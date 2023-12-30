@@ -25,21 +25,17 @@ public class RestXPathExpression {
 
     private String expression;
 
-    public RestXPathExpression(){
+    private RestXPathExpression(){
 
     }
 
     private RestXPathExpression(final Builder builder){
-        this.expression = Objects.requireNonNull(expression);
+        this.expression = Objects.requireNonNull(builder.expression, "expression");
     }
 
     @XmlElement
     public String getExpression() {
         return expression;
-    }
-
-    public void setExpression(final String expression) {
-        this.expression = expression;
     }
 
     @Override
@@ -83,7 +79,7 @@ public class RestXPathExpression {
         }
 
         public RestXPathExpression build() {
-            return new RestXPathExpression();
+            return new RestXPathExpression(this);
         }
     }
 }

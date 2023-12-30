@@ -20,13 +20,12 @@ import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.mock.rest.domain.RestApplication;
-import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.service.mock.rest.project.input.ReadRestApplicationInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestApplicationOutput;
 
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Karl Dahlgren
@@ -47,14 +46,16 @@ public class ReadRestApplicationService extends AbstractRestProjectService imple
     public ServiceResult<ReadRestApplicationOutput> process(final ServiceTask<ReadRestApplicationInput> serviceTask) {
         final ReadRestApplicationInput input = serviceTask.getInput();
         final RestApplication application = this.applicationRepository.findOne(input.getRestApplicationId());
-        final List<RestResource> resources = this.resourceRepository.findWithApplicationId(application.getId());
-        for(RestResource restResource : resources){
-            Map<RestMethodStatus, Integer> restMethodStatusCount = getRestMethodStatusCount(restResource);
-            restResource.setStatusCount(restMethodStatusCount);
-        }
-        application.setResources(resources);
+        final List<RestResource> resources = this.resourceRepository.findWithApplicationId(application.getId())
+                .stream()
+                .map(resource -> resource.toBuilder()
+                        .statusCount(getRestMethodStatusCount(resource))
+                        .build())
+                .collect(Collectors.toList());
         return createServiceResult(ReadRestApplicationOutput.builder()
-                .restApplication(application)
+                .restApplication(application.toBuilder()
+                        .resources(resources)
+                        .build())
                 .build());
     }
 }

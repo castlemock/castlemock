@@ -22,7 +22,7 @@ package com.castlemock.model.core;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class SearchValidator {
+public final class SearchValidator {
 
     private SearchValidator(){
 

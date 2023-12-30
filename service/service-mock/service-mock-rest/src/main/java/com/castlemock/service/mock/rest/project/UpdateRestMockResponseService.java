@@ -42,18 +42,18 @@ public class UpdateRestMockResponseService extends AbstractRestProjectService im
     @Override
     public ServiceResult<UpdateRestMockResponseOutput> process(final ServiceTask<UpdateRestMockResponseInput> serviceTask) {
         final UpdateRestMockResponseInput input = serviceTask.getInput();
-        final RestMockResponse existing = this.mockResponseRepository.findOne(input.getRestMockResponseId());
-
-        existing.setName(input.getName());
-        existing.setBody(input.getBody());
-        existing.setHttpStatusCode(input.getHttpStatusCode());
-        existing.setHttpHeaders(input.getHttpHeaders());
-        existing.setStatus(input.getStatus());
-        existing.setUsingExpressions(input.isUsingExpressions());
-        existing.setParameterQueries(input.getParameterQueries());
-        existing.setXpathExpressions(input.getXpathExpressions());
-        existing.setJsonPathExpressions(input.getJsonPathExpressions());
-        existing.setHeaderQueries(input.getHeaderQueries());
+        final RestMockResponse existing = this.mockResponseRepository.findOne(input.getRestMockResponseId()).toBuilder()
+                .name(input.getName())
+                .body(input.getBody())
+                .httpStatusCode(input.getHttpStatusCode())
+                .httpHeaders(input.getHttpHeaders())
+                .status(input.getStatus())
+                .usingExpressions(input.isUsingExpressions())
+                .parameterQueries(input.getParameterQueries())
+                .xpathExpressions(input.getXpathExpressions())
+                .jsonPathExpressions(input.getJsonPathExpressions())
+                .headerQueries(input.getHeaderQueries())
+                .build();
 
         final RestMockResponse updated = this.mockResponseRepository.update(input.getRestMockResponseId(), existing);
         return createServiceResult(UpdateRestMockResponseOutput.builder()

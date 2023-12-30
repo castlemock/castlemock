@@ -50,10 +50,6 @@ public class RestProject extends Project {
         return applications;
     }
 
-    public void setApplications(final List<RestApplication> applications) {
-        this.applications = applications;
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -76,6 +72,16 @@ public class RestProject extends Project {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public Builder toBuilder() {
+        return builder()
+                .id(id)
+                .name(name)
+                .created(created)
+                .updated(updated)
+                .description(description)
+                .applications(applications);
     }
 
     public static final class Builder extends Project.Builder<Builder> {

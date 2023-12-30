@@ -41,17 +41,16 @@ public class UpdateRestMethodService extends AbstractRestProjectService implemen
     @Override
     public ServiceResult<UpdateRestMethodOutput> process(final ServiceTask<UpdateRestMethodInput> serviceTask) {
         final UpdateRestMethodInput input = serviceTask.getInput();
-        final RestMethod existing = this.methodRepository.findOne(input.getRestMethodId());
-        
-        existing.setName(input.getName());
-        existing.setHttpMethod(input.getHttpMethod());
-        existing.setResponseStrategy(input.getResponseStrategy());
-        existing.setStatus(input.getStatus());
-        existing.setForwardedEndpoint(input.getForwardedEndpoint().orElse(null));
-        existing.setNetworkDelay(input.getNetworkDelay());
-        existing.setSimulateNetworkDelay(input.getSimulateNetworkDelay());
-        existing.setDefaultMockResponseId(input.getDefaultMockResponseId().orElse(null));
-        existing.setAutomaticForward(input.getAutomaticForward());
+        final RestMethod existing = this.methodRepository.findOne(input.getRestMethodId()).toBuilder()
+                .name(input.getName())
+                .httpMethod(input.getHttpMethod())
+                .responseStrategy(input.getResponseStrategy())
+                .status(input.getStatus())
+                .forwardedEndpoint(input.getForwardedEndpoint().orElse(null))
+                .networkDelay(input.getNetworkDelay())
+                .simulateNetworkDelay(input.getSimulateNetworkDelay())
+                .automaticForward(input.getAutomaticForward())
+                .build();
 
         final RestMethod updated = this.methodRepository.update(input.getRestMethodId(), existing);
         return createServiceResult(UpdateRestMethodOutput.builder()

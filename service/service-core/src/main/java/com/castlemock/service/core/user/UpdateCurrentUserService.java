@@ -52,13 +52,16 @@ public class UpdateCurrentUserService extends AbstractUserService implements Ser
         }
 
 
-        final User loggedInUser = findByUsername(loggedInUsername).orElse(null);
-        loggedInUser.setUsername(input.getUsername());
-        loggedInUser.setEmail(input.getEmail());
-        loggedInUser.setPassword(input.getPassword());
-        loggedInUser.setFullName(input.getFullName());
-        loggedInUser.setUpdated(new Date());
-
+        final User loggedInUser =
+                findByUsername(loggedInUsername)
+                        .orElseThrow()
+                        .toBuilder()
+                        .username(input.getUsername())
+                        .email(input.getEmail())
+                        .password(PASSWORD_ENCODER.encode(input.getPassword()))
+                        .fullName(input.getFullName())
+                        .updated(new Date())
+                        .build();
 
         update(loggedInUser.getId(), loggedInUser);
         final UpdateCurrentUserOutput output = new UpdateCurrentUserOutput(loggedInUser);

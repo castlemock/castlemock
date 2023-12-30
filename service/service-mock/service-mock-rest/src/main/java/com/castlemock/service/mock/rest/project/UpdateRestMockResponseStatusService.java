@@ -42,8 +42,9 @@ public class UpdateRestMockResponseStatusService extends AbstractRestProjectServ
     public ServiceResult<UpdateRestMockResponseStatusOutput> process(final ServiceTask<UpdateRestMockResponseStatusInput> serviceTask) {
         final UpdateRestMockResponseStatusInput input = serviceTask.getInput();
         final RestMockResponse mockResponse = this.mockResponseRepository.findOne(input.getMockResponseId());
-        mockResponse.setStatus(input.getStatus());
-        this.mockResponseRepository.update(input.getMockResponseId(), mockResponse);
+        this.mockResponseRepository.update(input.getMockResponseId(), mockResponse.toBuilder()
+                .status(input.getStatus())
+                .build());
         return createServiceResult(UpdateRestMockResponseStatusOutput.builder().build());
     }
 }

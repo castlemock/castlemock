@@ -57,7 +57,7 @@ public final class XPathUtility {
                 return Optional.empty();
             }
 
-            return Optional.ofNullable(evaluate);
+            return Optional.of(evaluate);
         } catch (Exception exception) {
             LOGGER.error("Unable to evaluate xpath expression", exception);
             return Optional.empty();

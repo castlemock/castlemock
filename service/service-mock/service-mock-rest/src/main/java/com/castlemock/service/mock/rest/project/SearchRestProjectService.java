@@ -85,30 +85,33 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
         final String responseType = messageSource.getMessage("rest.type.mockresponse", null , LocaleContextHolder.getLocale());
 
         projects.forEach(project -> {
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(project.getName());
-            searchResult.setLink(REST + SLASH + PROJECT + SLASH + project.getId());
-            searchResult.setDescription(REST_TYPE + COMMA + projectType);
+            final SearchResult searchResult = SearchResult.builder()
+                    .title(project.getName())
+                    .link(REST + SLASH + PROJECT + SLASH + project.getId())
+                    .description(REST_TYPE + COMMA + projectType)
+                    .build();
             searchResults.add(searchResult);
         });
 
         applications.forEach(application -> {
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(application.getName());
-            searchResult.setLink(REST + SLASH + PROJECT + SLASH + application.getProjectId()
-                    + SLASH + APPLICATION + SLASH + application.getId());
-            searchResult.setDescription(REST_TYPE + COMMA + applicationType);
+            final SearchResult searchResult = SearchResult.builder()
+                    .title(application.getName())
+                    .link(REST + SLASH + PROJECT + SLASH + application.getProjectId()
+                            + SLASH + APPLICATION + SLASH + application.getId())
+                    .description(REST_TYPE + COMMA + applicationType)
+                    .build();
             searchResults.add(searchResult);
         });
 
         resources.forEach(resource -> {
             final String projectId = this.applicationRepository.getProjectId(resource.getApplicationId());
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(resource.getName());
-            searchResult.setLink(REST + SLASH + PROJECT + SLASH + projectId
-                    + SLASH + APPLICATION + SLASH + resource.getApplicationId()
-                    + SLASH + RESOURCE + SLASH + resource.getId());
-            searchResult.setDescription(REST_TYPE + COMMA + resourceType);
+            final SearchResult searchResult = SearchResult.builder()
+                    .title(resource.getName())
+                    .link(REST + SLASH + PROJECT + SLASH + projectId
+                            + SLASH + APPLICATION + SLASH + resource.getApplicationId()
+                            + SLASH + RESOURCE + SLASH + resource.getId())
+                    .description(REST_TYPE + COMMA + resourceType)
+                    .build();
             searchResults.add(searchResult);
         });
 
@@ -116,13 +119,14 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
             final String applicationId = this.resourceRepository.getApplicationId(method.getResourceId())
                     .orElseThrow(() -> new IllegalArgumentException("Unable to find a resource with the following id: " + method.getResourceId()));
             final String projectId = this.applicationRepository.getProjectId(applicationId);
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(method.getName());
-            searchResult.setLink(REST + SLASH + PROJECT + SLASH + projectId
-                    + SLASH + APPLICATION + SLASH + applicationId
-                    + SLASH + RESOURCE + SLASH + method.getResourceId()
-                    + SLASH + METHOD + SLASH + method.getId());
-            searchResult.setDescription(REST_TYPE + COMMA + methodType);
+            final SearchResult searchResult = SearchResult.builder()
+                    .title(method.getName())
+                    .link(REST + SLASH + PROJECT + SLASH + projectId
+                            + SLASH + APPLICATION + SLASH + applicationId
+                            + SLASH + RESOURCE + SLASH + method.getResourceId()
+                            + SLASH + METHOD + SLASH + method.getId())
+                    .description(REST_TYPE + COMMA + methodType)
+                    .build();
             searchResults.add(searchResult);
         });
 
@@ -131,14 +135,15 @@ public class SearchRestProjectService extends AbstractRestProjectService impleme
             final String applicationId = this.resourceRepository.getApplicationId(resourceId)
                     .orElseThrow(() -> new IllegalArgumentException("Unable to find a resource with the following id: " + resourceId));
             final String projectId = this.applicationRepository.getProjectId(applicationId);
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(mockResponse.getName());
-            searchResult.setLink(REST + SLASH + PROJECT + SLASH + projectId
-                    + SLASH + APPLICATION + SLASH + applicationId
-                    + SLASH + RESOURCE + SLASH + resourceId
-                    + SLASH + METHOD + SLASH + mockResponse.getMethodId()
-                    + SLASH + RESPONSE + SLASH + mockResponse.getId());
-            searchResult.setDescription(REST_TYPE + COMMA + responseType);
+            final SearchResult searchResult = SearchResult.builder()
+                    .title(mockResponse.getName())
+                    .link(REST + SLASH + PROJECT + SLASH + projectId
+                            + SLASH + APPLICATION + SLASH + applicationId
+                            + SLASH + RESOURCE + SLASH + resourceId
+                            + SLASH + METHOD + SLASH + mockResponse.getMethodId()
+                            + SLASH + RESPONSE + SLASH + mockResponse.getId())
+                    .description(REST_TYPE + COMMA + responseType)
+                    .build();
             searchResults.add(searchResult);
         });
 

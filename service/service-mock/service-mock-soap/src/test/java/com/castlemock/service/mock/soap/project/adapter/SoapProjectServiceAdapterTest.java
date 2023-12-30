@@ -73,10 +73,11 @@ public class SoapProjectServiceAdapterTest {
     @Test
     public void testSearch(){
         final List<SearchResult> searchResults = new ArrayList<>();
-        final SearchResult searchResult = new SearchResult();
-        searchResult.setLink("Link");
-        searchResult.setTitle("Title");
-        searchResult.setDescription("Description");
+        final SearchResult searchResult = SearchResult.builder()
+                .link("link")
+                .title("Title")
+                .description("Description")
+                .build();
         searchResults.add(searchResult);
         final SearchSoapProjectOutput output = SearchSoapProjectOutput.builder()
                 .searchResults(searchResults)
@@ -84,7 +85,9 @@ public class SoapProjectServiceAdapterTest {
 
         Mockito.when(serviceProcessor.process(Mockito.any(SearchSoapProjectInput.class))).thenReturn(output);
 
-        final List<SearchResult> returnedSearchResults = adapter.search(new SearchQuery());
+        final List<SearchResult> returnedSearchResults = adapter.search(SearchQuery.builder()
+                .query("")
+                .build());
         Assert.assertEquals(returnedSearchResults.size(), searchResults.size());
         final SearchResult returnedSearchResult = returnedSearchResults.getFirst();
         Assert.assertEquals(returnedSearchResult.getLink(), searchResult.getLink());

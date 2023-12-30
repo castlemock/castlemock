@@ -61,12 +61,11 @@ public class ReadRestEventsByMethodIdServiceTest {
     public void testProcess(){
         final List<RestEvent> restEvents = new ArrayList<RestEvent>();
         for(int index = 0; index < 2; index++){
-            final RestEvent restEvent = RestEventTestBuilder.builder().build();
+            final RestEvent restEvent = RestEventTestBuilder.builder()
+                    .methodId("OperationId")
+                    .build();
             restEvents.add(restEvent);
         }
-
-        restEvents.get(0).setMethodId("OperationId");
-        restEvents.get(1).setMethodId("OperationId");
 
         Mockito.when(repository.findEventsByMethodId(Mockito.anyString())).thenReturn(restEvents);
 

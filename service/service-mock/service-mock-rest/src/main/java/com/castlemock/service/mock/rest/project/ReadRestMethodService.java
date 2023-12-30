@@ -49,9 +49,9 @@ public class ReadRestMethodService extends AbstractRestProjectService implements
         final RestMethod restMethod = this.methodRepository.findOne(input.getRestMethodId());
         final List<RestMockResponse> mockResponses = this.mockResponseRepository.findWithMethodId(input.getRestMethodId());
 
-        restMethod.setUri(restResource.getUri());
-        restMethod.setMockResponses(mockResponses);
-
+        final RestMethod.Builder builder = restMethod.toBuilder()
+                .uri(restResource.getUri())
+                .mockResponses(mockResponses);
         if(restMethod.getDefaultMockResponseId() != null){
             // Iterate through all the mocked responses to identify
             // which has been set to be the default XPath mock response.
@@ -59,11 +59,11 @@ public class ReadRestMethodService extends AbstractRestProjectService implements
                     .stream()
                     .filter(mockResponse -> mockResponse.getId().equals(restMethod.getDefaultMockResponseId()))
                     .findFirst()
-                    .ifPresent(mockResponse -> restMethod.setDefaultResponseName(mockResponse.getName()));
+                    .ifPresent(mockResponse -> builder.defaultResponseName(mockResponse.getName()));
         }
 
         return createServiceResult(ReadRestMethodOutput.builder()
-                .restMethod(restMethod)
+                .restMethod(builder.build())
                 .build());
     }
 }

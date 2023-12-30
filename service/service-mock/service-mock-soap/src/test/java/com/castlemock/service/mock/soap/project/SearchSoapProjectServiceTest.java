@@ -94,8 +94,9 @@ public class SearchSoapProjectServiceTest {
         Mockito.when(messageSource.getMessage("general.type.project", null, LocaleContextHolder.getLocale())).thenReturn("Project");
 
         final String query = "Query";
-        final SearchQuery searchQuery = new SearchQuery();
-        searchQuery.setQuery(query);
+        final SearchQuery searchQuery = SearchQuery.builder()
+                .query(query)
+                .build();
 
         final SearchSoapProjectInput input = SearchSoapProjectInput.builder()
                 .searchQuery(searchQuery)

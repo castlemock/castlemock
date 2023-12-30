@@ -43,8 +43,6 @@ import static java.util.stream.Collectors.toMap;
 @org.springframework.stereotype.Service
 public class IdentifyRestMethodService extends AbstractRestProjectService implements Service<IdentifyRestMethodInput, IdentifyRestMethodOutput> {
 
-    protected static final String SLASH = "/";
-
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
      * a response based on the incoming serviceTask input
@@ -81,14 +79,14 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
         pathParameters.putAll(UrlUtility.getQueryStringParameters(resource.getUri(), input.getHttpParameters()));
 
         final List<RestMockResponse> mockResponses = this.mockResponseRepository.findWithMethodId(method.getId());
-        method.setMockResponses(mockResponses);
-
         return createServiceResult(IdentifyRestMethodOutput.builder()
                         .restProjectId(input.getRestProjectId())
                         .restApplicationId(input.getRestApplicationId())
                         .restResourceId(resource.getId())
                         .restMethodId(method.getId())
-                        .restMethod(method)
+                        .restMethod(method.toBuilder()
+                                .mockResponses(mockResponses)
+                                .build())
                         .pathParameters(pathParameters)
                         .build());
     }

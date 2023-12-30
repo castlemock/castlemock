@@ -49,8 +49,9 @@ public class UpdateRestApplicationsForwardedEndpointService extends AbstractRest
             for(RestResource restResource : resources){
                 List<RestMethod> methods = this.methodRepository.findWithResourceId(restResource.getId());
                 for(RestMethod restMethod : methods){
-                    restMethod.setForwardedEndpoint(input.getForwardedEndpoint());
-                    this.methodRepository.update(restMethod.getId(), restMethod);
+                    this.methodRepository.update(restMethod.getId(), restMethod.toBuilder()
+                            .forwardedEndpoint(input.getForwardedEndpoint())
+                            .build());
                 }
             }
         }

@@ -41,9 +41,9 @@ public class UpdateRestApplicationService extends AbstractRestProjectService imp
     @Override
     public ServiceResult<UpdateRestApplicationOutput> process(final ServiceTask<UpdateRestApplicationInput> serviceTask) {
         final UpdateRestApplicationInput input = serviceTask.getInput();
-        final RestApplication existing = this.applicationRepository.findOne(input.getRestApplicationId());
-        existing.setName(input.getName());
-
+        final RestApplication existing = this.applicationRepository.findOne(input.getRestApplicationId()).toBuilder()
+                .name(input.getName())
+                .build();
         final RestApplication updatedRestApplication = this.applicationRepository.update(input.getRestApplicationId(), existing);
         return createServiceResult(UpdateRestApplicationOutput.builder()
                 .updatedRestApplication(updatedRestApplication)

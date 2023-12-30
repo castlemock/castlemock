@@ -23,6 +23,8 @@ import com.castlemock.model.core.user.User;
 import com.castlemock.service.core.user.input.UpdateUserInput;
 import com.castlemock.service.core.user.output.UpdateUserOutput;
 
+import java.util.Date;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -41,9 +43,17 @@ public class UpdateUserService extends AbstractUserService implements Service<Up
     @Override
     public ServiceResult<UpdateUserOutput> process(final ServiceTask<UpdateUserInput> serviceTask) {
         final UpdateUserInput input = serviceTask.getInput();
-        final String userId = input.getUserId();
-        final User user = input.getUser();
-        update(userId, user);
+        final User user = find(input.getId())
+                .toBuilder()
+                .username(input.getUsername())
+                .password(input.getPassword())
+                .fullName(input.getFullName())
+                .email(input.getEmail())
+                .role(input.getRole())
+                .status(input.getStatus())
+                .updated(new Date())
+                .build();
+        update(user.getId(), user);
         return createServiceResult(UpdateUserOutput.builder()
                 .updatedUser(user)
                 .build());

@@ -54,7 +54,6 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
      * @see ServiceResult
      */
     @Override
-    @SuppressWarnings("deprecation")
     public ServiceResult<ImportRestDefinitionOutput> process(final ServiceTask<ImportRestDefinitionInput> serviceTask) {
         final ImportRestDefinitionInput input = serviceTask.getInput();
         final String projectId = input.getRestProjectId();
@@ -93,21 +92,24 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
         restApplications.addAll(existingRestApplications);
 
         for(RestApplication application : restApplications){
-            application.setProjectId(projectId);
-            RestApplication savedApplication = this.applicationRepository.save(application);
+            final RestApplication savedApplication = this.applicationRepository.save(application.toBuilder()
+                    .projectId(projectId)
+                    .build());
 
             for(RestResource restResource : application.getResources()){
-                restResource.setApplicationId(savedApplication.getId());
-                RestResource savedResource = this.resourceRepository.save(restResource);
+                RestResource savedResource = this.resourceRepository.save(restResource.toBuilder()
+                        .applicationId(savedApplication.getId())
+                        .build());
 
                 for(RestMethod method : restResource.getMethods()){
-                    method.setResourceId(savedResource.getId());
-
-                    RestMethod savedMethod = this.methodRepository.save(method);
+                    final RestMethod savedMethod = this.methodRepository.save(method.toBuilder()
+                            .resourceId(savedResource.getId())
+                            .build());
 
                     for(RestMockResponse mockResponse : method.getMockResponses()){
-                        mockResponse.setMethodId(savedMethod.getId());
-                        this.mockResponseRepository.save(mockResponse);
+                        this.mockResponseRepository.save(mockResponse.toBuilder()
+                                .methodId(savedMethod.getId())
+                                .build());
                     }
                 }
             }
@@ -144,7 +146,9 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
             updateRestResource(newRestResource, existingRestResources, resultRestResources);
         }
         resultRestApplication.add(existingRestApplication);
-        newRestApplication.setResources(resultRestResources);
+
+        //TODO: FIX
+        //newRestApplication.setResources(resultRestResources);
 
         // Remove the existing REST application from the list of existing REST application
         // This is done so that we can add the REST applications which have not been
@@ -173,7 +177,8 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
         }
 
         // Update resource
-        existingRestResource.setUri(newRestResource.getUri());
+        //TODO: FIX
+        //existingRestResource.setUri(newRestResource.getUri());
 
         final List<RestMethod> existingRestMethods = this.methodRepository.findWithResourceId(existingRestResource.getId());
         final List<RestMethod> resultRestMethods = new ArrayList<RestMethod>();
@@ -181,7 +186,10 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
             updateRestMethod(newRestMethod, existingRestMethods, resultRestMethods);
         }
         resultRestResources.add(existingRestResource);
-        newRestResource.setMethods(resultRestMethods);
+
+        //TODO: FIX
+
+        //newRestResource.setMethods(resultRestMethods);
     }
 
     /**
@@ -204,7 +212,8 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
         }
 
         // THe REST method already exists. Update it.
-        existingRestMethod.setHttpMethod(newRestMethod.getHttpMethod());
+        //TODO: FIX
+        //existingRestMethod.setHttpMethod(newRestMethod.getHttpMethod());
         resultRestMethods.add(existingRestMethod);
     }
 

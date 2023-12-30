@@ -61,6 +61,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -122,9 +123,9 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestMethod restMethod = getMockedRestMethod();
-
-        restMethod.setResponseStrategy(RestResponseStrategy.RANDOM);
+        final RestMethod restMethod = getMockedRestMethod()
+                .responseStrategy(RestResponseStrategy.RANDOM)
+                .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)
@@ -156,9 +157,9 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestMethod restMethod = getMockedRestMethod();
-
-        restMethod.setResponseStrategy(RestResponseStrategy.SEQUENCE);
+        final RestMethod restMethod = getMockedRestMethod()
+                .responseStrategy(RestResponseStrategy.SEQUENCE)
+                .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)
@@ -186,9 +187,9 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestMethod restMethod = getQueryRestMethod();
-
-        restMethod.setResponseStrategy(RestResponseStrategy.QUERY_MATCH);
+        final RestMethod restMethod = getQueryRestMethod()
+                .responseStrategy(RestResponseStrategy.QUERY_MATCH)
+                .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)
@@ -204,8 +205,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final ResponseEntity<?> responseEntity = restServiceController.getMethod(PROJECT_ID, APPLICATION_ID, httpServletRequest, httpServletResponse);
         Assert.assertEquals(XML_RESPONSE_BODY, responseEntity.getBody());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
-        Assert.assertEquals(true, responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
         Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
         Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
     }
@@ -216,9 +217,9 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestMethod restMethod = getQueryRestMethod();
-
-        restMethod.setResponseStrategy(RestResponseStrategy.QUERY_MATCH);
+        final RestMethod restMethod = getQueryRestMethod()
+                .responseStrategy(RestResponseStrategy.QUERY_MATCH)
+                .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)
@@ -267,10 +268,10 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestMethod restMethod = getQueryNotMatchingNotDefaultResponseRestMethod();
-        restMethod.setAutomaticForward(false);
-
-        restMethod.setResponseStrategy(RestResponseStrategy.QUERY_MATCH);
+        final RestMethod restMethod = getQueryNotMatchingNotDefaultResponseRestMethod()
+                .automaticForward(false)
+                .responseStrategy(RestResponseStrategy.QUERY_MATCH)
+                .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)
@@ -294,9 +295,9 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestMethod restMethod = getQueryNotMatchingNotDefaultResponseRestMethod();
-
-        restMethod.setResponseStrategy(RestResponseStrategy.QUERY_MATCH);
+        final RestMethod restMethod = getQueryNotMatchingNotDefaultResponseRestMethod()
+                .responseStrategy(RestResponseStrategy.QUERY_MATCH)
+                .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)
@@ -320,9 +321,9 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestMethod restMethod = getQueryNotMatchingAndDefaultResponseRestMethod();
-
-        restMethod.setResponseStrategy(RestResponseStrategy.QUERY_MATCH);
+        final RestMethod restMethod = getQueryNotMatchingAndDefaultResponseRestMethod()
+                .responseStrategy(RestResponseStrategy.QUERY_MATCH)
+                .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)
@@ -345,9 +346,9 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(XML_REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestMethod restMethod = getMockedRestMethod();
-
-        restMethod.setStatus(RestMethodStatus.ECHO);
+        final RestMethod restMethod = getMockedRestMethod()
+                .status(RestMethodStatus.ECHO)
+                .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)
@@ -375,13 +376,14 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(XML_REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final RestXPathExpression xPathExpression = new RestXPathExpression();
-        xPathExpression.setExpression("//request/variable[text()='Value 1']");
+        final RestXPathExpression xPathExpression = RestXPathExpression.builder()
+                .expression("//request/variable[text()='Value 1']")
+                .build();
 
-        final RestMethod restMethod = getMockedRestMethod();
+        final RestMethod restMethod = getMockedRestMethod()
+                .responseStrategy(RestResponseStrategy.XPATH)
+                .build();
         restMethod.getMockResponses().get(0).getXpathExpressions().add(xPathExpression);
-
-        restMethod.setResponseStrategy(RestResponseStrategy.XPATH);
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)
@@ -415,10 +417,10 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .expression("$.request[?(@.variable == 'Value 1')]")
                 .build();
 
-        final RestMethod restMethod = getMockedRestMethod();
+        final RestMethod restMethod = getMockedRestMethod()
+                .responseStrategy(RestResponseStrategy.JSON_PATH)
+                .build();
         restMethod.getMockResponses().getFirst().getJsonPathExpressions().add(restJsonPathExpression);
-
-        restMethod.setResponseStrategy(RestResponseStrategy.JSON_PATH);
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)
@@ -440,8 +442,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
         Assert.assertNotNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER));
         Assert.assertNotNull(responseEntity.getHeaders().get(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).getFirst());
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).getFirst());
+        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
     }
 
     @Override
@@ -524,7 +526,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         return Mockito.mock(HttpServletResponse.class);
     }
 
-    private RestMethod getMockedRestMethod() {
+    private RestMethod.Builder getMockedRestMethod() {
         final HttpHeader contentTypeHeader = HttpHeader.builder()
                 .name(CONTENT_TYPE_HEADER)
                 .value(APPLICATION_XML)
@@ -558,11 +560,10 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .responseStrategy(RestResponseStrategy.SEQUENCE)
                 .simulateNetworkDelay(Boolean.FALSE)
                 .status(RestMethodStatus.MOCKED)
-                .mockResponses(Collections.singletonList(restMockResponse))
-                .build();
+                .mockResponses(Collections.singletonList(restMockResponse));
     }
 
-    private RestMethod getQueryRestMethod() {
+    private RestMethod.Builder getQueryRestMethod() {
         final HttpHeader contentTypeHeader = HttpHeader.builder()
                 .name(CONTENT_TYPE_HEADER)
                 .value(APPLICATION_XML)
@@ -618,11 +619,10 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .status(RestMethodStatus.MOCKED)
                 .mockResponses(Arrays.asList(restMockResponse1, restMockResponse2))
                 .defaultResponseName("Mocked response 2")
-                .defaultMockResponseId("MockResponseId2")
-                .build();
+                .defaultMockResponseId("MockResponseId2");
     }
 
-    private RestMethod getQueryNotMatchingAndDefaultResponseRestMethod() {
+    private RestMethod.Builder getQueryNotMatchingAndDefaultResponseRestMethod() {
         final HttpHeader contentTypeHeader = HttpHeader.builder()
                 .name(CONTENT_TYPE_HEADER)
                 .value(APPLICATION_XML)
@@ -660,11 +660,10 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .status(RestMethodStatus.MOCKED)
                 .mockResponses(List.of(restMockResponse1))
                 .defaultMockResponseId(mockResponseId)
-                .defaultResponseName(mockResponseName)
-                .build();
+                .defaultResponseName(mockResponseName);
     }
 
-    private RestMethod getQueryNotMatchingNotDefaultResponseRestMethod() {
+    private RestMethod.Builder getQueryNotMatchingNotDefaultResponseRestMethod() {
         final HttpHeader contentTypeHeader = HttpHeader.builder()
                 .name(CONTENT_TYPE_HEADER)
                 .value(APPLICATION_XML)
@@ -699,8 +698,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .responseStrategy(RestResponseStrategy.SEQUENCE)
                 .simulateNetworkDelay(Boolean.FALSE)
                 .status(RestMethodStatus.MOCKED)
-                .mockResponses(List.of(restMockResponse1))
-                .build();
+                .mockResponses(List.of(restMockResponse1));
     }
 
     private RestMethod getForwardingRestMethod() {

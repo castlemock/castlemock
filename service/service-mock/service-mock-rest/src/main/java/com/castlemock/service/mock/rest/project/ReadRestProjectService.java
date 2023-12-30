@@ -20,13 +20,11 @@ import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.mock.rest.domain.RestApplication;
-import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.service.mock.rest.project.input.ReadRestProjectInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestProjectOutput;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Karl Dahlgren
@@ -47,14 +45,16 @@ public class ReadRestProjectService extends AbstractRestProjectService implement
     public ServiceResult<ReadRestProjectOutput> process(final ServiceTask<ReadRestProjectInput> serviceTask) {
         final ReadRestProjectInput input = serviceTask.getInput();
         final RestProject restProject = find(input.getRestProjectId());
-        final List<RestApplication> applications = this.applicationRepository.findWithProjectId(input.getRestProjectId());
-        restProject.setApplications(applications);
-        for(final RestApplication restApplication : restProject.getApplications()){
-            final Map<RestMethodStatus, Integer> soapOperationStatusCount = getRestMethodStatusCount(restApplication);
-            restApplication.setStatusCount(soapOperationStatusCount);
-        }
+        final List<RestApplication> applications = this.applicationRepository.findWithProjectId(input.getRestProjectId())
+                .stream()
+                .map(application -> application.toBuilder()
+                        .statusCount(getRestMethodStatusCount(application))
+                        .build())
+                .toList();
         return createServiceResult(ReadRestProjectOutput.builder()
-                .restProject(restProject)
+                .restProject(restProject.toBuilder()
+                        .applications(applications)
+                        .build())
                 .build());
     }
 }

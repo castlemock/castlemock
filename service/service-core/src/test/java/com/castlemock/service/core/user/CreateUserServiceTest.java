@@ -62,7 +62,13 @@ public class CreateUserServiceTest {
                 .build();
 
         Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(user);
-        final CreateUserInput input = CreateUserInput.builder().user(user).build();
+        final CreateUserInput input = CreateUserInput.builder()
+                .username("Username")
+                .password("Password")
+                .status(Status.ACTIVE)
+                .role(Role.ADMIN)
+                .email("email@email.com")
+                .build();
         final ServiceTask<CreateUserInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateUserOutput> serviceResult = service.process(serviceTask);
         final CreateUserOutput output = serviceResult.getOutput();

@@ -57,8 +57,9 @@ public class CreateRestApplicationsServiceTest {
     @Test
     @Ignore
     public void testProcess(){
-        final RestProject restProject = RestProjectTestBuilder.build();
-        restProject.setApplications(new ArrayList<RestApplication>());
+        final RestProject restProject = RestProjectTestBuilder.builder()
+                .applications(List.of())
+                .build();
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(restProject);
 
         final List<RestApplication> restApplications = new ArrayList<RestApplication>();

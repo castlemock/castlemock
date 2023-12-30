@@ -30,7 +30,6 @@ import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.service.mock.rest.project.input.ImportRestProjectInput;
 import com.castlemock.service.mock.rest.project.output.ImportRestProjectOutput;
 
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -82,8 +81,9 @@ public class ImportRestProjectService extends AbstractRestProjectService impleme
                 throw new IllegalArgumentException("A method with the following key already exists: " + method.getId());
             }
 
-            method.setCurrentResponseSequenceIndex(0);
-            this.methodRepository.save(method);
+            this.methodRepository.save(method.toBuilder()
+                    .currentResponseSequenceIndex(0)
+                    .build());
         }
 
         for(RestMockResponse mockResponse : exportContainer.getMockResponses()){
@@ -91,12 +91,12 @@ public class ImportRestProjectService extends AbstractRestProjectService impleme
                 throw new IllegalArgumentException("A mocked response with the following key already exists: " + mockResponse.getId());
             }
 
+            final RestMockResponse.Builder builder = mockResponse.toBuilder();
             if(mockResponse.getParameterQueries() == null){
-                List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<RestParameterQuery>();
-                mockResponse.setParameterQueries(parameterQueries);
+                builder.parameterQueries(new CopyOnWriteArrayList<RestParameterQuery>());
             }
 
-            this.mockResponseRepository.save(mockResponse);
+            this.mockResponseRepository.save(builder.build());
 
         }
         return createServiceResult(ImportRestProjectOutput.builder()

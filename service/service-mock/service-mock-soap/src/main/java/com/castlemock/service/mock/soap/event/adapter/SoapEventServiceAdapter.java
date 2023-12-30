@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The SOAP event service adapter is an adapter class that provides functionality to
@@ -56,13 +57,11 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEvent> {
     @Override
     public List<SoapEvent> readAll() {
         final ReadAllSoapEventOutput output = serviceProcessor.process(ReadAllSoapEventInput.builder().build());
-
-        for(SoapEvent soapEvent : output.getSoapEvents()){
-            final String resourceLink = generateResourceLink(soapEvent);
-            soapEvent.setResourceLink(resourceLink);
-        }
-
-        return output.getSoapEvents();
+        return output.getSoapEvents().stream()
+                .map(event -> event.toBuilder()
+                        .resourceLink(generateResourceLink(event))
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Override

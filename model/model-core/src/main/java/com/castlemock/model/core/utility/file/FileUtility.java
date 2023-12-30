@@ -31,9 +31,13 @@ import java.io.InputStreamReader;
  * @since 1.10
  * @author Karl Dahlgren
  */
-public class FileUtility {
+public final class FileUtility {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtility.class);
+
+    private FileUtility() {
+
+    }
 
     /**
      * Parse the incoming <code>file</code> into a String.

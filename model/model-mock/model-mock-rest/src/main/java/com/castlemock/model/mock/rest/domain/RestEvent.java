@@ -43,7 +43,7 @@ public class RestEvent extends Event {
     private RestEvent(final Builder builder){
         super(builder);
         this.request = Objects.requireNonNull(builder.request, "request");
-        this.response = Objects.requireNonNull(builder.response, "response");
+        this.response = builder.response;
         this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
         this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
         this.resourceId = Objects.requireNonNull(builder.resourceId, "resourceId");
@@ -55,17 +55,9 @@ public class RestEvent extends Event {
         return request;
     }
 
-    public void setRequest(RestRequest request) {
-        this.request = request;
-    }
-
     @XmlElement
     public RestResponse getResponse() {
         return response;
-    }
-
-    public void setResponse(RestResponse response) {
-        this.response = response;
     }
 
     @XmlElement
@@ -73,17 +65,9 @@ public class RestEvent extends Event {
         return projectId;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
     @XmlElement
     public String getApplicationId() {
         return applicationId;
-    }
-
-    public void setApplicationId(String applicationId) {
-        this.applicationId = applicationId;
     }
 
     @XmlElement
@@ -91,17 +75,9 @@ public class RestEvent extends Event {
         return resourceId;
     }
 
-    public void setResourceId(String resourceId) {
-        this.resourceId = resourceId;
-    }
-
     @XmlElement
     public String getMethodId() {
         return methodId;
-    }
-
-    public void setMethodId(String methodId) {
-        this.methodId = methodId;
     }
 
     @Override
@@ -137,13 +113,28 @@ public class RestEvent extends Event {
         return new Builder();
     }
 
-    public static Builder builder(final Event event) {
+    public static Builder toBuilder(final Event event) {
         return builder()
                 .id(event.getId())
                 .startDate(event.getStartDate())
                 .endDate(event.getEndDate())
                 .resourceLink(event.getResourceLink())
                 .resourceName(event.getResourceName());
+    }
+
+    public Builder toBuilder() {
+        return builder()
+                .id(this.id)
+                .startDate(this.startDate)
+                .endDate(this.endDate)
+                .resourceLink(this.resourceLink)
+                .resourceName(this.resourceName)
+                .request(this.request)
+                .response(this.response)
+                .methodId(this.methodId)
+                .resourceId(this.resourceId)
+                .applicationId(this.applicationId)
+                .projectId(this.projectId);
     }
 
     public static final class Builder extends Event.Builder<Builder> {

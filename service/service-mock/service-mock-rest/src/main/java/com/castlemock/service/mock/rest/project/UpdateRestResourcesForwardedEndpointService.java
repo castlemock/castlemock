@@ -46,10 +46,9 @@ public class UpdateRestResourcesForwardedEndpointService extends AbstractRestPro
                 .stream()
                 .map(this.methodRepository::findWithResourceId)
                 .flatMap(List::stream)
-                .forEach(restMethod -> {
-                    restMethod.setForwardedEndpoint(input.getForwardedEndpoint());
-                    this.methodRepository.update(restMethod.getId(), restMethod);
-                });
+                .forEach(restMethod -> this.methodRepository.update(restMethod.getId(), restMethod.toBuilder()
+                            .forwardedEndpoint(input.getForwardedEndpoint())
+                            .build()));
         return createServiceResult(UpdateRestResourcesForwardedEndpointOutput.builder().build());
     }
 }

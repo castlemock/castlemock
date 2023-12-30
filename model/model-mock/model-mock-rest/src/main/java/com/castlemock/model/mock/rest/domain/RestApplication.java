@@ -57,26 +57,14 @@ public class RestApplication {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @XmlElement
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @XmlElement
     public String getProjectId() {
         return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
     }
 
     @XmlElementWrapper(name = "resources")
@@ -85,17 +73,9 @@ public class RestApplication {
         return resources;
     }
 
-    public void setResources(List<RestResource> resources) {
-        this.resources = resources;
-    }
-
     @XmlTransient
     public Map<RestMethodStatus, Integer> getStatusCount() {
         return statusCount;
-    }
-
-    public void setStatusCount(Map<RestMethodStatus, Integer> statusCount) {
-        this.statusCount = statusCount;
     }
 
     @Override
@@ -128,6 +108,15 @@ public class RestApplication {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public Builder toBuilder() {
+        return builder()
+                .id(this.id)
+                .name(this.name)
+                .projectId(this.projectId)
+                .resources(this.resources)
+                .statusCount(this.statusCount);
     }
 
     public static final class Builder {

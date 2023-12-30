@@ -139,13 +139,27 @@ public class SoapEvent extends Event {
         return new Builder();
     }
 
-    public static Builder builder(final Event event) {
+    public static Builder toBuilder(final Event event) {
         return builder()
                 .id(event.getId())
                 .startDate(event.getStartDate())
                 .endDate(event.getEndDate())
                 .resourceLink(event.getResourceLink())
                 .resourceName(event.getResourceName());
+    }
+
+    public Builder toBuilder() {
+        return builder()
+                .id(this.id)
+                .startDate(this.startDate)
+                .endDate(this.endDate)
+                .resourceLink(this.resourceLink)
+                .resourceName(this.resourceName)
+                .portId(this.portId)
+                .operationId(this.operationId)
+                .request(this.request)
+                .response(this.response)
+                .projectId(this.projectId);
     }
 
     public static final class Builder extends Event.Builder<Builder> {

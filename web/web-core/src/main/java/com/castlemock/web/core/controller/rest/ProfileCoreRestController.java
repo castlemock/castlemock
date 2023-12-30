@@ -66,8 +66,9 @@ public class ProfileCoreRestController extends AbstractRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        user.setPassword(EMPTY);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(user.toBuilder()
+                .password(EMPTY)
+                .build());
     }
 
 
@@ -98,9 +99,11 @@ public class ProfileCoreRestController extends AbstractRestController {
                 .password(request.getPassword())
                 .build());
 
-        final User updatedUser = updateCurrentUserOutput.getUpdatedUser();
+        final User updatedUser = updateCurrentUserOutput.getUpdatedUser()
+                        .toBuilder()
+                        .password(EMPTY)
+                        .build();
 
-        updatedUser.setPassword(EMPTY);
         return ResponseEntity.ok(updatedUser);
     }
 

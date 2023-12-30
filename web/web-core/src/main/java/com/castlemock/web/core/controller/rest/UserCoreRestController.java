@@ -27,6 +27,8 @@ import com.castlemock.service.core.user.output.CreateUserOutput;
 import com.castlemock.service.core.user.output.ReadAllUsersOutput;
 import com.castlemock.service.core.user.output.ReadUserOutput;
 import com.castlemock.service.core.user.output.UpdateUserOutput;
+import com.castlemock.web.core.model.user.CreateUserRequest;
+import com.castlemock.web.core.model.user.UpdateUserRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
@@ -40,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/api/rest/core")
@@ -56,12 +59,19 @@ public class UserCoreRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.POST, value = "/user")
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody
-    ResponseEntity<User> createUser(@RequestBody final User user) {
+    ResponseEntity<User> createUser(@RequestBody final CreateUserRequest request) {
         final CreateUserOutput output = serviceProcessor.process(CreateUserInput.builder()
-                .user(user)
+                .email(request.getEmail())
+                .role(request.getRole())
+                .status(request.getStatus())
+                .fullName(request.getFullName())
+                .username(request.getUsername())
+                .password(request.getPassword())
                 .build());
-        final User createdUser = output.getSavedUser();
-        createdUser.setPassword(EMPTY);
+        final User createdUser = output.getSavedUser()
+                        .toBuilder()
+                        .password(EMPTY)
+                        .build();
         return ResponseEntity.ok(createdUser);
     }
 
@@ -71,13 +81,20 @@ public class UserCoreRestController extends AbstractRestController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<User> updateUser(@PathVariable("userId") final String userId,
-                    @RequestBody final User user) {
+                    @RequestBody final UpdateUserRequest request) {
         final UpdateUserOutput output = serviceProcessor.process(UpdateUserInput.builder()
-                .user(user)
-                .userId(userId)
+                .id(userId)
+                .email(request.getEmail())
+                .role(request.getRole())
+                .status(request.getStatus())
+                .fullName(request.getFullName())
+                .username(request.getUsername())
+                .password(request.getPassword())
                 .build());
-        final User updatedUser = output.getUpdatedUser();
-        updatedUser.setPassword(EMPTY);
+        final User updatedUser = output.getUpdatedUser()
+                .toBuilder()
+                .password(EMPTY)
+                .build();
         return ResponseEntity.ok(updatedUser);
     }
 
@@ -88,8 +105,12 @@ public class UserCoreRestController extends AbstractRestController {
     public @ResponseBody
     ResponseEntity<List<User>> getUsers() {
         final ReadAllUsersOutput output = serviceProcessor.process(new ReadAllUsersInput());
-        final List<User> users = output.getUsers();
-        users.forEach(user -> user.setPassword(EMPTY));
+        final List<User> users = output.getUsers()
+                .stream()
+                .map(user -> user.toBuilder()
+                    .password(EMPTY)
+                    .build())
+                .collect(Collectors.toList());
         return ResponseEntity.ok(users);
     }
 
@@ -102,8 +123,10 @@ public class UserCoreRestController extends AbstractRestController {
         final ReadUserOutput output = serviceProcessor.process(ReadUserInput.builder()
                 .userId(userId)
                 .build());
-        final User user = output.getUser();
-        user.setPassword(EMPTY);
+        final User user = output.getUser()
+                .toBuilder()
+                .password(EMPTY)
+                .build();
         return ResponseEntity.ok(user);
     }
 
@@ -112,7 +135,7 @@ public class UserCoreRestController extends AbstractRestController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public @ResponseBody
     void deleteUser(@PathVariable("userId") final String userId) {
-        serviceProcessor.process(DeleteUserInput.builder()
+        this.serviceProcessor.process(DeleteUserInput.builder()
                 .userId(userId)
                 .build());
     }

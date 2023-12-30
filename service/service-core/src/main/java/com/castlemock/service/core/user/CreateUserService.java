@@ -19,7 +19,6 @@ package com.castlemock.service.core.user;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
-import com.castlemock.model.core.user.Status;
 import com.castlemock.model.core.user.User;
 import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.service.core.user.input.CreateUserInput;
@@ -45,22 +44,26 @@ public class CreateUserService extends AbstractUserService implements Service<Cr
     @Override
     public ServiceResult<CreateUserOutput> process(final ServiceTask<CreateUserInput> serviceTask) {
         final CreateUserInput input = serviceTask.getInput();
-        final User user = input.getUser();
 
-        final User existingUser = findByUsername(user.getUsername())
-                .orElse(null);
-        if(existingUser != null){
-            throw new IllegalArgumentException("User with the username '" + user.getUsername() + "' already exists.");
+        final User existingUser = findByUsername(input.getUsername()).orElse(null);
+
+        if(existingUser != null) {
+            throw new IllegalArgumentException("User with the username '" + input.getUsername() + "' already exists.");
         }
 
+        final User newUser = User.builder()
+                .id(IdUtility.generateId())
+                .username(input.getUsername())
+                .password(PASSWORD_ENCODER.encode(input.getPassword()))
+                .status(input.getStatus())
+                .email(input.getEmail())
+                .fullName(input.getFullName())
+                .role(input.getRole())
+                .created(new Date())
+                .updated(new Date())
+                .build();
 
-        user.setId(IdUtility.generateId());
-        user.setCreated(new Date());
-        user.setUpdated(new Date());
-        user.setStatus(Status.ACTIVE);
-        user.setPassword(PASSWORD_ENCODER.encode(user.getPassword()));
-
-        final User savedUser = save(user);
+        final User savedUser = save(newUser);
         return createServiceResult(CreateUserOutput.builder()
                 .savedUser(savedUser)
                 .build());

@@ -48,8 +48,9 @@ public class UpdateRestApplicationsStatusService extends AbstractRestProjectServ
         for(RestResource restResource : resources){
             final List<RestMethod> methods = this.methodRepository.findWithResourceId(restResource.getId());
             for(RestMethod restMethod : methods){
-                restMethod.setStatus(input.getMethodStatus());
-                this.methodRepository.update(restMethod.getId(), restMethod);
+                this.methodRepository.update(restMethod.getId(), restMethod.toBuilder()
+                        .status(input.getMethodStatus())
+                        .build());
             }
         }
         return createServiceResult(UpdateRestApplicationsStatusOutput.builder().build());

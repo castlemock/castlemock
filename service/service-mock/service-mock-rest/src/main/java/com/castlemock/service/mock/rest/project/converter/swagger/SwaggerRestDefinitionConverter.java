@@ -332,15 +332,15 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
                     final String contentType = bodyEntry.getKey();
                     final String body = bodyEntry.getValue();
                     final RestMockResponse restMockResponse = generateResponse(httpStatusCode,methodId, response);
-                    restMockResponse.setName(restMockResponse.getName() + " (" + contentType + ")");
-                    restMockResponse.setBody(body);
-
                     final HttpHeader httpHeader = HttpHeader.builder()
                             .name(CONTENT_TYPE)
                             .value(contentType)
                             .build();
-                    restMockResponse.getHttpHeaders().add(httpHeader);
-                    mockResponses.add(restMockResponse);
+                    mockResponses.add(restMockResponse.toBuilder()
+                            .name(restMockResponse.getName() + " (" + contentType + ")")
+                            .body(body)
+                            .httpHeaders(List.of(httpHeader))
+                            .build());
                 }
             }
         }

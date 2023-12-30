@@ -58,17 +58,9 @@ public class RestRequest {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
     @XmlElement
     public String getContentType() {
         return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 
     @XmlElement
@@ -76,17 +68,9 @@ public class RestRequest {
         return uri;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
     @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
-    }
-
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
     }
 
     @XmlElementWrapper(name = "httpHeaders")
@@ -95,18 +79,10 @@ public class RestRequest {
         return httpHeaders;
     }
 
-    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
-        this.httpHeaders = httpHeaders;
-    }
-
     @XmlElementWrapper(name = "httpParameters")
     @XmlElement(name = "httpParameter")
     public List<HttpParameter> getHttpParameters() {
         return httpParameters;
-    }
-
-    public void setHttpParameters(List<HttpParameter> httpParameters) {
-        this.httpParameters = httpParameters;
     }
 
     @Override

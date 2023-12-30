@@ -70,16 +70,19 @@ public class RestProjectServiceAdapterTest {
     @Test
     public void testSearch(){
         final List<SearchResult> searchResults = new ArrayList<>();
-        final SearchResult searchResult = new SearchResult();
-        searchResult.setLink("Link");
-        searchResult.setTitle("Title");
-        searchResult.setDescription("Description");
+        final SearchResult searchResult = SearchResult.builder()
+                .link("Link")
+                .title("Title")
+                .description("Description")
+                .build();
         searchResults.add(searchResult);
         final SearchRestProjectOutput output = SearchRestProjectOutput.builder().searchResults(searchResults).build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(SearchRestProjectInput.class))).thenReturn(output);
 
-        final List<SearchResult> returnedSearchResults = adapter.search(new SearchQuery());
+        final List<SearchResult> returnedSearchResults = adapter.search(SearchQuery.builder()
+                .query("")
+                .build());
         Assert.assertEquals(returnedSearchResults.size(), searchResults.size());
         final SearchResult returnedSearchResult = returnedSearchResults.get(0);
         Assert.assertEquals(returnedSearchResult.getLink(), searchResult.getLink());

@@ -61,17 +61,9 @@ public class RestResource {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @XmlElement
     public String getName() {
         return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
     }
 
     @XmlElement
@@ -79,17 +71,9 @@ public class RestResource {
         return uri;
     }
 
-    public void setUri(final String uri) {
-        this.uri = uri;
-    }
-
     @XmlElement
     public String getApplicationId() {
         return applicationId;
-    }
-
-    public void setApplicationId(final String applicationId) {
-        this.applicationId = applicationId;
     }
 
     @XmlElementWrapper(name = "methods")
@@ -98,26 +82,14 @@ public class RestResource {
         return methods;
     }
 
-    public void setMethods(final List<RestMethod> methods) {
-        this.methods = methods;
-    }
-
     @XmlElement
     public String getInvokeAddress() {
         return invokeAddress;
     }
 
-    public void setInvokeAddress(final String invokeAddress) {
-        this.invokeAddress = invokeAddress;
-    }
-
     @XmlTransient
     public Map<RestMethodStatus, Integer> getStatusCount() {
         return statusCount;
-    }
-
-    public void setStatusCount(final Map<RestMethodStatus, Integer> statusCount) {
-        this.statusCount = statusCount;
     }
 
     @Override
@@ -154,6 +126,17 @@ public class RestResource {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public Builder toBuilder() {
+        return builder()
+                .id(id)
+                .applicationId(applicationId)
+                .name(name)
+                .uri(uri)
+                .invokeAddress(invokeAddress)
+                .statusCount(statusCount)
+                .methods(methods);
     }
 
     public static final class Builder {

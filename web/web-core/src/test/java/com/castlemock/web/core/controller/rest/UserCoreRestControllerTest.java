@@ -27,6 +27,10 @@ import com.castlemock.service.core.user.output.DeleteUserOutput;
 import com.castlemock.service.core.user.output.ReadAllUsersOutput;
 import com.castlemock.service.core.user.output.ReadUserOutput;
 import com.castlemock.service.core.user.output.UpdateUserOutput;
+import com.castlemock.web.core.model.user.CreateUserRequest;
+import com.castlemock.web.core.model.user.CreateUserRequestTestBuilder;
+import com.castlemock.web.core.model.user.UpdateUserRequest;
+import com.castlemock.web.core.model.user.UpdateUserRequestTestBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,6 +38,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -57,16 +62,18 @@ class UserCoreRestControllerTest {
     @Test
     @DisplayName("Create user")
     void testCreateUser(){
-        final User user = UserTestBuilder.builder().build();
+        final CreateUserRequest request = CreateUserRequestTestBuilder.build();
+        final User createdUser = UserTestBuilder.build();
+
         when(serviceProcessor.process(any())).thenReturn(CreateUserOutput.builder()
-                .savedUser(user)
+                .savedUser(createdUser)
                 .build());
-        final ResponseEntity<User> responseEntity = this.userCoreRestController.createUser(user);
+        final ResponseEntity<User> responseEntity = this.userCoreRestController.createUser(request);
 
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
-        assertEquals(user, responseEntity.getBody());
+        assertEquals(createdUser, responseEntity.getBody());
 
         verify(serviceProcessor, times(1)).process(any());
     }
@@ -74,16 +81,20 @@ class UserCoreRestControllerTest {
     @Test
     @DisplayName("Update user")
     void testUpdateUser(){
-        final User user = UserTestBuilder.builder().build();
+        final String userId = UUID.randomUUID().toString();
+        final UpdateUserRequest request = UpdateUserRequestTestBuilder.build();
+        final User updatedUser = UserTestBuilder.build();
+
         when(serviceProcessor.process(any())).thenReturn(UpdateUserOutput.builder()
-                .updatedUser(user)
+                .updatedUser(updatedUser)
                 .build());
-        final ResponseEntity<User> responseEntity = this.userCoreRestController.updateUser(user.getId(), user);
+
+        final ResponseEntity<User> responseEntity = this.userCoreRestController.updateUser(userId, request);
 
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
-        assertEquals(user, responseEntity.getBody());
+        assertEquals(updatedUser, responseEntity.getBody());
 
         verify(serviceProcessor, times(1)).process(any());
     }

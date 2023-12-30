@@ -18,6 +18,7 @@ package com.castlemock.service.core.project;
 
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
+import com.castlemock.model.core.SearchResultTestBuilder;
 import com.castlemock.model.core.service.project.ProjectServiceAdapter;
 import org.junit.Assert;
 import org.junit.Before;
@@ -66,23 +67,26 @@ public class ProjectServiceFacadeImplTest {
     @Test
     public void testSearch(){
         final List<SearchResult> result = new ArrayList<SearchResult>();
-        final SearchResult firstSearchResult = new SearchResult();
-        firstSearchResult.setTitle("First title");
-        firstSearchResult.setDescription("First description");
-        firstSearchResult.setLink("First link");
+        final SearchResult firstSearchResult = SearchResultTestBuilder.builder()
+                        .title("First title")
+                        .description("First description")
+                        .link("First link")
+                        .build();
 
-        final SearchResult secondSearchResult = new SearchResult();
-        secondSearchResult.setTitle("Second title");
-        secondSearchResult.setDescription("Second description");
-        secondSearchResult.setLink("Second link");
+        final SearchResult secondSearchResult = SearchResultTestBuilder.builder()
+                .title("Second title")
+                .description("Second description")
+                .link("Second link")
+                .build();
 
         result.add(firstSearchResult);
         result.add(secondSearchResult);
         Mockito.when(projectServiceAdapter.search(Mockito.any(SearchQuery.class))).thenReturn(result);
 
-        final SearchQuery searchQuery = new SearchQuery();
-        searchQuery.setQuery("Search query");
-
+        final SearchQuery searchQuery = SearchQuery.builder()
+                .query("Search query")
+                .build();
+        
         final List<SearchResult> returnedResult = serviceFacade.search(searchQuery);
 
         Assert.assertEquals(result.size(), returnedResult.size());

@@ -16,20 +16,62 @@
 
 package com.castlemock.model.core;
 
+import java.util.Objects;
+
 /**
  * The search query is used to search for resources that matches the specific query
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class SearchQuery {
+public final class SearchQuery {
 
-    private String query;
+    private final String query;
+
+    private SearchQuery(final Builder builder) {
+        this.query = Objects.requireNonNull(builder.query, "query");
+    }
 
     public String getQuery() {
         return query;
     }
 
-    public void setQuery(String query) {
-        this.query = query;
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final SearchQuery that = (SearchQuery) o;
+        return Objects.equals(query, that.query);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(query);
+    }
+
+    @Override
+    public String toString() {
+        return "SearchQuery{" +
+                "query='" + query + '\'' +
+                '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String query;
+
+        private Builder() {
+        }
+
+        public Builder query(final String query) {
+            this.query = query;
+            return this;
+        }
+
+        public SearchQuery build() {
+            return new SearchQuery(this);
+        }
     }
 }

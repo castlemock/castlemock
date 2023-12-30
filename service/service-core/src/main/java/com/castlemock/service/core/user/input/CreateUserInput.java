@@ -17,7 +17,8 @@
 package com.castlemock.service.core.user.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.user.User;
+import com.castlemock.model.core.user.Role;
+import com.castlemock.model.core.user.Status;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.user.output.CreateUserOutput;
 
@@ -32,29 +33,92 @@ import java.util.Objects;
 public final class CreateUserInput implements Input {
 
     @NotNull
-    private final User user;
+    private final String username;
+    @NotNull
+    private final String password;
+    private final String email;
+    private final String fullName;
+    @NotNull
+    private final Status status;
+    @NotNull
+    private final Role role;
 
     public CreateUserInput(final Builder builder) {
-        this.user = Objects.requireNonNull(builder.user);
+        this.username = Objects.requireNonNull(builder.username, "username");
+        this.password = Objects.requireNonNull(builder.password, "password");
+        this.email = builder.email;
+        this.fullName =  builder.fullName;
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.role = Objects.requireNonNull(builder.role, "role");
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public static Builder builder() {
         return new Builder();
     }
 
+
     public static final class Builder {
-        private User user;
+        private String username;
+        private String password;
+        private String email;
+        private String fullName;
+        private Status status;
+        private Role role;
 
         private Builder() {
         }
 
+        public Builder username(final String username) {
+            this.username = username;
+            return this;
+        }
 
-        public Builder user(final User user) {
-            this.user = user;
+        public Builder password(final String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder email(final String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder fullName(final String fullName) {
+            this.fullName = fullName;
+            return this;
+        }
+
+        public Builder status(final Status status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder role(final Role role) {
+            this.role = role;
             return this;
         }
 

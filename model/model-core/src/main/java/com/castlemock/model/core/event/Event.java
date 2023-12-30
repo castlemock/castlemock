@@ -53,17 +53,9 @@ public abstract class Event {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @XmlElement
     public String getResourceName() {
         return resourceName;
-    }
-
-    public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
     }
 
     @XmlElement
@@ -71,26 +63,14 @@ public abstract class Event {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
     @XmlElement
     public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
     @XmlElement
     public String getResourceLink() {
         return resourceLink;
-    }
-
-    public void setResourceLink(String resourceLink) {
-        this.resourceLink = resourceLink;
     }
 
     @SuppressWarnings("unchecked")

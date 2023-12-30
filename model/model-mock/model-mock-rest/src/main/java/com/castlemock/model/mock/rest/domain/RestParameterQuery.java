@@ -32,17 +32,9 @@ public class RestParameterQuery {
         return parameter;
     }
 
-    public void setParameter(String parameter) {
-        this.parameter = parameter;
-    }
-
     @XmlElement
     public String getQuery() {
         return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query;
     }
 
     @XmlElement
@@ -50,17 +42,9 @@ public class RestParameterQuery {
         return matchCase;
     }
 
-    public void setMatchCase(boolean matchCase) {
-        this.matchCase = matchCase;
-    }
-
     @XmlElement
     public boolean getMatchAny() {
         return matchAny;
-    }
-
-    public void setMatchAny(boolean matchAny) {
-        this.matchAny = matchAny;
     }
 
     @XmlElement
@@ -68,17 +52,9 @@ public class RestParameterQuery {
         return matchRegex;
     }
 
-    public void setMatchRegex(boolean matchRegex) {
-        this.matchRegex = matchRegex;
-    }
-
     @XmlElement
     public boolean getUrlEncoded() {
         return urlEncoded;
-    }
-
-    public void setUrlEncoded(boolean urlEncoded) {
-        this.urlEncoded = urlEncoded;
     }
 
     @Override

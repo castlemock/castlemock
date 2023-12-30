@@ -114,9 +114,10 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
                         .orElse(null);
         Preconditions.checkArgument(projectWithName == null || projectWithName.getId().equals(restProjectId), "Project name is already taken");
         final RestProject project = find(restProjectId);
-        project.setName(updatedProject.getName());
-        project.setDescription(updatedProject.getDescription());
-        return Optional.ofNullable(super.save(project));
+        return Optional.ofNullable(super.save(project.toBuilder()
+                .name(updatedProject.getName())
+                .description(updatedProject.getDescription())
+                .build()));
     }
 
 

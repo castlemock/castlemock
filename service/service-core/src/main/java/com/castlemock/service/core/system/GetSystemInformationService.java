@@ -25,10 +25,8 @@ import com.castlemock.repository.Profiles;
 import com.castlemock.service.core.configuration.AbstractConfigurationGroupService;
 import com.castlemock.service.core.system.input.GetSystemInformationInput;
 import com.castlemock.service.core.system.output.GetSystemInformationOutput;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 
 /**
  * The {@link GetSystemInformationService} is used to retrieve information about the system which
@@ -48,9 +46,6 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
 
     @Autowired
     private org.springframework.core.env.Environment springEnvironment;
-
-    @Autowired
-    private ObjectProvider<MongoProperties> mongoPropertiesProvider;
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -82,15 +77,6 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
         final org.springframework.core.env.Profiles fileProfiles =
                 org.springframework.core.env.Profiles.of(Profiles.FILE);
 
-        if (springEnvironment.acceptsProfiles(mongoProfiles)) {
-            com.castlemock.model.core.system.MongoProperties mongoProperties = mongoPropertiesProvider.stream().map(props ->
-                    new com.castlemock.model.core.system.MongoProperties(
-                            props.getHost(), props.getPort(), props.determineUri(),
-                            props.getMongoClientDatabase(), isMongoUsesUri(props)))
-                    .findFirst()
-                    .orElse(null);
-            builder = builder.mongoProperties(mongoProperties);
-        }
         builder = builder.showCastleMockHomeDirectory(springEnvironment.acceptsProfiles(mongoProfiles));
         builder = builder.showMongoProperties(springEnvironment.acceptsProfiles(fileProfiles));
         return createServiceResult(GetSystemInformationOutput.builder()
@@ -98,20 +84,4 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
                 .build());
     }
 
-    // see org.springframework.boot.autoconfigure.mongo.MongoClientFactory
-    private boolean isMongoUsesUri(MongoProperties mongoProperties) {
-        if (mongoProperties.getUri() != null) {
-            return true;
-        }
-        return !hasMongoCustomAddress(mongoProperties) && !hasMongoCustomCredentials(mongoProperties);
-    }
-
-    private boolean hasMongoCustomAddress(MongoProperties mongoProperties) {
-        return mongoProperties.getHost() != null || mongoProperties.getPort() != null;
-    }
-
-    private boolean hasMongoCustomCredentials(MongoProperties mongoProperties) {
-        return mongoProperties.getUsername() != null
-                && mongoProperties.getPassword() != null;
-    }
 }

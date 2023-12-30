@@ -46,17 +46,9 @@ public class RestHeaderQuery {
         return header;
     }
 
-    public void setHeader(String header) {
-        this.header = header;
-    }
-
     @XmlElement
     public String getQuery() {
         return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query;
     }
 
     @XmlElement
@@ -64,26 +56,14 @@ public class RestHeaderQuery {
         return matchCase;
     }
 
-    public void setMatchCase(boolean matchCase) {
-        this.matchCase = matchCase;
-    }
-
     @XmlElement
     public boolean getMatchAny() {
         return matchAny;
     }
 
-    public void setMatchAny(boolean matchAny) {
-        this.matchAny = matchAny;
-    }
-
     @XmlElement
     public boolean getMatchRegex() {
         return matchRegex;
-    }
-
-    public void setMatchRegex(boolean matchRegex) {
-        this.matchRegex = matchRegex;
     }
 
     @Override

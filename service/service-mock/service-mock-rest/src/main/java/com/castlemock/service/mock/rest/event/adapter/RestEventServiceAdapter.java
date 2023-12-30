@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The REST event service adapter provides the functionality to translate incoming
@@ -53,13 +54,11 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEvent> {
     @Override
     public List<RestEvent> readAll() {
         final ReadAllRestEventOutput output = serviceProcessor.process(ReadAllRestEventInput.builder().build());
-
-        for(RestEvent restEvent : output.getRestEvents()){
-            final String resourceLink = generateResourceLink(restEvent);
-            restEvent.setResourceLink(resourceLink);
-        }
-
-        return output.getRestEvents();
+        return output.getRestEvents().stream()
+                .map(event -> event.toBuilder()
+                        .resourceLink(generateResourceLink(event))
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Override

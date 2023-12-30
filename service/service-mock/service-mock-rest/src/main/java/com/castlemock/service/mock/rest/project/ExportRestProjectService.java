@@ -72,12 +72,13 @@ public class ExportRestProjectService extends AbstractRestProjectService impleme
             }
         }
 
-        final RestExportContainer exportContainer = new RestExportContainer();
-        exportContainer.setProject(project);
-        exportContainer.setApplications(applications);
-        exportContainer.setResources(resources);
-        exportContainer.setMethods(methods);
-        exportContainer.setMockResponses(mockResponses);
+        final RestExportContainer exportContainer = RestExportContainer.builder()
+                .project(project)
+                .applications(applications)
+                .resources(resources)
+                .methods(methods)
+                .mockResponses(mockResponses)
+                .build();
 
         final String serialized = ExportContainerSerializer.serialize(exportContainer);
         return createServiceResult(ExportRestProjectOutput.builder()

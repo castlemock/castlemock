@@ -84,8 +84,9 @@ public class SearchRestProjectServiceTest {
         Mockito.when(messageSource.getMessage("general.type.project", null, LocaleContextHolder.getLocale())).thenReturn("Project");
 
         final String query = "Query";
-        final SearchQuery searchQuery = new SearchQuery();
-        searchQuery.setQuery(query);
+        final SearchQuery searchQuery = SearchQuery.builder()
+                .query(query)
+                .build();
 
         final SearchRestProjectInput input = SearchRestProjectInput.builder().searchQuery(searchQuery).build();
         final ServiceTask<SearchRestProjectInput> serviceTask = ServiceTask.of(input, "user");

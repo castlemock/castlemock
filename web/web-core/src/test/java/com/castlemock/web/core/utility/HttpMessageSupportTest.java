@@ -173,16 +173,17 @@ public class HttpMessageSupportTest {
 
     @Test
     public void testBuildParameterUri(){
+        final HttpParameter parameter1 = HttpParameter.builder()
+                .name("Parameter1")
+                .value("Value1")
+                .build();
 
-        HttpParameter parameter1 = new HttpParameter();
-        parameter1.setName("Parameter1");
-        parameter1.setValue("Value1");
+        final HttpParameter parameter2 =HttpParameter.builder()
+                .name("Parameter2")
+                .value("Value2")
+                .build();
 
-        HttpParameter parameter2 = new HttpParameter();
-        parameter2.setName("Parameter2");
-        parameter2.setValue("Value2");
-
-        String uri = HttpMessageSupport.buildParameterUri(Arrays.asList(parameter1, parameter2));
+        final String uri = HttpMessageSupport.buildParameterUri(Arrays.asList(parameter1, parameter2));
 
         Assert.assertEquals("?Parameter1=Value1&Parameter2=Value2", uri);
     }

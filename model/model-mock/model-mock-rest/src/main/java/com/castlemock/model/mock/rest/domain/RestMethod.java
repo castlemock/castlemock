@@ -46,7 +46,7 @@ public class RestMethod {
     private Long networkDelay;
     private String defaultMockResponseId;
 
-    private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<RestMockResponse>();
+    private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<>();
     private String uri;
     private String defaultResponseName;
     private Boolean automaticForward;
@@ -80,17 +80,9 @@ public class RestMethod {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @XmlElement
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @XmlElement
@@ -98,26 +90,14 @@ public class RestMethod {
         return defaultBody;
     }
 
-    public void setDefaultBody(String defaultBody) {
-        this.defaultBody = defaultBody;
-    }
-
     @XmlElement
     public String getResourceId() {
         return resourceId;
     }
 
-    public void setResourceId(String resourceId) {
-        this.resourceId = resourceId;
-    }
-
     @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
-    }
-
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
     }
 
     @XmlElementWrapper(name = "mockResponses")
@@ -126,17 +106,9 @@ public class RestMethod {
         return mockResponses;
     }
 
-    public void setMockResponses(List<RestMockResponse> mockResponses) {
-        this.mockResponses = mockResponses;
-    }
-
     @XmlElement
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
-    }
-
-    public void setForwardedEndpoint(String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
     }
 
     @XmlElement
@@ -144,17 +116,9 @@ public class RestMethod {
         return status;
     }
 
-    public void setStatus(RestMethodStatus status) {
-        this.status = status;
-    }
-
     @XmlElement
     public RestResponseStrategy getResponseStrategy() {
         return responseStrategy;
-    }
-
-    public void setResponseStrategy(RestResponseStrategy responseStrategy) {
-        this.responseStrategy = responseStrategy;
     }
 
     @XmlElement
@@ -162,17 +126,9 @@ public class RestMethod {
         return currentResponseSequenceIndex;
     }
 
-    public void setCurrentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
-        this.currentResponseSequenceIndex = currentResponseSequenceIndex;
-    }
-
     @XmlElement
     public String getUri() {
         return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
     }
 
     @XmlElement
@@ -180,17 +136,9 @@ public class RestMethod {
         return simulateNetworkDelay;
     }
 
-    public void setSimulateNetworkDelay(boolean simulateNetworkDelay) {
-        this.simulateNetworkDelay = simulateNetworkDelay;
-    }
-
     @XmlElement
     public Long getNetworkDelay() {
         return networkDelay;
-    }
-
-    public void setNetworkDelay(long networkDelay) {
-        this.networkDelay = networkDelay;
     }
 
     @XmlElement
@@ -198,25 +146,13 @@ public class RestMethod {
         return defaultResponseName;
     }
 
-    public void setDefaultResponseName(String defaultResponseName) {
-        this.defaultResponseName = defaultResponseName;
-    }
-
     @XmlElement
     public String getDefaultMockResponseId() {
         return defaultMockResponseId;
     }
 
-    public void setDefaultMockResponseId(String defaultMockResponseId) {
-        this.defaultMockResponseId = defaultMockResponseId;
-    }
-
     public boolean getAutomaticForward() {
         return automaticForward;
-    }
-
-    public void setAutomaticForward(boolean automaticForward) {
-        this.automaticForward = automaticForward;
     }
 
     @Override
@@ -224,22 +160,7 @@ public class RestMethod {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RestMethod that = (RestMethod) o;
-        return automaticForward == that.automaticForward &&
-                simulateNetworkDelay == that.simulateNetworkDelay &&
-                networkDelay == that.networkDelay &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(resourceId, that.resourceId) &&
-                Objects.equals(defaultBody, that.defaultBody) &&
-                httpMethod == that.httpMethod &&
-                Objects.equals(forwardedEndpoint, that.forwardedEndpoint) &&
-                status == that.status &&
-                responseStrategy == that.responseStrategy &&
-                Objects.equals(currentResponseSequenceIndex, that.currentResponseSequenceIndex) &&
-                Objects.equals(defaultMockResponseId, that.defaultMockResponseId) &&
-                Objects.equals(mockResponses, that.mockResponses) &&
-                Objects.equals(uri, that.uri) &&
-                Objects.equals(defaultResponseName, that.defaultResponseName);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(resourceId, that.resourceId) && Objects.equals(defaultBody, that.defaultBody) && httpMethod == that.httpMethod && Objects.equals(forwardedEndpoint, that.forwardedEndpoint) && status == that.status && responseStrategy == that.responseStrategy && Objects.equals(currentResponseSequenceIndex, that.currentResponseSequenceIndex) && Objects.equals(simulateNetworkDelay, that.simulateNetworkDelay) && Objects.equals(networkDelay, that.networkDelay) && Objects.equals(defaultMockResponseId, that.defaultMockResponseId) && Objects.equals(mockResponses, that.mockResponses) && Objects.equals(uri, that.uri) && Objects.equals(defaultResponseName, that.defaultResponseName) && Objects.equals(automaticForward, that.automaticForward);
     }
 
     @Override
@@ -271,6 +192,26 @@ public class RestMethod {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public Builder toBuilder() {
+        return builder()
+                .id(this.id)
+                .name(this.name)
+                .automaticForward(this.automaticForward)
+                .simulateNetworkDelay(this.simulateNetworkDelay)
+                .networkDelay(this.networkDelay)
+                .resourceId(this.resourceId)
+                .defaultBody(this.defaultBody)
+                .responseStrategy(this.responseStrategy)
+                .status(this.status)
+                .httpMethod(this.httpMethod)
+                .mockResponses(this.mockResponses)
+                .forwardedEndpoint(this.forwardedEndpoint)
+                .currentResponseSequenceIndex(this.currentResponseSequenceIndex)
+                .defaultMockResponseId(this.defaultMockResponseId)
+                .defaultResponseName(this.defaultResponseName)
+                .uri(this.uri);
     }
 
     public static final class Builder {
@@ -347,11 +288,6 @@ public class RestMethod {
 
         public Builder networkDelay(final Long networkDelay) {
             this.networkDelay = networkDelay;
-            return this;
-        }
-
-        public Builder defaultQueryMockResponseId(final String defaultQueryMockResponseId) {
-            this.defaultQueryMockResponseId = defaultQueryMockResponseId;
             return this;
         }
 

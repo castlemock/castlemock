@@ -20,10 +20,6 @@ public class OverviewEvent extends Event {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public static Builder builder() {
         return new Builder();
     }

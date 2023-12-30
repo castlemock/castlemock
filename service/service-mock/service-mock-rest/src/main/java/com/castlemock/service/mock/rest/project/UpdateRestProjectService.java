@@ -46,10 +46,11 @@ public class UpdateRestProjectService extends AbstractRestProjectService impleme
         final UpdateRestProjectInput input = serviceTask.getInput();
         final String restProjectId = input.getProjectId();
         final RestProject restProject = find(restProjectId);
-        restProject.setName(input.getName());
-        restProject.setDescription(input.getDescription());
-        restProject.setUpdated(new Date());
-        final Optional<RestProject> updatedRestProject = update(restProjectId, restProject);
+        final Optional<RestProject> updatedRestProject = update(restProjectId, restProject.toBuilder()
+                .name(input.getName())
+                .description(input.getDescription())
+                .updated(new Date())
+                .build());
         return createServiceResult(UpdateRestProjectOutput.builder()
                 .updatedRestProject(updatedRestProject.orElse(null))
                 .build());

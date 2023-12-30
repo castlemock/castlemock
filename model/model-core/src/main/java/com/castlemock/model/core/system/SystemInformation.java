@@ -24,20 +24,19 @@ package com.castlemock.model.core.system;
  */
 public class SystemInformation {
 
-    private String operatingSystemName;
-    private String javaVersion;
-    private String javaVendor;
-    private String tomcatBuilt;
-    private String tomcatInfo;
-    private String tomcatVersion;
-    private long totalMemory;
-    private long maxMemory;
-    private long freeMemory;
-    private int availableProcessors;
-    private String castleMockHomeDirectory;
-    private boolean showCastleMockHomeDirectory;
-    private MongoProperties mongoProperties;
-    private boolean showMongoProperties;
+    private final String operatingSystemName;
+    private final String javaVersion;
+    private final String javaVendor;
+    private final String tomcatBuilt;
+    private final String tomcatInfo;
+    private final String tomcatVersion;
+    private final long totalMemory;
+    private final long maxMemory;
+    private final long freeMemory;
+    private final int availableProcessors;
+    private final String castleMockHomeDirectory;
+    private final boolean showCastleMockHomeDirectory;
+    private final boolean showMongoProperties;
 
     public SystemInformation(final Builder builder){
         this.operatingSystemName = builder.operatingSystemName;
@@ -52,7 +51,6 @@ public class SystemInformation {
         this.availableProcessors = builder.availableProcessors;
         this.castleMockHomeDirectory = builder.castleMockHomeDirectory;
         this.showCastleMockHomeDirectory = builder.showCastleMockHomeDirectory;
-        this.mongoProperties = builder.mongoProperties;
         this.showMongoProperties = builder.showMongoProperties;
     }
 
@@ -104,10 +102,6 @@ public class SystemInformation {
         return showCastleMockHomeDirectory;
     }
 
-    public MongoProperties getMongoProperties() {
-        return mongoProperties;
-    }
-
     public boolean isShowMongoProperties() {
         return showMongoProperties;
     }
@@ -129,79 +123,73 @@ public class SystemInformation {
         private int availableProcessors;
         private String castleMockHomeDirectory;
         private boolean showCastleMockHomeDirectory;
-        private MongoProperties mongoProperties;
         private boolean showMongoProperties;
 
         private Builder() {
         }
 
 
-        public Builder operatingSystemName(String operatingSystemName) {
+        public Builder operatingSystemName(final String operatingSystemName) {
             this.operatingSystemName = operatingSystemName;
             return this;
         }
 
-        public Builder javaVersion(String javaVersion) {
+        public Builder javaVersion(final String javaVersion) {
             this.javaVersion = javaVersion;
             return this;
         }
 
-        public Builder javaVendor(String javaVendor) {
+        public Builder javaVendor(final String javaVendor) {
             this.javaVendor = javaVendor;
             return this;
         }
 
-        public Builder tomcatBuilt(String tomcatBuilt) {
+        public Builder tomcatBuilt(final String tomcatBuilt) {
             this.tomcatBuilt = tomcatBuilt;
             return this;
         }
 
-        public Builder tomcatInfo(String tomcatInfo) {
+        public Builder tomcatInfo(final String tomcatInfo) {
             this.tomcatInfo = tomcatInfo;
             return this;
         }
 
-        public Builder tomcatVersion(String tomcatVersion) {
+        public Builder tomcatVersion(final String tomcatVersion) {
             this.tomcatVersion = tomcatVersion;
             return this;
         }
 
-        public Builder totalMemory(long totalMemory) {
+        public Builder totalMemory(final long totalMemory) {
             this.totalMemory = totalMemory;
             return this;
         }
 
-        public Builder maxMemory(long maxMemory) {
+        public Builder maxMemory(final long maxMemory) {
             this.maxMemory = maxMemory;
             return this;
         }
 
-        public Builder freeMemory(long freeMemory) {
+        public Builder freeMemory(final long freeMemory) {
             this.freeMemory = freeMemory;
             return this;
         }
 
-        public Builder availableProcessors(int availableProcessors) {
+        public Builder availableProcessors(final int availableProcessors) {
             this.availableProcessors = availableProcessors;
             return this;
         }
 
-        public Builder castleMockHomeDirectory(String castleMockHomeDirectory) {
+        public Builder castleMockHomeDirectory(final String castleMockHomeDirectory) {
             this.castleMockHomeDirectory = castleMockHomeDirectory;
             return this;
         }
 
-        public Builder showCastleMockHomeDirectory(boolean showCastleMockHomeDirectory) {
+        public Builder showCastleMockHomeDirectory(final boolean showCastleMockHomeDirectory) {
             this.showCastleMockHomeDirectory = showCastleMockHomeDirectory;
             return this;
         }
 
-        public Builder mongoProperties(MongoProperties mongoProperties) {
-            this.mongoProperties = mongoProperties;
-            return this;
-        }
-
-        public Builder showMongoProperties(boolean showMongoProperties) {
+        public Builder showMongoProperties(final boolean showMongoProperties) {
             this.showMongoProperties = showMongoProperties;
             return this;
         }

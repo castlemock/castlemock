@@ -38,10 +38,6 @@ public class RestJsonPathExpression {
         return expression;
     }
 
-    public void setExpression(String expression) {
-        this.expression = expression;
-    }
-
     public Builder toBuilder(){
         return builder()
                 .expression(expression);

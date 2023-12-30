@@ -17,7 +17,8 @@
 package com.castlemock.service.core.user.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.user.User;
+import com.castlemock.model.core.user.Role;
+import com.castlemock.model.core.user.Status;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.user.output.UpdateUserOutput;
 
@@ -32,41 +33,105 @@ import java.util.Objects;
 public final class UpdateUserInput implements Input {
 
     @NotNull
-    private final String userId;
+    private final String id;
     @NotNull
-    private final User user;
+    private final String username;
+    @NotNull
+    private final String password;
+    private final String email;
+    private final String fullName;
+    @NotNull
+    private final Status status;
+    @NotNull
+    private final Role role;
 
     public UpdateUserInput(final Builder builder) {
-        this.userId = Objects.requireNonNull(builder.userId);
-        this.user = Objects.requireNonNull(builder.user);
+        this.id = Objects.requireNonNull(builder.id, "id");
+        this.username = Objects.requireNonNull(builder.username, "username");
+        this.password = Objects.requireNonNull(builder.password, "password");
+        this.email = builder.email;
+        this.fullName = builder.fullName;
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.role = Objects.requireNonNull(builder.role, "role");
     }
 
-    public String getUserId() {
-        return userId;
+    public String getId() {
+        return id;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public static Builder builder() {
         return new Builder();
     }
 
+
     public static final class Builder {
-        private String userId;
-        private User user;
+        private String id;
+        private String username;
+        private String password;
+        private String email;
+        private String fullName;
+        private Status status;
+        private Role role;
 
         private Builder() {
         }
 
-        public Builder userId(final String userId) {
-            this.userId = userId;
+        public Builder id(String id) {
+            this.id = id;
             return this;
         }
 
-        public Builder user(final User user) {
-            this.user = user;
+        public Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder fullName(String fullName) {
+            this.fullName = fullName;
+            return this;
+        }
+
+        public Builder status(Status status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder role(Role role) {
+            this.role = role;
             return this;
         }
 

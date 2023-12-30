@@ -118,18 +118,19 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
                 "Role: " + user.getRole() + " -> " + updatedUser.getRole() + "\n" +
                 "Updated: " + user.getUpdated() + " -> " + updatedTimestamp);
 
-        user.setId(userId);
-        user.setUsername(updatedUser.getUsername());
-        user.setEmail(updatedUser.getEmail());
-        user.setStatus(updatedUser.getStatus());
-        user.setRole(updatedUser.getRole());
-        user.setFullName(updatedUser.getFullName());
-        user.setUpdated(updatedTimestamp);
+        final User.Builder userBuilder = user.toBuilder()
+                .id(userId)
+                .username(updatedUser.getUsername())
+                .email(updatedUser.getEmail())
+                .status(updatedUser.getStatus())
+                .role(updatedUser.getRole())
+                .fullName(updatedUser.getFullName())
+                .updated(updatedTimestamp);
 
         if(updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()){
-            user.setPassword(PASSWORD_ENCODER.encode(updatedUser.getPassword()));
+            userBuilder.password((PASSWORD_ENCODER.encode(updatedUser.getPassword())));
         }
-        User savedUser = super.save(user);
+        final User savedUser = super.save(userBuilder.build());
         sessionTokenRepository.updateToken(oldUsername, user.getUsername());
         return Optional.of(savedUser);
     }

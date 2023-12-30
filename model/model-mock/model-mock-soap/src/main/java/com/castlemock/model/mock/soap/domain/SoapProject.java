@@ -108,6 +108,18 @@ public class SoapProject extends Project {
         return new Builder();
     }
 
+    public Builder toBuilder() {
+        return builder()
+                .id(id)
+                .name(name)
+                .created(created)
+                .updated(updated)
+                .description(description)
+                .ports(ports)
+                .resources(resources)
+                .statusCount(statusCount);
+    }
+
     public static final class Builder extends Project.Builder<Builder> {
 
         private List<SoapPort> ports = new CopyOnWriteArrayList<SoapPort>();

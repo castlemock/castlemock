@@ -93,9 +93,9 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
         final SoapProject projectInDatebase = repository.findSoapProjectWithName(project.getName())
                         .orElse(null);
         Preconditions.checkArgument(projectInDatebase == null, "Project name is already taken");
-        project.setUpdated(new Date());
-        project.setCreated(new Date());
-        return super.save(project);
+        return super.save(project.toBuilder()
+                .updated(new Date())
+                .created(new Date()).build());
     }
 
     /**
@@ -113,9 +113,10 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
                 .orElse(null);
         Preconditions.checkArgument(projectWithName == null || projectWithName.getId().equals(soapProjectId), "Project name is already taken");
         final SoapProject project = find(soapProjectId);
-        project.setName(updatedProject.getName());
-        project.setDescription(updatedProject.getDescription());
-        return Optional.of(super.save(project));
+        return Optional.of(super.save(project.toBuilder()
+                .name(updatedProject.getName())
+                .description(updatedProject.getDescription())
+                .build()));
     }
 
 }

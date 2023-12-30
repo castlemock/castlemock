@@ -22,6 +22,8 @@ import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMethodTestBuilder;
+import com.castlemock.model.mock.rest.domain.RestMockResponse;
+import com.castlemock.model.mock.rest.domain.RestMockResponseTestBuilder;
 import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.model.mock.rest.domain.RestResourceTestBuilder;
 import com.castlemock.repository.rest.project.RestMethodRepository;
@@ -67,17 +69,23 @@ public class IdentifyRestMethodServiceTest {
 
     @Test
     public void testProcess(){
+        final RestMockResponse restMockResponse1 = RestMockResponseTestBuilder.builder()
+                .build();
+
         final RestMethod restMethod1 = RestMethodTestBuilder.builder()
                 .resourceId("Resource1")
                 .httpMethod(HttpMethod.POST)
+                .mockResponses(List.of(restMockResponse1))
                 .build();
         final RestMethod restMethod2 = RestMethodTestBuilder.builder()
                 .resourceId("Resource1")
                 .httpMethod(HttpMethod.GET)
+                .mockResponses(List.of(restMockResponse1))
                 .build();
         final RestMethod restMethod3 = RestMethodTestBuilder.builder()
                 .resourceId("Resource1")
                 .httpMethod(HttpMethod.PUT)
+                .mockResponses(List.of(restMockResponse1))
                 .build();
         final RestResource restResource1 = RestResourceTestBuilder.builder()
                 .id("Resource1")
@@ -108,7 +116,7 @@ public class IdentifyRestMethodServiceTest {
         Mockito.when(methodRepository.findWithResourceId(restResource2.getId()))
                 .thenReturn(Arrays.asList(restMethod4, restMethod5));
 
-        Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
+        Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(List.of(restMockResponse1));
 
         final IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
@@ -237,6 +245,9 @@ public class IdentifyRestMethodServiceTest {
 
     @Test
     public void testVariableProcess1(){
+        final RestMockResponse restMockResponse1 = RestMockResponseTestBuilder.builder()
+                .build();
+
         final RestResource restResource1 = RestResourceTestBuilder.builder()
                 .id("Resource1")
                 .uri("/user/{test}")
@@ -244,6 +255,7 @@ public class IdentifyRestMethodServiceTest {
         final RestMethod restMethod1 = RestMethodTestBuilder.builder()
                 .resourceId("Resource1")
                 .httpMethod(HttpMethod.GET)
+                .mockResponses(List.of(restMockResponse1))
                 .build();
         final RestResource restResource2 = RestResourceTestBuilder.builder()
                 .id("Resource2")
@@ -252,14 +264,15 @@ public class IdentifyRestMethodServiceTest {
         final RestMethod restMethod2 = RestMethodTestBuilder.builder()
                 .resourceId("Resource2")
                 .httpMethod(HttpMethod.POST)
+                .mockResponses(List.of(restMockResponse1))
                 .build();
 
         Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1, restResource2));
 
-        Mockito.when(methodRepository.findWithResourceId(restResource1.getId())).thenReturn(Arrays.asList(restMethod1));
-        Mockito.when(methodRepository.findWithResourceId(restResource2.getId())).thenReturn(Arrays.asList(restMethod2));
+        Mockito.when(methodRepository.findWithResourceId(restResource1.getId())).thenReturn(List.of(restMethod1));
+        Mockito.when(methodRepository.findWithResourceId(restResource2.getId())).thenReturn(List.of(restMethod2));
 
-        Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
+        Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(List.of(restMockResponse1));
 
         final IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
@@ -286,6 +299,9 @@ public class IdentifyRestMethodServiceTest {
 
     @Test
     public void testVariableProcess2(){
+        final RestMockResponse restMockResponse1 = RestMockResponseTestBuilder.builder()
+                .build();
+
         final RestResource restResource1 = RestResourceTestBuilder.builder()
                 .id("Resource1")
                 .uri("/user/{variable}.json")
@@ -293,6 +309,7 @@ public class IdentifyRestMethodServiceTest {
         final RestMethod restMethod1 = RestMethodTestBuilder.builder()
                 .resourceId("Resource1")
                 .httpMethod(HttpMethod.GET)
+                .mockResponses(List.of(restMockResponse1))
                 .build();
 
         final RestResource restResource2 = RestResourceTestBuilder.builder()
@@ -302,6 +319,7 @@ public class IdentifyRestMethodServiceTest {
         final RestMethod restMethod2 = RestMethodTestBuilder.builder()
                 .resourceId("Resource2")
                 .httpMethod(HttpMethod.GET)
+                .mockResponses(List.of(restMockResponse1))
                 .build();
 
         final RestResource restResource3 = RestResourceTestBuilder.builder()
@@ -319,7 +337,7 @@ public class IdentifyRestMethodServiceTest {
         Mockito.when(methodRepository.findWithResourceId(restResource2.getId())).thenReturn(Collections.singletonList(restMethod2));
         Mockito.when(methodRepository.findWithResourceId(restResource3.getId())).thenReturn(Collections.singletonList(restMethod3));
 
-        Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
+        Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(List.of(restMockResponse1));
 
         final IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")
@@ -357,9 +375,13 @@ public class IdentifyRestMethodServiceTest {
 
     @Test
     public void testProcessSamePath(){
+        final RestMockResponse restMockResponse1 = RestMockResponseTestBuilder.builder()
+                .build();
+
         final RestMethod restMethod1 = RestMethodTestBuilder.builder()
                 .resourceId("Resource1")
                 .httpMethod(HttpMethod.GET)
+                .mockResponses(List.of(restMockResponse1))
                 .build();
         final RestResource restResource1 = RestResourceTestBuilder.builder()
                 .id("Resource1")
@@ -380,7 +402,7 @@ public class IdentifyRestMethodServiceTest {
         Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1, restResource2));
         Mockito.when(methodRepository.findWithResourceId(restResource1.getId())).thenReturn(Collections.singletonList(restMethod1));
         Mockito.when(methodRepository.findWithResourceId(restResource2.getId())).thenReturn(Collections.singletonList(restMethod2));
-        Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(new ArrayList<>());
+        Mockito.when(mockResponseRepository.findWithMethodId(Mockito.anyString())).thenReturn(List.of(restMockResponse1));
 
         final IdentifyRestMethodInput input1 = IdentifyRestMethodInput.builder()
                 .restProjectId("RestProjectId")

@@ -9,7 +9,6 @@ public final class SystemInformationTestBuilder {
     public static SystemInformation.Builder builder() {
         return SystemInformation.builder()
                 .operatingSystemName("Linux")
-                .mongoProperties(null)
                 .showMongoProperties(false)
                 .showCastleMockHomeDirectory(true)
                 .tomcatInfo("Tomcat")

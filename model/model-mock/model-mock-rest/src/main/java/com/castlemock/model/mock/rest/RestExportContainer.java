@@ -42,25 +42,21 @@ public class RestExportContainer extends ExportContainer {
     private List<RestMethod> methods;
     private List<RestMockResponse> mockResponses;
 
-    public RestExportContainer(){
+    private RestExportContainer(){
 
     }
 
     private RestExportContainer(final Builder builder){
-        this.project = Objects.requireNonNull(builder.project);
-        this.applications = Objects.requireNonNull(builder.applications);
-        this.resources = Objects.requireNonNull(builder.resources);
-        this.methods = Objects.requireNonNull(builder.methods);
-        this.mockResponses = Objects.requireNonNull(builder.mockResponses);
+        this.project = Objects.requireNonNull(builder.project, "project");
+        this.applications = Objects.requireNonNull(builder.applications, "applications");
+        this.resources = Objects.requireNonNull(builder.resources, "resources");
+        this.methods = Objects.requireNonNull(builder.methods, "methods");
+        this.mockResponses = Objects.requireNonNull(builder.mockResponses, "mockResponses");
     }
 
     @XmlElement
     public RestProject getProject() {
         return project;
-    }
-
-    public void setProject(RestProject project) {
-        this.project = project;
     }
 
     @XmlElementWrapper(name = "applications")
@@ -69,18 +65,10 @@ public class RestExportContainer extends ExportContainer {
         return applications;
     }
 
-    public void setApplications(List<RestApplication> applications) {
-        this.applications = applications;
-    }
-
     @XmlElementWrapper(name = "resources")
     @XmlElement(name = "resource")
     public List<RestResource> getResources() {
         return resources;
-    }
-
-    public void setResources(List<RestResource> resources) {
-        this.resources = resources;
     }
 
     @XmlElementWrapper(name = "methods")
@@ -89,30 +77,20 @@ public class RestExportContainer extends ExportContainer {
         return methods;
     }
 
-    public void setMethods(List<RestMethod> methods) {
-        this.methods = methods;
-    }
-
     @XmlElementWrapper(name = "mockResponses")
     @XmlElement(name = "mockResponse")
     public List<RestMockResponse> getMockResponses() {
         return mockResponses;
     }
 
-    public void setMockResponses(List<RestMockResponse> mockResponses) {
-        this.mockResponses = mockResponses;
-    }
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (!(o instanceof RestExportContainer)) return false;
-        RestExportContainer that = (RestExportContainer) o;
-        return Objects.equals(project, that.project) &&
-                Objects.equals(applications, that.applications) &&
-                Objects.equals(resources, that.resources) &&
-                Objects.equals(methods, that.methods) &&
-                Objects.equals(mockResponses, that.mockResponses);
+        if (o == null || getClass() != o.getClass()) return false;
+        final RestExportContainer that = (RestExportContainer) o;
+        return Objects.equals(project, that.project) && Objects.equals(applications, that.applications)
+                && Objects.equals(resources, that.resources) && Objects.equals(methods, that.methods)
+                && Objects.equals(mockResponses, that.mockResponses);
     }
 
     @Override

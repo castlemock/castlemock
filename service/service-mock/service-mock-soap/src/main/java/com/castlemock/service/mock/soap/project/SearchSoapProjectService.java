@@ -86,48 +86,53 @@ public class SearchSoapProjectService extends AbstractSoapProjectService impleme
         final String responseType = messageSource.getMessage("soap.type.mockresponse", null , LocaleContextHolder.getLocale());
 
         projects.forEach(project -> {
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(project.getName());
-            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + project.getId());
-            searchResult.setDescription(SOAP_TYPE + COMMA + projectType);
+            final SearchResult searchResult = SearchResult.builder()
+                    .title(project.getName())
+                    .link(SOAP + SLASH + PROJECT + SLASH + project.getId())
+                    .description(SOAP_TYPE + COMMA + projectType)
+                    .build();
             searchResults.add(searchResult);
         });
 
         ports.forEach(port -> {
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(port.getName());
-            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + port.getProjectId() + SLASH + PORT + SLASH + port.getId());
-            searchResult.setDescription(SOAP_TYPE + COMMA + portType);
+            final SearchResult searchResult = SearchResult.builder()
+                    .title(port.getName())
+                    .link(SOAP + SLASH + PROJECT + SLASH + port.getProjectId() + SLASH + PORT + SLASH + port.getId())
+                    .description(SOAP_TYPE + COMMA + portType)
+                    .build();
             searchResults.add(searchResult);
         });
 
         resources.forEach(resource -> {
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(resource.getName());
-            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + resource.getProjectId() + SLASH + RESOURCE + SLASH + resource.getId());
-            searchResult.setDescription(SOAP_TYPE + COMMA + resourceType);
+            final SearchResult searchResult = SearchResult.builder()
+                    .title(resource.getName())
+                    .link(SOAP + SLASH + PROJECT + SLASH + resource.getProjectId() + SLASH + RESOURCE + SLASH + resource.getId())
+                    .description(SOAP_TYPE + COMMA + resourceType)
+                    .build();
             searchResults.add(searchResult);
         });
 
         operations.forEach(operation -> {
             final String projectId = this.portRepository.getProjectId(operation.getPortId());
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(operation.getName());
-            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + projectId + SLASH + PORT +
-                    SLASH + operation.getPortId() + SLASH + OPERATION + SLASH + operation.getId());
-            searchResult.setDescription(SOAP_TYPE + COMMA + operationType);
+            final SearchResult searchResult = SearchResult.builder()
+                    .title(operation.getName())
+                    .link(SOAP + SLASH + PROJECT + SLASH + projectId + SLASH + PORT +
+                            SLASH + operation.getPortId() + SLASH + OPERATION + SLASH + operation.getId())
+                    .description(SOAP_TYPE + COMMA + operationType)
+                    .build();
             searchResults.add(searchResult);
         });
 
         mockResponses.forEach(mockResponse -> {
             final String portId = this.operationRepository.getPortId(mockResponse.getOperationId());
             final String projectId = this.portRepository.getProjectId(portId);
-            final SearchResult searchResult = new SearchResult();
-            searchResult.setTitle(mockResponse.getName());
-            searchResult.setLink(SOAP + SLASH + PROJECT + SLASH + projectId + SLASH + PORT +
-                    SLASH + portId + SLASH + OPERATION + SLASH + mockResponse.getOperationId() +
-                    SLASH + RESPONSE + SLASH + mockResponse.getId());
-            searchResult.setDescription(SOAP_TYPE + COMMA + responseType);
+            final SearchResult searchResult = SearchResult.builder()
+                    .title(mockResponse.getName())
+                    .link(SOAP + SLASH + PROJECT + SLASH + projectId + SLASH + PORT +
+                            SLASH + portId + SLASH + OPERATION + SLASH + mockResponse.getOperationId() +
+                            SLASH + RESPONSE + SLASH + mockResponse.getId())
+                    .description(SOAP_TYPE + COMMA + responseType)
+                    .build();
             searchResults.add(searchResult);
         });
 

@@ -24,17 +24,9 @@ public class RestParameterQueryMatch {
         return query;
     }
 
-    public void setQuery(RestParameterQuery query) {
-        this.query = query;
-    }
-
     @XmlElement
     public String getMatch() {
         return match;
-    }
-
-    public void setMatch(String match) {
-        this.match = match;
     }
 
     @Override

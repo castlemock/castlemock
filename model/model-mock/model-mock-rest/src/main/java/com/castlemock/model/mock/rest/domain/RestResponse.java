@@ -57,17 +57,9 @@ public class RestResponse {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
     @XmlElement
     public String getMockResponseName() {
         return mockResponseName;
-    }
-
-    public void setMockResponseName(String mockResponseName) {
-        this.mockResponseName = mockResponseName;
     }
 
     @XmlElement
@@ -75,17 +67,9 @@ public class RestResponse {
         return httpStatusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
-    }
-
     @XmlElement
     public String getContentType() {
         return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 
     @XmlElementWrapper(name = "httpHeaders")
@@ -94,18 +78,10 @@ public class RestResponse {
         return httpHeaders;
     }
 
-    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
-        this.httpHeaders = httpHeaders;
-    }
-
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
-    }
-
-    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
-        this.contentEncodings = contentEncodings;
     }
 
     @Override

@@ -75,17 +75,9 @@ public class RestMockResponse {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @XmlElement
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @XmlElement
@@ -93,17 +85,9 @@ public class RestMockResponse {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
     @XmlElement
     public String getMethodId() {
         return methodId;
-    }
-
-    public void setMethodId(String methodId) {
-        this.methodId = methodId;
     }
 
     @XmlElement
@@ -111,26 +95,14 @@ public class RestMockResponse {
         return status;
     }
 
-    public void setStatus(RestMockResponseStatus status) {
-        this.status = status;
-    }
-
     @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
-    }
-
     @XmlElement
     public boolean isUsingExpressions() {
         return usingExpressions;
-    }
-
-    public void setUsingExpressions(boolean usingExpressions) {
-        this.usingExpressions = usingExpressions;
     }
 
     @XmlElementWrapper(name = "httpHeaders")
@@ -139,18 +111,10 @@ public class RestMockResponse {
         return httpHeaders;
     }
 
-    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
-        this.httpHeaders = httpHeaders;
-    }
-
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
-    }
-
-    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
-        this.contentEncodings = contentEncodings;
     }
 
     @XmlElementWrapper(name = "parameterQueries")
@@ -159,21 +123,11 @@ public class RestMockResponse {
         return parameterQueries;
     }
 
-    public void setParameterQueries(List<RestParameterQuery> parameterQueries) {
-        this.parameterQueries = parameterQueries;
-    }
-
-
     @XmlElementWrapper(name = "xpathExpressions")
     @XmlElement(name = "xpathExpression")
     public List<RestXPathExpression> getXpathExpressions() {
         return xpathExpressions;
     }
-
-    public void setXpathExpressions(List<RestXPathExpression> xpathExpressions) {
-        this.xpathExpressions = xpathExpressions;
-    }
-
 
     @XmlElementWrapper(name = "jsonPathExpressions")
     @XmlElement(name = "jsonPathExpression")
@@ -181,18 +135,10 @@ public class RestMockResponse {
         return jsonPathExpressions;
     }
 
-    public void setJsonPathExpressions(List<RestJsonPathExpression> jsonPathExpressions) {
-        this.jsonPathExpressions = jsonPathExpressions;
-    }
-
     @XmlElementWrapper(name = "headerQueries")
     @XmlElement(name = "headerQuery")
     public List<RestHeaderQuery> getHeaderQueries() {
         return headerQueries;
-    }
-
-    public void setHeaderQueries(List<RestHeaderQuery> headerQueries) {
-        this.headerQueries = headerQueries;
     }
 
     @Override
