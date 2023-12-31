@@ -38,11 +38,11 @@ public class SoapResource {
     }
 
     private SoapResource(final Builder builder){
-        this.id = Objects.requireNonNull(builder.id);
-        this.name = Objects.requireNonNull(builder.name);
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.content = Objects.requireNonNull(builder.content);
-        this.type = Objects.requireNonNull(builder.type);
+        this.id = Objects.requireNonNull(builder.id, "id");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.content = builder.content;
+        this.type = Objects.requireNonNull(builder.type, "type");
     }
 
     @XmlElement
@@ -50,17 +50,9 @@ public class SoapResource {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @XmlElement
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @XmlElement
@@ -68,17 +60,9 @@ public class SoapResource {
         return type;
     }
 
-    public void setType(SoapResourceType type) {
-        this.type = type;
-    }
-
     @XmlElement
     public String getProjectId() {
         return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
     }
 
     @XmlElement
@@ -86,12 +70,17 @@ public class SoapResource {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public static Builder builder() {
         return new Builder();
+    }
+
+    public Builder toBuilder() {
+        return builder()
+                .id(this.id)
+                .name(this.name)
+                .projectId(this.projectId)
+                .content(this.content)
+                .type(this.type);
     }
 
     public static final class Builder {

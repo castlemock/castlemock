@@ -19,6 +19,7 @@ package com.castlemock.service.mock.soap.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapPort;
@@ -72,19 +73,22 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
 
         for(SoapPortConverterResult result : results){
             for(SoapPort newSoapPort : result.getPorts()){
-                newSoapPort.setProjectId(soapProjectId);
-                SoapPort existingSoapPort = this.portRepository.findWithName(soapProjectId, newSoapPort.getName())
+                final SoapPort existingSoapPort = this.portRepository.findWithName(soapProjectId, newSoapPort.getName())
                         .orElse(null);
 
                 if(existingSoapPort == null){
-                    SoapPort savedSoapPort = this.portRepository.save(newSoapPort);
+                    final SoapPort savedSoapPort = this.portRepository.save(newSoapPort.toBuilder()
+                            .projectId(soapProjectId)
+                            .build());
 
                     for(SoapOperation soapOperation : newSoapPort.getOperations()){
-                        soapOperation.setPortId(savedSoapPort.getId());
-                        SoapOperation savedSoapOperation = this.operationRepository.save(soapOperation);
+                        final SoapOperation savedSoapOperation = this.operationRepository.save(soapOperation.toBuilder()
+                                .portId(savedSoapPort.getId())
+                                .build());
                         for(SoapMockResponse soapMockResponse : soapOperation.getMockResponses()){
-                            soapMockResponse.setOperationId(savedSoapOperation.getId());
-                            this.mockResponseRepository.save(soapMockResponse);
+                            this.mockResponseRepository.save(soapMockResponse.toBuilder()
+                                    .operationId(savedSoapOperation.getId())
+                                    .build());
                         }
                     }
 
@@ -92,20 +96,24 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                 }
 
                 for(SoapOperation newSoapOperation : newSoapPort.getOperations()){
-                    SoapOperation existingSoapOperation =
+                    final SoapOperation existingSoapOperation =
                             this.operationRepository.findWithName(existingSoapPort.getId(), newSoapOperation.getName())
                                     .orElse(null);
 
                     if(existingSoapOperation != null){
-                        existingSoapOperation.setOriginalEndpoint(newSoapOperation.getOriginalEndpoint());
-                        existingSoapOperation.setSoapVersion(newSoapOperation.getSoapVersion());
-                        this.operationRepository.update(existingSoapOperation.getId(), existingSoapOperation);
+                        this.operationRepository.update(existingSoapOperation.getId(), existingSoapOperation
+                                .toBuilder()
+                                .originalEndpoint(newSoapOperation.getOriginalEndpoint())
+                                .soapVersion(newSoapOperation.getSoapVersion())
+                                .build());
                     } else {
-                        newSoapOperation.setPortId(existingSoapPort.getId());
-                        SoapOperation savedSoapOperation = this.operationRepository.save(newSoapOperation);
+                        final SoapOperation savedSoapOperation = this.operationRepository.save(newSoapOperation.toBuilder()
+                                .portId(existingSoapPort.getId())
+                                .build());
                         for(SoapMockResponse soapMockResponse : newSoapOperation.getMockResponses()){
-                            soapMockResponse.setOperationId(savedSoapOperation.getId());
-                            this.mockResponseRepository.save(soapMockResponse);
+                            this.mockResponseRepository.save(soapMockResponse.toBuilder()
+                                    .operationId(savedSoapOperation.getId())
+                                    .build());
                         }
                     }
                 }
@@ -121,6 +129,7 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
 
         for(SoapPortConverterResult result : results){
             final SoapResource soapResource = SoapResource.builder()
+                    .id(IdUtility.generateId())
                     .projectId(soapProjectId)
                     .name(result.getName())
                     .type(result.getResourceType())

@@ -86,8 +86,9 @@ public class SoapResourceRestController extends AbstractRestController {
                         .projectId(projectId)
                         .resourceId(soapResource.getId())
                         .build());
-        soapResource.setContent(loadOutput.getResource());
-        return ResponseEntity.ok(soapResource);
+        return ResponseEntity.ok(soapResource.toBuilder()
+                .content(loadOutput.getResource())
+                .build());
     }
 
     @Operation(summary =  "Get SOAP resource content")

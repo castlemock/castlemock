@@ -46,9 +46,10 @@ public class ReadSoapPortService extends AbstractSoapProjectService implements S
         final ReadSoapPortInput input = serviceTask.getInput();
         final SoapPort soapPort = this.portRepository.findOne(input.getPortId());
         final List<SoapOperation> operations = this.operationRepository.findWithPortId(input.getPortId());
-        soapPort.setOperations(operations);
         return createServiceResult(ReadSoapPortOutput.builder()
-                .port(soapPort)
+                .port(soapPort.toBuilder()
+                        .operations(operations)
+                        .build())
                 .build());
     }
 }

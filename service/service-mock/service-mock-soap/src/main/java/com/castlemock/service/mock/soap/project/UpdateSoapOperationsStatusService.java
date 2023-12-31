@@ -41,8 +41,10 @@ public class UpdateSoapOperationsStatusService extends AbstractSoapProjectServic
     @Override
     public ServiceResult<UpdateSoapOperationsStatusOutput> process(final ServiceTask<UpdateSoapOperationsStatusInput> serviceTask) {
         final UpdateSoapOperationsStatusInput input = serviceTask.getInput();
-        final SoapOperation soapOperation = this.operationRepository.findOne(input.getOperationId());
-        soapOperation.setStatus(input.getOperationStatus());
+        final SoapOperation soapOperation = this.operationRepository.findOne(input.getOperationId())
+                .toBuilder()
+                .status(input.getOperationStatus())
+                .build();
         this.operationRepository.update(input.getOperationId(), soapOperation);
         return createServiceResult(UpdateSoapOperationsStatusOutput.builder().build());
     }

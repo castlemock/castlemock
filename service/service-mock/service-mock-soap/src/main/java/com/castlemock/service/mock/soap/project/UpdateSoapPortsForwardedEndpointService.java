@@ -45,10 +45,10 @@ public class UpdateSoapPortsForwardedEndpointService extends AbstractSoapProject
         input.getPortIds().stream()
                 .map(portId -> this.operationRepository.findWithPortId(portId))
                 .flatMap(List::stream)
-                .forEach(operation -> {
-                    operation.setForwardedEndpoint(input.getForwardedEndpoint());
-                    this.operationRepository.update(operation.getId(), operation);
-                });
+                .map(operation -> operation.toBuilder()
+                        .forwardedEndpoint(input.getForwardedEndpoint())
+                        .build())
+                .forEach(operation -> this.operationRepository.update(operation.getId(), operation));
         return createServiceResult(UpdateSoapPortsForwardedEndpointOutput.builder().build());
     }
 }

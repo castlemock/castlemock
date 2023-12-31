@@ -58,28 +58,12 @@ public class SoapEvent extends Event {
     }
 
     /**
-     * Sets a new value to the SOAP request variable
-     * @param request The new SOAP request variable
-     */
-    public void setRequest(SoapRequest request) {
-        this.request = request;
-    }
-
-    /**
      * Returns the SOAP response variable
      * @return The SOAP response variable. The SOAP response will be null if the event has not yet finished
      */
     @XmlElement
     public SoapResponse getResponse() {
         return response;
-    }
-
-    /**
-     * Set a new value to the Soap response variable
-     * @param response The new SOAP response value
-     */
-    public void setResponse(SoapResponse response) {
-        this.response = response;
     }
 
     /**
@@ -92,14 +76,6 @@ public class SoapEvent extends Event {
     }
 
     /**
-     * Set a new value to the SOAP operation id
-     * @param operationId The new value to the SOAP operation id
-     */
-    public void setOperationId(String operationId) {
-        this.operationId = operationId;
-    }
-
-    /**
      * The SOAP project id is used to identify the project for which the
      * event spans from
      * @return The id of the project which the event affected
@@ -109,13 +85,6 @@ public class SoapEvent extends Event {
         return projectId;
     }
 
-    /**
-     * Set a new value to the SOAP project id
-     * @param projectId The new SOAP project id
-     */
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
 
     /**
      * The SOAP port id is used to identify the port for which the
@@ -127,25 +96,8 @@ public class SoapEvent extends Event {
         return portId;
     }
 
-    /**
-     * Sets a new value to the SOAP port id
-     * @param portId The new SOAP port id
-     */
-    public void setPortId(final String portId) {
-        this.portId = portId;
-    }
-
     public static Builder builder() {
         return new Builder();
-    }
-
-    public static Builder toBuilder(final Event event) {
-        return builder()
-                .id(event.getId())
-                .startDate(event.getStartDate())
-                .endDate(event.getEndDate())
-                .resourceLink(event.getResourceLink())
-                .resourceName(event.getResourceName());
     }
 
     public Builder toBuilder() {

@@ -70,7 +70,9 @@ public class UpdateSoapPortsForwardedEndpointServiceTest {
         final ServiceResult<UpdateSoapPortsForwardedEndpointOutput> result = service.process(serviceTask);
 
         Mockito.verify(operationRepository, Mockito.times(1)).findWithPortId(port.getId());
-        Mockito.verify(operationRepository, Mockito.times(1)).update(operation.getId(), operation);
+        Mockito.verify(operationRepository, Mockito.times(1)).update(operation.getId(), operation.toBuilder()
+                .forwardedEndpoint("Forward Endpoint")
+                .build());
 
     }
 }

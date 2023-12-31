@@ -18,6 +18,7 @@ package com.castlemock.model.mock.soap.domain;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -29,12 +30,12 @@ public enum SoapVersion {
 
     SOAP11("SOAP 1.1", "text/xml"), SOAP12("SOAP 1.2", "application/soap+xml");
 
-    private String name;
-    private String contextType;
+    private final String name;
+    private final String contextType;
 
-    private SoapVersion(final String name, final String contextType){
-        this.name = name;
-        this.contextType = contextType;
+    SoapVersion(final String name, final String contextType){
+        this.name = Objects.requireNonNull(name, "name");
+        this.contextType = Objects.requireNonNull(contextType, "contextType");
     }
 
     public String getName() {

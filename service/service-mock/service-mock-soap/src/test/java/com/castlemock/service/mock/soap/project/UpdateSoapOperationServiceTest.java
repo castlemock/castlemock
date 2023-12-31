@@ -88,7 +88,6 @@ public class UpdateSoapOperationServiceTest {
         Assert.assertEquals(operation.getSimulateNetworkDelay(), returnedSoapOperation.getSimulateNetworkDelay());
         Assert.assertEquals(operation.getNetworkDelay(), returnedSoapOperation.getNetworkDelay());
         Assert.assertEquals(operation.getCurrentResponseSequenceIndex(), returnedSoapOperation.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(operation.getDefaultXPathMockResponseId(), returnedSoapOperation.getDefaultXPathMockResponseId());
         Assert.assertEquals(operation.getMockOnFailure(), returnedSoapOperation.getMockOnFailure());
     }
 }

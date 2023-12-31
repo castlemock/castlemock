@@ -137,7 +137,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                     .type(request.getSoapVersion())
                     .build());
             final SoapOperation operation = output.getOperation();
-            request.setOperationName(operation.getName());
+            //request.setOperationName(operation.getName());
             return process(projectId, output.getPortId(), operation, request, httpServletRequest, httpServletResponse);
         } catch (Exception exception) {
             LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);

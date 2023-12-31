@@ -28,7 +28,6 @@ import com.castlemock.model.mock.soap.domain.SoapOperationTestBuilder;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.model.mock.soap.domain.SoapRequest;
-import com.castlemock.model.mock.soap.domain.SoapResource;
 import com.castlemock.model.mock.soap.domain.SoapResourceTestBuilder;
 import com.castlemock.model.mock.soap.domain.SoapResourceType;
 import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
@@ -66,6 +65,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -154,9 +154,10 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapOperation soapOperation = getSoapOperationWithNoMockedResponses();
-        soapOperation.setAutomaticForward(true);
-        soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
+        final SoapOperation soapOperation = getSoapOperationWithNoMockedResponses()
+                .automaticForward(true)
+                .responseStrategy(SoapResponseStrategy.SEQUENCE)
+                .build();
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
                 .projectId(PROJECT_ID)
@@ -185,9 +186,11 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapOperation soapOperation = getSoapOperationWithNoMockedResponses();
-        soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
-        soapOperation.setForwardedEndpoint(null);
+        final SoapOperation soapOperation = getSoapOperationWithNoMockedResponses()
+                .responseStrategy(SoapResponseStrategy.SEQUENCE)
+                .forwardedEndpoint(null)
+                .build();
+
         SoapOperation spySoapOperation = spy(soapOperation);
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
@@ -210,9 +213,10 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapOperation soapOperation = getSoapOperation();
-        soapOperation.setAutomaticForward(true);
-        soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
+        final SoapOperation soapOperation = getSoapOperation()
+                .automaticForward(true)
+                .responseStrategy(SoapResponseStrategy.XPATH_INPUT)
+                .build();
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
                 .projectId(PROJECT_ID)
@@ -241,8 +245,9 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapOperation soapOperation = getSoapOperation();
-        soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
+        final SoapOperation soapOperation = getSoapOperation()
+                .responseStrategy(SoapResponseStrategy.SEQUENCE)
+                .build();
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
                 .projectId(PROJECT_ID)
@@ -272,8 +277,9 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapOperation soapOperation = getSoapOperation();
-        soapOperation.setResponseStrategy(SoapResponseStrategy.RANDOM);
+        final SoapOperation soapOperation = getSoapOperation()
+                .responseStrategy(SoapResponseStrategy.RANDOM)
+                .build();
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
                 .projectId(PROJECT_ID)
@@ -301,11 +307,11 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapOperation soapOperation = getSoapOperation();
-
-        soapOperation.setDefaultResponseName("Mocked response");
-        soapOperation.setDefaultMockResponseId("MockResponseId");
-        soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
+        final SoapOperation soapOperation = getSoapOperation()
+                .defaultMockResponseId("MockResponseId")
+                .defaultResponseName("Mocked response")
+                .responseStrategy(SoapResponseStrategy.XPATH_INPUT)
+                .build();
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
                 .projectId(PROJECT_ID)
@@ -333,13 +339,28 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapXPathExpression xPathExpression = new SoapXPathExpression();
-        xPathExpression.setExpression("//ServiceName/value[text()='Input']");
+        final SoapXPathExpression xPathExpression = SoapXPathExpression.builder()
+                .expression("//ServiceName/value[text()='Input']")
+                .build();
 
-        final SoapOperation soapOperation = getSoapOperation();
-        soapOperation.getMockResponses().get(0).getXpathExpressions().add(xPathExpression);
-
-        soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
+        final SoapOperation soapOperation = getSoapOperation()
+                .responseStrategy(SoapResponseStrategy.XPATH_INPUT)
+                .mockResponses(List.of(SoapMockResponseTestBuilder
+                        .builder()
+                        .body(RESPONSE_BODY)
+                        .xpathExpressions(List.of(xPathExpression))
+                        .usingExpressions(false)
+                        .httpHeaders(List.of(
+                                HttpHeader.builder()
+                                        .name(CONTENT_TYPE_HEADER)
+                                        .value(APPLICATION_XML)
+                                        .build(),
+                                HttpHeader.builder()
+                                        .name(ACCEPT_HEADER)
+                                        .value(APPLICATION_XML)
+                                        .build()))
+                        .build()))
+                .build();
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
                 .projectId(PROJECT_ID)
@@ -367,9 +388,10 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapOperation soapOperation = getSoapOperation();
-        soapOperation.setAutomaticForward(false);
-        soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
+        final SoapOperation soapOperation = getSoapOperation()
+                .automaticForward(false)
+                .responseStrategy(SoapResponseStrategy.XPATH_INPUT)
+                .build();
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
                 .projectId(PROJECT_ID)
@@ -395,12 +417,9 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedMultipartHttpServletRequest(REQUEST_MTOM_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapXPathExpression xPathExpression = new SoapXPathExpression();
-        xPathExpression.setExpression("//ServiceName/Variable1[text()='?']");
-
-
-        final SoapOperation soapOperation = getSoapOperation();
-        soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
+        final SoapOperation soapOperation = getSoapOperation()
+                .responseStrategy(SoapResponseStrategy.SEQUENCE)
+                .build();
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
                 .projectId(PROJECT_ID)
@@ -432,13 +451,28 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedMultipartHttpServletRequest(REQUEST_MTOM_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapXPathExpression xPathExpression = new SoapXPathExpression();
-        xPathExpression.setExpression("//TestService/Variable1[text()='Input1']");
+        final SoapXPathExpression xPathExpression = SoapXPathExpression.builder()
+                .expression("//TestService/Variable1[text()='Input1']")
+                .build();
 
-        final SoapOperation soapOperation = getSoapOperation();
-        soapOperation.getMockResponses().get(0).getXpathExpressions().add(xPathExpression);
-
-        soapOperation.setResponseStrategy(SoapResponseStrategy.XPATH_INPUT);
+        final SoapOperation soapOperation = getSoapOperation()
+                .responseStrategy(SoapResponseStrategy.XPATH_INPUT)
+                .mockResponses(List.of(SoapMockResponseTestBuilder
+                        .builder()
+                        .body(RESPONSE_BODY)
+                        .xpathExpressions(List.of(xPathExpression))
+                        .usingExpressions(false)
+                        .httpHeaders(List.of(
+                                HttpHeader.builder()
+                                        .name(CONTENT_TYPE_HEADER)
+                                        .value(APPLICATION_XML)
+                                        .build(),
+                                HttpHeader.builder()
+                                        .name(ACCEPT_HEADER)
+                                        .value(APPLICATION_XML)
+                                        .build()))
+                        .build()))
+                .build();
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
                 .projectId(PROJECT_ID)
@@ -469,9 +503,10 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
-        final SoapOperation soapOperation = getSoapOperation();
-        soapOperation.setResponseStrategy(SoapResponseStrategy.SEQUENCE);
-        soapOperation.setStatus(SoapOperationStatus.ECHO);
+        final SoapOperation soapOperation = getSoapOperation()
+                .responseStrategy(SoapResponseStrategy.SEQUENCE)
+                .status(SoapOperationStatus.ECHO)
+                .build();
 
         final IdentifySoapOperationOutput identifySoapOperationOutput = IdentifySoapOperationOutput.builder()
                 .projectId(PROJECT_ID)
@@ -597,7 +632,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         return Mockito.mock(HttpServletResponse.class);
     }
 
-    private SoapOperation getSoapOperationWithNoMockedResponses() {
+    private SoapOperation.Builder getSoapOperationWithNoMockedResponses() {
         return SoapOperationTestBuilder
                 .builder()
                 .currentResponseSequenceIndex(0)
@@ -611,11 +646,10 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
                 .responseStrategy(SoapResponseStrategy.SEQUENCE)
                 .simulateNetworkDelay(false)
                 .status(SoapOperationStatus.MOCKED)
-                .mockResponses(Collections.emptyList())
-                .build();
+                .mockResponses(Collections.emptyList());
     }
 
-    private SoapOperation getSoapOperation() {
+    private SoapOperation.Builder getSoapOperation() {
         final HttpHeader contentTypeHeader = HttpHeader.builder()
                 .name(CONTENT_TYPE_HEADER)
                 .value(APPLICATION_XML)
@@ -652,20 +686,17 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
                     .responseStrategy(SoapResponseStrategy.SEQUENCE)
                     .simulateNetworkDelay(false)
                     .status(SoapOperationStatus.MOCKED)
-                    .mockResponses(Collections.singletonList(soapMockResponse))
-                .build();
+                    .mockResponses(Collections.singletonList(soapMockResponse));
     }
 
     private SoapProject getSoapProject() {
-        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
-        final SoapResource soapResource = SoapResourceTestBuilder.builder()
-                .id("Resource id")
-                .name("wsdl")
-                .type(SoapResourceType.WSDL)
-                .build();
-        soapProject.setResources(Collections.singletonList(soapResource));
-        return soapProject;
-    }
+        return SoapProjectTestBuilder.builder()
+                .resources(List.of(SoapResourceTestBuilder.builder()
+                        .id("Resource id")
+                        .name("wsdl")
+                        .type(SoapResourceType.WSDL)
+                        .build()))
+                .build();}
 
 
     private static class HttpServletRequestTest extends HttpServletRequestWrapper {

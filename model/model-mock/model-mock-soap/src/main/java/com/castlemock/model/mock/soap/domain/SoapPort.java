@@ -51,7 +51,7 @@ public class SoapPort {
         this.name = Objects.requireNonNull(builder.name);
         this.uri = Objects.requireNonNull(builder.uri);
         this.projectId = Objects.requireNonNull(builder.projectId);
-        this.invokeAddress = Objects.requireNonNull(builder.invokeAddress);
+        this.invokeAddress = builder.invokeAddress;
         this.operations = Optional.ofNullable(builder.operations).orElseGet(CopyOnWriteArrayList::new);
         this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(HashMap::new);
     }
@@ -61,18 +61,10 @@ public class SoapPort {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @XmlElementWrapper(name = "operations")
     @XmlElement(name = "operation")
     public List<SoapOperation> getOperations() {
         return operations;
-    }
-
-    public void setOperations(List<SoapOperation> operations) {
-        this.operations = operations;
     }
 
     @XmlTransient
@@ -80,17 +72,9 @@ public class SoapPort {
         return statusCount;
     }
 
-    public void setStatusCount(Map<SoapOperationStatus, Integer> statusCount) {
-        this.statusCount = statusCount;
-    }
-
     @XmlElement
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @XmlElement
@@ -98,17 +82,9 @@ public class SoapPort {
         return uri;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
     @XmlElement
     public String getProjectId() {
         return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
     }
 
     @XmlTransient
@@ -116,12 +92,45 @@ public class SoapPort {
         return invokeAddress;
     }
 
-    public void setInvokeAddress(String invokeAddress) {
-        this.invokeAddress = invokeAddress;
-    }
-
     public static Builder builder() {
         return new Builder();
+    }
+
+    public Builder toBuilder() {
+        return builder()
+                .id(this.id)
+                .projectId(this.projectId)
+                .invokeAddress(this.invokeAddress)
+                .name(this.name)
+                .uri(this.uri)
+                .operations(this.operations)
+                .statusCount(this.statusCount);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SoapPort soapPort = (SoapPort) o;
+        return Objects.equals(id, soapPort.id) && Objects.equals(name, soapPort.name) && Objects.equals(uri, soapPort.uri) && Objects.equals(projectId, soapPort.projectId) && Objects.equals(invokeAddress, soapPort.invokeAddress) && Objects.equals(operations, soapPort.operations) && Objects.equals(statusCount, soapPort.statusCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, uri, projectId, invokeAddress, operations, statusCount);
+    }
+
+    @Override
+    public String toString() {
+        return "SoapPort{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", uri='" + uri + '\'' +
+                ", projectId='" + projectId + '\'' +
+                ", invokeAddress='" + invokeAddress + '\'' +
+                ", operations=" + operations +
+                ", statusCount=" + statusCount +
+                '}';
     }
 
     public static final class Builder {
@@ -136,37 +145,37 @@ public class SoapPort {
         private Builder() {
         }
 
-        public Builder id(String id) {
+        public Builder id(final String id) {
             this.id = id;
             return this;
         }
 
-        public Builder name(String name) {
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder uri(String uri) {
+        public Builder uri(final String uri) {
             this.uri = uri;
             return this;
         }
 
-        public Builder projectId(String projectId) {
+        public Builder projectId(final String projectId) {
             this.projectId = projectId;
             return this;
         }
 
-        public Builder operations(List<SoapOperation> operations) {
+        public Builder operations(final List<SoapOperation> operations) {
             this.operations = operations;
             return this;
         }
 
-        public Builder invokeAddress(String invokeAddress) {
+        public Builder invokeAddress(final String invokeAddress) {
             this.invokeAddress = invokeAddress;
             return this;
         }
 
-        public Builder statusCount(Map<SoapOperationStatus, Integer> statusCount) {
+        public Builder statusCount(final Map<SoapOperationStatus, Integer> statusCount) {
             this.statusCount = statusCount;
             return this;
         }

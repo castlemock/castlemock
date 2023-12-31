@@ -22,6 +22,8 @@ import com.castlemock.model.core.ServiceTask;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapOperationsForwardedEndpointInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapOperationsForwardedEndpointOutput;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -40,13 +42,14 @@ public class UpdateSoapOperationsForwardedEndpointService extends AbstractSoapPr
     @Override
     public ServiceResult<UpdateSoapOperationsForwardedEndpointOutput> process(final ServiceTask<UpdateSoapOperationsForwardedEndpointInput> serviceTask) {
         final UpdateSoapOperationsForwardedEndpointInput input = serviceTask.getInput();
-        input.getOperationIds().stream()
+        input.getOperationIds()
+                .stream()
                 .map(operationId -> this.operationRepository.findOne(operationId))
-                .findFirst()
-                .map(soapOperation -> {
-                    soapOperation.setForwardedEndpoint(input.getForwardedEndpoint());
-                    return this.operationRepository.update(soapOperation.getId(), soapOperation);
-                });
+                .filter(Objects::nonNull)
+                .map(soapOperation -> soapOperation.toBuilder()
+                        .forwardedEndpoint(input.getForwardedEndpoint())
+                        .build())
+                .forEach(soapOperation -> this.operationRepository.update(soapOperation.getId(), soapOperation));
         return createServiceResult(UpdateSoapOperationsForwardedEndpointOutput.builder().build());
     }
 }

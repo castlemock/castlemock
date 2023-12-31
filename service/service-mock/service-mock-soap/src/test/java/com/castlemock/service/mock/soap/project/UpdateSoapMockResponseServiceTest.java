@@ -36,7 +36,6 @@ import org.mockito.MockitoAnnotations;
  */
 public class UpdateSoapMockResponseServiceTest {
 
-
     @Mock
     private SoapMockResponseRepository mockResponseRepository;
 

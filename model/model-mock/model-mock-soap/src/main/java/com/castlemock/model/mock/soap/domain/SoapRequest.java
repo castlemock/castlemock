@@ -63,17 +63,9 @@ public class SoapRequest {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
     @XmlElement
     public String getEnvelope() {
         return envelope;
-    }
-
-    public void setEnvelope(String envelope) {
-        this.envelope = envelope;
     }
 
     @XmlElement
@@ -81,17 +73,9 @@ public class SoapRequest {
         return contentType;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
     @XmlElement
     public String getUri() {
         return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
     }
 
     @XmlElement
@@ -99,17 +83,9 @@ public class SoapRequest {
         return httpMethod;
     }
 
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
-    }
-
     @XmlElement
     public String getOperationName() {
         return operationName;
-    }
-
-    public void setOperationName(String operationName) {
-        this.operationName = operationName;
     }
 
     @XmlElement
@@ -117,26 +93,14 @@ public class SoapRequest {
         return operationIdentifier;
     }
 
-    public void setOperationIdentifier(SoapOperationIdentifier operationIdentifier) {
-        this.operationIdentifier = operationIdentifier;
-    }
-
     @XmlElement
     public SoapVersion getSoapVersion() {
         return soapVersion;
     }
 
-    public void setSoapVersion(SoapVersion soapVersion) {
-        this.soapVersion = soapVersion;
-    }
-
     @XmlElement
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
-    }
-
-    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
-        this.httpHeaders = httpHeaders;
     }
 
     public static Builder builder() {

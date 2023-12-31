@@ -70,7 +70,10 @@ public class UpdateSoapOperationsForwardedEndpointServiceTest {
         final ServiceResult<UpdateSoapOperationsForwardedEndpointOutput> result = service.process(serviceTask);
 
         Mockito.verify(operationRepository, Mockito.times(1)).findOne(operation.getId());
-        Mockito.verify(operationRepository, Mockito.times(1)).update(operation.getId(), operation);
+        Mockito.verify(operationRepository, Mockito.times(1)).update(operation.getId(), operation
+                .toBuilder()
+                .forwardedEndpoint("Forward Endpoint")
+                .build());
 
     }
 }

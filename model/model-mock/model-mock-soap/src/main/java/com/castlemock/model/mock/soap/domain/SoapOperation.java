@@ -47,17 +47,12 @@ public class SoapOperation {
     private String originalEndpoint;
     private Boolean simulateNetworkDelay;
     private Long networkDelay;
-    @Deprecated
-    private String defaultXPathMockResponseId;
     private String defaultMockResponseId;
     private String portId;
     private Boolean mockOnFailure;
     private SoapOperationIdentifyStrategy identifyStrategy;
-
     private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<SoapMockResponse>();
-
     private String invokeAddress;
-
     private String defaultResponseName;
     private boolean automaticForward;
 
@@ -76,11 +71,10 @@ public class SoapOperation {
         this.soapVersion = Objects.requireNonNull(builder.soapVersion);
         this.defaultBody = Objects.requireNonNull(builder.defaultBody);
         this.currentResponseSequenceIndex = Objects.requireNonNull(builder.currentResponseSequenceIndex);
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
+        this.forwardedEndpoint = builder.forwardedEndpoint;
         this.originalEndpoint = Objects.requireNonNull(builder.originalEndpoint);
         this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay);
         this.networkDelay = builder.networkDelay;
-        this.defaultXPathMockResponseId = builder.defaultXPathMockResponseId;
         this.defaultMockResponseId = builder.defaultMockResponseId;
         this.portId = Objects.requireNonNull(builder.portId);
         this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure);
@@ -96,17 +90,9 @@ public class SoapOperation {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @XmlElement
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @XmlElement
@@ -114,17 +100,9 @@ public class SoapOperation {
         return identifier;
     }
 
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
-
     @XmlElement
     public SoapOperationIdentifier getOperationIdentifier() {
         return operationIdentifier;
-    }
-
-    public void setOperationIdentifier(SoapOperationIdentifier operationIdentifier) {
-        this.operationIdentifier = operationIdentifier;
     }
 
     @XmlElement
@@ -132,26 +110,14 @@ public class SoapOperation {
         return portId;
     }
 
-    public void setPortId(String portId) {
-        this.portId = portId;
-    }
-
     @XmlElement
     public SoapResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
 
-    public void setResponseStrategy(SoapResponseStrategy responseStrategy) {
-        this.responseStrategy = responseStrategy;
-    }
-
     @XmlElement
     public SoapOperationStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(SoapOperationStatus status) {
-        this.status = status;
     }
 
     @XmlElementWrapper(name = "mockResponses")
@@ -160,17 +126,9 @@ public class SoapOperation {
         return mockResponses;
     }
 
-    public void setMockResponses(List<SoapMockResponse> mockResponses) {
-        this.mockResponses = mockResponses;
-    }
-
     @XmlElement
     public String getInvokeAddress() {
         return invokeAddress;
-    }
-
-    public void setInvokeAddress(String invokeAddress) {
-        this.invokeAddress = invokeAddress;
     }
 
     @XmlElement
@@ -178,17 +136,9 @@ public class SoapOperation {
         return defaultBody;
     }
 
-    public void setDefaultBody(String defaultBody) {
-        this.defaultBody = defaultBody;
-    }
-
     @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
-    }
-
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
     }
 
     @XmlElement
@@ -196,17 +146,9 @@ public class SoapOperation {
         return soapVersion;
     }
 
-    public void setSoapVersion(SoapVersion soapVersion) {
-        this.soapVersion = soapVersion;
-    }
-
     @XmlElement
     public Integer getCurrentResponseSequenceIndex() {
         return currentResponseSequenceIndex;
-    }
-
-    public void setCurrentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
-        this.currentResponseSequenceIndex = currentResponseSequenceIndex;
     }
 
     @XmlElement
@@ -214,17 +156,9 @@ public class SoapOperation {
         return forwardedEndpoint;
     }
 
-    public void setForwardedEndpoint(String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
-    }
-
     @XmlElement
     public String getOriginalEndpoint() {
         return originalEndpoint;
-    }
-
-    public void setOriginalEndpoint(String originalEndpoint) {
-        this.originalEndpoint = originalEndpoint;
     }
 
     @XmlElement
@@ -232,27 +166,9 @@ public class SoapOperation {
         return simulateNetworkDelay;
     }
 
-    public void setSimulateNetworkDelay(Boolean simulateNetworkDelay) {
-        this.simulateNetworkDelay = simulateNetworkDelay;
-    }
-
     @XmlElement
     public Long getNetworkDelay() {
         return networkDelay;
-    }
-
-    public void setNetworkDelay(Long networkDelay) {
-        this.networkDelay = networkDelay;
-    }
-
-    @XmlElement
-    @Deprecated
-    public String getDefaultXPathMockResponseId() {
-        return defaultXPathMockResponseId;
-    }
-
-    public void setDefaultXPathMockResponseId(String defaultXPathMockResponseId) {
-        this.defaultXPathMockResponseId = defaultXPathMockResponseId;
     }
 
     @XmlElement
@@ -260,17 +176,9 @@ public class SoapOperation {
         return defaultResponseName;
     }
 
-    public void setDefaultResponseName(String defaultResponseName) {
-        this.defaultResponseName = defaultResponseName;
-    }
-
     @XmlElement
     public Boolean getMockOnFailure() {
         return mockOnFailure;
-    }
-
-    public void setMockOnFailure(Boolean mockOnFailure) {
-        this.mockOnFailure = mockOnFailure;
     }
 
     @XmlElement
@@ -278,29 +186,94 @@ public class SoapOperation {
         return identifyStrategy;
     }
 
-    public void setIdentifyStrategy(SoapOperationIdentifyStrategy identifyStrategy) {
-        this.identifyStrategy = identifyStrategy;
-    }
-
     @XmlElement
     public String getDefaultMockResponseId() {
         return defaultMockResponseId;
-    }
-
-    public void setDefaultMockResponseId(String defaultMockResponseId) {
-        this.defaultMockResponseId = defaultMockResponseId;
     }
 
     public boolean getAutomaticForward() {
         return automaticForward;
     }
 
-    public void setAutomaticForward(boolean automaticForward) {
-        this.automaticForward = automaticForward;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SoapOperation that = (SoapOperation) o;
+        return automaticForward == that.automaticForward && Objects.equals(id, that.id)
+                && Objects.equals(name, that.name) && Objects.equals(identifier, that.identifier)
+                && Objects.equals(operationIdentifier, that.operationIdentifier) && responseStrategy == that.responseStrategy
+                && status == that.status && httpMethod == that.httpMethod && soapVersion == that.soapVersion
+                && Objects.equals(defaultBody, that.defaultBody) && Objects.equals(currentResponseSequenceIndex, that.currentResponseSequenceIndex)
+                && Objects.equals(forwardedEndpoint, that.forwardedEndpoint) && Objects.equals(originalEndpoint, that.originalEndpoint)
+                && Objects.equals(simulateNetworkDelay, that.simulateNetworkDelay) && Objects.equals(networkDelay, that.networkDelay)
+                && Objects.equals(defaultMockResponseId, that.defaultMockResponseId) && Objects.equals(portId, that.portId)
+                && Objects.equals(mockOnFailure, that.mockOnFailure) && identifyStrategy == that.identifyStrategy
+                && Objects.equals(mockResponses, that.mockResponses) && Objects.equals(invokeAddress, that.invokeAddress)
+                && Objects.equals(defaultResponseName, that.defaultResponseName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, identifier, operationIdentifier, responseStrategy, status, httpMethod, soapVersion, defaultBody, currentResponseSequenceIndex, forwardedEndpoint, originalEndpoint, simulateNetworkDelay, networkDelay, defaultMockResponseId, portId, mockOnFailure, identifyStrategy, mockResponses, invokeAddress, defaultResponseName, automaticForward);
+    }
+
+    @Override
+    public String toString() {
+        return "SoapOperation{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", identifier='" + identifier + '\'' +
+                ", operationIdentifier=" + operationIdentifier +
+                ", responseStrategy=" + responseStrategy +
+                ", status=" + status +
+                ", httpMethod=" + httpMethod +
+                ", soapVersion=" + soapVersion +
+                ", defaultBody='" + defaultBody + '\'' +
+                ", currentResponseSequenceIndex=" + currentResponseSequenceIndex +
+                ", forwardedEndpoint='" + forwardedEndpoint + '\'' +
+                ", originalEndpoint='" + originalEndpoint + '\'' +
+                ", simulateNetworkDelay=" + simulateNetworkDelay +
+                ", networkDelay=" + networkDelay +
+                ", defaultMockResponseId='" + defaultMockResponseId + '\'' +
+                ", portId='" + portId + '\'' +
+                ", mockOnFailure=" + mockOnFailure +
+                ", identifyStrategy=" + identifyStrategy +
+                ", mockResponses=" + mockResponses +
+                ", invokeAddress='" + invokeAddress + '\'' +
+                ", defaultResponseName='" + defaultResponseName + '\'' +
+                ", automaticForward=" + automaticForward +
+                '}';
     }
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public Builder toBuilder() {
+        return builder()
+                .id(id)
+                .automaticForward(automaticForward)
+                .mockOnFailure(mockOnFailure)
+                .portId(portId)
+                .simulateNetworkDelay(simulateNetworkDelay)
+                .identifyStrategy(identifyStrategy)
+                .currentResponseSequenceIndex(currentResponseSequenceIndex)
+                .defaultBody(defaultBody)
+                .defaultResponseName(defaultResponseName)
+                .defaultMockResponseId(defaultMockResponseId)
+                .name(name)
+                .identifier(identifier)
+                .operationIdentifier(operationIdentifier)
+                .responseStrategy(responseStrategy)
+                .invokeAddress(invokeAddress)
+                .soapVersion(soapVersion)
+                .forwardedEndpoint(forwardedEndpoint)
+                .mockResponses(mockResponses)
+                .originalEndpoint(originalEndpoint)
+                .status(status)
+                .httpMethod(httpMethod)
+                .networkDelay(networkDelay);
     }
 
     public static final class Builder {
@@ -318,7 +291,6 @@ public class SoapOperation {
         private String originalEndpoint;
         private Boolean simulateNetworkDelay;
         private Long networkDelay;
-        private String defaultXPathMockResponseId;
         private String defaultMockResponseId;
         private String portId;
         private Boolean mockOnFailure;
@@ -398,11 +370,6 @@ public class SoapOperation {
 
         public Builder networkDelay(final Long networkDelay) {
             this.networkDelay = networkDelay;
-            return this;
-        }
-
-        public Builder defaultXPathMockResponseId(final String defaultXPathMockResponseId) {
-            this.defaultXPathMockResponseId = defaultXPathMockResponseId;
             return this;
         }
 

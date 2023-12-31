@@ -42,21 +42,34 @@ public class SoapOperationIdentifier {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @XmlElement
     public String getNamespace() {
         return namespace;
     }
 
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
-    }
-
     public static Builder builder() {
         return new Builder();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SoapOperationIdentifier that = (SoapOperationIdentifier) o;
+        return Objects.equals(name, that.name) && Objects.equals(namespace, that.namespace);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, namespace);
+    }
+
+    @Override
+    public String toString() {
+        return "SoapOperationIdentifier{" +
+                "name='" + name + '\'' +
+                ", namespace='" + namespace + '\'' +
+                '}';
     }
 
     public static final class Builder {
@@ -66,12 +79,12 @@ public class SoapOperationIdentifier {
         private Builder() {
         }
 
-        public Builder name(String name) {
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder namespace(String namespace) {
+        public Builder namespace(final String namespace) {
             this.namespace = namespace;
             return this;
         }

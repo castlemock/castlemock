@@ -44,12 +44,12 @@ public class SoapResponse {
     }
 
     private SoapResponse(final Builder builder){
-        this.body = Objects.requireNonNull(builder.body);
+        this.body = Objects.requireNonNull(builder.body, "body");
         this.mockResponseName = builder.mockResponseName;
-        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
         this.contentType = builder.contentType;
-        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
-        this.contentEncodings = Objects.requireNonNull(builder.contentEncodings);
+        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders, "httpHeaders");
+        this.contentEncodings = Objects.requireNonNull(builder.contentEncodings, "contentEncodings");
     }
 
     @XmlElement
@@ -57,17 +57,9 @@ public class SoapResponse {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
     @XmlElement
     public String getMockResponseName() {
         return mockResponseName;
-    }
-
-    public void setMockResponseName(String mockResponseName) {
-        this.mockResponseName = mockResponseName;
     }
 
     @XmlElement
@@ -75,17 +67,9 @@ public class SoapResponse {
         return httpStatusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
-    }
-
     @XmlElement
     public String getContentType() {
         return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 
     @XmlElementWrapper(name = "httpHeaders")
@@ -94,18 +78,10 @@ public class SoapResponse {
         return httpHeaders;
     }
 
-    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
-        this.httpHeaders = httpHeaders;
-    }
-
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
-    }
-
-    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
-        this.contentEncodings = contentEncodings;
     }
 
     public static Builder builder() {

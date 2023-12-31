@@ -28,7 +28,6 @@ import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
-import com.google.common.base.Strings;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -118,14 +117,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             }
 
             soapMockResponse.setContentEncodings(contentEncodings);
-
-            if(!Strings.isNullOrEmpty(soapMockResponse.getXpathExpression())){
-                final SoapXPathExpressionFile xPathExpression = new SoapXPathExpressionFile();
-                xPathExpression.setExpression(soapMockResponse.getXpathExpression());
-                soapMockResponse.getXpathExpressions().add(xPathExpression);
-                soapMockResponse.setXpathExpression(null);
-            }
-
             save(soapMockResponse);
         }
     }
@@ -208,9 +199,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         private Integer httpStatusCode;
         @Mapping("usingExpressions")
         private boolean usingExpressions;
-        @Mapping("xpathExpression")
-        @Deprecated
-        private String xpathExpression;
         @Mapping("httpHeaders")
         private List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<HttpHeaderFile>();
         @Mapping("contentEncodings")
@@ -291,16 +279,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
 
         public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
-        }
-
-
-        @XmlElement
-        public String getXpathExpression() {
-            return xpathExpression;
-        }
-
-        public void setXpathExpression(String xpathExpression) {
-            this.xpathExpression = xpathExpression;
         }
 
         @XmlElementWrapper(name = "contentEncodings")

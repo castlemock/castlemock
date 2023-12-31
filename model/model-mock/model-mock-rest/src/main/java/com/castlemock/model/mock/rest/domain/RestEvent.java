@@ -113,15 +113,6 @@ public class RestEvent extends Event {
         return new Builder();
     }
 
-    public static Builder toBuilder(final Event event) {
-        return builder()
-                .id(event.getId())
-                .startDate(event.getStartDate())
-                .endDate(event.getEndDate())
-                .resourceLink(event.getResourceLink())
-                .resourceName(event.getResourceName());
-    }
-
     public Builder toBuilder() {
         return builder()
                 .id(this.id)

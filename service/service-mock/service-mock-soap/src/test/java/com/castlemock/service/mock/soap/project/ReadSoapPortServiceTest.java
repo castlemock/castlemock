@@ -18,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class ReadSoapPortServiceTest {
 
@@ -49,14 +49,16 @@ public class ReadSoapPortServiceTest {
         final ServiceTask<ReadSoapPortInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(portRepository.findOne(port.getId())).thenReturn(port);
-        Mockito.when(operationRepository.findWithPortId(port.getId())).thenReturn(Arrays.asList(operation));
+        Mockito.when(operationRepository.findWithPortId(port.getId())).thenReturn(List.of(operation));
         final ServiceResult<ReadSoapPortOutput> result = service.process(serviceTask);
 
         Mockito.verify(portRepository, Mockito.times(1)).findOne(port.getId());
         Mockito.verify(operationRepository, Mockito.times(1)).findWithPortId(port.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(port, result.getOutput().getPort());
+        Assert.assertEquals(port.toBuilder()
+                .operations(List.of(operation))
+                .build(), result.getOutput().getPort());
     }
 
 }

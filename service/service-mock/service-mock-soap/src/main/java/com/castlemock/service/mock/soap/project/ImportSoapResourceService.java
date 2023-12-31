@@ -24,8 +24,6 @@ import com.castlemock.model.mock.soap.domain.SoapResourceType;
 import com.castlemock.service.mock.soap.project.input.ImportSoapResourceInput;
 import com.castlemock.service.mock.soap.project.output.ImportSoapResourceOutput;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -49,15 +47,7 @@ public class ImportSoapResourceService extends AbstractSoapProjectService implem
         final Optional<String> projectId = input.getProjectId();
         final SoapResource soapResource = input.getResource();
         final String raw = input.getRaw();
-
-        if(soapResource.getName() == null){
-            final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
-            final Date now = new Date();
-            final String soapResourceName = soapResource.getType().name() + "-" + formatter.format(now);
-            soapResource.setName(soapResourceName);
-        }
-
-        SoapResource result = null;
+        final SoapResource result;
         if(projectId.isPresent()){
 
             if(SoapResourceType.WSDL.equals(soapResource.getType())){
@@ -67,7 +57,6 @@ public class ImportSoapResourceService extends AbstractSoapProjectService implem
                         .map(SoapResource::getId)
                         .forEach(this.resourceRepository::deleteWithProjectId);
             }
-            soapResource.setProjectId(projectId.get());
             result = this.resourceRepository.saveSoapResource(soapResource, raw);
         } else {
             result = this.resourceRepository.saveSoapResource(soapResource, raw);

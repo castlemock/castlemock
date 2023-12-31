@@ -25,21 +25,17 @@ public class SoapXPathExpression {
 
     private String expression;
 
-    public SoapXPathExpression(){
+    private SoapXPathExpression(){
 
     }
 
     private SoapXPathExpression(final Builder builder){
-        this.expression = Objects.requireNonNull(builder.expression);
+        this.expression = Objects.requireNonNull(builder.expression, "expression");
     }
 
     @XmlElement
     public String getExpression() {
         return expression;
-    }
-
-    public void setExpression(String expression) {
-        this.expression = expression;
     }
 
     public Builder toBuilder(){
@@ -57,7 +53,7 @@ public class SoapXPathExpression {
         private Builder() {
         }
 
-        public Builder expression(String expression) {
+        public Builder expression(final String expression) {
             this.expression = expression;
             return this;
         }

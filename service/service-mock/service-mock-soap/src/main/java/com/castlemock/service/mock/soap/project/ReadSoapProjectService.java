@@ -31,6 +31,7 @@ import com.google.common.base.Preconditions;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Karl Dahlgren
@@ -52,16 +53,21 @@ public class ReadSoapProjectService extends AbstractSoapProjectService implement
         final ReadSoapProjectInput input = serviceTask.getInput();
         final SoapProject soapProject = find(input.getProjectId());
         final List<SoapResource> resources = this.resourceRepository.findWithProjectId(input.getProjectId());
-        final List<SoapPort> ports = this.portRepository.findWithProjectId(input.getProjectId());
-        soapProject.setResources(resources);
-        soapProject.setPorts(ports);
-        for(final SoapPort soapPort : soapProject.getPorts()){
-            final List<SoapOperation> operations = this.operationRepository.findWithPortId(soapPort.getId());
-            final Map<SoapOperationStatus, Integer> soapOperationStatusCount = getSoapOperationStatusCount(operations);
-            soapPort.setStatusCount(soapOperationStatusCount);
-        }
+        final List<SoapPort> ports = this.portRepository.findWithProjectId(input.getProjectId())
+                .stream()
+                .map(port -> {
+                    final List<SoapOperation> operations = this.operationRepository.findWithPortId(port.getId());
+                    final Map<SoapOperationStatus, Integer> soapOperationStatusCount = getSoapOperationStatusCount(operations);
+                    return port.toBuilder()
+                            .statusCount(soapOperationStatusCount)
+                            .build();})
+                .collect(Collectors.toList());
+
         return createServiceResult(ReadSoapProjectOutput.builder()
-                .project(soapProject)
+                .project(soapProject.toBuilder()
+                        .resources(resources)
+                        .ports(ports)
+                        .build())
                 .build());
     }
 

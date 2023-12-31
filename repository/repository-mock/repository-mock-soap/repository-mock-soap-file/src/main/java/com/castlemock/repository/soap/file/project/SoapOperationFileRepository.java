@@ -32,7 +32,6 @@ import com.castlemock.model.mock.soap.domain.SoapVersion;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
-import com.google.common.base.Strings;
 import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -124,11 +123,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
                 save(soapOperation);
             }
 
-            if(!Strings.isNullOrEmpty(soapOperation.getDefaultXPathMockResponseId())){
-                soapOperation.setDefaultMockResponseId(soapOperation.getDefaultXPathMockResponseId());
-                soapOperation.setDefaultXPathMockResponseId(null);
-                save(soapOperation);
-            }
         }
     }
 
@@ -288,9 +282,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         private String forwardedEndpoint;
         @Mapping("originalEndpoint")
         private String originalEndpoint;
-        @Mapping("defaultXPathMockResponseId")
-        @Deprecated
-        private String defaultXPathMockResponseId;
         @Mapping("defaultMockResponseId")
         private String defaultMockResponseId;
         @Mapping("simulateNetworkDelay")
@@ -439,16 +430,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
 
         public void setNetworkDelay(final long networkDelay) {
             this.networkDelay = networkDelay;
-        }
-
-        @XmlElement
-        @Deprecated
-        public String getDefaultXPathMockResponseId() {
-            return defaultXPathMockResponseId;
-        }
-
-        public void setDefaultXPathMockResponseId(final String defaultXPathMockResponseId) {
-            this.defaultXPathMockResponseId = defaultXPathMockResponseId;
         }
 
         @XmlElement

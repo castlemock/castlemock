@@ -61,12 +61,11 @@ public class ReadSoapEventsByOperationIdServiceTest {
     public void testProcess(){
         final List<SoapEvent> soapEvents = new ArrayList<SoapEvent>();
         for(int index = 0; index < 2; index++){
-            final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
+            final SoapEvent soapEvent = SoapEventTestBuilder.builder()
+                    .operationId("OperationId")
+                    .build();
             soapEvents.add(soapEvent);
         }
-
-        soapEvents.get(0).setOperationId("OperationId");
-        soapEvents.get(1).setOperationId("OperationId");
 
         Mockito.when(repository.findEventsByOperationId(Mockito.anyString())).thenReturn(soapEvents);
 

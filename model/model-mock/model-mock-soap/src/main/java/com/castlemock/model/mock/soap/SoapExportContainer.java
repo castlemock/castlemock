@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -41,13 +42,17 @@ public class SoapExportContainer extends ExportContainer {
     private List<SoapOperation> operations;
     private List<SoapMockResponse> mockResponses;
 
+    private SoapExportContainer(final Builder builder) {
+        this.project = Objects.requireNonNull(builder.project, "project");
+        this.ports = Objects.requireNonNull(builder.ports, "ports");
+        this.resources = Objects.requireNonNull(builder.resources, "resources");
+        this.operations = Objects.requireNonNull(builder.operations, "operations");
+        this.mockResponses = Objects.requireNonNull(builder.mockResponses, "mockResponses");
+    }
+
     @XmlElement
     public SoapProject getProject() {
         return project;
-    }
-
-    public void setProject(SoapProject project) {
-        this.project = project;
     }
 
     @XmlElementWrapper(name = "ports")
@@ -56,18 +61,10 @@ public class SoapExportContainer extends ExportContainer {
         return ports;
     }
 
-    public void setPorts(List<SoapPort> ports) {
-        this.ports = ports;
-    }
-
     @XmlElementWrapper(name = "resources")
     @XmlElement(name = "resource")
     public List<SoapResource> getResources() {
         return resources;
-    }
-
-    public void setResources(List<SoapResource> resources) {
-        this.resources = resources;
     }
 
     @XmlElementWrapper(name = "operations")
@@ -76,17 +73,80 @@ public class SoapExportContainer extends ExportContainer {
         return operations;
     }
 
-    public void setOperations(List<SoapOperation> operations) {
-        this.operations = operations;
-    }
-
     @XmlElementWrapper(name = "mockResponses")
     @XmlElement(name = "mockResponse")
     public List<SoapMockResponse> getMockResponses() {
         return mockResponses;
     }
 
-    public void setMockResponses(List<SoapMockResponse> mockResponses) {
-        this.mockResponses = mockResponses;
+    @Override
+    public boolean equals(final Object o) {
+
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final SoapExportContainer that = (SoapExportContainer) o;
+        return Objects.equals(project, that.project) && Objects.equals(ports, that.ports)
+                && Objects.equals(resources, that.resources) && Objects.equals(operations, that.operations)
+                && Objects.equals(mockResponses, that.mockResponses);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(project, ports, resources, operations, mockResponses);
+    }
+
+    @Override
+    public String toString() {
+        return "SoapExportContainer{" +
+                "project=" + project +
+                ", ports=" + ports +
+                ", resources=" + resources +
+                ", operations=" + operations +
+                ", mockResponses=" + mockResponses +
+                '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private SoapProject project;
+        private List<SoapPort> ports;
+        private List<SoapResource> resources;
+        private List<SoapOperation> operations;
+        private List<SoapMockResponse> mockResponses;
+
+        private Builder() {
+        }
+
+        public Builder project(final SoapProject project) {
+            this.project = project;
+            return this;
+        }
+
+        public Builder ports(final List<SoapPort> ports) {
+            this.ports = ports;
+            return this;
+        }
+
+        public Builder resources(final List<SoapResource> resources) {
+            this.resources = resources;
+            return this;
+        }
+
+        public Builder operations(final List<SoapOperation> operations) {
+            this.operations = operations;
+            return this;
+        }
+
+        public Builder mockResponses(final List<SoapMockResponse> mockResponses) {
+            this.mockResponses = mockResponses;
+            return this;
+        }
+
+        public SoapExportContainer build() {
+            return new SoapExportContainer(this);
+        }
     }
 }

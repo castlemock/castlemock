@@ -43,8 +43,6 @@ public class SoapMockResponse {
     private SoapMockResponseStatus status;
     private Integer httpStatusCode;
     private boolean usingExpressions;
-    @Deprecated
-    private String xpathExpression;
     private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
     private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
     private List<SoapXPathExpression> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpression>();
@@ -61,11 +59,9 @@ public class SoapMockResponse {
         this.status = Objects.requireNonNull(builder.status);
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
         this.usingExpressions = Objects.requireNonNull(builder.usingExpressions);
-        this.xpathExpression = builder.xpathExpression;
         this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
         this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(CopyOnWriteArrayList::new);
         this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
-
     }
 
     @XmlElement
@@ -73,17 +69,9 @@ public class SoapMockResponse {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @XmlElement
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @XmlElement
@@ -91,17 +79,9 @@ public class SoapMockResponse {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
     @XmlElement
     public String getOperationId() {
         return operationId;
-    }
-
-    public void setOperationId(String operationId) {
-        this.operationId = operationId;
     }
 
     @XmlElement
@@ -109,17 +89,9 @@ public class SoapMockResponse {
         return status;
     }
 
-    public void setStatus(SoapMockResponseStatus status) {
-        this.status = status;
-    }
-
     @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
-    }
-
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
     }
 
     @XmlElement
@@ -127,29 +99,10 @@ public class SoapMockResponse {
         return usingExpressions;
     }
 
-    public void setUsingExpressions(boolean usingExpressions) {
-        this.usingExpressions = usingExpressions;
-    }
-
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
-    }
-
-    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
-        this.httpHeaders = httpHeaders;
-    }
-
-    @XmlElement
-    @Deprecated
-    public String getXpathExpression() {
-        return xpathExpression;
-    }
-
-    @Deprecated
-    public void setXpathExpression(String xpathExpression) {
-        this.xpathExpression = xpathExpression;
     }
 
     @XmlElementWrapper(name = "contentEncodings")
@@ -168,10 +121,6 @@ public class SoapMockResponse {
         return xpathExpressions;
     }
 
-    public void setXpathExpressions(List<SoapXPathExpression> xpathExpressions) {
-        this.xpathExpressions = xpathExpressions;
-    }
-
     public Builder toBuilder() {
         return builder()
                 .id(id)
@@ -181,7 +130,6 @@ public class SoapMockResponse {
                 .status(status)
                 .httpStatusCode(httpStatusCode)
                 .usingExpressions(usingExpressions)
-                .xpathExpression(xpathExpression)
                 .httpHeaders(httpHeaders.stream()
                         .map(HttpHeader::toBuilder)
                         .map(HttpHeader.Builder::build)
@@ -198,6 +146,40 @@ public class SoapMockResponse {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SoapMockResponse that = (SoapMockResponse) o;
+        return usingExpressions == that.usingExpressions && Objects.equals(id, that.id)
+                && Objects.equals(name, that.name) && Objects.equals(body, that.body)
+                && Objects.equals(operationId, that.operationId) && status == that.status
+                && Objects.equals(httpStatusCode, that.httpStatusCode) && Objects.equals(httpHeaders, that.httpHeaders)
+                && Objects.equals(contentEncodings, that.contentEncodings) && Objects.equals(xpathExpressions, that.xpathExpressions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, body, operationId, status, httpStatusCode,
+                usingExpressions, httpHeaders, contentEncodings, xpathExpressions);
+    }
+
+    @Override
+    public String toString() {
+        return "SoapMockResponse{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", body='" + body + '\'' +
+                ", operationId='" + operationId + '\'' +
+                ", status=" + status +
+                ", httpStatusCode=" + httpStatusCode +
+                ", usingExpressions=" + usingExpressions +
+                ", httpHeaders=" + httpHeaders +
+                ", contentEncodings=" + contentEncodings +
+                ", xpathExpressions=" + xpathExpressions +
+                '}';
+    }
+
     public static final class Builder {
         private String id;
         private String name;
@@ -206,7 +188,6 @@ public class SoapMockResponse {
         private SoapMockResponseStatus status;
         private Integer httpStatusCode;
         private Boolean usingExpressions;
-        private String xpathExpression;
         private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
         private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
         private List<SoapXPathExpression> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpression>();
@@ -246,11 +227,6 @@ public class SoapMockResponse {
 
         public Builder usingExpressions(final Boolean usingExpressions) {
             this.usingExpressions = usingExpressions;
-            return this;
-        }
-
-        public Builder xpathExpression(final String xpathExpression) {
-            this.xpathExpression = xpathExpression;
             return this;
         }
 

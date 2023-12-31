@@ -114,9 +114,9 @@ class ProjectOverview extends PureComponent {
             newProject: {
                 name: "",
                 description: "",
-                projectType: "REST"
+                projectType: "rest"
             },
-            importProjectProjectType: 'REST',
+            importProjectProjectType: 'rest',
             importProjectSelectedFile: null,
             importProjectSelectedFileName: "",
             unauthorized: false
@@ -144,7 +144,7 @@ class ProjectOverview extends PureComponent {
     setNewProjectType(projectType) {
         this.setState({ newProject: {
                 ...this.state.newProject,
-                projectType: projectType
+                projectType: projectType.toLowerCase()
             }
         });
     }
@@ -166,16 +166,16 @@ class ProjectOverview extends PureComponent {
             return;
         }
 
-        if(cell === "SOAP") {
+        if(cell === "soap") {
             return (
                 <div>
-                    <Badge bg="primary" text="light">{cell}</Badge>
+                    <Badge bg="primary" text="light">{"SOAP"}</Badge>
                 </div>
             )
-        } else if(cell === "REST") {
+        } else if(cell === "rest") {
             return (
                 <div>
-                    <Badge bg="success" text="light">{cell}</Badge>
+                    <Badge bg="success" text="light">{"REST"}</Badge>
                 </div>
             )
         }
@@ -228,7 +228,7 @@ class ProjectOverview extends PureComponent {
 
     setImportProjectType(projectType) {
         this.setState({
-            importProjectProjectType: projectType
+            importProjectProjectType: projectType.toLowerCase()
         });
     }
 
@@ -246,7 +246,7 @@ class ProjectOverview extends PureComponent {
         axios
             .post(process.env.PUBLIC_URL + "/api/rest/" + this.state.newProject.projectType + "/project", this.state.newProject)
             .then(response => {
-                this.props.history.push("/web/" + response.data.type + "/project/" + response.data.id);
+                this.props.history.push("/web/" + this.state.newProject.projectType + "/project/" + response.data.id);
             })
             .catch(error => {
                 validateErrorResponse(error)

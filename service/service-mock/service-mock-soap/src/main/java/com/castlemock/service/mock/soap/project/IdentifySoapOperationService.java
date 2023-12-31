@@ -52,13 +52,14 @@ public class IdentifySoapOperationService extends AbstractSoapProjectService imp
                 .orElseThrow(() -> new IllegalArgumentException("Unable to identify SOAP operation: " + input.getUri()));
 
         final List<SoapMockResponse> mockResponses = this.mockResponseRepository.findWithOperationId(operation.getId());
-        operation.setMockResponses(mockResponses);
 
         return createServiceResult(IdentifySoapOperationOutput.builder()
                 .projectId(input.getProjectId())
                 .portId(port.getId())
                 .operationId(operation.getId())
-                .operation(operation)
+                .operation(operation.toBuilder()
+                        .mockResponses(mockResponses)
+                        .build())
                 .build());
     }
 

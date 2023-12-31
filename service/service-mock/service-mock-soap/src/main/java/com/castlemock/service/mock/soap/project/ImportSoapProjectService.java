@@ -23,15 +23,11 @@ import com.castlemock.model.core.utility.serializer.ExportContainerSerializer;
 import com.castlemock.model.mock.soap.SoapExportContainer;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
-import com.castlemock.model.mock.soap.domain.SoapOperationIdentifyStrategy;
 import com.castlemock.model.mock.soap.domain.SoapPort;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapResource;
-import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
 import com.castlemock.service.mock.soap.project.input.ImportSoapProjectInput;
 import com.castlemock.service.mock.soap.project.output.ImportSoapProjectOutput;
-import com.google.common.base.Strings;
 
 /**
  * @author Karl Dahlgren
@@ -83,38 +79,14 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
                 throw new IllegalArgumentException("An operation with the following key already exists: " + operation.getId());
             }
 
-            if(operation.getOperationIdentifier() == null){
-                final SoapOperationIdentifier operationIdentifier = SoapOperationIdentifier.builder()
-                        .name(operation.getIdentifier())
-                        .build();
-                operation.setOperationIdentifier(operationIdentifier);
-                operation.setIdentifier(null);
-            }
-            if(operation.getIdentifyStrategy() == null){
-                operation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
-            }
-            if(operation.getCurrentResponseSequenceIndex() == null){
-                operation.setCurrentResponseSequenceIndex(0);
-            }
-            if(!Strings.isNullOrEmpty(operation.getDefaultXPathMockResponseId())){
-                operation.setDefaultMockResponseId(operation.getDefaultXPathMockResponseId());
-                operation.setDefaultXPathMockResponseId(null);
-            }
-
-            operation.setCurrentResponseSequenceIndex(0);
-            this.operationRepository.save(operation);
+            this.operationRepository.save(operation.toBuilder()
+                    .currentResponseSequenceIndex(0)
+                    .build());
         }
 
         for(SoapMockResponse mockResponse : exportContainer.getMockResponses()){
             if(this.mockResponseRepository.exists(mockResponse.getId())){
                 throw new IllegalArgumentException("A mocked response with the following key already exists: " + mockResponse.getId());
-            }
-
-            if(!Strings.isNullOrEmpty(mockResponse.getXpathExpression())){
-                final SoapXPathExpression xPathExpression = new SoapXPathExpression();
-                xPathExpression.setExpression(mockResponse.getXpathExpression());
-                mockResponse.getXpathExpressions().add(xPathExpression);
-                mockResponse.setXpathExpression(null);
             }
 
             this.mockResponseRepository.save(mockResponse);

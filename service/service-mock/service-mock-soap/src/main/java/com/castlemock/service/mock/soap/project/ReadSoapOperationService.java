@@ -23,8 +23,6 @@ import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.service.mock.soap.project.input.ReadSoapOperationInput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapOperationOutput;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -34,8 +32,6 @@ import java.util.List;
  */
 @org.springframework.stereotype.Service
 public class ReadSoapOperationService extends AbstractSoapProjectService implements Service<ReadSoapOperationInput, ReadSoapOperationOutput> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReadSoapOperationService.class);
 
     /**
      * The process message is responsible for processing an incoming serviceTask and generate
@@ -51,32 +47,22 @@ public class ReadSoapOperationService extends AbstractSoapProjectService impleme
         final ReadSoapOperationInput input = serviceTask.getInput();
         final SoapOperation soapOperation = this.operationRepository.findOne(input.getOperationId());
         final List<SoapMockResponse> mockResponses = this.mockResponseRepository.findWithOperationId(input.getOperationId());
-        soapOperation.setMockResponses(mockResponses);
 
+        final SoapOperation.Builder builder = soapOperation.toBuilder();
         if(soapOperation.getDefaultMockResponseId() != null){
             // Iterate through all the mocked responses to identify
             // which has been set to be the default XPath mock response.
-            boolean defaultXpathMockResponseFound = false;
             for(SoapMockResponse mockResponse : mockResponses){
                 if(mockResponse.getId().equals(soapOperation.getDefaultMockResponseId())){
-                    soapOperation.setDefaultResponseName(mockResponse.getName());
-                    defaultXpathMockResponseFound = true;
+                    builder.defaultResponseName(mockResponse.getName());
                     break;
                 }
             }
-
-            if(!defaultXpathMockResponseFound){
-                // Unable to find the default XPath mock response.
-                // Log only an error message for now.
-                LOGGER.error("Unable to find the default XPath mock response with the following id: " +
-                        soapOperation.getDefaultXPathMockResponseId());
-            }
         }
 
-
-
         return createServiceResult(ReadSoapOperationOutput.builder()
-                .operation(soapOperation)
+                .operation(builder.mockResponses(mockResponses)
+                        .build())
                 .build());
     }
 }

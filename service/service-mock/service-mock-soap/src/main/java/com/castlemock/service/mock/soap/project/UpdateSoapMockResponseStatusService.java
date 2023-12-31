@@ -41,8 +41,10 @@ public class UpdateSoapMockResponseStatusService extends AbstractSoapProjectServ
     @Override
     public ServiceResult<UpdateSoapMockResponseStatusOutput> process(final ServiceTask<UpdateSoapMockResponseStatusInput> serviceTask) {
         final UpdateSoapMockResponseStatusInput input = serviceTask.getInput();
-        final SoapMockResponse mockResponse = this.mockResponseRepository.findOne(input.getMockResponseId());
-        mockResponse.setStatus(input.getMockResponseStatus());
+        final SoapMockResponse mockResponse = this.mockResponseRepository.findOne(input.getMockResponseId())
+                .toBuilder()
+                .status(input.getMockResponseStatus())
+                .build();
         this.mockResponseRepository.update(input.getMockResponseId(), mockResponse);
         return createServiceResult(UpdateSoapMockResponseStatusOutput.builder().build());
     }

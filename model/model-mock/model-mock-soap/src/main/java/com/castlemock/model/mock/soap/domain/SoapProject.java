@@ -62,14 +62,6 @@ public class SoapProject extends Project {
     }
 
     /**
-     * Set new value to the variable ports
-     * @param ports The new value to ports
-     */
-    public void setPorts(final List<SoapPort> ports) {
-        this.ports = ports;
-    }
-
-    /**
      * Returns all the SOAP resources
      * @return The SOAP resources for the SOAP resources
      */
@@ -80,28 +72,12 @@ public class SoapProject extends Project {
     }
 
     /**
-     * Set new value to the variable resources
-     * @param resources The new value to resources
-     */
-    public void setResources(final List<SoapResource> resources) {
-        this.resources = resources;
-    }
-
-    /**
      * The status count is used in the GUI to information the user on the SOAP operation status distribution.
      * @return The status counts.
      */
     @XmlTransient
     public Map<SoapOperationStatus, Integer> getStatusCount() {
         return statusCount;
-    }
-
-    /**
-     * Sets a new value to the statusCount variable
-     * @param statusCount The new value to statusCount
-     */
-    public void setStatusCount(Map<SoapOperationStatus, Integer> statusCount) {
-        this.statusCount = statusCount;
     }
 
     public static Builder builder() {

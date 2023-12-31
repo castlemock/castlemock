@@ -59,18 +59,20 @@ public class ReadSoapOperationServiceTest {
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithOperationId(operation.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(operation, result.getOutput().getOperation());
+        Assert.assertEquals(operation.toBuilder()
+                .mockResponses(List.of(mockResponse))
+                .build(), result.getOutput().getOperation());
         Assert.assertNull(operation.getDefaultResponseName());
     }
 
     @Test
     public void testProcessWithDefaultXPathResponse(){
-        final SoapOperation operation = SoapOperationTestBuilder.builder().build();
         final SoapMockResponse mockResponse = SoapMockResponseTestBuilder.builder().build();
+        final SoapOperation operation = SoapOperationTestBuilder.builder()
+                .defaultMockResponseId(mockResponse.getId())
+                .build();
         final String projectId = "SOAP PROJECT";
         final String portId = "SOAP PORT";
-
-        operation.setDefaultMockResponseId(mockResponse.getId());
 
         final ReadSoapOperationInput input = ReadSoapOperationInput.builder()
                 .projectId(projectId)
@@ -87,8 +89,10 @@ public class ReadSoapOperationServiceTest {
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithOperationId(operation.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(operation, result.getOutput().getOperation());
-        Assert.assertEquals(mockResponse.getName(), operation.getDefaultResponseName());
+        Assert.assertEquals(operation.toBuilder()
+                .defaultResponseName(mockResponse.getName())
+                .mockResponses(List.of(mockResponse))
+                .build(), result.getOutput().getOperation());
     }
 
 }
