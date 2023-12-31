@@ -230,7 +230,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 }
             }
 
-            return new ResponseEntity<String>(response.getBody(), responseHeaders, HttpStatus.valueOf(response.getHttpStatusCode()));
+            return new ResponseEntity<>(response.getBody(), responseHeaders, HttpStatus.valueOf(response.getHttpStatusCode()));
         } finally {
             final RestEvent event = RestEvent.builder()
                     .id(IdUtility.generateId())

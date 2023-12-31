@@ -81,9 +81,9 @@ public class RestProjectRepositoryTest {
         final RestProject restProject = save();
         final List<RestProject> restProjects = repository.findAll();
         Assert.assertEquals(restProjects.size(), 1);
-        Assert.assertEquals(restProjects.get(0).getId(), restProject.getId());
-        Assert.assertEquals(restProjects.get(0).getDescription(), restProject.getDescription());
-        Assert.assertEquals(restProjects.get(0).getName(), restProject.getName());
+        Assert.assertEquals(restProjects.getFirst().getId(), restProject.getId());
+        Assert.assertEquals(restProjects.getFirst().getDescription(), restProject.getDescription());
+        Assert.assertEquals(restProjects.getFirst().getName(), restProject.getName());
     }
 
     @Test

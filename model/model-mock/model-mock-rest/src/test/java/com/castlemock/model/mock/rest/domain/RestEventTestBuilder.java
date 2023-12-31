@@ -14,7 +14,6 @@ public final class RestEventTestBuilder {
                 .id("REST EVENT")
                 .projectId("Project id")
                 .request(RestRequestTestBuilder.builder().build())
-                .resourceLink("Resource link")
                 .response(RestResponseTestBuilder.builder().build())
                 .applicationId("Application id")
                 .resourceId("Resource id")

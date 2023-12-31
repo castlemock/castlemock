@@ -121,10 +121,12 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
         final User.Builder userBuilder = user.toBuilder()
                 .id(userId)
                 .username(updatedUser.getUsername())
-                .email(updatedUser.getEmail())
+                .email(updatedUser.getEmail()
+                        .orElse(null))
                 .status(updatedUser.getStatus())
                 .role(updatedUser.getRole())
-                .fullName(updatedUser.getFullName())
+                .fullName(updatedUser.getFullName()
+                        .orElse(null))
                 .updated(updatedTimestamp);
 
         if(updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()){

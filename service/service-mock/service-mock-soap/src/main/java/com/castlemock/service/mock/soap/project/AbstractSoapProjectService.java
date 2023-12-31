@@ -115,7 +115,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
         final SoapProject project = find(soapProjectId);
         return Optional.of(super.save(project.toBuilder()
                 .name(updatedProject.getName())
-                .description(updatedProject.getDescription())
+                .description(updatedProject.getDescription().orElse(null))
                 .build()));
     }
 

@@ -34,7 +34,6 @@ public abstract class Event {
     protected String resourceName;
     protected Date startDate;
     protected Date endDate;
-    protected String resourceLink;
 
     protected Event() {
 
@@ -42,7 +41,6 @@ public abstract class Event {
 
     protected Event(final Builder<?> builder){
         this.resourceName = Objects.requireNonNull(builder.resourceName, "resourceName");
-        this.resourceLink = builder.resourceLink;
         this.id = Objects.requireNonNull(builder.id, "id");
         this.startDate = Objects.requireNonNull(builder.startDate, "startDate");
         this.endDate = Objects.requireNonNull(builder.endDate, "endDate");
@@ -68,11 +66,6 @@ public abstract class Event {
         return endDate;
     }
 
-    @XmlElement
-    public String getResourceLink() {
-        return resourceLink;
-    }
-
     @SuppressWarnings("unchecked")
     public static class Builder<B extends Builder<B>> {
 
@@ -80,7 +73,6 @@ public abstract class Event {
         private String resourceName;
         private Date startDate;
         private Date endDate;
-        private String resourceLink;
 
         protected Builder() {
         }
@@ -102,11 +94,6 @@ public abstract class Event {
 
         public B endDate(final Date endDate) {
             this.endDate = endDate;
-            return (B) this;
-        }
-
-        public B resourceLink(final String resourceLink) {
-            this.resourceLink = resourceLink;
             return (B) this;
         }
 

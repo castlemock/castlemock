@@ -77,13 +77,6 @@ public class RestEventServiceAdapterTest {
     }
 
     @Test
-    public void testGenerateResourceLink(){
-        final RestEvent restEvent = RestEventTestBuilder.builder().build();
-        final String generatedResourceLink = serviceAdapter.generateResourceLink(restEvent);
-        Assert.assertEquals("/web/rest/project/" + restEvent.getProjectId() + "/application/" + restEvent.getApplicationId() + "/resource/" + restEvent.getResourceId() + "/method/" + restEvent.getMethodId(), generatedResourceLink);
-    }
-
-    @Test
     public void testClearAll(){
         serviceAdapter.clearAll();
         Mockito.verify(serviceProcessor, Mockito.times(1)).process(Mockito.any(ClearAllRestEventInput.class));

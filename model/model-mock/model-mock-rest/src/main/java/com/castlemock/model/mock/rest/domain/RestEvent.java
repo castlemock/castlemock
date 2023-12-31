@@ -118,7 +118,6 @@ public class RestEvent extends Event {
                 .id(this.id)
                 .startDate(this.startDate)
                 .endDate(this.endDate)
-                .resourceLink(this.resourceLink)
                 .resourceName(this.resourceName)
                 .request(this.request)
                 .response(this.response)

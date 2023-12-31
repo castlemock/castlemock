@@ -14,7 +14,6 @@ public final class OverviewEventTestBuilder {
                 .id(IdUtility.generateId())
                 .startDate(new Date())
                 .endDate(new Date())
-                .resourceLink("Resource link")
                 .resourceName("Resource name")
                 .type("test");
     }

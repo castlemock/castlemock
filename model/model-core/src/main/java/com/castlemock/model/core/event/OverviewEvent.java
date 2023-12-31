@@ -1,9 +1,9 @@
 package com.castlemock.model.core.event;
 
+import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
 public class OverviewEvent extends Event {
-
 
     private String type;
 
@@ -16,6 +16,7 @@ public class OverviewEvent extends Event {
         this.type = Objects.requireNonNull(builder.type, "type");
     }
 
+    @XmlElement
     public String getType() {
         return type;
     }
@@ -28,7 +29,6 @@ public class OverviewEvent extends Event {
         return new OverviewEvent.Builder()
                 .id(other.id)
                 .resourceName(other.getResourceName())
-                .resourceLink(other.getResourceLink())
                 .startDate(other.startDate)
                 .endDate(other.endDate);
 
@@ -37,6 +37,7 @@ public class OverviewEvent extends Event {
     public static final class Builder extends Event.Builder<Builder> {
 
         private String type;
+
         private Builder() {
         }
 

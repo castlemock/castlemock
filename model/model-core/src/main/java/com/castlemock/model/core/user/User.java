@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The User DTO class is a DTO (Data transfer object) for the user class
@@ -87,8 +88,8 @@ public class User {
      * @return Returns user email
      */
     @XmlElement
-    public String getEmail() {
-        return email;
+    public Optional<String> getEmail() {
+        return Optional.ofNullable(email);
     }
 
     /**
@@ -101,8 +102,8 @@ public class User {
     }
 
     @XmlElement
-    public String getFullName() {
-        return fullName;
+    public Optional<String> getFullName() {
+        return Optional.ofNullable(fullName);
     }
 
     /**

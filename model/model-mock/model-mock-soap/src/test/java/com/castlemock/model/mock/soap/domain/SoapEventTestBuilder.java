@@ -16,7 +16,6 @@ public final class SoapEventTestBuilder {
                 .portId("PortId")
                 .projectId("Project id")
                 .request(SoapRequestTestBuilder.builder().build())
-                .resourceLink("resourcelink")
                 .response(SoapResponseTestBuilder.builder().build())
                 .resourceName("resource name")
                 .startDate(new Date());

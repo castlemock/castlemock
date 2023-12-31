@@ -105,7 +105,6 @@ public class SoapEvent extends Event {
                 .id(this.id)
                 .startDate(this.startDate)
                 .endDate(this.endDate)
-                .resourceLink(this.resourceLink)
                 .resourceName(this.resourceName)
                 .portId(this.portId)
                 .operationId(this.operationId)

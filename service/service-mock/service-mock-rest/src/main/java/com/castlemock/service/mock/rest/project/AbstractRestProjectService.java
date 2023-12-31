@@ -116,7 +116,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         final RestProject project = find(restProjectId);
         return Optional.ofNullable(super.save(project.toBuilder()
                 .name(updatedProject.getName())
-                .description(updatedProject.getDescription())
+                .description(updatedProject.getDescription().orElse(null))
                 .build()));
     }
 

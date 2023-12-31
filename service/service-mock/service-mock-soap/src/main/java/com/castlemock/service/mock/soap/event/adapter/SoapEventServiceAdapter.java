@@ -26,8 +26,8 @@ import com.castlemock.service.mock.soap.event.output.ReadAllSoapEventOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * The SOAP event service adapter is an adapter class that provides functionality to
@@ -57,33 +57,12 @@ public class SoapEventServiceAdapter implements EventServiceAdapter<SoapEvent> {
     @Override
     public List<SoapEvent> readAll() {
         final ReadAllSoapEventOutput output = serviceProcessor.process(ReadAllSoapEventInput.builder().build());
-        return output.getSoapEvents().stream()
-                .map(event -> event.toBuilder()
-                        .resourceLink(generateResourceLink(event))
-                        .build())
-                .collect(Collectors.toList());
+        return new ArrayList<>(output.getSoapEvents());
     }
 
     @Override
     public String getType() {
         return "soap";
-    }
-
-    /**
-     * The method provides the functionality to generate resource link for an incoming
-     * SOAP event. The resource link will be based on the following:
-     * <ul>
-     *   <li>Project id</li>
-     *   <li>Port id</li>
-     *   <li>Operation id</li>
-     * </ul>
-     * @param soapEvent The incoming SOAP event which will be used to generate the resource link
-     * @return The resource link generated based on the incoming SOAP event
-     */
-    @Override
-    public String generateResourceLink(SoapEvent soapEvent) {
-        return SLASH + WEB + SLASH + SOAP + SLASH + PROJECT + SLASH + soapEvent.getProjectId() + SLASH + PORT + SLASH +
-                soapEvent.getPortId() + SLASH + OPERATION + SLASH + soapEvent.getOperationId();
     }
 
     /**

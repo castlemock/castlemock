@@ -307,7 +307,6 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                     .projectId(soapProjectId)
                     .portId(soapPortId)
                     .operationId(soapOperation.getId())
-                    .resourceLink("INVESTIGATE") //
                     .build();
             serviceProcessor.processAsync(CreateSoapEventInput.builder()
                     .soapEvent(event)

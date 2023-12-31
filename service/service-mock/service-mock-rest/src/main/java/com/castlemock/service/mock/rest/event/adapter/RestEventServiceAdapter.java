@@ -25,8 +25,8 @@ import com.castlemock.service.mock.rest.event.output.ReadAllRestEventOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * The REST event service adapter provides the functionality to translate incoming
@@ -39,13 +39,6 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEvent> {
 
     @Autowired
     private ServiceProcessor serviceProcessor;
-    private static final String SLASH = "/";
-    private static final String WEB = "web";
-    private static final String PROJECT = "project";
-    private static final String REST = "rest";
-    private static final String APPLICATION = "application";
-    private static final String RESOURCE = "resource";
-    private static final String METHOD = "method";
 
     /**
      * The method is responsible for retrieving all instances from all the various service types.
@@ -54,33 +47,12 @@ public class RestEventServiceAdapter implements EventServiceAdapter<RestEvent> {
     @Override
     public List<RestEvent> readAll() {
         final ReadAllRestEventOutput output = serviceProcessor.process(ReadAllRestEventInput.builder().build());
-        return output.getRestEvents().stream()
-                .map(event -> event.toBuilder()
-                        .resourceLink(generateResourceLink(event))
-                        .build())
-                .collect(Collectors.toList());
+        return new ArrayList<>(output.getRestEvents());
     }
 
     @Override
     public String getType() {
         return "rest";
-    }
-
-    /**
-     * The method provides the functionality to generate resource link for an incoming
-     * REST event. The resource link will be based on the following:
-     * <ul>
-     *   <li>Project id</li>
-     *   <li>Application id</li>
-     *   <li>Resource id</li>
-     *   <li>Method id</li>
-     * </ul>
-     * @param restEvent The incoming REST event which will be used to generate the resource link
-     * @return The resource link generated based on the incoming REST event
-     */
-    @Override
-    public String generateResourceLink(RestEvent restEvent) {
-        return SLASH + WEB + SLASH + REST + SLASH + PROJECT + SLASH + restEvent.getProjectId() + SLASH + APPLICATION + SLASH + restEvent.getApplicationId() + SLASH + RESOURCE + SLASH + restEvent.getResourceId() + SLASH + METHOD + SLASH + restEvent.getMethodId();
     }
 
     /**

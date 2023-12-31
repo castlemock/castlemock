@@ -55,7 +55,7 @@ public class CreateRestProjectServiceTest {
         Mockito.when(repository.save(Mockito.any(RestProject.class))).thenReturn(project);
         final CreateRestProjectInput input = CreateRestProjectInput.builder()
                 .name(project.getName())
-                .description(project.getDescription())
+                .description(project.getDescription().orElse(null))
                 .build();
         final ServiceTask<CreateRestProjectInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateRestProjectOutput> serviceResult = service.process(serviceTask);

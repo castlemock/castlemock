@@ -30,14 +30,6 @@ import com.castlemock.model.core.event.Event;
  */
 public interface EventServiceAdapter<D extends Event> extends ServiceAdapter<Event, D, String> {
 
-    /**
-     * The method provides the functionality to generate resource link for an incoming
-     * event. The resource link will be based on event attributes.
-     * @param event The incoming event which will be used to generate the resource link
-     * @return The resource link generated based on the incoming event
-     */
-    String generateResourceLink(D event);
-
 
     /**
      * The method will clear and remove all previous events.

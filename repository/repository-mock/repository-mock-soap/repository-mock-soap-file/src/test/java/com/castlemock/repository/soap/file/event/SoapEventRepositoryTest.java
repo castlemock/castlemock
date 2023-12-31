@@ -76,10 +76,6 @@ public class SoapEventRepositoryTest {
         Assert.assertEquals(returnedSoapEvent.getOperationId(), soapEvent.getOperationId());
         Assert.assertEquals(returnedSoapEvent.getPortId(), soapEvent.getPortId());
         Assert.assertEquals(returnedSoapEvent.getResourceName(), soapEvent.getResourceName());
-
-
-        //Assert.assertEquals(returnedSoapEvent.getResourceLink(), soapEvent.getResourceLink());
-        //Assert.assertEquals(returnedSoapEvent.getTypeIdentifier(), soapEvent.getTypeIdentifier());
     }
 
     @Test
@@ -87,20 +83,18 @@ public class SoapEventRepositoryTest {
         final SoapEvent soapEvent = save();
         final List<SoapEvent> soapEvents = repository.findAll();
         Assert.assertEquals(soapEvents.size(), 1);
-        Assert.assertEquals(soapEvents.get(0).getProjectId(), soapEvent.getProjectId());
-        Assert.assertEquals(soapEvents.get(0).getId(), soapEvent.getId());
-        Assert.assertEquals(soapEvents.get(0).getResourceName(), soapEvent.getResourceName());
-        Assert.assertEquals(soapEvents.get(0).getOperationId(), soapEvent.getOperationId());
-        Assert.assertEquals(soapEvents.get(0).getPortId(), soapEvent.getPortId());
-        Assert.assertEquals(soapEvents.get(0).getResourceName(), soapEvent.getResourceName());
-
-        //Assert.assertEquals(soapEvents.get(0).getResourceLink(), soapEvent.getResourceLink());
-        //Assert.assertEquals(soapEvents.get(0).getTypeIdentifier(), soapEvent.getTypeIdentifier());
+        Assert.assertEquals(soapEvents.getFirst().getProjectId(), soapEvent.getProjectId());
+        Assert.assertEquals(soapEvents.getFirst().getId(), soapEvent.getId());
+        Assert.assertEquals(soapEvents.getFirst().getResourceName(), soapEvent.getResourceName());
+        Assert.assertEquals(soapEvents.getFirst().getOperationId(), soapEvent.getOperationId());
+        Assert.assertEquals(soapEvents.getFirst().getPortId(), soapEvent.getPortId());
+        Assert.assertEquals(soapEvents.getFirst().getResourceName(), soapEvent.getResourceName());
+        
     }
 
     @Test
     public void testSave(){
-        final SoapEvent soapEvent = save();
+        save();
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(SoapEventFileRepository.SoapEventFile.class), Mockito.anyString());
     }
 

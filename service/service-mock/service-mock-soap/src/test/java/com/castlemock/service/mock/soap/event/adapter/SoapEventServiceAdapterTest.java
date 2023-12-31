@@ -76,13 +76,6 @@ public class SoapEventServiceAdapterTest {
     }
 
     @Test
-    public void testGenerateResourceLink(){
-        final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
-        final String generatedResourceLink = serviceAdapter.generateResourceLink(soapEvent);
-        Assert.assertEquals("/web/soap/project/" + soapEvent.getProjectId() + "/port/" + soapEvent.getPortId() + "/operation/" + soapEvent.getOperationId(), generatedResourceLink);
-    }
-
-    @Test
     public void testClearAll(){
         serviceAdapter.clearAll();
         Mockito.verify(serviceProcessor, Mockito.times(1)).process(Mockito.any(ClearAllSoapEventInput.class));

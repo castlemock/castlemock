@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The Project DTO is a DTO (Data transfer object) class for the project class.
@@ -44,7 +45,7 @@ public class Project {
         this.name = Objects.requireNonNull(builder.name, "name");
         this.updated = Objects.requireNonNull(builder.updated, "updated");
         this.created = Objects.requireNonNull(builder.created, "created");
-        this.description = Objects.requireNonNull(builder.description, "description");
+        this.description = builder.description;
     }
 
     @XmlElement
@@ -68,8 +69,8 @@ public class Project {
     }
 
     @XmlElement
-    public String getDescription() {
-        return description;
+    public Optional<String> getDescription() {
+        return Optional.ofNullable(description);
     }
 
     @Override
