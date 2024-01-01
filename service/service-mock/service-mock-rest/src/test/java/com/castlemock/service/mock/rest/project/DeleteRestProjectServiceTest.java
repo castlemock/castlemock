@@ -43,6 +43,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -81,10 +82,10 @@ public class DeleteRestProjectServiceTest {
         final RestMethod method = RestMethodTestBuilder.builder().build();
         final RestMockResponse mockResponse = RestMockResponseTestBuilder.builder().build();
 
-        Mockito.when(applicationRepository.findWithProjectId(project.getId())).thenReturn(Arrays.asList(application));
-        Mockito.when(resourceRepository.findWithApplicationId(application.getId())).thenReturn(Arrays.asList(resource));
-        Mockito.when(methodRepository.findWithResourceId(resource.getId())).thenReturn(Arrays.asList(method));
-        Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(Arrays.asList(mockResponse));
+        Mockito.when(applicationRepository.findWithProjectId(project.getId())).thenReturn(List.of(application));
+        Mockito.when(resourceRepository.findWithApplicationId(application.getId())).thenReturn(List.of(resource));
+        Mockito.when(methodRepository.findWithResourceId(resource.getId())).thenReturn(List.of(method));
+        Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(List.of(mockResponse));
 
         final DeleteRestProjectInput input = DeleteRestProjectInput.builder()
                 .restProjectId(project.getId())

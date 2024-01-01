@@ -77,8 +77,8 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
         final org.springframework.core.env.Profiles fileProfiles =
                 org.springframework.core.env.Profiles.of(Profiles.FILE);
 
-        builder = builder.showCastleMockHomeDirectory(springEnvironment.acceptsProfiles(mongoProfiles));
-        builder = builder.showMongoProperties(springEnvironment.acceptsProfiles(fileProfiles));
+        builder.showCastleMockHomeDirectory(springEnvironment.acceptsProfiles(mongoProfiles));
+        builder.showMongoProperties(springEnvironment.acceptsProfiles(fileProfiles));
         return createServiceResult(GetSystemInformationOutput.builder()
                 .systemInformation(builder.build())
                 .build());

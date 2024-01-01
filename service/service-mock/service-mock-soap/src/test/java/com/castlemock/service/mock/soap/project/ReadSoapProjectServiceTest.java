@@ -25,6 +25,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class ReadSoapProjectServiceTest {
 
@@ -61,9 +63,9 @@ public class ReadSoapProjectServiceTest {
         final ServiceTask<ReadSoapProjectInput> serviceTask = ServiceTask.of(input, "user");
 
         Mockito.when(repository.findOne(project.getId())).thenReturn(project);
-        Mockito.when(portRepository.findWithProjectId(project.getId())).thenReturn(Arrays.asList(port));
-        Mockito.when(resourceRepository.findWithProjectId(project.getId())).thenReturn(Arrays.asList(resource));
-        Mockito.when(operationRepository.findWithPortId(port.getId())).thenReturn(Arrays.asList(operation));
+        Mockito.when(portRepository.findWithProjectId(project.getId())).thenReturn(List.of(port));
+        Mockito.when(resourceRepository.findWithProjectId(project.getId())).thenReturn(Collections.singletonList(resource));
+        Mockito.when(operationRepository.findWithPortId(port.getId())).thenReturn(List.of(operation));
         final ServiceResult<ReadSoapProjectOutput> result = service.process(serviceTask);
 
         Mockito.verify(repository, Mockito.times(1)).findOne(project.getId());

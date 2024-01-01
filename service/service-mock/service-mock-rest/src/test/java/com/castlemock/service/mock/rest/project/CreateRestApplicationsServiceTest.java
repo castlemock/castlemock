@@ -62,7 +62,7 @@ public class CreateRestApplicationsServiceTest {
                 .build();
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(restProject);
 
-        final List<RestApplication> restApplications = new ArrayList<RestApplication>();
+        final List<RestApplication> restApplications = new ArrayList<>();
         for(int index = 0; index < 3; index++){
             final RestApplication restApplication = RestApplicationTestBuilder.builder().build();
             restApplications.add(restApplication);

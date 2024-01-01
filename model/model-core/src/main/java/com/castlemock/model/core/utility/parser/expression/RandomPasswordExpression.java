@@ -47,10 +47,10 @@ public class RandomPasswordExpression extends AbstractExpression {
         final ExpressionArgument<?> minArgument = input.getArgument(MIN_ARGUMENT);
         final ExpressionArgument<?> maxArgument = input.getArgument(MAX_ARGUMENT);
 
-        if(minArgument != null && minArgument instanceof ExpressionArgumentNumber){
+        if(minArgument instanceof ExpressionArgumentNumber){
             minLength = ((ExpressionArgumentNumber) minArgument).getValue().intValue();
         }
-        if(maxArgument != null && maxArgument instanceof ExpressionArgumentNumber){
+        if(maxArgument instanceof ExpressionArgumentNumber){
             maxLength = ((ExpressionArgumentNumber) maxArgument).getValue().intValue();
         }
 

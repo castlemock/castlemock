@@ -161,21 +161,18 @@ public final class ExpressionInputParser {
      *                      will be added to.
      */
     private static void convert(final ExpressionArgument<?> argument, final StringBuilder stringBuilder){
-        if(argument instanceof ExpressionArgumentString){
+        if(argument instanceof ExpressionArgumentString argumentString){
             // String
-            final ExpressionArgumentString argumentString = (ExpressionArgumentString) argument;
             stringBuilder.append(ARGUMENT_QUOTE_CHARACTER);
             stringBuilder.append(argumentString.getValue());
             stringBuilder.append(ARGUMENT_QUOTE_CHARACTER);
 
-        } else if(argument instanceof ExpressionArgumentNumber){
+        } else if(argument instanceof ExpressionArgumentNumber argumentNumber){
             // Number
-            final ExpressionArgumentNumber argumentNumber = (ExpressionArgumentNumber) argument;
             stringBuilder.append(argumentNumber.getValue());
 
-        } else if(argument instanceof ExpressionArgumentArray){
+        } else if(argument instanceof ExpressionArgumentArray argumentArray){
             // Array
-            ExpressionArgumentArray argumentArray = (ExpressionArgumentArray) argument;
             Iterator<ExpressionArgument<?>> iterator = argumentArray.iterator();
             stringBuilder.append(ARRAY_START_CHARACTER);
 

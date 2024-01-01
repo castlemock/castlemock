@@ -57,7 +57,7 @@ public class HttpMessageSupportTest {
 
         Assert.assertEquals(headerNames.size(), httpHeaders.size());
 
-        HttpHeader contentTypeHeader = httpHeaders.get(0);
+        HttpHeader contentTypeHeader = httpHeaders.getFirst();
         HttpHeader acceptHeader = httpHeaders.get(1);
         HttpHeader contentLengthHeader = httpHeaders.get(2);
 
@@ -75,10 +75,10 @@ public class HttpMessageSupportTest {
     @Test
     public void testExtractHttpHeadersConnection(){
         final Map<String, List<String>> headers = new HashMap<>();
-        headers.put("Content-Type", Arrays.asList("application/xml", "application/json"));
-        headers.put("Accept", Arrays.asList("application/json"));
-        headers.put("Content-Length", Arrays.asList("1024"));
-        headers.put("Transfer-Encoding", Arrays.asList("gzip"));
+        headers.put("Content-Type", List.of("application/xml", "application/json"));
+        headers.put("Accept", List.of("application/json"));
+        headers.put("Content-Length", List.of("1024"));
+        headers.put("Transfer-Encoding", List.of("gzip"));
 
         final HttpURLConnection httpURLConnection = Mockito.mock(HttpURLConnection.class);
         Mockito.when(httpURLConnection.getHeaderFields()).thenReturn(headers);
@@ -88,7 +88,7 @@ public class HttpMessageSupportTest {
         // Should ignore the Content-Length and Transfer-Encoding headers
         Assert.assertEquals(3, httpHeaders.size());
 
-        HttpHeader acceptHeader = httpHeaders.get(0);
+        HttpHeader acceptHeader = httpHeaders.getFirst();
         HttpHeader contentTypeXmlHeader = httpHeaders.get(1);
         HttpHeader contentTypeJsonHeader = httpHeaders.get(2);
 
@@ -117,8 +117,7 @@ public class HttpMessageSupportTest {
         }
 
         try {
-            final String noValue = null;
-            Mockito.when(reader.readLine()).thenReturn(readerOutput, noValue);
+            Mockito.when(reader.readLine()).thenReturn(readerOutput, (String) null);
         } catch (IOException e) {
             Assert.fail("Unable to mock readLine method for BufferedReader");
         }
@@ -140,7 +139,7 @@ public class HttpMessageSupportTest {
 
         Assert.assertEquals(parameterNames.size(), parameters.size());
 
-        HttpParameter parameter1 = parameters.get(0);
+        HttpParameter parameter1 = parameters.getFirst();
         HttpParameter parameter2 = parameters.get(1);
 
         Assert.assertEquals("Parameter1", parameter1.getName());
@@ -161,7 +160,7 @@ public class HttpMessageSupportTest {
 
         Assert.assertEquals(2, parameters.size());
 
-        HttpParameter parameter1 = parameters.get(0);
+        HttpParameter parameter1 = parameters.getFirst();
         HttpParameter parameter2 = parameters.get(1);
 
         Assert.assertEquals("Parameter1", parameter1.getName());
@@ -191,31 +190,32 @@ public class HttpMessageSupportTest {
 
     @Test
     public void testGetMTOMBody(){
-        String body = "------=_Part_64_1526053806.1517665317492\n" +
-                "Content-Type: text/xml; charset=UTF-8\n" +
-                "Content-Transfer-Encoding: 8bit\n" +
-                "Content-ID: <test@castlemock.org>\n" +
-                "\n" +
-                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cas=\"http://castlemock.org/\">\n" +
-                "   <soapenv:Header/>\n" +
-                "   <soapenv:Body>\n" +
-                "      <cas:TestService>\n" +
-                "         <Variable1>?</Variable1>\n" +
-                "         <Variable2>\n" +
-                "            <Variable1>?</Variable1>\n" +
-                "            <Variable2>?</Variable2>\n" +
-                "            <files/>\n" +
-                "         </Variable2>\n" +
-                "      </cas:Test>\n" +
-                "   </soapenv:Body>\n" +
-                "</soapenv:Envelope>\n" +
-                "------=_Part_64_1526053806.1517665317492\n" +
-                "Content-Type: text/plain; charset=us-ascii; name=\"example\"\n" +
-                "Content-ID: <example>\n" +
-                "Content-Disposition: attachment; name=\"example.txt\"; filename=\"example.txt\"\n" +
-                "\n" +
-                "This is an example\n" +
-                "------=_Part_24_1742827313.1517654770545--";
+        String body = """
+                ------=_Part_64_1526053806.1517665317492
+                Content-Type: text/xml; charset=UTF-8
+                Content-Transfer-Encoding: 8bit
+                Content-ID: <test@castlemock.org>
+
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cas="http://castlemock.org/">
+                   <soapenv:Header/>
+                   <soapenv:Body>
+                      <cas:TestService>
+                         <Variable1>?</Variable1>
+                         <Variable2>
+                            <Variable1>?</Variable1>
+                            <Variable2>?</Variable2>
+                            <files/>
+                         </Variable2>
+                      </cas:Test>
+                   </soapenv:Body>
+                </soapenv:Envelope>
+                ------=_Part_64_1526053806.1517665317492
+                Content-Type: text/plain; charset=us-ascii; name="example"
+                Content-ID: <example>
+                Content-Disposition: attachment; name="example.txt"; filename="example.txt"
+
+                This is an example
+                ------=_Part_24_1742827313.1517654770545--""";
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
         final Reader reader = new StringReader(body);
         final BufferedReader bufferedReader = new BufferedReader(reader);
@@ -266,8 +266,8 @@ public class HttpMessageSupportTest {
         List<ContentEncoding> contentEncodings = HttpMessageSupport.extractContentEncoding(httpURLConnection);
 
         Assert.assertEquals(2, contentEncodings.size());
-        Assert.assertEquals(true, contentEncodings.contains(ContentEncoding.GZIP));
-        Assert.assertEquals(true, contentEncodings.contains(ContentEncoding.DEFLATE));
+        Assert.assertTrue(contentEncodings.contains(ContentEncoding.GZIP));
+        Assert.assertTrue(contentEncodings.contains(ContentEncoding.DEFLATE));
     }
 
     @Test
@@ -277,7 +277,7 @@ public class HttpMessageSupportTest {
         List<ContentEncoding> contentEncodings = HttpMessageSupport.extractContentEncoding(httpURLConnection);
 
         Assert.assertEquals(1, contentEncodings.size());
-        Assert.assertEquals(false, contentEncodings.contains(ContentEncoding.GZIP));
-        Assert.assertEquals(true, contentEncodings.contains(ContentEncoding.DEFLATE));
+        Assert.assertFalse(contentEncodings.contains(ContentEncoding.GZIP));
+        Assert.assertTrue(contentEncodings.contains(ContentEncoding.DEFLATE));
     }
 }

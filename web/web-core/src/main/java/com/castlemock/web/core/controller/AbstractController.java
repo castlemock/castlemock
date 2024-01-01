@@ -17,8 +17,6 @@
 package com.castlemock.web.core.controller;
 
 import com.castlemock.model.core.ServiceProcessor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Objects;
 
@@ -29,12 +27,7 @@ import java.util.Objects;
  */
 public abstract class AbstractController {
 
-    @Value("${server.mode.demo}")
-    protected boolean demoMode;
-    @Value("${server.endpoint.address:}")
-    protected String endpointAddress;
-    @Autowired
-    protected ServiceProcessor serviceProcessor;
+    protected final ServiceProcessor serviceProcessor;
 
     protected static final String CONTENT_TYPE = "Content-Type";
     protected static final String ACCEPT_HEADER = "Accept";
@@ -47,7 +40,7 @@ public abstract class AbstractController {
     protected static final int DEFAULT_ECHO_RESPONSE_CODE = 200;
 
     protected AbstractController(final ServiceProcessor serviceProcessor){
-        this.serviceProcessor = Objects.requireNonNull(serviceProcessor);
+        this.serviceProcessor = Objects.requireNonNull(serviceProcessor, "serviceProcessor");
     }
 
 }

@@ -63,22 +63,22 @@ public class RandomEmailExpression extends AbstractExpression {
         int minLength = MIN_LENGTH;
         int maxLength = MAX_LENGTH;
 
-        if(domainArgument != null && domainArgument instanceof ExpressionArgumentString){
+        if(domainArgument instanceof ExpressionArgumentString){
             domain = ((ExpressionArgumentString) domainArgument).getValue();
         } else {
             domain = randomString(RANDOM.nextInt(MAX_LENGTH) + MIN_LENGTH);
         }
 
-        if(topDomainArgument != null && topDomainArgument instanceof ExpressionArgumentString){
+        if(topDomainArgument instanceof ExpressionArgumentString){
             topDomain = ((ExpressionArgumentString) topDomainArgument).getValue();
         } else {
             topDomain = DEFAULT_TOP_DOMAIN;
         }
 
-        if(minArgument != null && minArgument instanceof ExpressionArgumentNumber){
+        if(minArgument instanceof ExpressionArgumentNumber){
             minLength = ((ExpressionArgumentNumber) minArgument).getValue().intValue();
         }
-        if(maxArgument != null && maxArgument instanceof ExpressionArgumentNumber){
+        if(maxArgument instanceof ExpressionArgumentNumber){
             maxLength = ((ExpressionArgumentNumber) maxArgument).getValue().intValue();
         }
 

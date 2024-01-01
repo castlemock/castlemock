@@ -73,7 +73,7 @@ public class HttpMessageSupport {
     public static String getBody(final HttpServletRequest httpServletRequest) {
         BufferedReader reader = null;
         try {
-            final Deque<String> lines = new ArrayDeque<String>();
+            final Deque<String> lines = new ArrayDeque<>();
             reader = httpServletRequest.getReader();
             String line;
 
@@ -116,7 +116,7 @@ public class HttpMessageSupport {
      * @return A list of HTTP headers extracted from the provided httpServletRequest
      */
     public static List<HttpHeader> extractHttpHeaders(final HttpServletRequest httpServletRequest){
-        final List<HttpHeader> httpHeaders = new ArrayList<HttpHeader>();
+        final List<HttpHeader> httpHeaders = new ArrayList<>();
         final Enumeration<String> headers = httpServletRequest.getHeaderNames();
         while(headers.hasMoreElements()){
             final String headerName = headers.nextElement();
@@ -136,7 +136,7 @@ public class HttpMessageSupport {
      * @return A list of HTTP headers extracted from the provided connection
      */
     public static List<HttpHeader> extractHttpHeaders(final HttpURLConnection connection){
-        final List<HttpHeader> httpHeaders = new ArrayList<HttpHeader>();
+        final List<HttpHeader> httpHeaders = new ArrayList<>();
         for(Map.Entry<String, List<String>> header : connection.getHeaderFields().entrySet()){
             for(String headerValue : header.getValue()){
                 String headerName = header.getKey();

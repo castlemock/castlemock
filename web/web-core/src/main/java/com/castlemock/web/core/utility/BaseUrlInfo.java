@@ -17,7 +17,7 @@ public class BaseUrlInfo {
 		this.serverPort = serverPort;
 		this.contextPath = contextPath;
 		this.serverUrl = buildServerUrl(protocol, serverName, serverPort);
-		this.baseUrl = new StringBuilder().append(this.serverUrl).append(contextPath).toString();
+		this.baseUrl = this.serverUrl + contextPath;
 	}
 
 	private String buildServerUrl(String protocol, String hostname, int port) {
@@ -71,20 +71,20 @@ public class BaseUrlInfo {
 	}
 
 	/**
-	 * Returns the server url, without the application context path. For example http://localhost:8080 or https://www.castlemock.com
-	 * 
-	 * @return The application server url
-	 */
+     * Returns the server url, without the application context path. For example <a href="http://localh<a href="ost:8080">...</a>">or https</a>://www.castlemock.com
+     *
+     * @return The application server url
+     */
 
 	public String getServerUrl() {
 		return serverUrl;
 	}
 
 	/**
-	 * Returns the application base url, with the application context path, if any. For example http://localhost:8080/castlemock or https://www.castlemock.com/castlemock
-	 * 
-	 * @return The application base url
-	 */
+     * Returns the application base url, with the application context path, if any. For example <a href="http://localhost:8080/ca<a href="stlemock">...</a>">or https://www.cast</a>lemock.com/castlemock
+     *
+     * @return The application base url
+     */
 	public String getBaseUrl() {
 		return baseUrl;
 	}

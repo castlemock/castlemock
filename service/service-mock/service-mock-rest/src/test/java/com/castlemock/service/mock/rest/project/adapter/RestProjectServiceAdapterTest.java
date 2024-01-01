@@ -84,7 +84,7 @@ public class RestProjectServiceAdapterTest {
                 .query("")
                 .build());
         Assert.assertEquals(returnedSearchResults.size(), searchResults.size());
-        final SearchResult returnedSearchResult = returnedSearchResults.get(0);
+        final SearchResult returnedSearchResult = returnedSearchResults.getFirst();
         Assert.assertEquals(returnedSearchResult.getLink(), searchResult.getLink());
         Assert.assertEquals(returnedSearchResult.getTitle(), searchResult.getTitle());
         Assert.assertEquals(returnedSearchResult.getDescription(), searchResult.getDescription());

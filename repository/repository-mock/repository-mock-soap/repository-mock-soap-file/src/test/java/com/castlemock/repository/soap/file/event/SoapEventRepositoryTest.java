@@ -58,7 +58,7 @@ public class SoapEventRepositoryTest {
 
     @Test
     public void testInitialize(){
-        List<SoapEvent> soapEvents = new ArrayList<SoapEvent>();
+        List<SoapEvent> soapEvents = new ArrayList<>();
         SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
         soapEvents.add(soapEvent);
         Mockito.when(fileRepositorySupport.load(SoapEvent.class, DIRECTORY, EXTENSION)).thenReturn(soapEvents);

@@ -49,18 +49,13 @@ public final class RestDefinitionConverterFactory {
      */
     public static RestDefinitionConverter getConverter(final RestDefinitionType converterType,
                                                        final FileManager fileManager){
-        switch (converterType){
-            case WADL:
-                return new WADLRestDefinitionConverter(fileManager);
-            case SWAGGER:
-                return new SwaggerRestDefinitionConverter();
-            case OPENAPI:
-                return new OpenApiRestDefinitionConverter();
-            case RAML:
-                return new RAMLRestDefinitionConverter();
-        }
+        return switch (converterType) {
+            case WADL -> new WADLRestDefinitionConverter(fileManager);
+            case SWAGGER -> new SwaggerRestDefinitionConverter();
+            case OPENAPI -> new OpenApiRestDefinitionConverter();
+            case RAML -> new RAMLRestDefinitionConverter();
+        };
 
-        throw new IllegalArgumentException("Invalid converter type: " + converterType);
     }
 
 }

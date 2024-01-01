@@ -40,21 +40,21 @@ public final class UpdateRestMethodInput implements Input {
     @NotNull
     private final String restMethodId;
     @NotNull
-    private String name;
+    private final String name;
     @NotNull
-    private HttpMethod httpMethod;
-    private String forwardedEndpoint;
+    private final HttpMethod httpMethod;
+    private final String forwardedEndpoint;
     @NotNull
-    private RestMethodStatus status;
+    private final RestMethodStatus status;
     @NotNull
-    private RestResponseStrategy responseStrategy;
+    private final RestResponseStrategy responseStrategy;
     @NotNull
-    private boolean simulateNetworkDelay;
+    private final boolean simulateNetworkDelay;
     @NotNull
-    private long networkDelay;
-    private String defaultMockResponseId;
+    private final long networkDelay;
+    private final String defaultMockResponseId;
     @NotNull
-    private boolean automaticForward;
+    private final boolean automaticForward;
 
     private UpdateRestMethodInput(final Builder builder) {
         this.restProjectId = Objects.requireNonNull(builder.restProjectId);

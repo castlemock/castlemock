@@ -24,7 +24,7 @@ public class OpenApiRestDefinitionConverterTest {
     @Test
     public void shouldConvertToRestApplications_givenFile() throws URISyntaxException {
         final URL url = OpenApiRestDefinitionConverter.class.getResource("petstore.json");
-        final File file = new File(url.toURI());
+        final File file = new File(Objects.requireNonNull(url).toURI());
         final List<RestApplication> restApplications = converter.convert(file, "1", false);
         this.verifyResult(restApplications, false);
     }
@@ -32,7 +32,7 @@ public class OpenApiRestDefinitionConverterTest {
     @Test
     public void shouldConvertToRestApplications_givenFile_WithGenerateResponseTrue() throws URISyntaxException {
         final URL url = OpenApiRestDefinitionConverter.class.getResource("petstore.json");
-        final File file = new File(url.toURI());
+        final File file = new File(Objects.requireNonNull(url).toURI());
         final List<RestApplication> restApplications = converter.convert(file, "1", true);
         this.verifyResult(restApplications, true);
     }
@@ -49,7 +49,7 @@ public class OpenApiRestDefinitionConverterTest {
     @Test
     public void shouldConvertToRestApplications_givenMalformedFile() throws URISyntaxException {
         final URL url = OpenApiRestDefinitionConverter.class.getResource("petstore_malformed_openapi.json");
-        final File file = new File(url.toURI());
+        final File file = new File(Objects.requireNonNull(url).toURI());
         final List<RestApplication> restApplications = converter.convert(file, "1", true);
         this.verifyResultForMalformedFile(restApplications, true);
     }
@@ -60,7 +60,7 @@ public class OpenApiRestDefinitionConverterTest {
         Assert.assertNotNull(restApplications);
         Assert.assertEquals(1, restApplications.size());
 
-        final RestApplication restApplication = restApplications.get(0);
+        final RestApplication restApplication = restApplications.getFirst();
 
         Assert.assertEquals("Swagger Petstore - OpenAPI 3.0", restApplication.getName());
         Assert.assertEquals(2, restApplication.getResources().size());
@@ -336,7 +336,7 @@ public class OpenApiRestDefinitionConverterTest {
         Assert.assertNotNull(restApplications);
         Assert.assertEquals(1, restApplications.size());
 
-        final RestApplication restApplication = restApplications.get(0);
+        final RestApplication restApplication = restApplications.getFirst();
 
         Assert.assertEquals("/api/v3", restApplication.getName());
         Assert.assertEquals(2, restApplication.getResources().size());

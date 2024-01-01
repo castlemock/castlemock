@@ -57,7 +57,6 @@ import com.castlemock.web.mock.soap.utility.config.AddressLocationConfigurer;
 import com.google.common.base.Preconditions;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -119,12 +118,10 @@ public abstract class AbstractSoapServiceController extends AbstractController {
      *
      * @param projectId           The id of the project which the incoming request and mocked response belongs to
      * @param httpServletRequest  The incoming request
-     * @param httpServletResponse The outgoing response
-     * @return Returns the response as an String
+     * @return Returns the response as a String
      */
     protected ResponseEntity<?> process(final String projectId,
-                                        final HttpServletRequest httpServletRequest,
-                                        final HttpServletResponse httpServletResponse) {
+                                        final HttpServletRequest httpServletRequest) {
         try {
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
@@ -137,15 +134,14 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                     .type(request.getSoapVersion())
                     .build());
             final SoapOperation operation = output.getOperation();
-            //request.setOperationName(operation.getName());
-            return process(projectId, output.getPortId(), operation, request, httpServletRequest, httpServletResponse);
+            return process(projectId, output.getPortId(), operation, request, httpServletRequest);
         } catch (Exception exception) {
             LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
             throw new SoapException(exception);
         }
     }
 
-    protected ResponseEntity<?> processGet(final String projectId, final HttpServletRequest httpServletRequest, final HttpServletResponse httpServletResponse) {
+    protected ResponseEntity<?> processGet(final String projectId, final HttpServletRequest httpServletRequest) {
         try {
             Preconditions.checkNotNull(projectId, "THe project id cannot be null");
             Preconditions.checkNotNull(httpServletRequest, "The HTTP Servlet Request cannot be null");
@@ -160,7 +156,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                     final HttpHeaders responseHeaders = new HttpHeaders();
                     responseHeaders.put(CONTENT_TYPE, List.of("text/xml; " + DEFAULT_CHAR_SET));
 
-                    return new ResponseEntity<String>(wsdl, responseHeaders, HttpStatus.OK);
+                    return new ResponseEntity<>(wsdl, responseHeaders, HttpStatus.OK);
                 }
             }
 
@@ -243,15 +239,13 @@ public abstract class AbstractSoapServiceController extends AbstractController {
      * @param soapPortId          The id of the port that the incoming request belong to
      * @param soapOperation       The operation that contain the appropriate mocked response
      * @param request             The incoming request
-     * @param httpServletResponse The outgoing HTTP servlet response
-     * @return Returns the response as an String
+     * @return Returns the response as a String
      */
     protected ResponseEntity<?> process(final String soapProjectId,
                                         final String soapPortId,
                                         final SoapOperation soapOperation,
                                         final SoapRequest request,
-                                        final HttpServletRequest httpServletRequest,
-                                        final HttpServletResponse httpServletResponse) {
+                                        final HttpServletRequest httpServletRequest) {
         Preconditions.checkNotNull(request, "Request cannot be null");
         if (soapOperation == null) {
             throw new SoapException("Soap operation could not be found");
@@ -281,9 +275,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
             response.getHttpHeaders()
                     .stream()
                     .filter(httpHeader -> !httpHeader.getName().equalsIgnoreCase(CONTENT_ENCODING))
-                    .forEach(httpHeader -> {
-                        responseHeaders.put(httpHeader.getName(), List.of(httpHeader.getValue()));
-                    });
+                    .forEach(httpHeader -> responseHeaders.put(httpHeader.getName(), List.of(httpHeader.getValue())));
 
             if (soapOperation.getSimulateNetworkDelay().orElse(false) &&
                     soapOperation.getNetworkDelay().orElse(0L) >= 0L) {
@@ -341,7 +333,6 @@ public abstract class AbstractSoapServiceController extends AbstractController {
     /**
      * The method is responsible for retrieving and returning a mocked response for the provided operation
      *
-     * @param request
      * @param soapOperation The SOAP operation that is being executed. The response is based on
      *                      the provided SOAP operation.
      * @return A mocked response based on the provided SOAP operation
@@ -351,7 +342,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                                       final String soapPortId,
                                       final SoapOperation soapOperation,
                                       final HttpServletRequest httpServletRequest) {
-        final List<SoapMockResponse> mockResponses = new ArrayList<SoapMockResponse>();
+        final List<SoapMockResponse> mockResponses = new ArrayList<>();
         for (SoapMockResponse mockResponse : soapOperation.getMockResponses()) {
             if (mockResponse.getStatus().equals(SoapMockResponseStatus.ENABLED)) {
                 mockResponses.add(mockResponse);
@@ -362,7 +353,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
 
         SoapMockResponse mockResponse = null;
         if (mockResponses.isEmpty()) {
-            if (soapOperation.getAutomaticForward() && soapOperation.getForwardedEndpoint() != null) {
+            if (soapOperation.getAutomaticForward() && soapOperation.getForwardedEndpoint().isPresent()) {
                 return forwardRequest(request, soapProjectId, soapPortId, soapOperation, httpServletRequest);
             }
         } else if (soapOperation.getResponseStrategy().equals(SoapResponseStrategy.RANDOM)) {
@@ -395,7 +386,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                 LOGGER.info("Unable to match the input XPath to a response");
                 mockResponse = this.getDefaultMockResponse(soapOperation, mockResponses).orElse(null);
 
-                if (mockResponse == null && soapOperation.getAutomaticForward() && soapOperation.getForwardedEndpoint() != null) {
+                if (mockResponse == null && soapOperation.getAutomaticForward() && soapOperation.getForwardedEndpoint().isPresent()) {
                     return forwardRequest(request, soapProjectId, soapPortId, soapOperation, httpServletRequest);
                 }
             }
@@ -454,11 +445,6 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                                         final String soapPortId,
                                         final SoapOperation soapOperation,
                                         final HttpServletRequest httpServletRequest) {
-        if (demoMode) {
-            // If the application is configured to run in demo mode, then use mocked response instead
-            return mockResponse(request, soapProjectId, soapPortId, soapOperation, httpServletRequest);
-        }
-
         Optional<SoapResponse> optionalSoapResponse = soapHttpClient.getResponse(request, soapOperation);
 
         if (optionalSoapResponse.isPresent()) {

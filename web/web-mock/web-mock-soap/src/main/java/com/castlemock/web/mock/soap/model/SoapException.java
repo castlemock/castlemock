@@ -19,6 +19,8 @@ package com.castlemock.web.mock.soap.model;
 
 import com.castlemock.web.mock.soap.controller.mock.SoapServiceController;
 
+import java.io.Serial;
+
 /**
  * The SoapException is the main exception for the all SOAP related issues. All SOAP related exceptions
  * should inherit from the class.
@@ -29,6 +31,7 @@ import com.castlemock.web.mock.soap.controller.mock.SoapServiceController;
 
 public class SoapException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = 381683485628067054L;
 
     /**

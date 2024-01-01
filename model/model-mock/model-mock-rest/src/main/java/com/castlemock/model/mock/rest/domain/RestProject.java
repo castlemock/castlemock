@@ -85,7 +85,7 @@ public class RestProject extends Project {
     }
 
     public static final class Builder extends Project.Builder<Builder> {
-        private List<RestApplication> applications = new CopyOnWriteArrayList<RestApplication>();
+        private List<RestApplication> applications = new CopyOnWriteArrayList<>();
 
         private Builder() {
         }

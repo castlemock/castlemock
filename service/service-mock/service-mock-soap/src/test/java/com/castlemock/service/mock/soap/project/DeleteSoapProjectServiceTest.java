@@ -45,6 +45,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -87,10 +89,10 @@ public class DeleteSoapProjectServiceTest {
         final SoapMockResponse soapMockResponse = SoapMockResponseTestBuilder.builder().build();
 
         Mockito.when(repository.delete(soapProject.getId())).thenReturn(soapProject);
-        Mockito.when(portRepository.findWithProjectId(soapProject.getId())).thenReturn(Arrays.asList(soapPort));
-        Mockito.when(resourceRepository.findWithProjectId(soapProject.getId())).thenReturn(Arrays.asList(soapResource));
-        Mockito.when(operationRepository.findWithPortId(soapPort.getId())).thenReturn(Arrays.asList(soapOperation));
-        Mockito.when(mockResponseRepository.findWithOperationId(soapOperation.getId())).thenReturn(Arrays.asList(soapMockResponse));
+        Mockito.when(portRepository.findWithProjectId(soapProject.getId())).thenReturn(List.of(soapPort));
+        Mockito.when(resourceRepository.findWithProjectId(soapProject.getId())).thenReturn(Collections.singletonList(soapResource));
+        Mockito.when(operationRepository.findWithPortId(soapPort.getId())).thenReturn(List.of(soapOperation));
+        Mockito.when(mockResponseRepository.findWithOperationId(soapOperation.getId())).thenReturn(List.of(soapMockResponse));
 
         final DeleteSoapProjectInput input = DeleteSoapProjectInput.builder()
                 .projectId(soapProject.getId())

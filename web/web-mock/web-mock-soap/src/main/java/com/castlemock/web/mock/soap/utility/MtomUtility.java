@@ -55,7 +55,7 @@ public class MtomUtility {
         InputStream bodyInputStream = null;
         ByteArrayOutputStream output = null;
         try {
-            stream = new ByteArrayInputStream(requestBody.getBytes(StandardCharsets.UTF_8.name()));
+            stream = new ByteArrayInputStream(requestBody.getBytes(StandardCharsets.UTF_8));
             // Create a new CXF Message
             final Message message = new MessageImpl();
             final Exchange exchange = new ExchangeImpl();

@@ -15,12 +15,12 @@ public final class RestMockResponseTestBuilder {
     private Integer httpStatusCode;
     private RestMockResponseStatus status;
     private Boolean usingExpressions;
-    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
-    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
-    private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<RestParameterQuery>();
-    private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<RestXPathExpression>();
-    private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpression>();
-    private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<RestHeaderQuery>();
+    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<>();
+    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
+    private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<>();
+    private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<>();
+    private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<>();
+    private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<>();
 
     private RestMockResponseTestBuilder() {
         this.id = "r1eXT3";
@@ -30,12 +30,12 @@ public final class RestMockResponseTestBuilder {
         this.httpStatusCode = 200;
         this.status = RestMockResponseStatus.ENABLED;
         this.usingExpressions = Boolean.TRUE;
-        this.httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
-        this.contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
-        this.parameterQueries = new CopyOnWriteArrayList<RestParameterQuery>();
-        this.xpathExpressions = new CopyOnWriteArrayList<RestXPathExpression>();
-        this.jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpression>();
-        this.headerQueries = new CopyOnWriteArrayList<RestHeaderQuery>();
+        this.httpHeaders = new CopyOnWriteArrayList<>();
+        this.contentEncodings = new CopyOnWriteArrayList<>();
+        this.parameterQueries = new CopyOnWriteArrayList<>();
+        this.xpathExpressions = new CopyOnWriteArrayList<>();
+        this.jsonPathExpressions = new CopyOnWriteArrayList<>();
+        this.headerQueries = new CopyOnWriteArrayList<>();
     }
 
     public RestMockResponseTestBuilder id(final String id) {

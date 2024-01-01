@@ -22,6 +22,7 @@ import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.configuration.input.UpdateAllConfigurationGroupsInput;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
@@ -31,10 +32,10 @@ import java.util.List;
 public final class UpdateAllConfigurationGroupsOutput implements Output {
 
     @NotNull
-    private List<ConfigurationGroup> updatedConfigurationGroups;
+    private final List<ConfigurationGroup> updatedConfigurationGroups;
 
     public UpdateAllConfigurationGroupsOutput(final List<ConfigurationGroup> updatedConfigurationGroups) {
-        this.updatedConfigurationGroups = updatedConfigurationGroups;
+        this.updatedConfigurationGroups = Objects.requireNonNull(updatedConfigurationGroups);
     }
 
     public List<ConfigurationGroup> getUpdatedConfigurationGroups() {

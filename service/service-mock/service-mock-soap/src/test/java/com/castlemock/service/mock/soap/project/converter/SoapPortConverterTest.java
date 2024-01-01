@@ -293,7 +293,7 @@ public class SoapPortConverterTest {
         Assert.assertEquals("ServiceExample7.Endpoint", soapPort.getUri());
         Assert.assertEquals(1, soapPort.getOperations().size());
 
-        SoapOperation soapOperation = soapPort.getOperations().get(0);
+        SoapOperation soapOperation = soapPort.getOperations().getFirst();
 
         Assert.assertEquals("ServiceExample7", soapOperation.getName());
         Assert.assertEquals(SoapResponseStrategy.RANDOM, soapOperation.getResponseStrategy());
@@ -315,7 +315,7 @@ public class SoapPortConverterTest {
         Assert.assertEquals(name + ".Endpoint", soapPort.getUri());
         Assert.assertEquals(1, soapPort.getOperations().size());
 
-        SoapOperation soapOperation = soapPort.getOperations().get(0);
+        SoapOperation soapOperation = soapPort.getOperations().getFirst();
 
         Assert.assertEquals(name, soapOperation.getName());
         Assert.assertEquals(SoapResponseStrategy.RANDOM, soapOperation.getResponseStrategy());
@@ -333,8 +333,12 @@ public class SoapPortConverterTest {
 
     private List<File> loadFile(final String location) throws URISyntaxException {
         final URL resourceUrl = SoapPortConverterTest.class.getResource(location);
-        final File file = new File(resourceUrl.toURI());
-        return Collections.singletonList(file);
+        final File file;
+        if (resourceUrl != null) {
+            file = new File(resourceUrl.toURI());
+            return List.of(file);
+        }
+        return Collections.emptyList();
     }
 
 

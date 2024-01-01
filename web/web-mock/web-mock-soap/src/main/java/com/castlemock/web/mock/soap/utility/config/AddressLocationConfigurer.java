@@ -8,13 +8,10 @@ public class AddressLocationConfigurer {
 		if (beginIndexAdressLocationTag >= 0) {
 			final int beginIndexUrl = beginIndexAdressLocationTag + adressLocationTag.length();
 			final int endIndexUrl = wsdl.indexOf("\"", beginIndexUrl);
-			
-			StringBuilder wsdlBuilder = new StringBuilder();
-			wsdlBuilder.append(wsdl.substring(0, beginIndexUrl));
-			wsdlBuilder.append(correctAddressLocation);
-			wsdlBuilder.append(wsdl.substring(endIndexUrl));
-			
-			return wsdlBuilder.toString();			
+
+            return wsdl.substring(0, beginIndexUrl) +
+                    correctAddressLocation +
+                    wsdl.substring(endIndexUrl);
 		} else {
 			return wsdl;
 		}

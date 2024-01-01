@@ -96,7 +96,7 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
      */
     @Override
     public List<SoapPort> search(SearchQuery query) {
-        final List<SoapPort> result = new LinkedList<SoapPort>();
+        final List<SoapPort> result = new LinkedList<>();
         for(SoapPortFile soapPortFile : collection.values()){
             if(SearchValidator.validate(soapPortFile.getName(), query.getQuery())){
                 SoapPort soapPort = mapper.map(soapPortFile, SoapPort.class);

@@ -197,11 +197,11 @@ public abstract class AbstractRestServiceController extends AbstractController {
             if (RestMethodStatus.DISABLED.equals(restMethod.getStatus())) {
                 throw new RestException("The requested REST method, " + restMethod.getName() + ", is disabled");
             } else if (RestMethodStatus.FORWARDED.equals(restMethod.getStatus())) {
-                response = forwardRequest(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
+                response = forwardRequest(restRequest, restMethod);
             } else if (RestMethodStatus.RECORDING.equals(restMethod.getStatus())) {
-                response = forwardRequestAndRecordResponse(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
+                response = forwardRequestAndRecordResponse(restRequest, projectId, applicationId, resourceId, restMethod);
             } else if (RestMethodStatus.RECORD_ONCE.equals(restMethod.getStatus())) {
-                response = forwardRequestAndRecordResponseOnce(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
+                response = forwardRequestAndRecordResponseOnce(restRequest, projectId, applicationId, resourceId, restMethod);
             } else if (RestMethodStatus.ECHO.equals(restMethod.getStatus())) {
                 response = echoResponse(restRequest);
             } else { // Status.MOCKED
@@ -214,7 +214,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                     .stream()
                     .filter(httpHeader -> !httpHeader.getName().equalsIgnoreCase(CONTENT_ENCODING))
                     .forEach(httpHeader -> {
-                        final List<String> headerValues = new LinkedList<String>();
+                        final List<String> headerValues = new LinkedList<>();
                         headerValues.add(httpHeader.getValue());
                         responseHeaders.put(httpHeader.getName(), headerValues);
                     });
@@ -257,17 +257,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @return The response received from the external endpoint
      */
     private RestResponse forwardRequest(final RestRequest request,
-                                        final String projectId,
-                                        final String applicationId,
-                                        final String resourceId,
-                                        final RestMethod restMethod,
-                                        final Map<String, Set<String>> pathParameters,
-                                        final HttpServletRequest httpServletRequest) {
-        if (demoMode) {
-            // If the application is configured to run in demo mode, then use mocked response instead
-            return mockResponse(request, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
-        }
-
+                                        final RestMethod restMethod) {
         return restClient.getResponse(request, restMethod).orElseThrow(() -> new RestException("Unable to forward request to configured endpoint"));
     }
 
@@ -283,11 +273,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                                          final String projectId,
                                                          final String applicationId,
                                                          final String resourceId,
-                                                         final RestMethod restMethod,
-                                                         final Map<String, Set<String>> pathParameters,
-                                                         final HttpServletRequest httpServletRequest) {
-        final RestResponse response = forwardRequest(restRequest, projectId, applicationId, resourceId,
-                restMethod, pathParameters, httpServletRequest);
+                                                         final RestMethod restMethod) {
+        final RestResponse response = forwardRequest(restRequest, restMethod);
         serviceProcessor.processAsync(CreateRestMockResponseInput.builder()
                 .projectId(projectId)
                 .applicationId(applicationId)
@@ -320,12 +307,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                                              final String projectId,
                                                              final String applicationId,
                                                              final String resourceId,
-                                                             final RestMethod restMethod,
-                                                             final Map<String, Set<String>> pathParameters,
-                                                             final HttpServletRequest httpServletRequest) {
+                                                             final RestMethod restMethod) {
         final RestResponse response =
                 forwardRequestAndRecordResponse(restRequest, projectId,
-                        applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
+                        applicationId, resourceId, restMethod);
         serviceProcessor.process(UpdateRestMethodsStatusInput.builder()
                 .projectId(projectId)
                 .applicationId(applicationId)
@@ -384,7 +369,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
         // Iterate through all mocked responses and extract the ones
         // that are active.
-        final List<RestMockResponse> enabledMockResponses = new ArrayList<RestMockResponse>();
+        final List<RestMockResponse> enabledMockResponses = new ArrayList<>();
         for (RestMockResponse mockResponse : restMethod.getMockResponses()) {
             if (mockResponse.getStatus().equals(RestMockResponseStatus.ENABLED)) {
                 enabledMockResponses.add(mockResponse);
@@ -483,7 +468,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         }
 
         if (mockResponse == null && restMethod.getAutomaticForward().orElse(false) && restMethod.getForwardedEndpoint().isPresent()) {
-            return forwardRequest(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
+            return forwardRequest(restRequest, restMethod);
         }
 
         if (mockResponse == null) {

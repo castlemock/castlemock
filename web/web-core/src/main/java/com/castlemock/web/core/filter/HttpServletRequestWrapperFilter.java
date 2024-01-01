@@ -38,9 +38,8 @@ public class HttpServletRequestWrapperFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws java.io.IOException, ServletException {
-        if(request instanceof HttpServletRequest){
+        if(request instanceof HttpServletRequest httpServletRequest){
             // Wrap the incoming request if it is a HTTP Servlet request
-            final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
             final HttpServletRequestWrapper requestWrapper = new HttpServletRequestWrapper(httpServletRequest);
             chain.doFilter(requestWrapper,response);
         } else {

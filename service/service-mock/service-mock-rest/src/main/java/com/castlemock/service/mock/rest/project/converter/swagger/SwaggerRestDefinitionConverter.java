@@ -87,12 +87,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -121,7 +121,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         final String swaggerContent = FileUtility.getFileContent(file);
         final Swagger swagger = new SwaggerParser().parse(swaggerContent);
         final RestApplication restApplication = convertSwagger(swagger, projectId, generateResponse);
-        return Arrays.asList(restApplication);
+        return List.of(restApplication);
     }
 
     /**
@@ -135,7 +135,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
     public List<RestApplication> convert(final String location, final String projectId, final boolean generateResponse){
         final Swagger swagger = new SwaggerParser().read(location);
         final RestApplication restApplication = convertSwagger(swagger, projectId, generateResponse);
-        return Arrays.asList(restApplication);
+        return List.of(restApplication);
     }
 
 
@@ -234,7 +234,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
     private String getForwardAddress(final Swagger swagger){
         String schemas = "http";
         if(swagger.getSchemes() != null && !swagger.getSchemes().isEmpty()){
-            schemas = swagger.getSchemes().get(0).toValue();
+            schemas = swagger.getSchemes().getFirst().toValue();
         }
 
 
@@ -307,7 +307,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
 
         final List<RestMockResponse> mockResponses = new ArrayList<>();
         for(Map.Entry<String, Response> responseEntry : responses.entrySet()){
-            Map<String, String> bodies = new HashMap<String, String>();
+            Map<String, String> bodies = new HashMap<>();
             Response response = responseEntry.getValue();
             for(String produce : produces){
                 String body = null;
@@ -479,7 +479,6 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param definitions Other {@link Model} that might be related and required.
      * @param document The XML DOM document.
      * @since 1.13
-     * @see {@link #getXmlElement(String, Property, Map, Document)}
      */
     private Element getXmlElement(final Model model, final Map<String, Model> definitions, final Document document) {
 
@@ -499,16 +498,14 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             element = document.createElement("Result");
         }
 
-        if(model instanceof ArrayModel){
-            final ArrayModel arrayModel = (ArrayModel) model;
+        if(model instanceof ArrayModel arrayModel){
             final Property item = arrayModel.getItems();
             final int maxItems = getMaxItems(arrayModel.getMaxItems());
             for(int index = 0; index < maxItems; index++){
                 getXmlElement(arrayModel.getType(), item, definitions, document)
                         .ifPresent(element::appendChild);
             }
-        } else if(model instanceof RefModel){
-            final RefModel refModel = (RefModel) model;
+        } else if(model instanceof RefModel refModel){
             final String simpleRef = refModel.getSimpleRef();
             final Model subModel = definitions.get(simpleRef);
             final Element child = getXmlElement(subModel, definitions, document);
@@ -532,7 +529,6 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param definitions The map of definitions that might be required to generate the response.
      * @return A HTTP response body based on the provided {@link Response}.
      * @since 1.13
-     * @see {@link #generateJsonBody(String, Property, Map, JsonGenerator)}
      */
     @SuppressWarnings("deprecation")
     private String generateJsonBody(final Response response, final Map<String, Model> definitions){
@@ -570,9 +566,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param property The property that will be part of the response.
      * @param definitions The map of definitions will be used when composing the response body.
      * @param generator The {@link JsonGenerator}.
-     * @throws IOException
      * @since 1.13
-     * @see {@link #generateJsonBody(Response, Map)}
      */
     private void generateJsonBody(final String name, final Property property,
                               final Map<String, Model> definitions, final JsonGenerator generator) throws IOException {
@@ -581,8 +575,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             generator.writeFieldName(name);
         }
 
-        if(property instanceof RefProperty){
-            final RefProperty refProperty = (RefProperty) property;
+        if(property instanceof RefProperty refProperty){
             final String simpleRef = refProperty.getSimpleRef();
             final Model model = definitions.get(simpleRef);
 
@@ -591,8 +584,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
                 return;
             }
             generateJsonBody(model, definitions, generator);
-        } else if(property instanceof ArrayProperty){
-            final ArrayProperty arrayProperty = (ArrayProperty) property;
+        } else if(property instanceof ArrayProperty arrayProperty){
             final Property item = arrayProperty.getItems();
             final int maxItems = getMaxItems(arrayProperty.getMaxItems());
             generator.writeStartArray();
@@ -605,13 +597,9 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             String expression = getExpressionIdentifier(property)
                     .orElse(null);
 
-            if(expression != null){
-                generator.writeObject(expression);
-            } else {
-                // Unsupported type. Need to write something otherwise
-                // we might have a serialization problem.
-                generator.writeObject("");
-            }
+            // Unsupported type. Need to write something otherwise
+            // we might have a serialization problem.
+            generator.writeObject(Objects.requireNonNullElse(expression, ""));
         }
     }
 
@@ -620,14 +608,11 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @param model The {@link Model} used to generate to the body.
      * @param definitions Other {@link Model} that might be related and required.
      * @param generator generator The {@link JsonGenerator}.
-     * @throws IOException
      * @since 1.13
-     * @see {@link #generateJsonBody(String, Property, Map, JsonGenerator)}
      */
     private void generateJsonBody(final Model model, final Map<String, Model> definitions, final JsonGenerator generator) throws IOException {
         generator.writeStartObject();
-        if(model instanceof ArrayModel){
-            final ArrayModel arrayModel = (ArrayModel) model;
+        if(model instanceof ArrayModel arrayModel){
             final Property item = arrayModel.getItems();
             final int maxItems = getMaxItems(arrayModel.getMaxItems());
             generator.writeStartArray();
@@ -635,8 +620,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
                 generateJsonBody(item.getName(), item, definitions, generator);
             }
             generator.writeEndArray();
-        } else if(model instanceof RefModel){
-            final RefModel refModel = (RefModel) model;
+        } else if(model instanceof RefModel refModel){
             final String simpleRef = refModel.getSimpleRef();
             final Model subModel = definitions.get(simpleRef);
             generateJsonBody(subModel, definitions, generator);
@@ -662,44 +646,43 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      */
     private Optional<String> getExpressionIdentifier(final Property property){
         ExpressionInput expressionInput = null;
-        if(property instanceof IntegerProperty){
-            expressionInput = new ExpressionInput(RandomIntegerExpression.IDENTIFIER);
-        } else if(property instanceof LongProperty) {
-            expressionInput = new ExpressionInput(RandomLongExpression.IDENTIFIER);
-        } else if(property instanceof StringProperty stringProperty){
-            final List<String> enumValues = stringProperty.getEnum();
+        switch (property) {
+            case IntegerProperty integerProperty ->
+                    expressionInput = new ExpressionInput(RandomIntegerExpression.IDENTIFIER);
+            case LongProperty longProperty -> expressionInput = new ExpressionInput(RandomLongExpression.IDENTIFIER);
+            case StringProperty stringProperty -> {
+                final List<String> enumValues = stringProperty.getEnum();
 
-            if(enumValues == null || enumValues.isEmpty()){
-                expressionInput = new ExpressionInput(RandomStringExpression.IDENTIFIER);
-            } else {
-                expressionInput = new ExpressionInput(RandomEnumExpression.IDENTIFIER);
-                final ExpressionArgumentArray arrayArgument = new ExpressionArgumentArray();
-                for (String enumValue : enumValues) {
-                    ExpressionArgumentString expressionArgumentString = new ExpressionArgumentString(enumValue);
-                    arrayArgument.addArgument(expressionArgumentString);
+                if (enumValues == null || enumValues.isEmpty()) {
+                    expressionInput = new ExpressionInput(RandomStringExpression.IDENTIFIER);
+                } else {
+                    expressionInput = new ExpressionInput(RandomEnumExpression.IDENTIFIER);
+                    final ExpressionArgumentArray arrayArgument = new ExpressionArgumentArray();
+                    for (String enumValue : enumValues) {
+                        ExpressionArgumentString expressionArgumentString = new ExpressionArgumentString(enumValue);
+                        arrayArgument.addArgument(expressionArgumentString);
+                    }
+
+                    expressionInput.addArgument(RandomEnumExpression.VALUES_PARAMETER, arrayArgument);
                 }
-
-                expressionInput.addArgument(RandomEnumExpression.VALUES_PARAMETER, arrayArgument);
             }
-        } else if(property instanceof DoubleProperty){
-            expressionInput = new ExpressionInput(RandomDoubleExpression.IDENTIFIER);
-        } else if(property instanceof FloatProperty){
-            expressionInput = new ExpressionInput(RandomFloatExpression.IDENTIFIER);
-        } else if(property instanceof BooleanProperty){
-            expressionInput = new ExpressionInput(RandomBooleanExpression.IDENTIFIER);
-        } else if(property instanceof UUIDProperty){
-            expressionInput = new ExpressionInput(RandomUUIDExpression.IDENTIFIER);
-        } else if(property instanceof DecimalProperty){
-            expressionInput = new ExpressionInput(RandomDecimalExpression.IDENTIFIER);
-        } else if(property instanceof DateProperty){
-            expressionInput = new ExpressionInput(RandomDateExpression.IDENTIFIER);
-        } else if(property instanceof DateTimeProperty){
-            expressionInput = new ExpressionInput(RandomDateTimeExpression.IDENTIFIER);
-        } else if(property instanceof PasswordProperty){
-            expressionInput = new ExpressionInput(RandomPasswordExpression.IDENTIFIER);
-        } else {
-            LOGGER.warn("Unsupported property type: " + property.getClass().getSimpleName());
-            return Optional.empty();
+            case DoubleProperty doubleProperty ->
+                    expressionInput = new ExpressionInput(RandomDoubleExpression.IDENTIFIER);
+            case FloatProperty floatProperty -> expressionInput = new ExpressionInput(RandomFloatExpression.IDENTIFIER);
+            case BooleanProperty booleanProperty ->
+                    expressionInput = new ExpressionInput(RandomBooleanExpression.IDENTIFIER);
+            case UUIDProperty uuidProperty -> expressionInput = new ExpressionInput(RandomUUIDExpression.IDENTIFIER);
+            case DecimalProperty decimalProperty ->
+                    expressionInput = new ExpressionInput(RandomDecimalExpression.IDENTIFIER);
+            case DateProperty dateProperty -> expressionInput = new ExpressionInput(RandomDateExpression.IDENTIFIER);
+            case DateTimeProperty dateTimeProperty ->
+                    expressionInput = new ExpressionInput(RandomDateTimeExpression.IDENTIFIER);
+            case PasswordProperty passwordProperty ->
+                    expressionInput = new ExpressionInput(RandomPasswordExpression.IDENTIFIER);
+            case null, default -> {
+                LOGGER.warn("Unsupported property type: " + Objects.requireNonNull(property).getClass().getSimpleName());
+                return Optional.empty();
+            }
         }
 
         return Optional.of(ExpressionInputParser.convert(expressionInput));

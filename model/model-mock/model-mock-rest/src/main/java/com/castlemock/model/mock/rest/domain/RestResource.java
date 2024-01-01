@@ -39,8 +39,8 @@ public class RestResource {
     private String uri;
     private String applicationId;
     private String invokeAddress;
-    private List<RestMethod> methods = new CopyOnWriteArrayList<RestMethod>();
-    private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
+    private List<RestMethod> methods = new CopyOnWriteArrayList<>();
+    private Map<RestMethodStatus, Integer> statusCount = new HashMap<>();
 
     private RestResource(){
 
@@ -145,8 +145,8 @@ public class RestResource {
         private String uri;
         private String applicationId;
         private String invokeAddress;
-        private List<RestMethod> methods = new CopyOnWriteArrayList<RestMethod>();
-        private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
+        private List<RestMethod> methods = new CopyOnWriteArrayList<>();
+        private Map<RestMethodStatus, Integer> statusCount = new HashMap<>();
 
         private Builder() {
         }

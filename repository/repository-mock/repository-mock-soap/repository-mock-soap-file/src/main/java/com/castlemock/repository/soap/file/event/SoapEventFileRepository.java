@@ -112,7 +112,7 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
      */
     @Override
     public List<SoapEvent> findEventsByOperationId(String operationId) {
-        final List<SoapEventFile> events = new ArrayList<SoapEventFile>();
+        final List<SoapEventFile> events = new ArrayList<>();
         for(SoapEventFile event : collection.values()){
             if(event.getOperationId().equals(operationId)){
                 events.add(event);

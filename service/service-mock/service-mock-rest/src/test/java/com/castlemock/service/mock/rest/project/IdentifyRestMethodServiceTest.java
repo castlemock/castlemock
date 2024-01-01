@@ -227,7 +227,7 @@ public class IdentifyRestMethodServiceTest {
                 .methods(List.of(restMethod1, restMethod2, restMethod3))
                 .build();
 
-        Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(Arrays.asList(restResource1));
+        Mockito.when(resourceRepository.findWithApplicationId("RestApplicationId")).thenReturn(List.of(restResource1));
 
         Mockito.when(methodRepository.findWithResourceId(restResource1.getId())).thenReturn(Arrays.asList(restMethod1, restMethod2, restMethod3));
 

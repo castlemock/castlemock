@@ -63,7 +63,7 @@ public class UpdateCurrentUserServiceTest {
 
     @Test
     public void testProcess(){
-        final List<User> users = new ArrayList<User>();
+        final List<User> users = new ArrayList<>();
         final User user = UserTestBuilder.builder()
                 .id("123")
                 .username("Username")

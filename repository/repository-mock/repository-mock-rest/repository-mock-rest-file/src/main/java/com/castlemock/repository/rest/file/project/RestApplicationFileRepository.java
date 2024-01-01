@@ -95,7 +95,7 @@ public class RestApplicationFileRepository extends FileRepository<RestApplicatio
      */
     @Override
     public List<RestApplication> search(SearchQuery query) {
-        final List<RestApplication> result = new LinkedList<RestApplication>();
+        final List<RestApplication> result = new LinkedList<>();
         for(RestApplicationFile restApplicationFile : collection.values()){
             if(SearchValidator.validate(restApplicationFile.getName(), query.getQuery())){
                 RestApplication restApplication = mapper.map(restApplicationFile, RestApplication.class);

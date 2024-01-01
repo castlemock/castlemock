@@ -107,43 +107,45 @@ public class JsonPathUtilityTest {
     }
 
     private String getBody() {
-        return "{\n" +
-                "  \"store\": {\n" +
-                "    \"book\": [\n" +
-                "      {\n" +
-                "        \"category\": \"reference\",\n" +
-                "        \"author\": \"Author 1\",\n" +
-                "        \"title\": \"Book title 1\",\n" +
-                "        \"price\": 8.95\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"category\": \"fiction\",\n" +
-                "        \"author\": \"Author 2\",\n" +
-                "        \"title\": \"Book title 2\",\n" +
-                "        \"isbn\": \"1-553-21311-3\",\n" +
-                "        \"price\": 8.99\n" +
-                "      },\n" +
-                "      {\n" +
-                "        \"category\": \"fiction\",\n" +
-                "        \"author\": \"Author 3\",\n" +
-                "        \"title\": \"Book title 3\",\n" +
-                "        \"isbn\": \"1-395-19395-8\",\n" +
-                "        \"price\": 22.99\n" +
-                "      }\n" +
-                "    ],\n" +
-                "    \"bicycle\": {\n" +
-                "      \"color\": \"red\",\n" +
-                "      \"price\": 19.95\n" +
-                "    }\n" +
-                "  },\n" +
-                "  \"expensive\": 10\n" +
-                "}";
+        return """
+                {
+                  "store": {
+                    "book": [
+                      {
+                        "category": "reference",
+                        "author": "Author 1",
+                        "title": "Book title 1",
+                        "price": 8.95
+                      },
+                      {
+                        "category": "fiction",
+                        "author": "Author 2",
+                        "title": "Book title 2",
+                        "isbn": "1-553-21311-3",
+                        "price": 8.99
+                      },
+                      {
+                        "category": "fiction",
+                        "author": "Author 3",
+                        "title": "Book title 3",
+                        "isbn": "1-395-19395-8",
+                        "price": 22.99
+                      }
+                    ],
+                    "bicycle": {
+                      "color": "red",
+                      "price": 19.95
+                    }
+                  },
+                  "expensive": 10
+                }""";
     }
 
     private String getBodyWithDefiniteProperty() {
-        return "{\n" +
-                "   \"definite\": \"value\"\n" +
-                "}";
+        return """
+                {
+                   "definite": "value"
+                }""";
     }
 
 }

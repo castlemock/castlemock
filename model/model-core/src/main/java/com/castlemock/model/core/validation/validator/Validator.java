@@ -32,7 +32,7 @@ import java.lang.reflect.Field;
  */
 public abstract class Validator {
 
-    private Class<? extends Annotation> validationType;
+    private final Class<? extends Annotation> validationType;
     protected Validator(Class<? extends Annotation> validationType){
         this.validationType = validationType;
     }

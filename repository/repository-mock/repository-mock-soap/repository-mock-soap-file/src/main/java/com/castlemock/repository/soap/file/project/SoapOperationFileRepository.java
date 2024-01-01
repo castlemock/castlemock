@@ -134,7 +134,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
      */
     @Override
     public List<SoapOperation> search(SearchQuery query) {
-        final List<SoapOperation> result = new LinkedList<SoapOperation>();
+        final List<SoapOperation> result = new LinkedList<>();
         for(SoapOperationFile soapOperationFile : collection.values()){
             if(SearchValidator.validate(soapOperationFile.getName(), query.getQuery())){
                 SoapOperation soapOperation = mapper.map(soapOperationFile, SoapOperation.class);

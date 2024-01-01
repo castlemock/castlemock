@@ -29,9 +29,8 @@ public final class WsdlNamespaceParser extends WsdlParser {
     public Set<Namespace> parseNamespaces(final Document document){
         final TypeInfo typeInfo = document.getDocumentElement().getSchemaTypeInfo();
         final Set<Namespace> namespaces = new HashSet<>();
-        if(typeInfo instanceof Node){
-            Node node = (Node) typeInfo;
-            NamedNodeMap nodeMap = node.getAttributes();
+        if(typeInfo instanceof Node node){
+            final NamedNodeMap nodeMap = node.getAttributes();
 
             IntStream.range(0, nodeMap.getLength())
                     .forEach(index -> {

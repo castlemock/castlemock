@@ -146,8 +146,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).getFirst());
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).getFirst());
+        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
     }
 
 
@@ -177,8 +177,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).getFirst());
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).getFirst());
+        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
     }
 
     @Test
@@ -207,8 +207,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).get(0));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).get(0));
+        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
     }
 
     @Test
@@ -237,8 +237,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).getFirst());
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).getFirst());
+        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
     }
 
     @Test
@@ -367,7 +367,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(XML_REQUEST_BODY, responseEntity.getBody());
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
-        Assert.assertEquals(APPLICATION_JSON, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).getFirst());
+        Assert.assertEquals(APPLICATION_JSON, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
     }
 
     @Test
@@ -383,7 +383,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         final RestMethod restMethod = getMockedRestMethod()
                 .responseStrategy(RestResponseStrategy.XPATH)
                 .build();
-        restMethod.getMockResponses().get(0).getXpathExpressions().add(xPathExpression);
+        restMethod.getMockResponses().getFirst().getXpathExpressions().add(xPathExpression);
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)
@@ -403,8 +403,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
         Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(CONTENT_TYPE_HEADER).getFirst());
-        Assert.assertEquals(APPLICATION_XML, responseEntity.getHeaders().get(ACCEPT_HEADER).getFirst());
+        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
     }
 
     @Test

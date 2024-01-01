@@ -59,7 +59,7 @@ public class ReadSoapEventsByOperationIdServiceTest {
 
     @Test
     public void testProcess(){
-        final List<SoapEvent> soapEvents = new ArrayList<SoapEvent>();
+        final List<SoapEvent> soapEvents = new ArrayList<>();
         for(int index = 0; index < 2; index++){
             final SoapEvent soapEvent = SoapEventTestBuilder.builder()
                     .operationId("OperationId")

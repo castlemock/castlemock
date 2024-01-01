@@ -171,7 +171,7 @@ public class RestMockResponseRestController extends AbstractRestController {
                 .applicationId(applicationId)
                 .resourceId(resourceId)
                 .methodId(methodId)
-                .body(request.getBody())
+                .body(request.getBody().orElse(null))
                 .contentEncodings(request.getContentEncodings())
                 .headerQueries(request.getHeaderQueries())
                 .httpHeaders(request.getHttpHeaders())

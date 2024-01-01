@@ -28,7 +28,7 @@ public class ExpressionParserTest {
         ExpressionParser.ExpressionContext expression = parse("${RANDOM_BOOLEAN(Key=\"Value\")}");
         Assert.assertEquals(expression.type.getText(), "RANDOM_BOOLEAN");
         Assert.assertEquals(1, expression.arguments.size());
-        ExpressionParser.ArgumentContext argument = expression.arguments.get(0);
+        ExpressionParser.ArgumentContext argument = expression.arguments.getFirst();
         ExpressionParser.ArgumentNameContext argumentName = argument.argumentName();
         ExpressionParser.ArgumentValueContext argumentValue = argument.argumentValue();
 
@@ -41,7 +41,7 @@ public class ExpressionParserTest {
         ExpressionParser.ExpressionContext expression = parse("${RANDOM_BOOLEAN(Key=\\\"Value\\\")}");
         Assert.assertEquals(expression.type.getText(), "RANDOM_BOOLEAN");
         Assert.assertEquals(1, expression.arguments.size());
-        ExpressionParser.ArgumentContext argument = expression.arguments.get(0);
+        ExpressionParser.ArgumentContext argument = expression.arguments.getFirst();
         ExpressionParser.ArgumentNameContext argumentName = argument.argumentName();
         ExpressionParser.ArgumentValueContext argumentValue = argument.argumentValue();
 
@@ -55,7 +55,7 @@ public class ExpressionParserTest {
         ExpressionParser.ExpressionContext expression = parse("${RANDOM_BOOLEAN(Key=\"Good day to you.\")}");
         Assert.assertEquals(expression.type.getText(), "RANDOM_BOOLEAN");
         Assert.assertEquals(1, expression.arguments.size());
-        ExpressionParser.ArgumentContext argument = expression.arguments.get(0);
+        ExpressionParser.ArgumentContext argument = expression.arguments.getFirst();
         ExpressionParser.ArgumentNameContext argumentName = argument.argumentName();
         ExpressionParser.ArgumentValueContext argumentValue = argument.argumentValue();
 
@@ -68,7 +68,7 @@ public class ExpressionParserTest {
         ExpressionParser.ExpressionContext expression = parse("${RANDOM_BOOLEAN(Key=\"Value123\")}");
         Assert.assertEquals(expression.type.getText(), "RANDOM_BOOLEAN");
         Assert.assertEquals(1, expression.arguments.size());
-        ExpressionParser.ArgumentContext argument = expression.arguments.get(0);
+        ExpressionParser.ArgumentContext argument = expression.arguments.getFirst();
         ExpressionParser.ArgumentNameContext argumentName = argument.argumentName();
         ExpressionParser.ArgumentValueContext argumentValue = argument.argumentValue();
 
@@ -81,7 +81,7 @@ public class ExpressionParserTest {
         ExpressionParser.ExpressionContext expression = parse("${RANDOM_BOOLEAN(Key=12)}");
         Assert.assertEquals(expression.type.getText(), "RANDOM_BOOLEAN");
         Assert.assertEquals(1, expression.arguments.size());
-        ExpressionParser.ArgumentContext argument = expression.arguments.get(0);
+        ExpressionParser.ArgumentContext argument = expression.arguments.getFirst();
         ExpressionParser.ArgumentNameContext argumentName = argument.argumentName();
         ExpressionParser.ArgumentValueContext argumentValue = argument.argumentValue();
         Assert.assertEquals("Key", argumentName.getText());
@@ -93,12 +93,12 @@ public class ExpressionParserTest {
         ExpressionParser.ExpressionContext expression = parse("${RANDOM_BOOLEAN(Key=[\"ValueA\",\"ValueB\",\"ValueC\"])}");
         Assert.assertEquals(expression.type.getText(), "RANDOM_BOOLEAN");
         Assert.assertEquals(1, expression.arguments.size());
-        ExpressionParser.ArgumentContext argument = expression.arguments.get(0);
+        ExpressionParser.ArgumentContext argument = expression.arguments.getFirst();
         ExpressionParser.ArgumentNameContext argumentName = argument.argumentName();
         ExpressionParser.ArgumentValueContext argumentValue = argument.argumentValue();
         Assert.assertEquals("Key", argumentName.getText());
         Assert.assertEquals(3, argumentValue.array().value.size());
-        Assert.assertEquals("ValueA", argumentValue.array().value.get(0).argumentString().value.getText());
+        Assert.assertEquals("ValueA", argumentValue.array().value.getFirst().argumentString().value.getText());
         Assert.assertEquals("ValueB", argumentValue.array().value.get(1).argumentString().value.getText());
         Assert.assertEquals("ValueC", argumentValue.array().value.get(2).argumentString().value.getText());
     }
@@ -108,12 +108,12 @@ public class ExpressionParserTest {
         ExpressionParser.ExpressionContext expression = parse("${RANDOM_BOOLEAN(Key=[\\\"ValueA\\\",\\\"ValueB\\\",\\\"ValueC\\\"])}");
         Assert.assertEquals(expression.type.getText(), "RANDOM_BOOLEAN");
         Assert.assertEquals(1, expression.arguments.size());
-        ExpressionParser.ArgumentContext argument = expression.arguments.get(0);
+        ExpressionParser.ArgumentContext argument = expression.arguments.getFirst();
         ExpressionParser.ArgumentNameContext argumentName = argument.argumentName();
         ExpressionParser.ArgumentValueContext argumentValue = argument.argumentValue();
         Assert.assertEquals("Key", argumentName.getText());
         Assert.assertEquals(3, argumentValue.array().value.size());
-        Assert.assertEquals("ValueA", argumentValue.array().value.get(0).argumentString().value.getText());
+        Assert.assertEquals("ValueA", argumentValue.array().value.getFirst().argumentString().value.getText());
         Assert.assertEquals("ValueB", argumentValue.array().value.get(1).argumentString().value.getText());
         Assert.assertEquals("ValueC", argumentValue.array().value.get(2).argumentString().value.getText());
     }
@@ -123,12 +123,12 @@ public class ExpressionParserTest {
         ExpressionParser.ExpressionContext expression = parse("${RANDOM_BOOLEAN(Key=[1,2,3])}");
         Assert.assertEquals(expression.type.getText(), "RANDOM_BOOLEAN");
         Assert.assertEquals(1, expression.arguments.size());
-        ExpressionParser.ArgumentContext argument = expression.arguments.get(0);
+        ExpressionParser.ArgumentContext argument = expression.arguments.getFirst();
         ExpressionParser.ArgumentNameContext argumentName = argument.argumentName();
         ExpressionParser.ArgumentValueContext argumentValue = argument.argumentValue();
         Assert.assertEquals("Key", argumentName.getText());
         Assert.assertEquals(3, argumentValue.array().value.size());
-        Assert.assertEquals("1", argumentValue.array().value.get(0).argumentNumber().value.getText());
+        Assert.assertEquals("1", argumentValue.array().value.getFirst().argumentNumber().value.getText());
         Assert.assertEquals("2", argumentValue.array().value.get(1).argumentNumber().value.getText());
         Assert.assertEquals("3", argumentValue.array().value.get(2).argumentNumber().value.getText());
     }
@@ -140,7 +140,7 @@ public class ExpressionParserTest {
         Assert.assertEquals(2, expression.arguments.size());
 
         // First argument
-        ExpressionParser.ArgumentContext firstArgument = expression.arguments.get(0);
+        ExpressionParser.ArgumentContext firstArgument = expression.arguments.getFirst();
         ExpressionParser.ArgumentNameContext firstArgumentName = firstArgument.argumentName();
         ExpressionParser.ArgumentValueContext firstArgumentValue = firstArgument.argumentValue();
 
@@ -163,7 +163,7 @@ public class ExpressionParserTest {
         Assert.assertEquals(2, expression.arguments.size());
 
         // First argument
-        ExpressionParser.ArgumentContext firstArgument = expression.arguments.get(0);
+        ExpressionParser.ArgumentContext firstArgument = expression.arguments.getFirst();
         ExpressionParser.ArgumentNameContext firstArgumentName = firstArgument.argumentName();
         ExpressionParser.ArgumentValueContext firstArgumentValue = firstArgument.argumentValue();
 

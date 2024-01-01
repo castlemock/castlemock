@@ -111,7 +111,7 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      */
     @Override
     public List<RestMethod> search(SearchQuery query) {
-        final List<RestMethod> result = new LinkedList<RestMethod>();
+        final List<RestMethod> result = new LinkedList<>();
         for(RestMethodFile restMethodFile : collection.values()){
             if(SearchValidator.validate(restMethodFile.getName(), query.getQuery())){
                 RestMethod restMethod = mapper.map(restMethodFile, RestMethod.class);

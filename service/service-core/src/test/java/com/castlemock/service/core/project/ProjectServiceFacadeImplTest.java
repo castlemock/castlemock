@@ -57,7 +57,7 @@ public class ProjectServiceFacadeImplTest {
         MockitoAnnotations.openMocks(this);
         projectServiceAdapter = Mockito.mock(ProjectServiceAdapter.class);
 
-        final Map<String, Object> projectServiceAdapters = new HashMap<String, Object>();
+        final Map<String, Object> projectServiceAdapters = new HashMap<>();
         projectServiceAdapters.put("ProjectServiceAdapter", projectServiceAdapter);
         Mockito.when(applicationContext.getBeansWithAnnotation(Mockito.any(Class.class))).thenReturn(projectServiceAdapters);
 
@@ -66,7 +66,7 @@ public class ProjectServiceFacadeImplTest {
 
     @Test
     public void testSearch(){
-        final List<SearchResult> result = new ArrayList<SearchResult>();
+        final List<SearchResult> result = new ArrayList<>();
         final SearchResult firstSearchResult = SearchResultTestBuilder.builder()
                         .title("First title")
                         .description("First description")

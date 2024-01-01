@@ -32,11 +32,11 @@ public interface Saveable<I> {
      * Returns the identifier for the model
      * @return The identifier for the model
      */
-    public I getId();
+    I getId();
 
     /**
      * Set a new identifier for the model
      * @param id The new identifier
      */
-    public void setId(final I id);
+    void setId(final I id);
 }

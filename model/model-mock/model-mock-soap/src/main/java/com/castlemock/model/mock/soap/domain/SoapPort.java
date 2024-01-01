@@ -39,8 +39,8 @@ public class SoapPort {
     private String uri;
     private String projectId;
     private String invokeAddress;
-    private List<SoapOperation> operations = new CopyOnWriteArrayList<SoapOperation>();
-    private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
+    private List<SoapOperation> operations = new CopyOnWriteArrayList<>();
+    private Map<SoapOperationStatus, Integer> statusCount = new HashMap<>();
 
     private SoapPort(){
 
@@ -141,8 +141,8 @@ public class SoapPort {
         private String uri;
         private String projectId;
         private String invokeAddress;
-        private List<SoapOperation> operations = new CopyOnWriteArrayList<SoapOperation>();
-        private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
+        private List<SoapOperation> operations = new CopyOnWriteArrayList<>();
+        private Map<SoapOperationStatus, Integer> statusCount = new HashMap<>();
 
         private Builder() {
         }

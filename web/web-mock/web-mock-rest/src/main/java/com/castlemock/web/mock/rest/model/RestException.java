@@ -17,6 +17,8 @@
 package com.castlemock.web.mock.rest.model;
 
 
+import java.io.Serial;
+
 /**
  * The RestException is the main exception for the all REST related issues. All REST related exceptions
  * should inherit from the class.
@@ -26,6 +28,7 @@ package com.castlemock.web.mock.rest.model;
 
 public class RestException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = 381683485628067012L;
 
     /**

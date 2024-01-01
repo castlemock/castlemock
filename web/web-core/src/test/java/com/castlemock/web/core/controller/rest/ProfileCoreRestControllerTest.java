@@ -31,12 +31,11 @@ import static org.mockito.Mockito.mock;
 
 class ProfileCoreRestControllerTest {
 
-    private ServiceProcessor serviceProcessor;
     private ProfileCoreRestController profileCoreRestController;
 
     @BeforeEach
     void setup(){
-        this.serviceProcessor = mock(ServiceProcessor.class);
+        final ServiceProcessor serviceProcessor = mock(ServiceProcessor.class);
         this.profileCoreRestController = new ProfileCoreRestController(serviceProcessor);
     }
 

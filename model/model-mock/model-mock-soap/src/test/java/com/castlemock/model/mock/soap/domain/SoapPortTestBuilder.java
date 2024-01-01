@@ -21,8 +21,8 @@ public final class SoapPortTestBuilder {
         this.uri = "UrlPath";
         this.projectId = "SOAP PROJECT";
         this.invokeAddress = "soapproject";
-        this.operations = new CopyOnWriteArrayList<SoapOperation>();
-        this.statusCount = new HashMap<SoapOperationStatus, Integer>();
+        this.operations = new CopyOnWriteArrayList<>();
+        this.statusCount = new HashMap<>();
     }
 
     public static SoapPortTestBuilder builder(){

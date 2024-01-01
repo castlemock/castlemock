@@ -53,7 +53,7 @@ public class ExpressionArgumentArray extends ExpressionArgument<List<ExpressionA
     public ExpressionArgument<?> getArgument(final int index){
         if(index >= this.value.size()){
             throw new IndexOutOfBoundsException(
-                    String.format("Invalid index for argument array (Index: {0}, Size: {1})",
+                    String.format("Invalid index for argument array (Index: %s}, Size: %s)",
                             index, this.value.size()));
         }
         return this.value.get(index);

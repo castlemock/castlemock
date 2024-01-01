@@ -44,12 +44,10 @@ public class QueryStringExpression extends AbstractExpression {
         final ExpressionArgument<?> querysArgument = input.getArgument(QUERY_STRINGS);
         final ExpressionArgument<?> queryIdentifierArgument = input.getArgument(QUERY_ARGUMENT);
 
-        if(querysArgument == null || queryIdentifierArgument == null ||
-                !(querysArgument instanceof ExpressionArgumentMap)){
+        if(queryIdentifierArgument == null || !(querysArgument instanceof ExpressionArgumentMap querysMap)){
             return MISSING_QUERY_STRING;
         }
 
-        final ExpressionArgumentMap querysMap = (ExpressionArgumentMap) querysArgument;
         final Object key = queryIdentifierArgument.getValue();
         final ExpressionArgument<?> result = querysMap.getArgument(key);
 

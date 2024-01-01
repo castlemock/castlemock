@@ -64,7 +64,7 @@ public class ReadAllUsersServiceTest {
 
         final List<User> returnedUsers = output.getUsers();
         Assert.assertEquals(returnedUsers.size(), users.size());
-        final User returnedUser = returnedUsers.get(0);
+        final User returnedUser = returnedUsers.getFirst();
         Assert.assertEquals(user.getId(), returnedUser.getId());
         Assert.assertEquals(user.getEmail(), returnedUser.getEmail());
         Assert.assertEquals(user.getRole(), returnedUser.getRole());

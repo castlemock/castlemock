@@ -30,7 +30,7 @@ public class AlphanumComparatorTest {
         final List<String> collection = Arrays.asList("a100", "a1", "a10", "a11", "a101");
         collection.sort(comparator);
 
-        Assert.assertEquals("a1", collection.get(0));
+        Assert.assertEquals("a1", collection.getFirst());
         Assert.assertEquals("a10", collection.get(1));
         Assert.assertEquals("a11", collection.get(2));
         Assert.assertEquals("a100", collection.get(3));

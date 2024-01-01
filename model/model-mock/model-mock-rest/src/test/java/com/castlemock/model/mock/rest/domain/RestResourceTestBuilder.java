@@ -21,8 +21,8 @@ public final class RestResourceTestBuilder {
         this.uri = "/user/{username}";
         this.applicationId = "QLP2Nk";
         this.invokeAddress = "http://castlemock.herokuapp.com:80/mock/rest/project/EqbLQU/application/QLP2Nk/user/{username}";
-        this.methods = new CopyOnWriteArrayList<RestMethod>();
-        this.statusCount = new HashMap<RestMethodStatus, Integer>();
+        this.methods = new CopyOnWriteArrayList<>();
+        this.statusCount = new HashMap<>();
 
         this.methods.add(RestMethodTestBuilder.builder().build());
     }

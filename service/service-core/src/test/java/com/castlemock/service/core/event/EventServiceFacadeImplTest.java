@@ -35,9 +35,6 @@ import java.util.Map;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class EventServiceFacadeImplTest {
 
-    private static final String TYPE = "Type";
-    private static final String TYPE_URL = "TypeUrl";
-
     @Mock
     private ApplicationContext applicationContext;
 
@@ -52,7 +49,7 @@ public class EventServiceFacadeImplTest {
 
         eventServiceAdapter = Mockito.mock(EventServiceAdapter.class);
 
-        final Map<String, Object> eventServiceAdapters = new HashMap<String, Object>();
+        final Map<String, Object> eventServiceAdapters = new HashMap<>();
         eventServiceAdapters.put("EventServiceAdapter", eventServiceAdapter);
         Mockito.when(applicationContext.getBeansWithAnnotation(Mockito.any(Class.class))).thenReturn(eventServiceAdapters);
 

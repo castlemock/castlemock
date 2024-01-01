@@ -30,49 +30,52 @@ public class MtomUtilityTest {
 
     @Test
     public void extractMtomBodyTest() throws IOException {
-        String body = "------=_Part_64_1526053806.1517665317492\n" +
-                "Content-Type: text/xml; charset=UTF-8\n" +
-                "Content-Transfer-Encoding: 8bit\n" +
-                "Content-ID: <test@castlemock.org>\n" +
-                "\n" +
-                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cas=\"http://castlemock.com/\">\n" +
-                "   <soapenv:Header/>\n" +
-                "   <soapenv:Body>\n" +
-                "      <cas:TestService>\n" +
-                "         <Variable1>?</Variable1>\n" +
-                "         <Variable2>\n" +
-                "            <Variable1>?</Variable1>\n" +
-                "            <Variable2>?</Variable2>\n" +
-                "            <files/>\n" +
-                "         </Variable2>\n" +
-                "      </cas:TestService>\n" +
-                "   </soapenv:Body>\n" +
-                "</soapenv:Envelope>\n" +
-                "------=_Part_64_1526053806.1517665317492\n" +
-                "Content-Type: text/plain; charset=us-ascii; name=\"example\"\n" +
-                "Content-ID: <example>\n" +
-                "Content-Disposition: attachment; name=\"example.txt\"; filename=\"example.txt\"\n" +
-                "\n" +
-                "This is an example\n" +
-                "------=_Part_24_1742827313.1517654770545--";
+        String body = """
+                ------=_Part_64_1526053806.1517665317492
+                Content-Type: text/xml; charset=UTF-8
+                Content-Transfer-Encoding: 8bit
+                Content-ID: <test@castlemock.org>
+
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cas="http://castlemock.com/">
+                   <soapenv:Header/>
+                   <soapenv:Body>
+                      <cas:TestService>
+                         <Variable1>?</Variable1>
+                         <Variable2>
+                            <Variable1>?</Variable1>
+                            <Variable2>?</Variable2>
+                            <files/>
+                         </Variable2>
+                      </cas:TestService>
+                   </soapenv:Body>
+                </soapenv:Envelope>
+                ------=_Part_64_1526053806.1517665317492
+                Content-Type: text/plain; charset=us-ascii; name="example"
+                Content-ID: <example>
+                Content-Disposition: attachment; name="example.txt"; filename="example.txt"
+
+                This is an example
+                ------=_Part_24_1742827313.1517654770545--""";
         String contextType = "multipart/related; type=\"text/xml\"; start=\"<test@castlemock.org>\"; boundary=\"----=_Part_64_1526053806.1517665317492\"";
 
         String mainBody = MtomUtility.extractMtomBody(body, contextType);
 
         Assert.assertNotNull(mainBody);
-        Assert.assertEquals("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cas=\"http://castlemock.com/\">\n" +
-                "   <soapenv:Header/>\n" +
-                "   <soapenv:Body>\n" +
-                "      <cas:TestService>\n" +
-                "         <Variable1>?</Variable1>\n" +
-                "         <Variable2>\n" +
-                "            <Variable1>?</Variable1>\n" +
-                "            <Variable2>?</Variable2>\n" +
-                "            <files/>\n" +
-                "         </Variable2>\n" +
-                "      </cas:TestService>\n" +
-                "   </soapenv:Body>\n" +
-                "</soapenv:Envelope>\n", mainBody);
+        Assert.assertEquals("""
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cas="http://castlemock.com/">
+                   <soapenv:Header/>
+                   <soapenv:Body>
+                      <cas:TestService>
+                         <Variable1>?</Variable1>
+                         <Variable2>
+                            <Variable1>?</Variable1>
+                            <Variable2>?</Variable2>
+                            <files/>
+                         </Variable2>
+                      </cas:TestService>
+                   </soapenv:Body>
+                </soapenv:Envelope>
+                """, mainBody);
     }
 
 

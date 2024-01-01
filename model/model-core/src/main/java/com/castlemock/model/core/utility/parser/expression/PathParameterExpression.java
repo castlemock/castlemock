@@ -45,12 +45,11 @@ public class PathParameterExpression extends AbstractExpression {
         final ExpressionArgument<?> parametersArgument = input.getArgument(PATH_PARAMETERS);
         final ExpressionArgument<?> parameterIdentifierArgument = input.getArgument(PARAMETER_ARGUMENT);
 
-        if(parametersArgument == null || parameterIdentifierArgument == null ||
-                !(parametersArgument instanceof ExpressionArgumentMap)){
+        if(parameterIdentifierArgument == null ||
+                !(parametersArgument instanceof ExpressionArgumentMap parametersMap)){
             return MISSING_PATH_PARAMETER;
         }
 
-        final ExpressionArgumentMap parametersMap = (ExpressionArgumentMap) parametersArgument;
         final Object key = parameterIdentifierArgument.getValue();
         final ExpressionArgumentArray result = (ExpressionArgumentArray) parametersMap.getArgument(key);
 

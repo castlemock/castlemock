@@ -54,11 +54,11 @@ public class UpdateAllConfigurationGroupsServiceTest {
 
     @Test
     public void testProcess(){
-        final List<ConfigurationGroup> configurationGroups = new ArrayList<ConfigurationGroup>();
+        final List<ConfigurationGroup> configurationGroups = new ArrayList<>();
         final ConfigurationGroup configurationGroup = new ConfigurationGroup();
         configurationGroup.setId("123");
         configurationGroup.setName("Configuration group");
-        configurationGroup.setConfigurations(new ArrayList<Configuration>());
+        configurationGroup.setConfigurations(new ArrayList<>());
         final Configuration configuration = new Configuration();
         configuration.setKey("Key");
         configuration.setValue("New value");
@@ -66,11 +66,11 @@ public class UpdateAllConfigurationGroupsServiceTest {
         configurationGroup.getConfigurations().add(configuration);
         configurationGroups.add(configurationGroup);
 
-        final List<ConfigurationGroup> sourceConfigurationGroups = new ArrayList<ConfigurationGroup>();
+        final List<ConfigurationGroup> sourceConfigurationGroups = new ArrayList<>();
         final ConfigurationGroup sourceConfigurationGroup = new ConfigurationGroup();
         sourceConfigurationGroup.setId("123");
         sourceConfigurationGroup.setName("Configuration group");
-        sourceConfigurationGroup.setConfigurations(new ArrayList<Configuration>());
+        sourceConfigurationGroup.setConfigurations(new ArrayList<>());
         final Configuration sourceConfiguration = new Configuration();
         sourceConfiguration.setKey("Key");
         sourceConfiguration.setValue("Old value");
@@ -81,7 +81,7 @@ public class UpdateAllConfigurationGroupsServiceTest {
         final ConfigurationGroup updatedConfigurationGroup = new ConfigurationGroup();
         updatedConfigurationGroup.setId("123");
         updatedConfigurationGroup.setName("Configuration group");
-        updatedConfigurationGroup.setConfigurations(new ArrayList<Configuration>());
+        updatedConfigurationGroup.setConfigurations(new ArrayList<>());
         final Configuration updatedConfiguration = new Configuration();
         updatedConfiguration.setKey("Key");
         updatedConfiguration.setValue("New value");
@@ -100,12 +100,12 @@ public class UpdateAllConfigurationGroupsServiceTest {
         Assert.assertNotNull(output.getUpdatedConfigurationGroups());
         List<ConfigurationGroup> returnedConfigurationGroups = output.getUpdatedConfigurationGroups();
         Assert.assertEquals(1, returnedConfigurationGroups.size());
-        ConfigurationGroup returnedConfigurationGroup = returnedConfigurationGroups.get(0);
+        ConfigurationGroup returnedConfigurationGroup = returnedConfigurationGroups.getFirst();
         Assert.assertEquals(updatedConfigurationGroup.getId(), returnedConfigurationGroup.getId());
         Assert.assertEquals(updatedConfigurationGroup.getName(), returnedConfigurationGroup.getName());
         Assert.assertEquals(updatedConfigurationGroup.getConfigurations().size(), returnedConfigurationGroup.getConfigurations().size());
         Assert.assertEquals(1, returnedConfigurationGroup.getConfigurations().size());
-        Configuration returnedConfiguration = returnedConfigurationGroup.getConfigurations().get(0);
+        Configuration returnedConfiguration = returnedConfigurationGroup.getConfigurations().getFirst();
         Assert.assertEquals(returnedConfiguration.getType(), updatedConfiguration.getType());
         Assert.assertEquals(returnedConfiguration.getKey(), updatedConfiguration.getKey());
         Assert.assertEquals(returnedConfiguration.getValue(), updatedConfiguration.getValue());

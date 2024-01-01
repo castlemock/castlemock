@@ -59,7 +59,7 @@ public class RestEventRepositoryTest {
 
     @Test
     public void testInitialize(){
-        List<RestEvent> restEvents = new ArrayList<RestEvent>();
+        List<RestEvent> restEvents = new ArrayList<>();
         RestEvent restEvent = RestEventTestBuilder.builder().build();
         restEvents.add(restEvent);
         Mockito.when(fileRepositorySupport.load(RestEvent.class, DIRECTORY, EXTENSION)).thenReturn(restEvents);
@@ -83,11 +83,11 @@ public class RestEventRepositoryTest {
         final RestEvent restEvent = save();
         final List<RestEvent> restEvents = repository.findAll();
         Assert.assertEquals(restEvents.size(), 1);
-        Assert.assertEquals(restEvents.get(0).getResourceId(), restEvent.getResourceId());
-        Assert.assertEquals(restEvents.get(0).getApplicationId(), restEvent.getApplicationId());
-        Assert.assertEquals(restEvents.get(0).getMethodId(), restEvent.getMethodId());
-        Assert.assertEquals(restEvents.get(0).getProjectId(), restEvent.getProjectId());
-        Assert.assertEquals(restEvents.get(0).getResourceName(), restEvent.getResourceName());
+        Assert.assertEquals(restEvents.getFirst().getResourceId(), restEvent.getResourceId());
+        Assert.assertEquals(restEvents.getFirst().getApplicationId(), restEvent.getApplicationId());
+        Assert.assertEquals(restEvents.getFirst().getMethodId(), restEvent.getMethodId());
+        Assert.assertEquals(restEvents.getFirst().getProjectId(), restEvent.getProjectId());
+        Assert.assertEquals(restEvents.getFirst().getResourceName(), restEvent.getResourceName());
     }
 
     @Test

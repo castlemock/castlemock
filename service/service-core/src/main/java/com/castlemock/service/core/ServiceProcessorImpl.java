@@ -54,7 +54,7 @@ public class ServiceProcessorImpl implements ServiceProcessor {
     private ServiceRegistry serviceRegistry;
     private static final String UNKNOWN_USER = "Unknown";
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceProcessorImpl.class);
-    private static final List<Validator> VALIDATORS = new ArrayList<Validator>();
+    private static final List<Validator> VALIDATORS = new ArrayList<>();
 
     static {
         VALIDATORS.add(new NotNullValidator());
@@ -101,7 +101,7 @@ public class ServiceProcessorImpl implements ServiceProcessor {
     @SuppressWarnings("deprecation")
     public <I extends Input, O extends Output> Future<O> processAsync(final I input) {
         O output = process(input);
-        return new AsyncResult<O>(output);
+        return new AsyncResult<>(output);
     }
 
     /**

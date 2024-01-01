@@ -44,7 +44,7 @@ public class DocumentUtility {
     public static Optional<String> getAttribute(final Element element,
                                       final String name){
         final String value = element.getAttribute(name);
-        if(value == null || value.isEmpty()){
+        if(value.isEmpty()){
             return Optional.empty();
         }
         String[] splitValues = value.split(":");
@@ -62,7 +62,7 @@ public class DocumentUtility {
             return Optional.empty();
         }
 
-        return Optional.ofNullable(getElements(nodeList).get(0));
+        return Optional.ofNullable(getElements(nodeList).getFirst());
     }
 
     public static Optional<Element> getElement(final Element element,
@@ -73,7 +73,7 @@ public class DocumentUtility {
             return Optional.empty();
         }
 
-        return Optional.ofNullable(getElements(nodeList).get(0));
+        return Optional.ofNullable(getElements(nodeList).getFirst());
     }
 
     public static Optional<Element> getElement(final Element element,
@@ -85,7 +85,7 @@ public class DocumentUtility {
             return Optional.empty();
         }
 
-        return Optional.ofNullable(getElements(nodeList).get(0));
+        return Optional.ofNullable(getElements(nodeList).getFirst());
     }
 
     public static Optional<Element> getElement(final Document document,
@@ -97,7 +97,7 @@ public class DocumentUtility {
             return Optional.empty();
         }
 
-        return Optional.ofNullable(getElements(nodeList).get(0));
+        return Optional.ofNullable(getElements(nodeList).getFirst());
     }
 
     public static List<Element> getElements(final Document document,

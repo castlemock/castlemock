@@ -30,20 +30,21 @@ public class FileRepositorySupportTest {
         headers.add(httpHeaderFile);
         soapMockResponseFile.setId("Id");
         soapMockResponseFile.setName("Name");
-        soapMockResponseFile.setBody("\n" +
-                "<?xml version=\"1.0\"?>\n" +
-                "\n" +
-                "<soap:Envelope\n" +
-                "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope/\"\n" +
-                "soap:encodingStyle=\"http://www.w3.org/2003/05/soap-encoding\">\n" +
-                "\n" +
-                "<soap:Body>\n" +
-                "  <m:GetPrice xmlns:m=\"https://www.w3schools.com/prices\">\n" +
-                "    <m:Item>Apples Maçãs</m:Item>\n" +
-                "  </m:GetPrice>\n" +
-                "</soap:Body>\n" +
-                "\n" +
-                "</soap:Envelope> ");
+        soapMockResponseFile.setBody("""
+
+                <?xml version="1.0"?>
+
+                <soap:Envelope
+                xmlns:soap="http://www.w3.org/2003/05/soap-envelope/"
+                soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
+
+                <soap:Body>
+                  <m:GetPrice xmlns:m="https://www.w3schools.com/prices">
+                    <m:Item>Apples Maçãs</m:Item>
+                  </m:GetPrice>
+                </soap:Body>
+
+                </soap:Envelope>\s""");
         soapMockResponseFile.setHttpHeaders(headers);
         soapMockResponseFile.setXpathExpressions(expressions);
 

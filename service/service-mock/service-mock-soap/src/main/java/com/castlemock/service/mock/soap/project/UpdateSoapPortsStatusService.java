@@ -50,9 +50,7 @@ public class UpdateSoapPortsStatusService extends AbstractSoapProjectService imp
                 .map(operation -> operation.toBuilder()
                         .status(soapOperationStatus)
                         .build())
-                .forEach(operation -> {
-                    this.operationRepository.update(operation.getId(), operation);
-                });
+                .forEach(operation -> this.operationRepository.update(operation.getId(), operation));
         return createServiceResult(UpdateSoapPortsStatusOutput.builder().build());
     }
 }

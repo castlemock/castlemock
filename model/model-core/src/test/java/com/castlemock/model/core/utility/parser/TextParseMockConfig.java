@@ -46,7 +46,7 @@ class TextParseMockConfig {
 		this.mockedExpressions = configureMockedExpressions();
 	}
 	
-	private Map<String,Expression> mockedExpressions;
+	private final Map<String,Expression> mockedExpressions;
 	
 	public Map<String,Expression> getMockedExpressions() {
 		return this.mockedExpressions;

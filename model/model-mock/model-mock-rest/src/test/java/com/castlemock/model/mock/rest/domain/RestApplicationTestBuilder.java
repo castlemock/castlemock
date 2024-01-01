@@ -17,8 +17,8 @@ public final class RestApplicationTestBuilder {
         this.id = "QLP2Nk";
         this.name = "Swagger Petstore";
         this.projectId = "EqbLQU";
-        this.resources = new CopyOnWriteArrayList<RestResource>();
-        this.statusCount = new HashMap<RestMethodStatus, Integer>();
+        this.resources = new CopyOnWriteArrayList<>();
+        this.statusCount = new HashMap<>();
 
         this.resources.add(RestResourceTestBuilder.builder().build());
     }

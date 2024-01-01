@@ -51,7 +51,7 @@ public class SoapOperation {
     private String portId;
     private Boolean mockOnFailure;
     private SoapOperationIdentifyStrategy identifyStrategy;
-    private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<SoapMockResponse>();
+    private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<>();
     private String invokeAddress;
     private String defaultResponseName;
     private boolean automaticForward;
@@ -297,7 +297,7 @@ public class SoapOperation {
         private String portId;
         private Boolean mockOnFailure;
         private SoapOperationIdentifyStrategy identifyStrategy;
-        private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<SoapMockResponse>();
+        private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<>();
         private String invokeAddress;
         private String defaultResponseName;
         private Boolean automaticForward;

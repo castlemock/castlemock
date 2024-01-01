@@ -141,7 +141,7 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
 
         final List<RestResource> existingRestResources =
                 this.resourceRepository.findWithApplicationId(existingRestApplication.getId());
-        final List<RestResource> resultRestResources = new ArrayList<RestResource>();
+        final List<RestResource> resultRestResources = new ArrayList<>();
         for(RestResource newRestResource : newRestApplication.getResources()) {
             updateRestResource(newRestResource, existingRestResources, resultRestResources);
         }
@@ -181,7 +181,7 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
         //existingRestResource.setUri(newRestResource.getUri());
 
         final List<RestMethod> existingRestMethods = this.methodRepository.findWithResourceId(existingRestResource.getId());
-        final List<RestMethod> resultRestMethods = new ArrayList<RestMethod>();
+        final List<RestMethod> resultRestMethods = new ArrayList<>();
         for(RestMethod newRestMethod : newRestResource.getMethods()){
             updateRestMethod(newRestMethod, existingRestMethods, resultRestMethods);
         }

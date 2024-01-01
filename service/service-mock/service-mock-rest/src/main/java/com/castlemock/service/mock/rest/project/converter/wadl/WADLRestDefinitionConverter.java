@@ -70,7 +70,7 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
      */
     @Override
     public List<RestApplication> convert(final File file, final String projectId, final boolean generateResponse){
-        List<RestApplication> applications = new LinkedList<RestApplication>();
+        List<RestApplication> applications = new LinkedList<>();
         try {
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();

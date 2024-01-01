@@ -5,6 +5,8 @@ import com.castlemock.model.core.validation.validator.NotNullValidator;
 import com.castlemock.model.core.validation.validator.Validator;
 import org.junit.Test;
 
+import java.util.Objects;
+
 public class NotNullValidatorTest {
 
 
@@ -29,14 +31,11 @@ public class NotNullValidatorTest {
         validator.validateMessage(null);
     }
 
-    private static class TestMessage implements Message {
+    private record TestMessage(@NotNull String input) implements Message {
 
-        @NotNull
-        private final String input;
-
-        private TestMessage(final String input) {
-            this.input = input;
+            private TestMessage(final String input) {
+                this.input = Objects.requireNonNull(input, "input");
+            }
         }
-    }
 
 }

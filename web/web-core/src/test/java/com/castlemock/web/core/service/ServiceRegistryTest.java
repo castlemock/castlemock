@@ -50,7 +50,7 @@ public class ServiceRegistryTest {
     @Before
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        final Map<String, Object> components = new HashMap<String, Object>();
+        final Map<String, Object> components = new HashMap<>();
         final ReadUserService readUserService = Mockito.mock(ReadUserService.class);
         components.put("readUserService",readUserService);
         Mockito.when(applicationContext.getBeansWithAnnotation(Mockito.any(Class.class))).thenReturn(components);

@@ -50,7 +50,7 @@ public class UpdateAllConfigurationGroupsService extends AbstractConfigurationGr
         Preconditions.checkNotNull(configurationGroupDtos, "The updated configuration group cannot be null");
         final List<ConfigurationGroup> sourceConfigurationGroups = findAll();
         Preconditions.checkNotNull(sourceConfigurationGroups, "The source configuration group cannot be null");
-        final List<ConfigurationGroup> updateConfigurations = new ArrayList<ConfigurationGroup>();
+        final List<ConfigurationGroup> updateConfigurations = new ArrayList<>();
 
         for(ConfigurationGroup sourceConfigurationGroup : sourceConfigurationGroups){
             for(ConfigurationGroup configurationGroup : configurationGroupDtos){

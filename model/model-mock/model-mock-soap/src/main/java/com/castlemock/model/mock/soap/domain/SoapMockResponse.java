@@ -43,9 +43,9 @@ public class SoapMockResponse {
     private SoapMockResponseStatus status;
     private Integer httpStatusCode;
     private boolean usingExpressions;
-    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
-    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
-    private List<SoapXPathExpression> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpression>();
+    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<>();
+    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
+    private List<SoapXPathExpression> xpathExpressions = new CopyOnWriteArrayList<>();
 
     private SoapMockResponse(){
 
@@ -188,9 +188,9 @@ public class SoapMockResponse {
         private SoapMockResponseStatus status;
         private Integer httpStatusCode;
         private Boolean usingExpressions;
-        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
-        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
-        private List<SoapXPathExpression> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpression>();
+        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<>();
+        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
+        private List<SoapXPathExpression> xpathExpressions = new CopyOnWriteArrayList<>();
 
         private Builder() {
         }

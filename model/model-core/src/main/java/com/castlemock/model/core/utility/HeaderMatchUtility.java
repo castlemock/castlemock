@@ -28,7 +28,7 @@ public final class HeaderMatchUtility {
     private static final String GREATHER_THAN_SIGN = ">";
     private static final String SPACE = " ";
 
-    private static Pattern VALID_HEADER_REGEX =
+    private static final Pattern VALID_HEADER_REGEX =
             Pattern.compile("^[A-Z0-9()=*,:;/_-]+->[A-Z0-9()=*,:;/_-]+$", Pattern.CASE_INSENSITIVE);
 
     private HeaderMatchUtility() {

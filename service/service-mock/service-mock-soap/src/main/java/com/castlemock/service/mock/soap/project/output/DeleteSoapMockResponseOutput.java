@@ -27,10 +27,10 @@ import java.util.Objects;
  */
 public final class DeleteSoapMockResponseOutput implements Output {
 
-    private SoapMockResponse mockResponse;
+    private final SoapMockResponse mockResponse;
 
     private DeleteSoapMockResponseOutput(final Builder builder){
-        this.mockResponse = Objects.requireNonNull(builder.mockResponse);
+        this.mockResponse = Objects.requireNonNull(builder.mockResponse, "mockResponse");
     }
 
     public SoapMockResponse getMockResponse() {

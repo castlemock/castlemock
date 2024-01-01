@@ -25,8 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
@@ -59,16 +57,11 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
     @Autowired
     protected FileRepositorySupport fileRepositorySupport;
 
-    private Class<T> entityClass;
+    private final Class<T> entityClass;
 
-    private Class<D> dtoClass;
-
-    protected Map<I, T> collection = new ConcurrentHashMap<I, T>();
-
-    private Map<I, Semaphore> writeLocks = new ConcurrentHashMap<>();
-
-    private JAXBContext jaxbContext;
-
+    private final Class<D> dtoClass;
+    protected final Map<I, T> collection = new ConcurrentHashMap<>();
+    private final Map<I, Semaphore> writeLocks = new ConcurrentHashMap<>();
     private static final Logger LOGGER = LoggerFactory.getLogger(FileRepository.class);
 
     /**
@@ -92,13 +85,6 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      */
     @Override
     public void initialize(){
-        LOGGER.debug("Creating a new JAXB context for the following class: " + entityClass.getSimpleName());
-        try {
-            this.jaxbContext = JAXBContext.newInstance(entityClass);
-        } catch (JAXBException e) {
-            LOGGER.error("Unable to create a new JAXB instance" , e);
-            throw new IllegalStateException("Unable to create a new JAXB instance" , e);
-        }
         LOGGER.debug("Start the initialize phase for the type " + entityClass.getSimpleName());
         final Collection<T> loadedFiles = loadFiles();
         for(T type : loadedFiles){
@@ -164,7 +150,6 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      *         there could be modifications of the object during the save process. For example, if the type does not
      *         have an identifier, then the method will generate a new identifier for the type.
      */
-    @SuppressWarnings("unchecked")
     protected D save(final T type){
         I id = type.getId();
         checkType(type);
@@ -193,7 +178,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      * @since 1.20
      */
     @Override
-    public D update(I id, D type) {
+    public D update(final I id, final D type) {
         return save(type);
     }
 
@@ -206,13 +191,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      * @since 1.5
      */
     private synchronized Semaphore getWriteLock(final I id){
-        Semaphore writeLock = writeLocks.get(id);
-        if(writeLock == null){
-            // Create a new write lock and only one is allowed to write to the file at a time.
-            writeLock = new Semaphore(1);
-            writeLocks.put(id, writeLock);
-        }
-        return writeLock;
+        return writeLocks.computeIfAbsent(id, k -> new Semaphore(1));
     }
 
     /**
@@ -253,7 +232,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      * @return <code>true</code> if the id exists. <code>false</code> otherwise.
      * @since 1.20
      */
-    public boolean exists(I id){
+    public boolean exists(final I id){
         return this.collection.containsKey(id);
     }
 
@@ -262,7 +241,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      * @param id The id will be the foundation of the generated file name.
      * @return A file name based on the provided id.
      */
-    private String getFilename(I id){
+    private String getFilename(final I id){
         final String directory = getFileDirectory();
         final String postfix = getFileExtension();
         return directory + File.separator + id + postfix;

@@ -228,7 +228,7 @@ public class RestMethod {
         private Long networkDelay;
         private String defaultQueryMockResponseId;
         private String defaultMockResponseId;
-        private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<RestMockResponse>();
+        private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<>();
         private String uri;
         private String defaultResponseName;
         private Boolean automaticForward;

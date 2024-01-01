@@ -27,6 +27,10 @@ abstract class AbstractRAMLParser {
     protected static final int DEFAULT_RESPONSE_CODE = 200;
     protected static final String RESPONSE_NAME_PREFIX = "Response ";
 
+    protected AbstractRAMLParser() {
+
+    }
+
     /**
      * The method will extract the HTTP response status code. The provided response code
      * is a {@link String} and should be parsed to an integer. However, the response code

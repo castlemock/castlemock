@@ -27,6 +27,8 @@ import com.castlemock.model.mock.rest.domain.RestXPathExpression;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -47,100 +49,65 @@ public class CreateRestMockResponseRequest {
     private List<RestJsonPathExpression> jsonPathExpressions;
     private List<RestHeaderQuery> headerQueries;
 
-    public CreateRestMockResponseRequest(){
+    private CreateRestMockResponseRequest(){
 
     }
 
     private CreateRestMockResponseRequest(final Builder builder){
-        this.name = Objects.requireNonNull(builder.name);
-    }
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.body = builder.body;
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions, "usingExpressions");
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
+        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(CopyOnWriteArrayList::new);
+        this.parameterQueries = Optional.ofNullable(builder.parameterQueries).orElseGet(CopyOnWriteArrayList::new);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
+        this.jsonPathExpressions = Optional.ofNullable(builder.jsonPathExpressions).orElseGet(CopyOnWriteArrayList::new);
+        this.headerQueries = Optional.ofNullable(builder.headerQueries).orElseGet(CopyOnWriteArrayList::new);    }
     
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
+    public Optional<String> getBody() {
+        return Optional.ofNullable(body);
     }
 
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
-    }
-
     public RestMockResponseStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(RestMockResponseStatus status) {
-        this.status = status;
     }
 
     public boolean isUsingExpressions() {
         return usingExpressions;
     }
 
-    public void setUsingExpressions(boolean usingExpressions) {
-        this.usingExpressions = usingExpressions;
-    }
-
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
-    }
-
-    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
-        this.httpHeaders = httpHeaders;
     }
 
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
 
-    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
-        this.contentEncodings = contentEncodings;
-    }
-
     public List<RestParameterQuery> getParameterQueries() {
         return parameterQueries;
-    }
-
-    public void setParameterQueries(List<RestParameterQuery> parameterQueries) {
-        this.parameterQueries = parameterQueries;
     }
 
     public List<RestXPathExpression> getXpathExpressions() {
         return xpathExpressions;
     }
 
-    public void setXpathExpressions(List<RestXPathExpression> xpathExpressions) {
-        this.xpathExpressions = xpathExpressions;
-    }
-
     public List<RestJsonPathExpression> getJsonPathExpressions() {
         return jsonPathExpressions;
     }
 
-    public void setJsonPathExpressions(List<RestJsonPathExpression> jsonPathExpressions) {
-        this.jsonPathExpressions = jsonPathExpressions;
-    }
-
     public List<RestHeaderQuery> getHeaderQueries() {
         return headerQueries;
-    }
-
-    public void setHeaderQueries(List<RestHeaderQuery> headerQueries) {
-        this.headerQueries = headerQueries;
     }
 
     @Override

@@ -52,7 +52,7 @@ public class RestEventServiceAdapterTest {
 
     @Test
     public void testReadAll(){
-        final List<RestEvent> restEvents = new ArrayList<RestEvent>();
+        final List<RestEvent> restEvents = new ArrayList<>();
         for(int index = 0; index < 3; index++){
             final RestEvent restEvent = RestEventTestBuilder.builder().build();
             restEvents.add(restEvent);

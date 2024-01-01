@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serial;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
@@ -67,7 +68,7 @@ public class SessionTokenFileRepository implements SessionTokenRepository {
     public synchronized void createNewToken(PersistentRememberMeToken token) {
         PersistentRememberMeToken current = this.seriesTokens.get(token.getSeries());
         if(current != null) {
-            throw new IllegalArgumentException("Series Id \'" + token.getSeries() + "\' already exists!");
+            throw new IllegalArgumentException("Series Id '" + token.getSeries() + "' already exists!");
         } else {
             this.seriesTokens.put(token.getSeries(), token);
             saveTokens();
@@ -96,7 +97,7 @@ public class SessionTokenFileRepository implements SessionTokenRepository {
      * @param newUsername The new username. It will replace the old username
      */
     public synchronized void updateToken(String oldUsername, String newUsername) {
-        final List<PersistentRememberMeToken> tokens = new LinkedList<PersistentRememberMeToken>();
+        final List<PersistentRememberMeToken> tokens = new LinkedList<>();
         for(PersistentRememberMeToken token : seriesTokens.values()){
             if(token.getUsername().equalsIgnoreCase(oldUsername)){
                 PersistentRememberMeToken newToken = new PersistentRememberMeToken(newUsername, token.getSeries(), token.getTokenValue(), token.getDate());
@@ -288,10 +289,11 @@ public class SessionTokenFileRepository implements SessionTokenRepository {
     @XmlSeeAlso({SessionToken.class})
     public static class SessionTokenList extends LinkedList<SessionToken> {
 
+        @Serial
         private static final long serialVersionUID = 1L;
 
         @XmlElement(name = "token")
-        public List<SessionToken> getSessionTokens() {
+        private List<SessionToken> getSessionTokens() {
             return this;
         }
     }

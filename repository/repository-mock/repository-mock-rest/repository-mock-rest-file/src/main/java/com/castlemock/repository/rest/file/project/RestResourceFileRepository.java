@@ -96,7 +96,7 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      */
     @Override
     public List<RestResource> search(SearchQuery query) {
-        final List<RestResource> result = new LinkedList<RestResource>();
+        final List<RestResource> result = new LinkedList<>();
         for(RestResourceFile restResourceFile : collection.values()){
             if(SearchValidator.validate(restResourceFile.getName(), query.getQuery())){
                 RestResource restResource = mapper.map(restResourceFile, RestResource.class);

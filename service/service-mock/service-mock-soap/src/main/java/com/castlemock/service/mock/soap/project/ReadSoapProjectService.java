@@ -79,7 +79,7 @@ public class ReadSoapProjectService extends AbstractSoapProjectService implement
      */
     private Map<SoapOperationStatus, Integer> getSoapOperationStatusCount(final List<SoapOperation> soapOperations){
         Preconditions.checkNotNull(soapOperations, "The operation list cannot be null");
-        final Map<SoapOperationStatus, Integer> statuses = new HashMap<SoapOperationStatus, Integer>();
+        final Map<SoapOperationStatus, Integer> statuses = new HashMap<>();
 
         for(SoapOperationStatus soapOperationStatus : SoapOperationStatus.values()){
             statuses.put(soapOperationStatus, 0);

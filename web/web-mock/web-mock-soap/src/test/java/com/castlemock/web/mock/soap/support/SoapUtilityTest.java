@@ -30,16 +30,17 @@ public class SoapUtilityTest {
     @Test
     public void testExtractSoapRequestName(){
         final String requestBody =
-                "<?xml version=\"1.0\"?>\n" +
-                        "<soap:Envelope\n" +
-                        "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope/\"\n" +
-                        "soap:encodingStyle=\"http://www.w3.org/2003/05/soap-encoding\">\n" +
-                        "<soap:Body>\n" +
-                        "  <m:GetPrice xmlns:m=\"http://www.w3schools.com/prices\">\n" +
-                        "    <m:Item>Apples</m:Item>\n" +
-                        "  </m:GetPrice>\n" +
-                        "</soap:Body>\n" +
-                        "</soap:Envelope> ";
+                """
+                        <?xml version="1.0"?>
+                        <soap:Envelope
+                        xmlns:soap="http://www.w3.org/2003/05/soap-envelope/"
+                        soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
+                        <soap:Body>
+                          <m:GetPrice xmlns:m="http://www.w3schools.com/prices">
+                            <m:Item>Apples</m:Item>
+                          </m:GetPrice>
+                        </soap:Body>
+                        </soap:Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
@@ -49,15 +50,16 @@ public class SoapUtilityTest {
     @Test
     public void testExtractSoapRequestNameWithoutNamespaces(){
         final String requestBody =
-                "<?xml version=\"1.0\"?>\n" +
-                        "<soap:Envelope\n" +
-                        "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope/\">\n" +
-                        "<soap:Body>\n" +
-                        "  <GetPrice xmlns=\"http://www.w3schools.com/prices\">\n" +
-                        "    <Item>Apples</Item>\n" +
-                        "  </GetPrice>\n" +
-                        "</soap:Body>\n" +
-                        "</soap:Envelope> ";
+                """
+                        <?xml version="1.0"?>
+                        <soap:Envelope
+                        xmlns:soap="http://www.w3.org/2003/05/soap-envelope/">
+                        <soap:Body>
+                          <GetPrice xmlns="http://www.w3schools.com/prices">
+                            <Item>Apples</Item>
+                          </GetPrice>
+                        </soap:Body>
+                        </soap:Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
@@ -67,15 +69,16 @@ public class SoapUtilityTest {
     @Test
     public void testExtractSoapRequestNameWithHref(){
         final String requestBody =
-                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
-                        "\t<soap:Body soap:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
-                        "\t\t<ns3:GetPrice xmlns:ns3=\"http://www.w3schools.com/prices\">\n" +
-                        "\t\t\t<in href=\"#id1\"/>\n" +
-                        "\t\t</ns3:GetPrice>\n" +
-                        "\t\t<ns3:GetPriceIn id=\"id1\" xmlns:ns3=\"http://www.w3schools.com/prices\" xsi:type=\"ns3:GetPriceIn\">\n" +
-                        "\t\t</ns3:GetPriceIn>\n" +
-                        "\t</soap:Body>\n" +
-                        "</soapenv:Envelope>";
+                """
+                        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                        \t<soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                        \t\t<ns3:GetPrice xmlns:ns3="http://www.w3schools.com/prices">
+                        \t\t\t<in href="#id1"/>
+                        \t\t</ns3:GetPrice>
+                        \t\t<ns3:GetPriceIn id="id1" xmlns:ns3="http://www.w3schools.com/prices" xsi:type="ns3:GetPriceIn">
+                        \t\t</ns3:GetPriceIn>
+                        \t</soap:Body>
+                        </soapenv:Envelope>""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
@@ -85,15 +88,16 @@ public class SoapUtilityTest {
     @Test
     public void testExtractSoapRequestNameNamespacesInElement(){
         final String requestBody =
-                "<?xml version=\"1.0\"?>\n" +
-                        "<soap:Envelope\n" +
-                        "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope/\">\n" +
-                        "<soap:Body>\n" +
-                        "  <GetPrice>\n" +
-                        "    <Item>Apples</Item>\n" +
-                        "  </GetPrice>\n" +
-                        "</soap:Body>\n" +
-                        "</soap:Envelope> ";
+                """
+                        <?xml version="1.0"?>
+                        <soap:Envelope
+                        xmlns:soap="http://www.w3.org/2003/05/soap-envelope/">
+                        <soap:Body>
+                          <GetPrice>
+                            <Item>Apples</Item>
+                          </GetPrice>
+                        </soap:Body>
+                        </soap:Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
@@ -103,16 +107,17 @@ public class SoapUtilityTest {
     @Test
     public void testExtractSoapSameNamespaceAndName(){
         final String requestBody =
-                "<?xml version=\"1.0\"?>\n" +
-                        "<soap:Envelope\n" +
-                        "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope/\"\n" +
-                        "soap:encodingStyle=\"http://www.w3.org/2003/05/soap-encoding\">\n" +
-                        "<soap:Body>\n" +
-                        "  <GetPrice xmlns:GetPrice=\"http://www.w3schools.com/prices\">\n" +
-                        "    <m:Item>Apples</m:Item>\n" +
-                        "  </GetPrice>\n" +
-                        "</soap:Body>\n" +
-                        "</soap:Envelope> ";
+                """
+                        <?xml version="1.0"?>
+                        <soap:Envelope
+                        xmlns:soap="http://www.w3.org/2003/05/soap-envelope/"
+                        soap:encodingStyle="http://www.w3.org/2003/05/soap-encoding">
+                        <soap:Body>
+                          <GetPrice xmlns:GetPrice="http://www.w3schools.com/prices">
+                            <m:Item>Apples</m:Item>
+                          </GetPrice>
+                        </soap:Body>
+                        </soap:Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
@@ -122,15 +127,16 @@ public class SoapUtilityTest {
     @Test
     public void testExtractSoapRequestNameWithoutBodyNamespace(){
         final String requestBody =
-                "<?xml version=\"1.0\"?>\n" +
-                        "<soap:Envelope\n" +
-                        "xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope/\">\n" +
-                        "<Body>\n" +
-                        "  <GetPrice>\n" +
-                        "    <Item>Apples</Item>\n" +
-                        "  </GetPrice>\n" +
-                        "</Body>\n" +
-                        "</soap:Envelope> ";
+                """
+                        <?xml version="1.0"?>
+                        <soap:Envelope
+                        xmlns:soap="http://www.w3.org/2003/05/soap-envelope/">
+                        <Body>
+                          <GetPrice>
+                            <Item>Apples</Item>
+                          </GetPrice>
+                        </Body>
+                        </soap:Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
@@ -140,15 +146,16 @@ public class SoapUtilityTest {
     @Test
     public void testExtractSoapRequestNameWithBodyNamespace(){
         final String requestBody =
-                "<?xml version=\"1.0\"?>\n" +
-                        "<soapenv:Envelope\n" +
-                        "xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
-                        "<soap:Body xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
-                        "  <GetPrice>\n" +
-                        "    <Item>Apples</Item>\n" +
-                        "  </GetPrice>\n" +
-                        "</soap:Body>\n" +
-                        "</soapenv:Envelope> ";
+                """
+                        <?xml version="1.0"?>
+                        <soapenv:Envelope
+                        xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                        <soap:Body xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+                          <GetPrice>
+                            <Item>Apples</Item>
+                          </GetPrice>
+                        </soap:Body>
+                        </soapenv:Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
@@ -158,14 +165,15 @@ public class SoapUtilityTest {
     @Test
     public void testExtractSoapRequestNameWithoutSoapNamespaces(){
         final String requestBody =
-                "<?xml version=\"1.0\"?>\n" +
-                        "<Envelope>\n" +
-                        "<Body>\n" +
-                        "  <GetPrice>\n" +
-                        "    <Item>Apples</Item>\n" +
-                        "  </GetPrice>\n" +
-                        "</Body>\n" +
-                        "</Envelope> ";
+                """
+                        <?xml version="1.0"?>
+                        <Envelope>
+                        <Body>
+                          <GetPrice>
+                            <Item>Apples</Item>
+                          </GetPrice>
+                        </Body>
+                        </Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
@@ -174,7 +182,7 @@ public class SoapUtilityTest {
 
     @Test(expected = IllegalStateException.class)
     public void testExtractSoapRequestNameInvalidRequestBody(){
-        SoapUtility.extractSoapRequestName(new String());
+        SoapUtility.extractSoapRequestName("");
     }
 
 }

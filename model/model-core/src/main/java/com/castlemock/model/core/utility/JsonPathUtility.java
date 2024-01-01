@@ -54,8 +54,7 @@ public final class JsonPathUtility {
                 .parse(document)
                 .read(expression);
 
-        if(result instanceof List){
-            final List<?> jsonArray = (List<?>) result;
+        if(result instanceof List<?> jsonArray){
 
             if(jsonArray.isEmpty()) {
                 return Optional.empty();

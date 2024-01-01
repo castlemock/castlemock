@@ -95,7 +95,7 @@ public class UserDetailSecurityService implements UserDetailsService {
      */
     private List<GrantedAuthority> buildUserAuthority(final Role role) {
         Preconditions.checkNotNull(role, "Role cannot be null");
-        final List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+        final List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(role.name()));
         return grantedAuthorities;
     }

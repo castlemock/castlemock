@@ -49,7 +49,7 @@ public class ReadRestEventWithMethodIdService extends AbstractRestEventService i
     public ServiceResult<ReadRestEventWithMethodIdOutput> process(ServiceTask<ReadRestEventWithMethodIdInput> serviceTask) {
         final ReadRestEventWithMethodIdInput input = serviceTask.getInput();
         final List<RestEvent> events = repository.findEventsByMethodId(input.getRestMethodId());
-        Collections.sort(events, new EventStartDateComparator());
+        events.sort(new EventStartDateComparator());
         return createServiceResult(ReadRestEventWithMethodIdOutput.builder()
                 .restEvents(events)
                 .build());

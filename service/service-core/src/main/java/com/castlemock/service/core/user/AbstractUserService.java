@@ -55,7 +55,7 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
     public List<User> findByRole(final Role role) {
         Preconditions.checkNotNull(role, "Role cannot be null");
         LOGGER.debug("Finding user with role " + role);
-        final List<User> result = new ArrayList<User>();
+        final List<User> result = new ArrayList<>();
 
         for (User user : findAll()) {
             if(role.equals(user.getRole())){

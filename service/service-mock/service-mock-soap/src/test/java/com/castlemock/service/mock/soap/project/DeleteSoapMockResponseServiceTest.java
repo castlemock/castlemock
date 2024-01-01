@@ -16,7 +16,6 @@
 
 package com.castlemock.service.mock.soap.project;
 
-import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseTestBuilder;
@@ -28,7 +27,6 @@ import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
 import com.castlemock.service.mock.soap.project.input.DeleteSoapMockResponseInput;
-import com.castlemock.service.mock.soap.project.output.DeleteSoapMockResponseOutput;
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -78,8 +76,7 @@ public class DeleteSoapMockResponseServiceTest {
                 .mockResponseId(soapMockResponse.getId())
                 .build();
         final ServiceTask<DeleteSoapMockResponseInput> serviceTask = ServiceTask.of(input, "user");
-        final ServiceResult<DeleteSoapMockResponseOutput> serviceResult = service.process(serviceTask);
-        serviceResult.getOutput();
+        service.process(serviceTask);
 
         Mockito.verify(mockResponseRepository, Mockito.times(1)).delete(Mockito.anyString());
     }

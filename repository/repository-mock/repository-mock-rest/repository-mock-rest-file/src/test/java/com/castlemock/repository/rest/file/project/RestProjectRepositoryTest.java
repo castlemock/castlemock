@@ -59,7 +59,7 @@ public class RestProjectRepositoryTest {
 
     @Test
     public void testInitialize(){
-        List<RestProject> restProjects = new ArrayList<RestProject>();
+        List<RestProject> restProjects = new ArrayList<>();
         RestProject restProject = RestProjectTestBuilder.builder().build();
         restProjects.add(restProject);
         Mockito.when(fileRepositorySupport.load(RestProject.class, DIRECTORY, EXTENSION)).thenReturn(restProjects);

@@ -32,6 +32,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -63,7 +64,7 @@ public class UpdateSoapPortsStatusServiceTest {
                 .build();
         final ServiceTask<UpdateSoapPortsStatusInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(operationRepository.findWithPortId("SOAP PORT")).thenReturn(Arrays.asList(soapOperation));
+        Mockito.when(operationRepository.findWithPortId("SOAP PORT")).thenReturn(List.of(soapOperation));
         Mockito.when(operationRepository.update(Mockito.anyString(), Mockito.any(SoapOperation.class))).thenReturn(soapOperation);
         final ServiceResult<UpdateSoapPortsStatusOutput> result = service.process(serviceTask);
 

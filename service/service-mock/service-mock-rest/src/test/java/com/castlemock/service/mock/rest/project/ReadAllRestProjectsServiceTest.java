@@ -34,7 +34,7 @@ public class ReadAllRestProjectsServiceTest {
     @Test
     public void testProcess(){
         final RestProject project = RestProjectTestBuilder.builder().build();
-        final List<RestProject> projects = Arrays.asList(project);
+        final List<RestProject> projects = List.of(project);
 
         final ReadAllRestProjectsInput input = ReadAllRestProjectsInput.builder().build();
         final ServiceTask<ReadAllRestProjectsInput> serviceTask = ServiceTask.of(input, "user");

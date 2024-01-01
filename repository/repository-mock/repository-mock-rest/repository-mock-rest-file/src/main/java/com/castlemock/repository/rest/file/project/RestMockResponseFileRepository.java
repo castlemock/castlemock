@@ -104,12 +104,12 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
     protected void postInitiate() {
         for(RestMockResponseFile restMockResponse : collection.values()) {
             if(restMockResponse.getParameterQueries() == null){
-                final List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<RestParameterQueryFile>();
+                final List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<>();
                 restMockResponse.setParameterQueries(parameterQueries);
                 save(restMockResponse);
             }
             if(restMockResponse.getHeaderQueries() == null){
-                final List<RestHeaderQueryFile> headerQueries = new CopyOnWriteArrayList<RestHeaderQueryFile>();
+                final List<RestHeaderQueryFile> headerQueries = new CopyOnWriteArrayList<>();
                 restMockResponse.setHeaderQueries(headerQueries);
                 save(restMockResponse);
             }
@@ -124,7 +124,7 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
      */
     @Override
     public List<RestMockResponse> search(SearchQuery query) {
-        final List<RestMockResponse> result = new LinkedList<RestMockResponse>();
+        final List<RestMockResponse> result = new LinkedList<>();
         for(RestMockResponseFile restMockResponseFile : collection.values()){
             if(SearchValidator.validate(restMockResponseFile.getName(), query.getQuery())){
                 RestMockResponse restMockResponse = mapper.map(restMockResponseFile, RestMockResponse.class);
@@ -208,17 +208,17 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         @Mapping("usingExpressions")
         private boolean usingExpressions;
         @Mapping("httpHeaders")
-        private List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<HttpHeaderFile>();
+        private List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<>();
         @Mapping("contentEncodings")
-        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
+        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
         @Mapping("parameterQueries")
-        private List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<RestParameterQueryFile>();
+        private List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<>();
         @Mapping("xpathExpressions")
-        private List<RestXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<RestXPathExpressionFile>();
+        private List<RestXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<>();
         @Mapping("jsonPathExpressions")
-        private List<RestJsonPathExpressionFile> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpressionFile>();
+        private List<RestJsonPathExpressionFile> jsonPathExpressions = new CopyOnWriteArrayList<>();
         @Mapping("headerQueries")
-        private List<RestHeaderQueryFile> headerQueries = new CopyOnWriteArrayList<RestHeaderQueryFile>();
+        private List<RestHeaderQueryFile> headerQueries = new CopyOnWriteArrayList<>();
 
         @Override
         @XmlElement
@@ -349,15 +349,10 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         public boolean equals(Object o) {
             if (this == o)
                 return true;
-            if (!(o instanceof RestMockResponseFile))
+            if (!(o instanceof RestMockResponseFile that))
                 return false;
 
-            RestMockResponseFile that = (RestMockResponseFile) o;
-
-            if (id != null ? !id.equals(that.id) : that.id != null)
-                return false;
-
-            return true;
+            return id != null ? id.equals(that.id) : that.id == null;
         }
 
         @Override

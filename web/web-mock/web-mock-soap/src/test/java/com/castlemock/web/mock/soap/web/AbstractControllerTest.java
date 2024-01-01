@@ -45,13 +45,8 @@ public abstract class AbstractControllerTest {
     protected ServletContext servletContext;
     protected MockMvc mockMvc;
     protected static final String CONTEXT = "/castlemock";
-    protected static final String PARTIAL = "partial";
-    protected static final String INDEX = "index";
     protected static final String SLASH = "/";
     protected static final String PROJECT = "project";
-    protected static final String PROJECT_ID = "projectId";
-    protected static final String PROJECT_TYPES = "projectTypes";
-    protected static final String DEMO_MODE = "demoMode";
     protected static final String MOCK = "mock";
     protected static final String SOAP = "soap";
 

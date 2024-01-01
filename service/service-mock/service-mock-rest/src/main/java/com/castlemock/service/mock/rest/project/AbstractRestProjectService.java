@@ -128,7 +128,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
      */
     protected Map<RestMethodStatus, Integer> getRestMethodStatusCount(final RestApplication restApplication){
         Preconditions.checkNotNull(restApplication, "The REST application cannot be null");
-        final Map<RestMethodStatus, Integer> statuses = new HashMap<RestMethodStatus, Integer>();
+        final Map<RestMethodStatus, Integer> statuses = new HashMap<>();
 
         for(RestMethodStatus restMethodStatus : RestMethodStatus.values()){
             statuses.put(restMethodStatus, 0);

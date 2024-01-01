@@ -128,7 +128,7 @@ public class SoapProjectFileRepository extends AbstractProjectFileRepository<Soa
      */
     @Override
     public List<SoapProject> search(final SearchQuery query) {
-        final List<SoapProject> soapProjects = new LinkedList<SoapProject>();
+        final List<SoapProject> soapProjects = new LinkedList<>();
         for(SoapProjectFile soapProjectFile : collection.values()){
             if(SearchValidator.validate(soapProjectFile.getName(), query.getQuery())){
                 SoapProject soapProject = mapper.map(soapProjectFile, SoapProject.class);

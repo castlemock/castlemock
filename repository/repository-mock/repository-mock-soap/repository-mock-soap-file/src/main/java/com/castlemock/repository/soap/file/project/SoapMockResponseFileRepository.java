@@ -105,13 +105,13 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
     @Override
     protected void postInitiate() {
         for(SoapMockResponseFile soapMockResponse : collection.values()) {
-            List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<HttpHeaderFile>();
+            List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<>();
             if (soapMockResponse.getHttpHeaders() != null) {
                 httpHeaders.addAll(soapMockResponse.getHttpHeaders());
             }
             soapMockResponse.setHttpHeaders(httpHeaders);
 
-            List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
+            List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
             if (soapMockResponse.getContentEncodings() != null) {
                 contentEncodings.addAll(soapMockResponse.getContentEncodings());
             }
@@ -130,7 +130,7 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
      */
     @Override
     public List<SoapMockResponse> search(SearchQuery query) {
-        final List<SoapMockResponse> result = new LinkedList<SoapMockResponse>();
+        final List<SoapMockResponse> result = new LinkedList<>();
         for(SoapMockResponseFile soapMockResponseFile : collection.values()){
             if(SearchValidator.validate(soapMockResponseFile.getName(), query.getQuery())){
                 SoapMockResponse mockResponse = mapper.map(soapMockResponseFile, SoapMockResponse.class);
@@ -200,11 +200,11 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         @Mapping("usingExpressions")
         private boolean usingExpressions;
         @Mapping("httpHeaders")
-        private List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<HttpHeaderFile>();
+        private List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<>();
         @Mapping("contentEncodings")
-        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
+        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
         @Mapping("xpathExpressions")
-        private List<SoapXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<SoapXPathExpressionFile>();
+        private List<SoapXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<>();
 
         @XmlElement
         @Override
@@ -305,15 +305,10 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         public boolean equals(Object o) {
             if (this == o)
                 return true;
-            if (!(o instanceof SoapMockResponseFile))
+            if (!(o instanceof SoapMockResponseFile that))
                 return false;
 
-            SoapMockResponseFile that = (SoapMockResponseFile) o;
-
-            if (id != null ? !id.equals(that.id) : that.id != null)
-                return false;
-
-            return true;
+            return id != null ? id.equals(that.id) : that.id == null;
         }
 
         @Override

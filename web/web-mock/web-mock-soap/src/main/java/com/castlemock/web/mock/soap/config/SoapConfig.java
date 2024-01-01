@@ -31,7 +31,6 @@ public class SoapConfig {
 
     /**
      * Register a {@link HttpServletRequestWrapperFilter}
-     * @return
      */
     @Bean
     public FilterRegistrationBean<HttpServletRequestWrapperFilter> soapRequestWrapperFilter() {

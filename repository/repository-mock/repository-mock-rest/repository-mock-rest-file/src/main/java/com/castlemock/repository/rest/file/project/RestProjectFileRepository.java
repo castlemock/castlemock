@@ -107,7 +107,7 @@ public class RestProjectFileRepository extends AbstractProjectFileRepository<Res
      *         have an identifier, then the method will generate a new identifier for the type.
      */
     @Override
-    public RestProject save(final RestProjectFile project) {
+    protected RestProject save(final RestProjectFile project) {
         return super.save(project);
     }
 
@@ -118,7 +118,7 @@ public class RestProjectFileRepository extends AbstractProjectFileRepository<Res
      */
     @Override
     public List<RestProject> search(SearchQuery query) {
-        final List<RestProject> result = new LinkedList<RestProject>();
+        final List<RestProject> result = new LinkedList<>();
         for(RestProjectFile restProjectFile : collection.values()){
             if(SearchValidator.validate(restProjectFile.getName(), query.getQuery())){
                 RestProject restProject = mapper.map(restProjectFile, RestProject.class);

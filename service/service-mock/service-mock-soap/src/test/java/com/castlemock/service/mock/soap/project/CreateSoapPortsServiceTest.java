@@ -58,7 +58,7 @@ public class CreateSoapPortsServiceTest {
     @Ignore
     public void testProcess(){
         final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
-        final List<SoapPort> soapPorts = new ArrayList<SoapPort>();
+        final List<SoapPort> soapPorts = new ArrayList<>();
         for(int index = 0; index < 3; index++){
             final SoapPort soapPort = SoapPortTestBuilder.builder().build();
             soapPorts.add(soapPort);

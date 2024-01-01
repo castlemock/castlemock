@@ -129,7 +129,7 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
      */
     @Override
     public List<RestEvent> findEventsByMethodId(final String restMethodId) {
-        final List<RestEventFile> events = new ArrayList<RestEventFile>();
+        final List<RestEventFile> events = new ArrayList<>();
         for(RestEventFile event : collection.values()){
             if(event.getMethodId().equals(restMethodId)){
                 events.add(event);

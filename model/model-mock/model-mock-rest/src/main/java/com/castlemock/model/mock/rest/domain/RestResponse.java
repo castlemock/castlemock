@@ -89,8 +89,7 @@ public class RestResponse {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RestResponse)) return false;
-        RestResponse that = (RestResponse) o;
+        if (!(o instanceof RestResponse that)) return false;
         return Objects.equals(body, that.body) &&
                 Objects.equals(mockResponseName, that.mockResponseName) &&
                 Objects.equals(httpStatusCode, that.httpStatusCode) &&

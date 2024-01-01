@@ -59,7 +59,7 @@ public class ConfigurationRepositoryTest {
 
     @Test
     public void testInitialize(){
-        List<ConfigurationGroup> configurationGroups = new ArrayList<ConfigurationGroup>();
+        List<ConfigurationGroup> configurationGroups = new ArrayList<>();
         ConfigurationGroup configurationGroup = ConfigurationGroupTestBuilder.builder().build();
         configurationGroups.add(configurationGroup);
         Mockito.when(fileRepositorySupport.load(ConfigurationGroup.class, DIRECTORY, EXTENSION)).thenReturn(configurationGroups);
@@ -80,13 +80,13 @@ public class ConfigurationRepositoryTest {
         final ConfigurationGroup configurationGroup = save();
         final List<ConfigurationGroup> configurationGroups = repository.findAll();
         Assert.assertEquals(configurationGroups.size(), 1);
-        Assert.assertEquals(configurationGroups.get(0).getId(), configurationGroup.getId());
-        Assert.assertEquals(configurationGroups.get(0).getName(), configurationGroup.getName());
+        Assert.assertEquals(configurationGroups.getFirst().getId(), configurationGroup.getId());
+        Assert.assertEquals(configurationGroups.getFirst().getName(), configurationGroup.getName());
     }
 
     @Test
     public void testSave(){
-        final ConfigurationGroup configurationGroup = save();
+        save();
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(ConfigurationFileRepository.ConfigurationGroupFile.class), Mockito.anyString());
     }
 
@@ -99,7 +99,7 @@ public class ConfigurationRepositoryTest {
 
     @Test
     public void testCount(){
-        final ConfigurationGroup configurationGroup = save();
+        save();
         final Integer count = repository.count();
         Assert.assertEquals(Integer.valueOf(1), count);
     }

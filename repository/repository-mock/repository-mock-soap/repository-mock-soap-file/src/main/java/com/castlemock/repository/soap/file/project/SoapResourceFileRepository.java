@@ -110,7 +110,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
      */
     @Override
     public List<SoapResource> search(SearchQuery query) {
-        final List<SoapResource> result = new LinkedList<SoapResource>();
+        final List<SoapResource> result = new LinkedList<>();
         for(SoapResourceFile soapResourceFile : collection.values()){
             if(SearchValidator.validate(soapResourceFile.getName(), query.getQuery())){
                 SoapResource soapResource = mapper.map(soapResourceFile, SoapResource.class);
@@ -160,13 +160,12 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
 
         if(SoapResourceType.WSDL.equals(soapResource.getType())){
             path += WSDL_DIRECTORY;
-        } else if(SoapResourceType.WSDL.equals(soapResource.getType())){
+        } else if(SoapResourceType.SCHEMA.equals(soapResource.getType())){
             path += SCHEMA_DIRECTORY;
         }
 
-        String resource = fileRepositorySupport.load(path, soapResource.getId() +
+        return fileRepositorySupport.load(path, soapResource.getId() +
                 this.fileExtension);
-        return resource;
     }
 
     /**
@@ -215,7 +214,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
 
             if(SoapResourceType.WSDL.equals(soapResource.getType())){
                 path += WSDL_DIRECTORY;
-            } else if(SoapResourceType.WSDL.equals(soapResource.getType())){
+            } else if(SoapResourceType.SCHEMA.equals(soapResource.getType())){
                 path += SCHEMA_DIRECTORY;
             }
 

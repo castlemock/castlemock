@@ -25,20 +25,10 @@ import java.util.List;
 
 /**
  * @author Karl Dahlgren
- * @since 1.0
  * @see ReadAllConfigurationGroupsInput
+ * @since 1.0
  */
-public final class ReadAllConfigurationGroupsOutput implements Output {
-
-    @NotNull
-    private final List<ConfigurationGroup> configurationGroups;
-
-    public ReadAllConfigurationGroupsOutput(final List<ConfigurationGroup> configurationGroups) {
-        this.configurationGroups = configurationGroups;
-    }
-
-    public List<ConfigurationGroup> getConfigurationGroups() {
-        return configurationGroups;
-    }
+public record ReadAllConfigurationGroupsOutput(
+        @NotNull List<ConfigurationGroup> configurationGroups) implements Output {
 
 }

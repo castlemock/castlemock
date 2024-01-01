@@ -31,7 +31,6 @@ public class RestConfig {
 
     /**
      * Register a {@link HttpServletRequestWrapperFilter}
-     * @return
      */
     @Bean
     public FilterRegistrationBean<HttpServletRequestWrapperFilter> restRequestWrapperFilter() {

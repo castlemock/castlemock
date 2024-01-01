@@ -60,7 +60,7 @@ public class UserRepositoryTest {
 
     @Test
     public void testInitialize(){
-        List<User> users = new ArrayList<User>();
+        List<User> users = new ArrayList<>();
         User user = UserTestBuilder.builder().build();
         users.add(user);
         Mockito.when(fileRepositorySupport.load(User.class, DIRECTORY, EXTENSION)).thenReturn(users);
@@ -85,7 +85,7 @@ public class UserRepositoryTest {
         final User user = save();
         final List<User> users = repository.findAll();
         Assert.assertEquals(users.size(), 1);
-        Assert.assertEquals(users.get(0), user);
+        Assert.assertEquals(users.getFirst(), user);
     }
 
     @Test

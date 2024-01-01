@@ -98,9 +98,9 @@ public class SoapProject extends Project {
 
     public static final class Builder extends Project.Builder<Builder> {
 
-        private List<SoapPort> ports = new CopyOnWriteArrayList<SoapPort>();
-        private List<SoapResource> resources = new CopyOnWriteArrayList<SoapResource>();
-        private Map<SoapOperationStatus, Integer> statusCount = new HashMap<SoapOperationStatus, Integer>();
+        private List<SoapPort> ports = new CopyOnWriteArrayList<>();
+        private List<SoapResource> resources = new CopyOnWriteArrayList<>();
+        private Map<SoapOperationStatus, Integer> statusCount = new HashMap<>();
 
         private Builder() {
         }

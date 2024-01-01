@@ -45,7 +45,7 @@ public class ServiceRegistry<I extends Input, O extends Output> {
     /**
      * The collection contains all the services and their identifiers (The input message class)
      */
-    private Map<Class<I>, Service<I,O>> services = new HashMap<Class<I>, Service<I,O>>();
+    private final Map<Class<I>, Service<I,O>> services = new HashMap<>();
 
     /**
      * The method provides the functionality to retrieve a specific service that is identified
@@ -68,8 +68,7 @@ public class ServiceRegistry<I extends Input, O extends Output> {
         final Map<String, Object> components = applicationContext.getBeansWithAnnotation(org.springframework.stereotype.Service.class);
         for(Map.Entry<String, Object> entry : components.entrySet()){
             final Object value = entry.getValue();
-            if(value instanceof Service){
-                final Service service = (Service) value;
+            if(value instanceof Service service){
                 final Class<?>[] processorInputOutputClasses = GenericTypeResolver.resolveTypeArguments(service.getClass(), Service.class);
                 if(processorInputOutputClasses != null && processorInputOutputClasses.length > 0){
                     final Class<I> processorInputClass = (Class<I>) processorInputOutputClasses[0];

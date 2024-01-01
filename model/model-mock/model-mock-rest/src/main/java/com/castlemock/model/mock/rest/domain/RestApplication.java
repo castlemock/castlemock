@@ -37,8 +37,8 @@ public class RestApplication {
     private String id;
     private String name;
     private String projectId;
-    private List<RestResource> resources = new CopyOnWriteArrayList<RestResource>();
-    private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
+    private List<RestResource> resources = new CopyOnWriteArrayList<>();
+    private Map<RestMethodStatus, Integer> statusCount = new HashMap<>();
 
     private RestApplication(){
 
@@ -123,8 +123,8 @@ public class RestApplication {
         private String id;
         private String name;
         private String projectId;
-        private List<RestResource> resources = new CopyOnWriteArrayList<RestResource>();
-        private Map<RestMethodStatus, Integer> statusCount = new HashMap<RestMethodStatus, Integer>();
+        private List<RestResource> resources = new CopyOnWriteArrayList<>();
+        private Map<RestMethodStatus, Integer> statusCount = new HashMap<>();
 
         private Builder() {
         }

@@ -59,8 +59,8 @@ public class SoapProjectRepositoryTest {
 
     @Test
     public void testInitialize(){
-        final List<SoapProject> soapProjects = new ArrayList<SoapProject>();
-        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();;
+        final List<SoapProject> soapProjects = new ArrayList<>();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
         soapProjects.add(soapProject);
         Mockito.when(fileRepositorySupport.load(SoapProject.class, DIRECTORY, EXTENSION)).thenReturn(soapProjects);
         repository.initialize();
@@ -88,7 +88,7 @@ public class SoapProjectRepositoryTest {
 
     @Test
     public void testSave(){
-        final SoapProject soapProject = save();
+        save();
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(SoapProjectFileRepository.SoapProjectFile.class), Mockito.anyString());
     }
 
@@ -101,13 +101,13 @@ public class SoapProjectRepositoryTest {
 
     @Test
     public void testCount(){
-        final SoapProject soapProject = save();
+        save();
         final Integer count = repository.count();
         Assert.assertEquals(Integer.valueOf(1), count);
     }
 
     private SoapProject save(){
-        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();;
+        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
         repository.save(soapProject);
         return soapProject;
     }

@@ -34,13 +34,13 @@ public interface SessionTokenRepository extends PersistentTokenRepository {
      * The initialize method is responsible for initiating the token repository and load
      * all the stored tokens
      */
-    public void initialize();
+    void initialize();
 
     /**
      * The method provides the functionality to store a new token in the token repository
      * @param token The token that will be stored in the token repository
      */
-    public void createNewToken(PersistentRememberMeToken token);
+    void createNewToken(PersistentRememberMeToken token);
 
     /**
      * Updates a specific token with a new values to a specific token
@@ -48,7 +48,7 @@ public interface SessionTokenRepository extends PersistentTokenRepository {
      * @param tokenValue The new token value
      * @param lastUsed Date for when it was last used
      */
-    public void updateToken(String series, String tokenValue, Date lastUsed);
+    void updateToken(String series, String tokenValue, Date lastUsed);
 
     /**
      * The method provides the functionality to update the token with a new username. The token
@@ -57,7 +57,7 @@ public interface SessionTokenRepository extends PersistentTokenRepository {
      * @param oldUsername The old username. It is used to identify the token
      * @param newUsername The new username. It will replace the old username
      */
-    public void updateToken(String oldUsername, String newUsername);
+    void updateToken(String oldUsername, String newUsername);
 
     /**
      * Get a specific token for a series
@@ -65,10 +65,10 @@ public interface SessionTokenRepository extends PersistentTokenRepository {
      * @return Token that matches the provided series id. Null will be returned if no token matches
      * the provided series id
      */
-    public PersistentRememberMeToken getTokenForSeries(String seriesId);
+    PersistentRememberMeToken getTokenForSeries(String seriesId);
     /**
      * Remove a user token from the repository
      * @param username The token that matches this user name will be removed
      */
-    public void removeUserTokens(String username);
+    void removeUserTokens(String username);
 }

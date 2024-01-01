@@ -5,28 +5,31 @@ import org.junit.jupiter.api.Test;
 
 public class AddressLocationConfigurerTest {
 	
-	private static final String WSDL_WITHOU_ADDRESS_LOCATION = "<wsdl:definitions>\n" +
-			"  <wsdl:service name=\"Service\">\n" + 
-			"    <wsdl:port name=\"ServiceHttpPost\" binding=\"tns:ServiceHttpPost\">\n" +
-			"    </wsdl:port>\n" + 
-			"  </wsdl:service>\n" +
-			"</wsdl:definitions>";
+	private static final String WSDL_WITHOU_ADDRESS_LOCATION = """
+            <wsdl:definitions>
+              <wsdl:service name="Service">
+                <wsdl:port name="ServiceHttpPost" binding="tns:ServiceHttpPost">
+                </wsdl:port>
+              </wsdl:service>
+            </wsdl:definitions>""";
 	
-	private static final String ORIGINAL_WSDL_WITH_ADDRESS_LOCATION = "<wsdl:definitions>\n" +
-			"  <wsdl:service name=\"Service\">\n" + 
-			"    <wsdl:port name=\"ServiceHttpPost\" binding=\"tns:ServiceHttpPost\">\n" +
-			"      <soap:address location=\"http://www.castlemock.com/services/myservice\"/>\n" + 
-			"    </wsdl:port>\n" + 
-			"  </wsdl:service>\n" +
-			"</wsdl:definitions>";
+	private static final String ORIGINAL_WSDL_WITH_ADDRESS_LOCATION = """
+            <wsdl:definitions>
+              <wsdl:service name="Service">
+                <wsdl:port name="ServiceHttpPost" binding="tns:ServiceHttpPost">
+                  <soap:address location="http://www.castlemock.com/services/myservice"/>
+                </wsdl:port>
+              </wsdl:service>
+            </wsdl:definitions>""";
 	
-	private static final String MODIFIED_WSDL_WITH_ADDRESS_LOCATION = "<wsdl:definitions>\n" +
-			"  <wsdl:service name=\"Service\">\n" + 
-			"    <wsdl:port name=\"ServiceHttpPost\" binding=\"tns:ServiceHttpPost\">\n" +
-			"      <soap:address location=\"http://localhost:8080/other-path\"/>\n" + 
-			"    </wsdl:port>\n" + 
-			"  </wsdl:service>\n" +
-			"</wsdl:definitions>";
+	private static final String MODIFIED_WSDL_WITH_ADDRESS_LOCATION = """
+            <wsdl:definitions>
+              <wsdl:service name="Service">
+                <wsdl:port name="ServiceHttpPost" binding="tns:ServiceHttpPost">
+                  <soap:address location="http://localhost:8080/other-path"/>
+                </wsdl:port>
+              </wsdl:service>
+            </wsdl:definitions>""";
 
 	@Test
 	public void testWsdlWithAddressLocation() {

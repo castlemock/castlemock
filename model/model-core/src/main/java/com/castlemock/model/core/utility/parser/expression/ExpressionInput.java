@@ -33,14 +33,14 @@ import java.util.TreeMap;
 public class ExpressionInput {
 
     private final String name;
-    private Map<String, ExpressionArgument<?>> arguments;
+    private final Map<String, ExpressionArgument<?>> arguments;
 
     /**
      * Constructor for {@link ExpressionInput}.
      * @param name The name of the expression.
      */
     public ExpressionInput(final String name){
-        this.name = Objects.requireNonNull(name);
+        this.name = Objects.requireNonNull(name, "name");
         this.arguments = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
     }
 

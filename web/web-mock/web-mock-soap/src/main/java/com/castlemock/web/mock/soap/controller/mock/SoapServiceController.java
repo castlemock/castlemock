@@ -22,7 +22,6 @@ import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -56,27 +55,26 @@ public class SoapServiceController extends AbstractSoapServiceController {
      * and a response will be generated and returned to the service consumer.
      * @param projectId The id of the project that the request belongs to
      * @param request The incoming request that will be processed
-     * @param response The outgoing response
-     * @return Returns a mocked response
+¨     * @return Returns a mocked response
      * @see SoapProject
      * @see SoapOperation
      * @see SoapMockResponse
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/{projectId}/**")
-    public ResponseEntity<?> postMethod(@PathVariable final String projectId, final HttpServletRequest request, final HttpServletResponse response) {
-        return process(projectId, request, response);
+    public ResponseEntity<?> postMethod(@PathVariable final String projectId, final HttpServletRequest request) {
+        return process(projectId, request);
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/{projectId}", produces = {MediaType.TEXT_XML_VALUE})
-    public ResponseEntity<?> getMethod(@PathVariable final String projectId, final HttpServletRequest request, final HttpServletResponse response) {
-        return processGet(projectId, request, response);
+    public ResponseEntity<?> getMethod(@PathVariable final String projectId, final HttpServletRequest request) {
+        return processGet(projectId, request);
     }
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/{projectId}/**", produces = {MediaType.TEXT_XML_VALUE})
-    public ResponseEntity<?> getWildcardMethod(@PathVariable final String projectId, final HttpServletRequest request, final HttpServletResponse response) {
-        return processGet(projectId, request, response);
+    public ResponseEntity<?> getWildcardMethod(@PathVariable final String projectId, final HttpServletRequest request) {
+        return processGet(projectId, request);
     }
 }

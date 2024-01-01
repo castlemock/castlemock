@@ -23,7 +23,7 @@ public final class SoapOperationTestBuilder {
                 .identifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE)
                 .invokeAddress("Invoke address")
                 .mockOnFailure(Boolean.FALSE)
-                .mockResponses(new CopyOnWriteArrayList<SoapMockResponse>())
+                .mockResponses(new CopyOnWriteArrayList<>())
                 .name("Soap operation name")
                 .networkDelay(1000L)
                 .operationIdentifier( SoapOperationIdentifierTestBuilder.builder().build())

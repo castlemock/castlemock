@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class RAMLRestDefinitionConverter extends AbstractRestDefinitionConverter {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(RAMLRestDefinitionConverter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RAMLRestDefinitionConverter.class);
 
     /**
      * The convert method provides the functionality to convert the provided {@link File} into

@@ -53,7 +53,7 @@ public class ReadAllSoapEventServiceTest {
 
     @Test
     public void testProcess(){
-        final List<SoapEvent> soapEvents = new ArrayList<SoapEvent>();
+        final List<SoapEvent> soapEvents = new ArrayList<>();
         for(int index = 0; index < 3; index++){
             final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
             soapEvents.add(soapEvent);

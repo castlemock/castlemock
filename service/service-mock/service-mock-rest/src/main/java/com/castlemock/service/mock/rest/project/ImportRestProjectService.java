@@ -93,7 +93,7 @@ public class ImportRestProjectService extends AbstractRestProjectService impleme
 
             final RestMockResponse.Builder builder = mockResponse.toBuilder();
             if(mockResponse.getParameterQueries() == null){
-                builder.parameterQueries(new CopyOnWriteArrayList<RestParameterQuery>());
+                builder.parameterQueries(new CopyOnWriteArrayList<>());
             }
 
             this.mockResponseRepository.save(builder.build());

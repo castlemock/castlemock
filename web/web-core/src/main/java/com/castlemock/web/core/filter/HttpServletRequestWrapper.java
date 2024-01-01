@@ -39,7 +39,7 @@ import java.io.InputStreamReader;
  * @since 1.18
  */
 public class HttpServletRequestWrapper extends jakarta.servlet.http.HttpServletRequestWrapper {
-    private byte[] bytes;
+    private final byte[] bytes;
 
     HttpServletRequestWrapper(final HttpServletRequest request) throws IOException {
         super(request);
@@ -49,7 +49,7 @@ public class HttpServletRequestWrapper extends jakarta.servlet.http.HttpServletR
     }
 
     @Override
-    public ServletInputStream getInputStream() throws IOException {
+    public ServletInputStream getInputStream() {
 
         final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 
@@ -71,14 +71,14 @@ public class HttpServletRequestWrapper extends jakarta.servlet.http.HttpServletR
             }
 
             @Override
-            public int read() throws IOException {
+            public int read() {
                 return byteArrayInputStream.read();
             }
         };
     }
 
     @Override
-    public BufferedReader getReader() throws IOException {
+    public BufferedReader getReader() {
         return new BufferedReader(new InputStreamReader(this.getInputStream()));
     }
 }

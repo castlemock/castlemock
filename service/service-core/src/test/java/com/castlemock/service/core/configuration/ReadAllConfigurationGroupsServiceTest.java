@@ -54,11 +54,11 @@ public class ReadAllConfigurationGroupsServiceTest {
 
     @Test
     public void testProcess(){
-        List<ConfigurationGroup> configurationGroups = new ArrayList<ConfigurationGroup>();
+        List<ConfigurationGroup> configurationGroups = new ArrayList<>();
         ConfigurationGroup configurationGroup = new ConfigurationGroup();
         configurationGroup.setId("123");
         configurationGroup.setName("Configuration group");
-        configurationGroup.setConfigurations(new ArrayList<Configuration>());
+        configurationGroup.setConfigurations(new ArrayList<>());
         Configuration configuration = new Configuration();
         configuration.setKey("Key");
         configuration.setValue("Value");
@@ -72,13 +72,13 @@ public class ReadAllConfigurationGroupsServiceTest {
         final ServiceResult<ReadAllConfigurationGroupsOutput> serviceResult = service.process(serviceTask);
         final ReadAllConfigurationGroupsOutput output = serviceResult.getOutput();
 
-        final List<ConfigurationGroup> returnedConfigurationGroups = output.getConfigurationGroups();
+        final List<ConfigurationGroup> returnedConfigurationGroups = output.configurationGroups();
         Assert.assertEquals(returnedConfigurationGroups.size(), configurationGroups.size());
-        final ConfigurationGroup returnedConfigurationGroup = returnedConfigurationGroups.get(0);
+        final ConfigurationGroup returnedConfigurationGroup = returnedConfigurationGroups.getFirst();
         Assert.assertEquals(returnedConfigurationGroup.getId(), configurationGroup.getId());
         Assert.assertEquals(returnedConfigurationGroup.getName(), configurationGroup.getName());
         Assert.assertEquals(returnedConfigurationGroup.getConfigurations().size(), configurationGroup.getConfigurations().size());
-        final Configuration returnedConfiguration = returnedConfigurationGroup.getConfigurations().get(0);
+        final Configuration returnedConfiguration = returnedConfigurationGroup.getConfigurations().getFirst();
         Assert.assertEquals(returnedConfiguration.getType(), configuration.getType());
         Assert.assertEquals(returnedConfiguration.getKey(), configuration.getKey());
         Assert.assertEquals(returnedConfiguration.getValue(), configuration.getValue());

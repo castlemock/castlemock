@@ -43,12 +43,12 @@ public class RestMockResponse {
     private Integer httpStatusCode;
     private RestMockResponseStatus status;
     private boolean usingExpressions;
-    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
-    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
-    private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<RestParameterQuery>();
-    private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<RestXPathExpression>();
-    private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpression>();
-    private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<RestHeaderQuery>();
+    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<>();
+    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
+    private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<>();
+    private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<>();
+    private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<>();
+    private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<>();
 
     private RestMockResponse(){
 
@@ -236,12 +236,12 @@ public class RestMockResponse {
         private Integer httpStatusCode;
         private RestMockResponseStatus status;
         private Boolean usingExpressions;
-        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<HttpHeader>();
-        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<ContentEncoding>();
-        private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<RestParameterQuery>();
-        private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<RestXPathExpression>();
-        private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<RestJsonPathExpression>();
-        private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<RestHeaderQuery>();
+        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<>();
+        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
+        private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<>();
+        private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<>();
+        private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<>();
+        private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<>();
 
         private Builder() {
         }

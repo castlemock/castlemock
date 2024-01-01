@@ -89,8 +89,7 @@ public class RestRequest {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RestRequest)) return false;
-        RestRequest that = (RestRequest) o;
+        if (!(o instanceof RestRequest that)) return false;
         return Objects.equals(body, that.body) &&
                 Objects.equals(contentType, that.contentType) &&
                 Objects.equals(uri, that.uri) &&
