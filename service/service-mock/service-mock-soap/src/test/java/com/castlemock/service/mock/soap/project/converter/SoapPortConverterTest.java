@@ -305,7 +305,7 @@ public class SoapPortConverterTest {
 
         Assert.assertNotNull(operationIdentifier);
         Assert.assertEquals("Request", operationIdentifier.getName());
-        Assert.assertNull(operationIdentifier.getNamespace());
+        Assert.assertNull(operationIdentifier.getNamespace().orElse(null));
     }
     
     private void verify(final SoapPort soapPort,
@@ -328,7 +328,7 @@ public class SoapPortConverterTest {
         Assert.assertNotNull(operationIdentifier);
         Assert.assertEquals("Request", operationIdentifier.getName());
         Assert.assertEquals("http://Services/ServiceExample/ServiceExample/1/Schema",
-                operationIdentifier.getNamespace());
+                operationIdentifier.getNamespace().orElse(null));
     }
 
     private List<File> loadFile(final String location) throws URISyntaxException {

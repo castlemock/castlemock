@@ -104,6 +104,6 @@ public class ReadRestMethodServiceTest {
 
         Assert.assertNotNull(result.getOutput());
         //Assert.assertEquals(method, result.getOutput().getRestMethod());
-        Assert.assertEquals("", method.getDefaultResponseName());
+        Assert.assertEquals("", method.getDefaultResponseName().orElse(null));
     }
 }

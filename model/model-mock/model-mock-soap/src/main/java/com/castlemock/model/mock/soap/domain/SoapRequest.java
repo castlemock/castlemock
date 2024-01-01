@@ -46,7 +46,7 @@ public class SoapRequest {
     }
 
     private SoapRequest(final Builder builder){
-        this.body = builder.body;
+        this.body = Objects.requireNonNull(builder.body);
         this.envelope = builder.envelope;
         this.contentType = builder.contentType;
         this.uri = Objects.requireNonNull(builder.uri);

@@ -62,7 +62,7 @@ public class ReadSoapOperationServiceTest {
         Assert.assertEquals(operation.toBuilder()
                 .mockResponses(List.of(mockResponse))
                 .build(), result.getOutput().getOperation());
-        Assert.assertNull(operation.getDefaultResponseName());
+        Assert.assertNull(operation.getDefaultResponseName().orElse(null));
     }
 
     @Test

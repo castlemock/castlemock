@@ -47,7 +47,7 @@ public class RestClient {
             if (HttpMethod.POST.equals(request.getHttpMethod()) ||
                 HttpMethod.PUT.equals(request.getHttpMethod()) ||
                 HttpMethod.DELETE.equals(request.getHttpMethod())) {
-                requestBody = request.getBody();
+                requestBody = request.getBody().orElse(null);
             }
 
             final String parameterUri = HttpMessageSupport.buildParameterUri(request.getHttpParameters());

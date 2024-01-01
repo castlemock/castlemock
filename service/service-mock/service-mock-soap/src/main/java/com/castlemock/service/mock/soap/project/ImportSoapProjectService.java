@@ -71,7 +71,7 @@ public class ImportSoapProjectService extends AbstractSoapProjectService impleme
                 throw new IllegalArgumentException("A resource with the following key already exists: " + resource.getId());
             }
 
-            this.resourceRepository.saveSoapResource(resource, resource.getContent());
+            this.resourceRepository.saveSoapResource(resource, resource.getContent().orElse(null));
         }
 
         for(SoapOperation operation : exportContainer.getOperations()){

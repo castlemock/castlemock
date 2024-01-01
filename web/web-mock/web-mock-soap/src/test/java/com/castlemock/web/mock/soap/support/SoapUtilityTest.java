@@ -43,7 +43,7 @@ public class SoapUtilityTest {
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace());
+        Assert.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class SoapUtilityTest {
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace());
+        Assert.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class SoapUtilityTest {
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace());
+        Assert.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -97,7 +97,7 @@ public class SoapUtilityTest {
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertNull(operationIdentifier.getNamespace());
+        Assert.assertNull(operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -116,7 +116,7 @@ public class SoapUtilityTest {
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertNull(operationIdentifier.getNamespace());
+        Assert.assertNull(operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -134,7 +134,7 @@ public class SoapUtilityTest {
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertNull(operationIdentifier.getNamespace());
+        Assert.assertNull(operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -152,7 +152,7 @@ public class SoapUtilityTest {
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertNull(operationIdentifier.getNamespace());
+        Assert.assertNull(operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -169,7 +169,7 @@ public class SoapUtilityTest {
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
         Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertNull(operationIdentifier.getNamespace());
+        Assert.assertNull(operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test(expected = IllegalStateException.class)

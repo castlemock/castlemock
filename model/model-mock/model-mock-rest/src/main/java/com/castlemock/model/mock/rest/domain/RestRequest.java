@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -47,20 +48,20 @@ public class RestRequest {
     private RestRequest(final Builder builder){
         this.body = builder.body;
         this.contentType = builder.contentType;
-        this.uri = Objects.requireNonNull(builder.uri);
-        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
-        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
-        this.httpParameters = Objects.requireNonNull(builder.httpParameters);
+        this.uri = Objects.requireNonNull(builder.uri, "uri");
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
+        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders, "httpHeaders");
+        this.httpParameters = Objects.requireNonNull(builder.httpParameters, "httpParameters");
     }
 
     @XmlElement
-    public String getBody() {
-        return body;
+    public Optional<String> getBody() {
+        return Optional.ofNullable(body);
     }
 
     @XmlElement
-    public String getContentType() {
-        return contentType;
+    public Optional<String> getContentType() {
+        return Optional.ofNullable(contentType);
     }
 
     @XmlElement

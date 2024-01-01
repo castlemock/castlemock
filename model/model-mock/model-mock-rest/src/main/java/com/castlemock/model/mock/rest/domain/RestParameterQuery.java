@@ -19,12 +19,12 @@ public class RestParameterQuery {
     }
 
     private RestParameterQuery(final Builder builder){
-        this.parameter = Objects.requireNonNull(builder.parameter);
-        this.query = Objects.requireNonNull(builder.query);
-        this.matchCase = Objects.requireNonNull(builder.matchCase);
-        this.matchAny = Objects.requireNonNull(builder.matchAny);
-        this.matchRegex = Objects.requireNonNull(builder.matchRegex);
-        this.urlEncoded = Objects.requireNonNull(builder.urlEncoded);
+        this.parameter = Objects.requireNonNull(builder.parameter, "parameter");
+        this.query = Objects.requireNonNull(builder.query, "query");
+        this.matchCase = Objects.requireNonNull(builder.matchCase, "matchCase");
+        this.matchAny = Objects.requireNonNull(builder.matchAny, "matchAny");
+        this.matchRegex = Objects.requireNonNull(builder.matchRegex, "matchRegex");
+        this.urlEncoded = Objects.requireNonNull(builder.urlEncoded, "urlEncoded");
     }
 
     @XmlElement

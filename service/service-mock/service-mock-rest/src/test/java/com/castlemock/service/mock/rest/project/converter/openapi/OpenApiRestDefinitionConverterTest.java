@@ -85,13 +85,13 @@ public class OpenApiRestDefinitionConverterTest {
 
         Assert.assertNotNull(updatePetRestMethod);
         Assert.assertEquals("updatePet", updatePetRestMethod.getName());
-        Assert.assertEquals("/api/v3", updatePetRestMethod.getForwardedEndpoint());
+        Assert.assertEquals("/api/v3", updatePetRestMethod.getForwardedEndpoint().orElse(null));
         Assert.assertEquals(HttpMethod.PUT, updatePetRestMethod.getHttpMethod());
         Assert.assertEquals(RestMethodStatus.MOCKED, updatePetRestMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, updatePetRestMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), updatePetRestMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), updatePetRestMethod.getNetworkDelay());
-        Assert.assertFalse(updatePetRestMethod.getSimulateNetworkDelay());
+        Assert.assertEquals(Long.valueOf(0L), updatePetRestMethod.getNetworkDelay().orElse(null));
+        Assert.assertFalse(updatePetRestMethod.getSimulateNetworkDelay().orElse(false));
 
         if (generatedResponse) {
             Assert.assertEquals(4, updatePetRestMethod.getMockResponses().size());
@@ -117,7 +117,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Invalid ID supplied", invalidMockResponse.getName());
-            Assert.assertNull(invalidMockResponse.getBody());
+            Assert.assertNull(invalidMockResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
@@ -132,7 +132,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Pet not found", notFoundResponse.getName());
-            Assert.assertNull(notFoundResponse.getBody());
+            Assert.assertNull(notFoundResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
@@ -147,7 +147,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Validation exception", validationExceptionResponse.getName());
-            Assert.assertNull(validationExceptionResponse.getBody());
+            Assert.assertNull(validationExceptionResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(405), validationExceptionResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, validationExceptionResponse.getStatus());
@@ -168,13 +168,13 @@ public class OpenApiRestDefinitionConverterTest {
 
         Assert.assertNotNull(addPetRestMethod);
         Assert.assertEquals("addPet", addPetRestMethod.getName());
-        Assert.assertEquals("/api/v3", addPetRestMethod.getForwardedEndpoint());
+        Assert.assertEquals("/api/v3", addPetRestMethod.getForwardedEndpoint().orElse(null));
         Assert.assertEquals(HttpMethod.POST, addPetRestMethod.getHttpMethod());
         Assert.assertEquals(RestMethodStatus.MOCKED, addPetRestMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, addPetRestMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), addPetRestMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), addPetRestMethod.getNetworkDelay());
-        Assert.assertFalse(addPetRestMethod.getSimulateNetworkDelay());
+        Assert.assertEquals(Long.valueOf(0L), addPetRestMethod.getNetworkDelay().orElse(null));
+        Assert.assertFalse(addPetRestMethod.getSimulateNetworkDelay().orElse(false));
 
         if (generatedResponse) {
             Assert.assertEquals(2, addPetRestMethod.getMockResponses().size());
@@ -199,7 +199,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Invalid input", invalidMockResponse.getName());
-            Assert.assertNull(invalidMockResponse.getBody());
+            Assert.assertNull(invalidMockResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(405), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
@@ -220,7 +220,7 @@ public class OpenApiRestDefinitionConverterTest {
         Assert.assertNotNull(petWithParameterResource);
         Assert.assertEquals("/pet/{petId}", petWithParameterResource.getName());
         Assert.assertEquals("/pet/{petId}", petWithParameterResource.getUri());
-        Assert.assertNull(petWithParameterResource.getInvokeAddress());
+        Assert.assertNull(petWithParameterResource.getInvokeAddress().orElse(null));
 
         // /mock/{mockId} (GET) - getMockById
 
@@ -231,14 +231,14 @@ public class OpenApiRestDefinitionConverterTest {
 
         Assert.assertNotNull(getPetByIdMethod);
         Assert.assertEquals("getPetById", getPetByIdMethod.getName());
-        Assert.assertEquals("/api/v3", getPetByIdMethod.getForwardedEndpoint());
+        Assert.assertEquals("/api/v3", getPetByIdMethod.getForwardedEndpoint().orElse(null));
         Assert.assertEquals(HttpMethod.GET, getPetByIdMethod.getHttpMethod());
         Assert.assertEquals(RestMethodStatus.MOCKED, getPetByIdMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, getPetByIdMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), getPetByIdMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), getPetByIdMethod.getNetworkDelay());
-        Assert.assertFalse(getPetByIdMethod.getSimulateNetworkDelay());
-        Assert.assertNull(getPetByIdMethod.getDefaultBody());
+        Assert.assertEquals(Long.valueOf(0L), getPetByIdMethod.getNetworkDelay().orElse(null));
+        Assert.assertFalse(getPetByIdMethod.getSimulateNetworkDelay().orElse(false));
+        Assert.assertNull(getPetByIdMethod.getDefaultBody().orElse(null));
 
         if (generatedResponse) {
             Assert.assertEquals(3, getPetByIdMethod.getMockResponses().size());
@@ -263,7 +263,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Invalid ID supplied", invalidMockResponse.getName());
-            Assert.assertNull(invalidMockResponse.getBody());
+            Assert.assertNull(invalidMockResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
@@ -278,7 +278,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Pet not found", notFoundResponse.getName());
-            Assert.assertNull(notFoundResponse.getBody());
+            Assert.assertNull(notFoundResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
@@ -299,14 +299,14 @@ public class OpenApiRestDefinitionConverterTest {
 
         Assert.assertNotNull(deletePetMethod);
         Assert.assertEquals("deletePet", deletePetMethod.getName());
-        Assert.assertEquals("/api/v3", deletePetMethod.getForwardedEndpoint());
+        Assert.assertEquals("/api/v3", deletePetMethod.getForwardedEndpoint().orElse(null));
         Assert.assertEquals(HttpMethod.DELETE, deletePetMethod.getHttpMethod());
         Assert.assertEquals(RestMethodStatus.MOCKED, deletePetMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, deletePetMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), deletePetMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), deletePetMethod.getNetworkDelay());
-        Assert.assertFalse(deletePetMethod.getSimulateNetworkDelay());
-        Assert.assertNull(deletePetMethod.getDefaultBody());
+        Assert.assertEquals(Long.valueOf(0L), deletePetMethod.getNetworkDelay().orElse(null));
+        Assert.assertFalse(deletePetMethod.getSimulateNetworkDelay().orElse(false));
+        Assert.assertNull(deletePetMethod.getDefaultBody().orElse(null));
 
         if (generatedResponse) {
             Assert.assertEquals(1, deletePetMethod.getMockResponses().size());
@@ -318,7 +318,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Invalid pet value", invalidMockResponse.getName());
-            Assert.assertNull(invalidMockResponse.getBody());
+            Assert.assertNull(invalidMockResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
@@ -351,7 +351,7 @@ public class OpenApiRestDefinitionConverterTest {
         Assert.assertNotNull(mockResource);
         Assert.assertEquals("/pet", mockResource.getName());
         Assert.assertEquals("/pet", mockResource.getUri());
-        Assert.assertNull(mockResource.getInvokeAddress());
+        Assert.assertNull(mockResource.getInvokeAddress().orElse(null));
 
         // /pet (PUT) - updatePet
 
@@ -362,13 +362,13 @@ public class OpenApiRestDefinitionConverterTest {
 
         Assert.assertNotNull(updatePetRestMethod);
         Assert.assertEquals("Update an existing pet", updatePetRestMethod.getName());
-        Assert.assertEquals("/api/v3", updatePetRestMethod.getForwardedEndpoint());
+        Assert.assertEquals("/api/v3", updatePetRestMethod.getForwardedEndpoint().orElse(null));
         Assert.assertEquals(HttpMethod.PUT, updatePetRestMethod.getHttpMethod());
         Assert.assertEquals(RestMethodStatus.MOCKED, updatePetRestMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, updatePetRestMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), updatePetRestMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), updatePetRestMethod.getNetworkDelay());
-        Assert.assertFalse(updatePetRestMethod.getSimulateNetworkDelay());
+        Assert.assertEquals(Long.valueOf(0L), updatePetRestMethod.getNetworkDelay().orElse(null));
+        Assert.assertFalse(updatePetRestMethod.getSimulateNetworkDelay().orElse(false));
 
         if (generatedResponse) {
             Assert.assertEquals(4, updatePetRestMethod.getMockResponses().size());
@@ -394,7 +394,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Invalid ID supplied", invalidMockResponse.getName());
-            Assert.assertNull(invalidMockResponse.getBody());
+            Assert.assertNull(invalidMockResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
@@ -409,7 +409,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Pet not found", notFoundResponse.getName());
-            Assert.assertNull(notFoundResponse.getBody());
+            Assert.assertNull(notFoundResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
@@ -424,7 +424,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Validation exception", validationExceptionResponse.getName());
-            Assert.assertNull(validationExceptionResponse.getBody());
+            Assert.assertNull(validationExceptionResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(405), validationExceptionResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, validationExceptionResponse.getStatus());
@@ -445,14 +445,14 @@ public class OpenApiRestDefinitionConverterTest {
 
         Assert.assertNotNull(addPetRestMethod);
         Assert.assertEquals("addPet", addPetRestMethod.getName());
-        Assert.assertEquals("/api/v3", addPetRestMethod.getForwardedEndpoint());
+        Assert.assertEquals("/api/v3", addPetRestMethod.getForwardedEndpoint().orElse(null));
         Assert.assertEquals(HttpMethod.POST, addPetRestMethod.getHttpMethod());
         Assert.assertEquals(RestMethodStatus.MOCKED, addPetRestMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, addPetRestMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), addPetRestMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), addPetRestMethod.getNetworkDelay());
-        Assert.assertFalse(addPetRestMethod.getSimulateNetworkDelay());
-        Assert.assertNull(addPetRestMethod.getDefaultBody());
+        Assert.assertEquals(Long.valueOf(0L), addPetRestMethod.getNetworkDelay().orElse(null));
+        Assert.assertFalse(addPetRestMethod.getSimulateNetworkDelay().orElse(false));
+        Assert.assertNull(addPetRestMethod.getDefaultBody().orElse(null));
 
         if (generatedResponse) {
             Assert.assertEquals(2, addPetRestMethod.getMockResponses().size());
@@ -477,7 +477,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Invalid input", invalidMockResponse.getName());
-            Assert.assertNull(invalidMockResponse.getBody());
+            Assert.assertNull(invalidMockResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(405), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
@@ -498,7 +498,7 @@ public class OpenApiRestDefinitionConverterTest {
         Assert.assertNotNull(petWithParameterResource);
         Assert.assertEquals("/pet/{petId}", petWithParameterResource.getName());
         Assert.assertEquals("/pet/{petId}", petWithParameterResource.getUri());
-        Assert.assertNull(petWithParameterResource.getInvokeAddress());
+        Assert.assertNull(petWithParameterResource.getInvokeAddress().orElse(null));
 
         // /mock/{mockId} (GET) - getMockById
 
@@ -509,14 +509,14 @@ public class OpenApiRestDefinitionConverterTest {
 
         Assert.assertNotNull(getPetByIdMethod);
         Assert.assertEquals("getPetById", getPetByIdMethod.getName());
-        Assert.assertEquals("/api/v3", getPetByIdMethod.getForwardedEndpoint());
+        Assert.assertEquals("/api/v3", getPetByIdMethod.getForwardedEndpoint().orElse(null));
         Assert.assertEquals(HttpMethod.GET, getPetByIdMethod.getHttpMethod());
         Assert.assertEquals(RestMethodStatus.MOCKED, getPetByIdMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, getPetByIdMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), getPetByIdMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), getPetByIdMethod.getNetworkDelay());
-        Assert.assertFalse(getPetByIdMethod.getSimulateNetworkDelay());
-        Assert.assertNull(getPetByIdMethod.getDefaultBody());
+        Assert.assertEquals(Long.valueOf(0L), getPetByIdMethod.getNetworkDelay().orElse(null));
+        Assert.assertFalse(getPetByIdMethod.getSimulateNetworkDelay().orElse(false));
+        Assert.assertNull(getPetByIdMethod.getDefaultBody().orElse(null));
 
         if (generatedResponse) {
             Assert.assertEquals(3, getPetByIdMethod.getMockResponses().size());
@@ -542,7 +542,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Invalid ID supplied", invalidMockResponse.getName());
-            Assert.assertNull(invalidMockResponse.getBody());
+            Assert.assertNull(invalidMockResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
@@ -556,7 +556,7 @@ public class OpenApiRestDefinitionConverterTest {
                     .get();
 
             Assert.assertEquals("Pet not found", notFoundResponse.getName());
-            Assert.assertNull(notFoundResponse.getBody());
+            Assert.assertNull(notFoundResponse.getBody().orElse(null));
 
             Assert.assertEquals(Integer.valueOf(200), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, notFoundResponse.getStatus());
@@ -577,14 +577,14 @@ public class OpenApiRestDefinitionConverterTest {
 
         Assert.assertNotNull(deletePetMethod);
         Assert.assertEquals("deletePet", deletePetMethod.getName());
-        Assert.assertEquals("/api/v3", deletePetMethod.getForwardedEndpoint());
+        Assert.assertEquals("/api/v3", deletePetMethod.getForwardedEndpoint().orElse(null));
         Assert.assertEquals(HttpMethod.DELETE, deletePetMethod.getHttpMethod());
         Assert.assertEquals(RestMethodStatus.MOCKED, deletePetMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.SEQUENCE, deletePetMethod.getResponseStrategy());
         Assert.assertEquals(Integer.valueOf(0), deletePetMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), deletePetMethod.getNetworkDelay());
-        Assert.assertFalse(deletePetMethod.getSimulateNetworkDelay());
-        Assert.assertNull(deletePetMethod.getDefaultBody());
+        Assert.assertEquals(Long.valueOf(0L), deletePetMethod.getNetworkDelay().orElse(null));
+        Assert.assertFalse(deletePetMethod.getSimulateNetworkDelay().orElse(false));
+        Assert.assertNull(deletePetMethod.getDefaultBody().orElse(null));
 
         if (generatedResponse) {
             Assert.assertEquals(1, deletePetMethod.getMockResponses().size());

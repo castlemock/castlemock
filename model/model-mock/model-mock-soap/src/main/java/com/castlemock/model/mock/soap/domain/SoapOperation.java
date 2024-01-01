@@ -61,28 +61,30 @@ public class SoapOperation {
     }
 
     private SoapOperation(final Builder builder){
-        this.id = Objects.requireNonNull(builder.id);
-        this.name = Objects.requireNonNull(builder.name);
-        this.identifier = Objects.requireNonNull(builder.identifier);
-        this.operationIdentifier = Objects.requireNonNull(builder.operationIdentifier);
-        this.responseStrategy = Objects.requireNonNull(builder.responseStrategy);
-        this.status = Objects.requireNonNull(builder.status);
-        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
-        this.soapVersion = Objects.requireNonNull(builder.soapVersion);
-        this.defaultBody = Objects.requireNonNull(builder.defaultBody);
-        this.currentResponseSequenceIndex = Objects.requireNonNull(builder.currentResponseSequenceIndex);
+        this.id = Objects.requireNonNull(builder.id, "id");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.identifier = Objects.requireNonNull(builder.identifier, "identifier");
+        this.operationIdentifier = Objects.requireNonNull(builder.operationIdentifier, "operationIdentifier");
+        this.responseStrategy = Objects.requireNonNull(builder.responseStrategy, "responseStrategy");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
+        this.soapVersion = Objects.requireNonNull(builder.soapVersion, "soapVersion");
+        this.defaultBody = Objects.requireNonNull(builder.defaultBody, "defaultBody");
+        this.currentResponseSequenceIndex = Objects.requireNonNull(builder.currentResponseSequenceIndex, "currentResponseSequenceIndex");
+        this.originalEndpoint = Objects.requireNonNull(builder.originalEndpoint, "originalEndpoint");
+        this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay, "simulateNetworkDelay");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure, "mockOnFailure");
+        this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy, "identifyStrategy");
+        this.automaticForward = Objects.requireNonNull(builder.automaticForward, "automaticForward");
+
         this.forwardedEndpoint = builder.forwardedEndpoint;
-        this.originalEndpoint = Objects.requireNonNull(builder.originalEndpoint);
-        this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay);
         this.networkDelay = builder.networkDelay;
         this.defaultMockResponseId = builder.defaultMockResponseId;
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure);
-        this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy);
         this.invokeAddress = builder.invokeAddress;
         this.defaultResponseName = builder.defaultResponseName;
-        this.mockResponses = Optional.ofNullable(builder.mockResponses).orElseGet(CopyOnWriteArrayList::new);
-        this.automaticForward = Objects.requireNonNull(builder.automaticForward);
+        this.mockResponses = Optional.ofNullable(builder.mockResponses)
+                .orElseGet(CopyOnWriteArrayList::new);
     }
 
     @XmlElement
@@ -127,8 +129,8 @@ public class SoapOperation {
     }
 
     @XmlElement
-    public String getInvokeAddress() {
-        return invokeAddress;
+    public Optional<String> getInvokeAddress() {
+        return Optional.ofNullable(invokeAddress);
     }
 
     @XmlElement
@@ -152,8 +154,8 @@ public class SoapOperation {
     }
 
     @XmlElement
-    public String getForwardedEndpoint() {
-        return forwardedEndpoint;
+    public Optional<String> getForwardedEndpoint() {
+        return Optional.ofNullable(forwardedEndpoint);
     }
 
     @XmlElement
@@ -162,18 +164,18 @@ public class SoapOperation {
     }
 
     @XmlElement
-    public Boolean getSimulateNetworkDelay() {
-        return simulateNetworkDelay;
+    public Optional<Boolean> getSimulateNetworkDelay() {
+        return Optional.ofNullable(simulateNetworkDelay);
     }
 
     @XmlElement
-    public Long getNetworkDelay() {
-        return networkDelay;
+    public Optional<Long> getNetworkDelay() {
+        return Optional.ofNullable(networkDelay);
     }
 
     @XmlElement
-    public String getDefaultResponseName() {
-        return defaultResponseName;
+    public Optional<String> getDefaultResponseName() {
+        return Optional.ofNullable(defaultResponseName);
     }
 
     @XmlElement
@@ -187,8 +189,8 @@ public class SoapOperation {
     }
 
     @XmlElement
-    public String getDefaultMockResponseId() {
-        return defaultMockResponseId;
+    public Optional<String> getDefaultMockResponseId() {
+        return Optional.ofNullable(defaultMockResponseId);
     }
 
     public boolean getAutomaticForward() {

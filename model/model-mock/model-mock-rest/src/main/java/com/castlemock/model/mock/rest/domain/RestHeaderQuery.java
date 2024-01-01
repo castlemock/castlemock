@@ -34,11 +34,11 @@ public class RestHeaderQuery {
     }
 
     private RestHeaderQuery(final Builder builder){
-        this.header = Objects.requireNonNull(builder.header);
-        this.query = Objects.requireNonNull(builder.query);
-        this.matchCase = Objects.requireNonNull(builder.matchCase);
-        this.matchAny = Objects.requireNonNull(builder.matchAny);
-        this.matchRegex = Objects.requireNonNull(builder.matchRegex);
+        this.header = Objects.requireNonNull(builder.header, "header");
+        this.query = Objects.requireNonNull(builder.query, "query");
+        this.matchCase = Objects.requireNonNull(builder.matchCase, "matchCase");
+        this.matchAny = Objects.requireNonNull(builder.matchAny, "matchAny");
+        this.matchRegex = Objects.requireNonNull(builder.matchRegex, "matchRegex");
     }
 
     @XmlElement

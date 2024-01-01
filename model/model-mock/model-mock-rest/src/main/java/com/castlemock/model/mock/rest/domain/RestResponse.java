@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -44,22 +45,23 @@ public class RestResponse {
     }
 
     private RestResponse(final Builder builder){
-        this.body = Objects.requireNonNull(builder.body);
-        this.mockResponseName = builder.mockResponseName;
-        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
+        this.body = builder.body;
         this.contentType = builder.contentType;
-        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
+        this.mockResponseName = builder.mockResponseName;
         this.contentEncodings = builder.contentEncodings;
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
+        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders, "httpHeaders");
+
     }
 
     @XmlElement
-    public String getBody() {
-        return body;
+    public Optional<String> getBody() {
+        return Optional.ofNullable(body);
     }
 
     @XmlElement
-    public String getMockResponseName() {
-        return mockResponseName;
+    public Optional<String> getMockResponseName() {
+        return Optional.ofNullable(mockResponseName);
     }
 
     @XmlElement
@@ -68,8 +70,8 @@ public class RestResponse {
     }
 
     @XmlElement
-    public String getContentType() {
-        return contentType;
+    public Optional<String> getContentType() {
+        return Optional.ofNullable(contentType);
     }
 
     @XmlElementWrapper(name = "httpHeaders")

@@ -21,6 +21,7 @@ import com.castlemock.model.core.event.Event;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -56,8 +57,8 @@ public class RestEvent extends Event {
     }
 
     @XmlElement
-    public RestResponse getResponse() {
-        return response;
+    public Optional<RestResponse> getResponse() {
+        return Optional.ofNullable(response);
     }
 
     @XmlElement

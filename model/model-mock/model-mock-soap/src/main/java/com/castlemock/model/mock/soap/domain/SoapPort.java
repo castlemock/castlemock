@@ -52,8 +52,10 @@ public class SoapPort {
         this.uri = Objects.requireNonNull(builder.uri);
         this.projectId = Objects.requireNonNull(builder.projectId);
         this.invokeAddress = builder.invokeAddress;
-        this.operations = Optional.ofNullable(builder.operations).orElseGet(CopyOnWriteArrayList::new);
-        this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(HashMap::new);
+        this.operations = Optional.ofNullable(builder.operations)
+                .orElseGet(CopyOnWriteArrayList::new);
+        this.statusCount = Optional.ofNullable(builder.statusCount)
+                .orElseGet(HashMap::new);
     }
 
     @XmlElement
@@ -88,8 +90,8 @@ public class SoapPort {
     }
 
     @XmlTransient
-    public String getInvokeAddress() {
-        return invokeAddress;
+    public Optional<String> getInvokeAddress() {
+        return Optional.ofNullable(invokeAddress);
     }
 
     public static Builder builder() {

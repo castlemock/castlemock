@@ -30,7 +30,7 @@ public class RestJsonPathExpression {
     }
 
     private RestJsonPathExpression(final Builder builder){
-        this.expression = Objects.requireNonNull(builder.expression);
+        this.expression = Objects.requireNonNull(builder.expression, "expression");
     }
 
     @XmlElement

@@ -60,12 +60,12 @@ public class UpdateSoapOperationServiceTest {
                 .operationId(operation.getId())
                 .status(operation.getStatus())
                 .responseStrategy(operation.getResponseStrategy())
-                .simulateNetworkDelay(operation.getSimulateNetworkDelay())
-                .networkDelay(operation.getNetworkDelay())
+                .simulateNetworkDelay(operation.getSimulateNetworkDelay().orElse(null))
+                .networkDelay(operation.getNetworkDelay().orElse(null))
                 .mockOnFailure(operation.getMockOnFailure())
                 .identifyStrategy(operation.getIdentifyStrategy())
-                .forwardedEndpoint(operation.getForwardedEndpoint())
-                .defaultMockResponseId(operation.getDefaultMockResponseId())
+                .forwardedEndpoint(operation.getForwardedEndpoint().orElse(null))
+                .defaultMockResponseId(operation.getDefaultMockResponseId().orElse(null))
                 .automaticForward(operation.getAutomaticForward())
                 .build();
         final ServiceTask<UpdateSoapOperationInput> serviceTask = ServiceTask.of(input, "user");

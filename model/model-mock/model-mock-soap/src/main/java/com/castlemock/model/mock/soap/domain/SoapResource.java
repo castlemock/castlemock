@@ -19,6 +19,7 @@ package com.castlemock.model.mock.soap.domain;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -66,8 +67,8 @@ public class SoapResource {
     }
 
     @XmlElement
-    public String getContent() {
-        return content;
+    public Optional<String> getContent() {
+        return Optional.ofNullable(content);
     }
 
     public static Builder builder() {

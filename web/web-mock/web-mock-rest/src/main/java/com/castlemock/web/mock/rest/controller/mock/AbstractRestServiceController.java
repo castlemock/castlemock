@@ -27,7 +27,6 @@ import com.castlemock.model.core.utility.parser.ExternalInputBuilder;
 import com.castlemock.model.core.utility.parser.TextParser;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
 import com.castlemock.model.mock.rest.domain.RestEvent;
-import com.castlemock.model.mock.rest.domain.RestJsonPathExpression;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
@@ -35,7 +34,6 @@ import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 import com.castlemock.model.mock.rest.domain.RestRequest;
 import com.castlemock.model.mock.rest.domain.RestResponse;
 import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
-import com.castlemock.model.mock.rest.domain.RestXPathExpression;
 import com.castlemock.service.mock.rest.event.input.CreateRestEventInput;
 import com.castlemock.service.mock.rest.project.input.CreateRestMockResponseInput;
 import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
@@ -221,16 +219,17 @@ public abstract class AbstractRestServiceController extends AbstractController {
                         responseHeaders.put(httpHeader.getName(), headerValues);
                     });
 
-            if (restMethod.getSimulateNetworkDelay() &&
-                    restMethod.getNetworkDelay() >= 0) {
+            if (restMethod.getSimulateNetworkDelay().orElse(false) &&
+                    restMethod.getNetworkDelay().isPresent()) {
                 try {
-                    Thread.sleep(restMethod.getNetworkDelay());
+                    Thread.sleep(restMethod.getNetworkDelay().get());
                 } catch (InterruptedException e) {
                     LOGGER.error("Unable to simulate network delay", e);
                 }
             }
 
-            return new ResponseEntity<>(response.getBody(), responseHeaders, HttpStatus.valueOf(response.getHttpStatusCode()));
+            return new ResponseEntity<>(response.getBody().orElse(null), responseHeaders,
+                    HttpStatus.valueOf(response.getHttpStatusCode()));
         } finally {
             final RestEvent event = RestEvent.builder()
                     .id(IdUtility.generateId())
@@ -295,7 +294,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 .resourceId(resourceId)
                 .methodId(restMethod.getId())
                 .name(RECORDED_RESPONSE_NAME + SPACE + DATE_FORMAT.format(new Date()))
-                .body(response.getBody())
+                .body(response.getBody().orElse(null))
                 .methodId(restMethod.getId())
                 .status(RestMockResponseStatus.ENABLED)
                 .httpHeaders(response.getHttpHeaders())
@@ -347,14 +346,19 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @since 1.14
      */
     private RestResponse echoResponse(final RestRequest request) {
-        final List<HttpHeader> headers = List.of(HttpHeader.builder()
-                .name(CONTENT_TYPE)
-                .value(request.getContentType())
-                .build());
+
+
+
+        final List<HttpHeader> headers = request.getContentType()
+                .map(contentType -> List.of(HttpHeader.builder()
+                        .name(CONTENT_TYPE)
+                        .value(contentType)
+                        .build()))
+                .orElseGet(List::of);
 
         return RestResponse.builder()
-                .body(request.getBody())
-                .contentType(request.getContentType())
+                .body(request.getBody().orElse(null))
+                .contentType(request.getContentType().orElse(null))
                 .httpHeaders(headers)
                 .httpStatusCode(DEFAULT_ECHO_RESPONSE_CODE)
                 .build();
@@ -439,14 +443,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
                 mockResponse = this.getDefaultMockResponse(restMethod, mockResponses).orElse(null);
             }
         } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.XPATH)) {
-            for (RestMockResponse testedMockResponse : mockResponses) {
-                for (RestXPathExpression xPathExpression : testedMockResponse.getXpathExpressions()) {
-                    if (XPathUtility.isValidXPathExpr(restRequest.getBody(), xPathExpression.getExpression())) {
-                        mockResponse = testedMockResponse;
-                        break;
-                    }
-                }
-            }
+            mockResponse = restRequest.getBody()
+                    .flatMap(body -> mockResponses.stream()
+                            .filter(testedMockResponse -> testedMockResponse.getXpathExpressions()
+                                    .stream()
+                                    .anyMatch(xPathExpression -> XPathUtility.isValidXPathExpr(body, xPathExpression.getExpression())))
+                            .findFirst())
+                    .orElse(null);
 
             if (mockResponse == null) {
                 LOGGER.info("Unable to match the input XPath to a response");
@@ -454,14 +457,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
             }
 
         } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.JSON_PATH)) {
-            for (RestMockResponse testedMockResponse : mockResponses) {
-                for (RestJsonPathExpression jsonPathExpression : testedMockResponse.getJsonPathExpressions()) {
-                    if (JsonPathUtility.isValidJsonPathExpr(restRequest.getBody(), jsonPathExpression.getExpression())) {
-                        mockResponse = testedMockResponse;
-                        break;
-                    }
-                }
-            }
+            mockResponse = restRequest.getBody()
+                    .flatMap(body -> mockResponses.stream()
+                            .filter(testedMockResponse -> testedMockResponse.getJsonPathExpressions()
+                                    .stream()
+                                    .anyMatch(jsonPathExpression -> JsonPathUtility.isValidJsonPathExpr(body, jsonPathExpression.getExpression())))
+                            .findFirst())
+                    .orElse(null);
 
             if (mockResponse == null) {
                 LOGGER.info("Unable to match the input JSON Path to a response");
@@ -480,7 +482,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
             }
         }
 
-        if (mockResponse == null && restMethod.getAutomaticForward() && restMethod.getForwardedEndpoint() != null) {
+        if (mockResponse == null && restMethod.getAutomaticForward().orElse(false) && restMethod.getForwardedEndpoint().isPresent()) {
             return forwardRequest(restRequest, projectId, applicationId, resourceId, restMethod, pathParameters, httpServletRequest);
         }
 
@@ -488,13 +490,13 @@ public abstract class AbstractRestServiceController extends AbstractController {
             throw new RestException("No mocked response created for operation " + restMethod.getName());
         }
 
-        String body = mockResponse.getBody();
+        String body = mockResponse.getBody().orElse(null);
         if (mockResponse.isUsingExpressions()) {
             final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder()
                     .pathParameters(pathParameters)
                     .queryStringParameters(restRequest.getHttpParameters())
                     .requestUrl(httpServletRequest.getRequestURL().toString())
-                    .requestBody(restRequest.getBody())
+                    .requestBody(restRequest.getBody().orElse(null))
                     .build();
 
             // Parse the text and apply expression functionality if
@@ -513,18 +515,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
 
     private Optional<RestMockResponse> getDefaultMockResponse(final RestMethod restMethod,
                                                               final List<RestMockResponse> mockResponses) {
-        final String defaultResponseId = restMethod.getDefaultMockResponseId();
-
-        if (defaultResponseId != null && !defaultResponseId.isEmpty()) {
-            LOGGER.info("Use the default response");
-            for (RestMockResponse tmpMockResponse : mockResponses) {
-                if (defaultResponseId.equals(tmpMockResponse.getId())) {
-                    return Optional.of(tmpMockResponse);
-                }
-            }
-            LOGGER.error("Unable to find the default response");
-        }
-        return Optional.empty();
+        return restMethod.getDefaultMockResponseId()
+                .flatMap(defaultMockResponseId -> mockResponses.stream()
+                        .filter(tmpMockResponse-> tmpMockResponse.getId().equals(defaultMockResponseId))
+                        .findFirst());
     }
 
     /**

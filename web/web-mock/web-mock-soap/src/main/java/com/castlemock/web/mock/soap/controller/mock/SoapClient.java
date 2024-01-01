@@ -42,7 +42,8 @@ public class SoapClient {
         HttpURLConnection connection = null;
         try {
             connection = HttpMessageSupport.establishConnection(
-                soapOperation.getForwardedEndpoint(),
+                soapOperation.getForwardedEndpoint()
+                        .orElseThrow(() -> new IllegalStateException("Unable to extract forwarded endpoint")),
                 request.getHttpMethod(),
                 request.getBody(),
                 request.getHttpHeaders());

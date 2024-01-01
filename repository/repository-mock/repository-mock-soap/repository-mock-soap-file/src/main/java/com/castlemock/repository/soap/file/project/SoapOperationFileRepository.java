@@ -213,7 +213,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
                     // 3. Both the name and namespace is matching
                     if(operationIdentifierFile.getNamespace() == null ||
                             soapOperation.getIdentifyStrategy() == SoapOperationIdentifyStrategy.ELEMENT ||
-                            operationIdentifierFile.getNamespace().equalsIgnoreCase(operationIdentifier.getNamespace())) {
+                            operationIdentifierFile.getNamespace().equalsIgnoreCase(operationIdentifier.getNamespace().orElse(null))) {
                         return Optional.ofNullable(this.mapper.map(soapOperation, SoapOperation.class));
                     }
                 }

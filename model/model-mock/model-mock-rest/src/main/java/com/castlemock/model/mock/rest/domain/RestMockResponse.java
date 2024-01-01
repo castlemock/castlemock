@@ -81,8 +81,8 @@ public class RestMockResponse {
     }
 
     @XmlElement
-    public String getBody() {
-        return body;
+    public Optional<String> getBody() {
+        return Optional.ofNullable(body);
     }
 
     @XmlElement

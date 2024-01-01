@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -45,11 +46,11 @@ public class SoapResponse {
 
     private SoapResponse(final Builder builder){
         this.body = Objects.requireNonNull(builder.body, "body");
-        this.mockResponseName = builder.mockResponseName;
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
-        this.contentType = builder.contentType;
         this.httpHeaders = Objects.requireNonNull(builder.httpHeaders, "httpHeaders");
         this.contentEncodings = Objects.requireNonNull(builder.contentEncodings, "contentEncodings");
+        this.contentType = builder.contentType;
+        this.mockResponseName = builder.mockResponseName;
     }
 
     @XmlElement
@@ -58,8 +59,8 @@ public class SoapResponse {
     }
 
     @XmlElement
-    public String getMockResponseName() {
-        return mockResponseName;
+    public Optional<String> getMockResponseName() {
+        return Optional.ofNullable(mockResponseName);
     }
 
     @XmlElement
@@ -68,8 +69,8 @@ public class SoapResponse {
     }
 
     @XmlElement
-    public String getContentType() {
-        return contentType;
+    public Optional<String> getContentType() {
+        return Optional.ofNullable(contentType);
     }
 
     @XmlElementWrapper(name = "httpHeaders")

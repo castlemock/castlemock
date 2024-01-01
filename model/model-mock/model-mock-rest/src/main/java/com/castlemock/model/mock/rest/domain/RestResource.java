@@ -83,8 +83,8 @@ public class RestResource {
     }
 
     @XmlElement
-    public String getInvokeAddress() {
-        return invokeAddress;
+    public Optional<String> getInvokeAddress() {
+        return Optional.ofNullable(invokeAddress);
     }
 
     @XmlTransient
@@ -93,10 +93,10 @@ public class RestResource {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RestResource that = (RestResource) o;
+        final RestResource that = (RestResource) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(uri, that.uri) &&

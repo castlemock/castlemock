@@ -39,8 +39,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -75,7 +75,7 @@ public class SearchRestProjectServiceTest {
     public void testProcess(){
         RestProject restProject = RestProjectTestBuilder.builder().build();
 
-        Mockito.when(repository.search(Mockito.any(SearchQuery.class))).thenReturn(Arrays.asList(restProject));
+        Mockito.when(repository.search(Mockito.any(SearchQuery.class))).thenReturn(List.of(restProject));
         Mockito.when(applicationRepository.search(Mockito.any(SearchQuery.class))).thenReturn(Collections.emptyList());
         Mockito.when(resourceRepository.search(Mockito.any(SearchQuery.class))).thenReturn(Collections.emptyList());
         Mockito.when(methodRepository.search(Mockito.any(SearchQuery.class))).thenReturn(Collections.emptyList());
@@ -97,9 +97,9 @@ public class SearchRestProjectServiceTest {
         Assert.assertNotNull(searchRestProjectOutput.getSearchResults());
         Assert.assertEquals(1, searchRestProjectOutput.getSearchResults().size());
 
-        SearchResult returnedSearchResult = searchRestProjectOutput.getSearchResults().get(0);
+        SearchResult returnedSearchResult = searchRestProjectOutput.getSearchResults().getFirst();
 
-        Assert.assertEquals("REST, Project", returnedSearchResult.getDescription());
+        Assert.assertEquals("REST, Project", returnedSearchResult.getDescription().orElse(null));
         Assert.assertEquals("rest/project/" + restProject.getId(), returnedSearchResult.getLink());
         Assert.assertEquals(restProject.getName(), returnedSearchResult.getTitle());
     }

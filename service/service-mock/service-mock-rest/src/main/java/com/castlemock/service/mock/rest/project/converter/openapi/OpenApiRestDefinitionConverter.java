@@ -176,8 +176,8 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
      * @return The extracted source address configured in {@link OpenAPI}.
      */
     private String getForwardAddress(final OpenAPI openAPI) {
-        if (!openAPI.getServers().isEmpty() && openAPI.getServers().get(0).getUrl() != null) {
-            return openAPI.getServers().get(0).getUrl();
+        if (!openAPI.getServers().isEmpty() && openAPI.getServers().getFirst().getUrl() != null) {
+            return openAPI.getServers().getFirst().getUrl();
         }
         return Strings.EMPTY;
     }
@@ -322,12 +322,12 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
                 return openAPI.getInfo().getDescription();
             }
         }
-        if (openAPI.getServers().size() != 0) {
-            if (openAPI.getServers().get(0).getDescription() != null) {
-                return openAPI.getServers().get(0).getDescription();
+        if (!openAPI.getServers().isEmpty()) {
+            if (openAPI.getServers().getFirst().getDescription() != null) {
+                return openAPI.getServers().getFirst().getDescription();
             }
-            if (openAPI.getServers().get(0).getUrl() != null) {
-                return openAPI.getServers().get(0).getUrl();
+            if (openAPI.getServers().getFirst().getUrl() != null) {
+                return openAPI.getServers().getFirst().getUrl();
             }
         }
 

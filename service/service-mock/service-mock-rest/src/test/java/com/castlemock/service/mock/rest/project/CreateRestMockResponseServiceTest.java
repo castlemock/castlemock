@@ -66,7 +66,7 @@ public class CreateRestMockResponseServiceTest {
                 .resourceId(resourceId)
                 .methodId(methodId)
                 .name(mockResponse.getName())
-                .body(mockResponse.getBody())
+                .body(mockResponse.getBody().orElse(null))
                 .status(mockResponse.getStatus())
                 .contentEncodings(mockResponse.getContentEncodings())
                 .headerQueries(mockResponse.getHeaderQueries())

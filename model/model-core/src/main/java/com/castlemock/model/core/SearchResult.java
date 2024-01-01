@@ -1,6 +1,7 @@
 package com.castlemock.model.core;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The search result is the result from executing the search functionality.
@@ -17,7 +18,7 @@ public class SearchResult {
     private SearchResult(final Builder builder) {
         this.title = Objects.requireNonNull(builder.title, "title");
         this.link = Objects.requireNonNull(builder.link, "link");
-        this.description = Objects.requireNonNull(builder.description, "description");
+        this.description = builder.description;
     }
 
     public String getTitle() {
@@ -28,8 +29,8 @@ public class SearchResult {
         return link;
     }
 
-    public String getDescription() {
-        return description;
+    public Optional<String> getDescription() {
+        return Optional.ofNullable(description);
     }
 
     @Override

@@ -21,6 +21,7 @@ import com.castlemock.model.core.event.Event;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -42,7 +43,7 @@ public class SoapEvent extends Event {
     private SoapEvent(final Builder builder){
         super(builder);
         this.request = Objects.requireNonNull(builder.request, "request");
-        this.response = Objects.requireNonNull(builder.response, "response");
+        this.response = builder.response;
         this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
         this.portId = Objects.requireNonNull(builder.portId, "portId");
         this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
@@ -62,8 +63,8 @@ public class SoapEvent extends Event {
      * @return The SOAP response variable. The SOAP response will be null if the event has not yet finished
      */
     @XmlElement
-    public SoapResponse getResponse() {
-        return response;
+    public Optional<SoapResponse> getResponse() {
+        return Optional.ofNullable(response);
     }
 
     /**

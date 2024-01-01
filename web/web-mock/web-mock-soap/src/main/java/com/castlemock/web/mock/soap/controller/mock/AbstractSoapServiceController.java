@@ -285,10 +285,10 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                         responseHeaders.put(httpHeader.getName(), List.of(httpHeader.getValue()));
                     });
 
-            if (soapOperation.getSimulateNetworkDelay() &&
-                    soapOperation.getNetworkDelay() >= 0) {
+            if (soapOperation.getSimulateNetworkDelay().orElse(false) &&
+                    soapOperation.getNetworkDelay().orElse(0L) >= 0L) {
                 try {
-                    Thread.sleep(soapOperation.getNetworkDelay());
+                    Thread.sleep(soapOperation.getNetworkDelay().get());
                 } catch (InterruptedException e) {
                     LOGGER.error("Unable to simulate network delay", e);
                 }
@@ -427,7 +427,8 @@ public abstract class AbstractSoapServiceController extends AbstractController {
 
     private Optional<SoapMockResponse> getDefaultMockResponse(final SoapOperation soapOperation,
                                                               final List<SoapMockResponse> mockResponses) {
-        final String defaultResponseId = soapOperation.getDefaultMockResponseId();
+        final String defaultResponseId = soapOperation.getDefaultMockResponseId()
+                .orElse(null);
 
         if (defaultResponseId != null && !defaultResponseId.isEmpty()) {
             LOGGER.info("Use the default response");

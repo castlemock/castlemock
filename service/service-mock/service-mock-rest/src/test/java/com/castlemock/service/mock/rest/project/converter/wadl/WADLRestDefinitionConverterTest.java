@@ -258,7 +258,7 @@ public class WADLRestDefinitionConverterTest {
 
         Assert.assertEquals(resourceName, restResource.getName());
         Assert.assertEquals(resourceUri, restResource.getUri());
-        Assert.assertNull(restResource.getInvokeAddress());
+        Assert.assertNull(restResource.getInvokeAddress().orElse(null));
         //Assert.assertNull(restResource.getStatusCount());
 
         Assert.assertEquals(1, restResource.getMethods().size());
@@ -267,10 +267,10 @@ public class WADLRestDefinitionConverterTest {
         Assert.assertEquals(httpMethod, restMethod.getHttpMethod());
         Assert.assertEquals(RestMethodStatus.MOCKED, restMethod.getStatus());
         Assert.assertEquals(RestResponseStrategy.RANDOM, restMethod.getResponseStrategy());
-        Assert.assertFalse(restMethod.getSimulateNetworkDelay());
-        Assert.assertNull(restMethod.getForwardedEndpoint());
-        Assert.assertNull(restMethod.getDefaultBody());
-        Assert.assertNull(restMethod.getNetworkDelay());
+        Assert.assertFalse(restMethod.getSimulateNetworkDelay().orElse(false));
+        Assert.assertNull(restMethod.getForwardedEndpoint().orElse(null));
+        Assert.assertNull(restMethod.getDefaultBody().orElse(null));
+        Assert.assertNull(restMethod.getNetworkDelay().orElse(null));
 
         if(generatedResponse){
             Assert.assertEquals(1, restMethod.getMockResponses().size());
@@ -282,7 +282,7 @@ public class WADLRestDefinitionConverterTest {
             Assert.assertTrue(restMockResponse.getHttpHeaders().isEmpty());
             Assert.assertTrue(restMockResponse.isUsingExpressions());
 
-            Assert.assertNull(restMockResponse.getBody());
+            Assert.assertNull(restMockResponse.getBody().orElse(null));
 
         }else {
             Assert.assertEquals(0, restMethod.getMockResponses().size());

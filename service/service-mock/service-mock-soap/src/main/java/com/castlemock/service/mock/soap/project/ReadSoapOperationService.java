@@ -42,26 +42,19 @@ public class ReadSoapOperationService extends AbstractSoapProjectService impleme
      * @see ServiceResult
      */
     @Override
-    @SuppressWarnings("deprecation")
     public ServiceResult<ReadSoapOperationOutput> process(final ServiceTask<ReadSoapOperationInput> serviceTask) {
         final ReadSoapOperationInput input = serviceTask.getInput();
         final SoapOperation soapOperation = this.operationRepository.findOne(input.getOperationId());
         final List<SoapMockResponse> mockResponses = this.mockResponseRepository.findWithOperationId(input.getOperationId());
-
-        final SoapOperation.Builder builder = soapOperation.toBuilder();
-        if(soapOperation.getDefaultMockResponseId() != null){
-            // Iterate through all the mocked responses to identify
-            // which has been set to be the default XPath mock response.
-            for(SoapMockResponse mockResponse : mockResponses){
-                if(mockResponse.getId().equals(soapOperation.getDefaultMockResponseId())){
-                    builder.defaultResponseName(mockResponse.getName());
-                    break;
-                }
-            }
-        }
-
         return createServiceResult(ReadSoapOperationOutput.builder()
-                .operation(builder.mockResponses(mockResponses)
+                .operation(soapOperation.toBuilder()
+                        .mockResponses(mockResponses)
+                        .defaultResponseName(soapOperation.getDefaultMockResponseId()
+                                .flatMap(defaultMockResponseId -> mockResponses.stream()
+                                        .filter(mockResponse -> mockResponse.getId().equals(defaultMockResponseId))
+                                        .findFirst())
+                                .map(SoapMockResponse::getName)
+                                .orElse(null))
                         .build())
                 .build());
     }

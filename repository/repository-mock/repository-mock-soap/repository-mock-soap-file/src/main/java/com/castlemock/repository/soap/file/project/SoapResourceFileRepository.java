@@ -178,21 +178,23 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
      * @see SoapResource
      */
     @Override
-    public SoapResource saveSoapResource(SoapResource soapResource, String resource) {
-        SoapResourceFile resourceFile = mapper.map(soapResource, SoapResourceFile.class);
-        SoapResource saveSoapResource = save(soapResource);
-        String path = this.fileDirectory + File.separator;
+    public SoapResource saveSoapResource(final SoapResource soapResource, final String resource) {
+        final SoapResource saveSoapResource = save(soapResource);
 
-        if(SoapResourceType.WSDL.equals(resourceFile.getType())){
-            path += WSDL_DIRECTORY;
-        } else if(SoapResourceType.WSDL.equals(resourceFile.getType())){
-            path
-                    += SCHEMA_DIRECTORY;
-        }
-        try {
-            this.fileRepositorySupport.save(path, saveSoapResource.getId() + this.fileExtension, resource);
-        } catch (Exception e){
-            LOGGER.error("Unable to upload SOAP resource", e);
+        if(resource != null) {
+            final SoapResourceFile resourceFile = mapper.map(soapResource, SoapResourceFile.class);
+            final StringBuilder path = new StringBuilder(this.fileDirectory)
+                    .append(File.separator);
+            if(SoapResourceType.WSDL.equals(resourceFile.getType())){
+                path.append(WSDL_DIRECTORY);
+            } else if(SoapResourceType.SCHEMA.equals(resourceFile.getType())){
+                path.append(SCHEMA_DIRECTORY);
+            }
+            try {
+                this.fileRepositorySupport.save(path.toString(), saveSoapResource.getId() + this.fileExtension, resource);
+            } catch (Exception e){
+                LOGGER.error("Unable to upload SOAP resource", e);
+            }
         }
 
         return saveSoapResource;

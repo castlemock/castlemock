@@ -41,8 +41,8 @@ import org.mockito.Spy;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -85,7 +85,7 @@ public class SearchSoapProjectServiceTest {
     public void testProcess(){
         SoapProject soapProject = SoapProjectTestBuilder.builder().build();
 
-        Mockito.when(repository.search(Mockito.any(SearchQuery.class))).thenReturn(Arrays.asList(soapProject));
+        Mockito.when(repository.search(Mockito.any(SearchQuery.class))).thenReturn(List.of(soapProject));
         Mockito.when(portRepository.search(Mockito.any(SearchQuery.class))).thenReturn(Collections.emptyList());
         Mockito.when(operationRepository.search(Mockito.any(SearchQuery.class))).thenReturn(Collections.emptyList());
         Mockito.when(resourceRepository.search(Mockito.any(SearchQuery.class))).thenReturn(Collections.emptyList());
@@ -109,9 +109,9 @@ public class SearchSoapProjectServiceTest {
         Assert.assertNotNull(searchSoapProjectOutput.getSearchResults());
         Assert.assertEquals(1, searchSoapProjectOutput.getSearchResults().size());
 
-        SearchResult returnedSearchResult = searchSoapProjectOutput.getSearchResults().get(0);
+        SearchResult returnedSearchResult = searchSoapProjectOutput.getSearchResults().getFirst();
 
-        Assert.assertEquals("SOAP, Project", returnedSearchResult.getDescription());
+        Assert.assertEquals("SOAP, Project", returnedSearchResult.getDescription().orElse(null));
         Assert.assertEquals("soap/project/" + soapProject.getId(), returnedSearchResult.getLink());
         Assert.assertEquals(soapProject.getName(), returnedSearchResult.getTitle());
     }

@@ -15,8 +15,8 @@ public class RestParameterQueryMatch {
     }
 
     private RestParameterQueryMatch(final Builder builder){
-        this.query = Objects.requireNonNull(builder.query);
-        this.match = Objects.requireNonNull(builder.match);
+        this.query = Objects.requireNonNull(builder.query, "query");
+        this.match = Objects.requireNonNull(builder.match, "match");
     }
 
     @XmlElement

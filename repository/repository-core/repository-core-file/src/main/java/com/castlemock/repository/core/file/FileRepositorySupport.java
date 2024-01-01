@@ -67,7 +67,7 @@ public class FileRepositorySupport {
         }
     }
 
-    public void save(String directory, String filename, String data){
+    public void save(final String directory, final String filename, final String data){
         final Path path = FileSystems.getDefault().getPath(directory);
         this.createDirectory(path);
 

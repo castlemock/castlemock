@@ -86,8 +86,8 @@ public class RestMethod {
     }
 
     @XmlElement
-    public String getDefaultBody() {
-        return defaultBody;
+    public Optional<String> getDefaultBody() {
+        return Optional.ofNullable(defaultBody);
     }
 
     @XmlElement
@@ -107,8 +107,8 @@ public class RestMethod {
     }
 
     @XmlElement
-    public String getForwardedEndpoint() {
-        return forwardedEndpoint;
+    public Optional<String> getForwardedEndpoint() {
+        return Optional.ofNullable(forwardedEndpoint);
     }
 
     @XmlElement
@@ -132,27 +132,27 @@ public class RestMethod {
     }
 
     @XmlElement
-    public boolean getSimulateNetworkDelay() {
-        return simulateNetworkDelay;
+    public Optional<Boolean> getSimulateNetworkDelay() {
+        return Optional.ofNullable(simulateNetworkDelay);
     }
 
     @XmlElement
-    public Long getNetworkDelay() {
-        return networkDelay;
+    public Optional<Long> getNetworkDelay() {
+        return Optional.ofNullable(networkDelay);
     }
 
     @XmlElement
-    public String getDefaultResponseName() {
-        return defaultResponseName;
+    public Optional<String> getDefaultResponseName() {
+        return Optional.ofNullable(defaultResponseName);
     }
 
     @XmlElement
-    public String getDefaultMockResponseId() {
-        return defaultMockResponseId;
+    public Optional<String> getDefaultMockResponseId() {
+        return Optional.ofNullable(defaultMockResponseId);
     }
 
-    public boolean getAutomaticForward() {
-        return automaticForward;
+    public Optional<Boolean> getAutomaticForward() {
+        return Optional.ofNullable(automaticForward);
     }
 
     @Override

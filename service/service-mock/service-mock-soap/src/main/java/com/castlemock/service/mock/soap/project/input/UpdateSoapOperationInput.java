@@ -23,6 +23,7 @@ import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
 import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -37,36 +38,37 @@ public final class UpdateSoapOperationInput implements Input {
     @NotNull
     private final String operationId;
     @NotNull
-    private SoapResponseStrategy responseStrategy;
+    private final SoapResponseStrategy responseStrategy;
     @NotNull
-    private SoapOperationStatus status;
+    private final SoapOperationStatus status;
     @NotNull
-    private String forwardedEndpoint;
+    private final String forwardedEndpoint;
     @NotNull
-    private Boolean simulateNetworkDelay;
+    private final Boolean simulateNetworkDelay;
     @NotNull
-    private Long networkDelay;
-    private String defaultMockResponseId;
+    private final Long networkDelay;
+    private final String defaultMockResponseId;
     @NotNull
-    private Boolean mockOnFailure;
+    private final Boolean mockOnFailure;
     @NotNull
-    private SoapOperationIdentifyStrategy identifyStrategy;
+    private final SoapOperationIdentifyStrategy identifyStrategy;
     @NotNull
-    private boolean automaticForward;
+    private final Boolean automaticForward;
 
     public UpdateSoapOperationInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
-        this.responseStrategy = Objects.requireNonNull(builder.responseStrategy);
-        this.status = Objects.requireNonNull(builder.status);
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
-        this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay);
-        this.networkDelay = Objects.requireNonNull(builder.networkDelay);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
+        this.responseStrategy = Objects.requireNonNull(builder.responseStrategy, "responseStrategy");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure, "mockOnFailure");
+        this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy, "identifyStrategy");
+        this.automaticForward = Objects.requireNonNull(builder.automaticForward, "automaticForward");
+
+        this.simulateNetworkDelay = builder.simulateNetworkDelay;
         this.defaultMockResponseId = builder.defaultMockResponseId;
-        this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure);
-        this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy);
-        this.automaticForward = Objects.requireNonNull(builder.automaticForward);
+        this.networkDelay = builder.networkDelay;
+        this.forwardedEndpoint = builder.forwardedEndpoint;
     }
 
     public String getProjectId() {
@@ -89,20 +91,20 @@ public final class UpdateSoapOperationInput implements Input {
         return status;
     }
 
-    public String getForwardedEndpoint() {
-        return forwardedEndpoint;
+    public Optional<String> getForwardedEndpoint() {
+        return Optional.ofNullable(forwardedEndpoint);
     }
 
-    public Boolean getSimulateNetworkDelay() {
-        return simulateNetworkDelay;
+    public Optional<Boolean> getSimulateNetworkDelay() {
+        return Optional.ofNullable(simulateNetworkDelay);
     }
 
-    public Long getNetworkDelay() {
-        return networkDelay;
+    public Optional<Long> getNetworkDelay() {
+        return Optional.ofNullable(networkDelay);
     }
 
-    public String getDefaultMockResponseId() {
-        return defaultMockResponseId;
+    public Optional<String> getDefaultMockResponseId() {
+        return Optional.ofNullable(defaultMockResponseId);
     }
 
     public Boolean getMockOnFailure() {
