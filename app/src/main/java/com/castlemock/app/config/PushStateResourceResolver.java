@@ -19,6 +19,8 @@ package com.castlemock.app.config;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.resource.ResourceResolver;
 import org.springframework.web.servlet.resource.ResourceResolverChain;
@@ -35,15 +37,15 @@ public class PushStateResourceResolver implements ResourceResolver {
     private static final List<String> IGNORED_PATHS = List.of("api");
 
     @Override
-    public Resource resolveResource(final HttpServletRequest request, final String requestPath, List<? extends Resource> locations,
-                                    final ResourceResolverChain chain) {
+    public Resource resolveResource(@Nullable final HttpServletRequest request, @NonNull final String requestPath, @NonNull final List<? extends Resource> locations,
+                                    @NonNull final ResourceResolverChain chain) {
         return resolve(requestPath, locations)
                 .orElse(null);
     }
 
     @Override
-    public String resolveUrlPath(final String resourcePath, List<? extends Resource> locations,
-                                 final ResourceResolverChain chain) {
+    public String resolveUrlPath(@NonNull final String resourcePath, @NonNull final List<? extends Resource> locations,
+                                 @NonNull final ResourceResolverChain chain) {
         return resolve(resourcePath, locations)
                 .map(resolvedResource -> {
                     try {

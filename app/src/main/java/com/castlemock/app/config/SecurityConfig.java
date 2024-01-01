@@ -40,7 +40,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @Order(1)
 @EnableWebSecurity
-@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
     @Autowired
