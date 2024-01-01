@@ -57,8 +57,8 @@ public class AuthenticationRestController extends AbstractRestController {
                                         final AuthenticationManager authenticationManager,
                                         final JWTEncoderDecoder jwtEncoderDecoder){
         super(serviceProcessor);
-        this.authenticationManager = Objects.requireNonNull(authenticationManager);
-        this.jwtEncoderDecoder = Objects.requireNonNull(jwtEncoderDecoder);
+        this.authenticationManager = Objects.requireNonNull(authenticationManager, "authenticationManager");
+        this.jwtEncoderDecoder = Objects.requireNonNull(jwtEncoderDecoder, "jwtEncoderDecoder");
     }
 
     /**

@@ -15,8 +15,8 @@ public class UpdateRestMethodStatusesRequest {
     }
 
     private UpdateRestMethodStatusesRequest(final Builder builder) {
-        this.methodIds = Objects.requireNonNull(builder.methodIds);
-        this.status = Objects.requireNonNull(builder.status);
+        this.methodIds = Objects.requireNonNull(builder.methodIds, "methodIds");
+        this.status = Objects.requireNonNull(builder.status, "status");
     }
 
     public Set<String> getMethodIds() {

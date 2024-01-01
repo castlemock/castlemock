@@ -42,7 +42,7 @@ public final class ExportContainerSerializer {
 
     }
 
-    public static <T extends ExportContainer> String serialize(T exportContainer){
+    public static <T extends ExportContainer> String serialize(final T exportContainer){
         try {
             final JAXBContext context = JAXBContext.newInstance(exportContainer.getClass());
             final Marshaller marshaller = context.createMarshaller();

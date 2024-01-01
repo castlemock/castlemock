@@ -71,14 +71,10 @@ public class GetSystemInformationService extends AbstractConfigurationGroupServi
                 .freeMemory(Runtime.getRuntime().freeMemory() / 1000000)
                 .castleMockHomeDirectory(this.castleMockHomeDirectory);
 
-
-        final org.springframework.core.env.Profiles mongoProfiles =
-                org.springframework.core.env.Profiles.of(Profiles.MONGODB);
         final org.springframework.core.env.Profiles fileProfiles =
                 org.springframework.core.env.Profiles.of(Profiles.FILE);
 
-        builder.showCastleMockHomeDirectory(springEnvironment.acceptsProfiles(mongoProfiles));
-        builder.showMongoProperties(springEnvironment.acceptsProfiles(fileProfiles));
+        builder.showCastleMockHomeDirectory(springEnvironment.acceptsProfiles(fileProfiles));
         return createServiceResult(GetSystemInformationOutput.builder()
                 .systemInformation(builder.build())
                 .build());

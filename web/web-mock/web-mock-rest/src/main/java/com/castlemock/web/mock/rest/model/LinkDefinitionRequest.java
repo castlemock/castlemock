@@ -26,6 +26,16 @@ public class LinkDefinitionRequest {
     private Boolean generateResponse;
     private RestDefinitionType definitionType;
 
+    private LinkDefinitionRequest() {
+
+    }
+
+    private LinkDefinitionRequest(final Builder builder) {
+        this.url = Objects.requireNonNull(builder.url, "url");
+        this.generateResponse = Objects.requireNonNull(builder.generateResponse, "generateResponse");
+        this.definitionType = Objects.requireNonNull(builder.definitionType, "definitionType");
+    }
+
     public String getUrl() {
         return url;
     }
@@ -39,10 +49,10 @@ public class LinkDefinitionRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LinkDefinitionRequest that = (LinkDefinitionRequest) o;
+        final LinkDefinitionRequest that = (LinkDefinitionRequest) o;
         return Objects.equals(url, that.url) &&
                 Objects.equals(generateResponse, that.generateResponse) &&
                 Objects.equals(definitionType, that.definitionType);
@@ -62,4 +72,36 @@ public class LinkDefinitionRequest {
                 '}';
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+
+    public static final class Builder {
+        private String url;
+        private Boolean generateResponse;
+        private RestDefinitionType definitionType;
+
+        private Builder() {
+        }
+
+        public Builder url(final String url) {
+            this.url = url;
+            return this;
+        }
+
+        public Builder generateResponse(final Boolean generateResponse) {
+            this.generateResponse = generateResponse;
+            return this;
+        }
+
+        public Builder definitionType(final RestDefinitionType definitionType) {
+            this.definitionType = definitionType;
+            return this;
+        }
+
+        public LinkDefinitionRequest build() {
+            return new LinkDefinitionRequest(this);
+        }
+    }
 }

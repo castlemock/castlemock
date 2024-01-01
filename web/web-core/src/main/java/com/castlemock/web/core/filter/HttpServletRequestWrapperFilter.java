@@ -32,11 +32,10 @@ import jakarta.servlet.http.HttpServletRequest;
  * @since 1.18
  */
 public class HttpServletRequestWrapperFilter implements Filter {
-    public void init(FilterConfig config)
-            throws ServletException {
+    public void init(final FilterConfig config) {
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain)
             throws java.io.IOException, ServletException {
         if(request instanceof HttpServletRequest httpServletRequest){
             // Wrap the incoming request if it is a HTTP Servlet request

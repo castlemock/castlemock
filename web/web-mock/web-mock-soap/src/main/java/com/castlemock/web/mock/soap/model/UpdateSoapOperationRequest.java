@@ -43,87 +43,51 @@ public class UpdateSoapOperationRequest {
     }
 
     private UpdateSoapOperationRequest(final Builder builder){
-        this.responseStrategy = Objects.requireNonNull(builder.responseStrategy);
-        this.status = Objects.requireNonNull(builder.status);
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
-        this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay);
-        this.networkDelay = Objects.requireNonNull(builder.networkDelay);
+        this.responseStrategy = Objects.requireNonNull(builder.responseStrategy, "responseStrategy");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint, "forwardedEndpoint");
+        this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay, "simulateNetworkDelay");
+        this.networkDelay = Objects.requireNonNull(builder.networkDelay, "networkDelay");
         this.defaultMockResponseId = builder.defaultMockResponseId;
-        this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure);
-        this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy);
-        this.automaticForward = Objects.requireNonNull(builder.automaticForward);
+        this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure, "mockOnFailure");
+        this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy, "identifyStrategy");
+        this.automaticForward = Objects.requireNonNull(builder.automaticForward, "automaticForward");
     }
 
     public SoapResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
 
-    public void setResponseStrategy(SoapResponseStrategy responseStrategy) {
-        this.responseStrategy = responseStrategy;
-    }
-
     public SoapOperationStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(SoapOperationStatus status) {
-        this.status = status;
     }
 
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
 
-    public void setForwardedEndpoint(String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
-    }
-
     public Boolean getSimulateNetworkDelay() {
         return simulateNetworkDelay;
-    }
-
-    public void setSimulateNetworkDelay(Boolean simulateNetworkDelay) {
-        this.simulateNetworkDelay = simulateNetworkDelay;
     }
 
     public Long getNetworkDelay() {
         return networkDelay;
     }
 
-    public void setNetworkDelay(Long networkDelay) {
-        this.networkDelay = networkDelay;
-    }
-
     public Boolean getMockOnFailure() {
         return mockOnFailure;
-    }
-
-    public void setMockOnFailure(Boolean mockOnFailure) {
-        this.mockOnFailure = mockOnFailure;
     }
 
     public SoapOperationIdentifyStrategy getIdentifyStrategy() {
         return identifyStrategy;
     }
 
-    public void setIdentifyStrategy(SoapOperationIdentifyStrategy identifyStrategy) {
-        this.identifyStrategy = identifyStrategy;
-    }
-
     public String getDefaultMockResponseId() {
         return defaultMockResponseId;
     }
 
-    public void setDefaultMockResponseId(String defaultMockResponseId) {
-        this.defaultMockResponseId = defaultMockResponseId;
-    }
-
     public boolean getAutomaticForward() {
         return automaticForward;
-    }
-
-    public void setAutomaticForward(boolean automaticForward) {
-        this.automaticForward = automaticForward;
     }
 
     public static Builder builder() {

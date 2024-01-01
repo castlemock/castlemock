@@ -29,12 +29,12 @@ public class UpdateRestApplicationRequest {
 
     private String name;
 
-    public UpdateRestApplicationRequest(){
+    private UpdateRestApplicationRequest(){
 
     }
 
     private UpdateRestApplicationRequest(final Builder builder){
-        this.name = Objects.requireNonNull(builder.name);
+        this.name = Objects.requireNonNull(builder.name, "name");
     }
 
     @XmlElement
@@ -42,15 +42,11 @@ public class UpdateRestApplicationRequest {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateRestApplicationRequest that = (UpdateRestApplicationRequest) o;
+        final UpdateRestApplicationRequest that = (UpdateRestApplicationRequest) o;
         return Objects.equals(name, that.name);
     }
 

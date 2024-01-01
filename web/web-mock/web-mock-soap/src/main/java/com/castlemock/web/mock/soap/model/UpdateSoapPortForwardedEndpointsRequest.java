@@ -13,8 +13,8 @@ public class UpdateSoapPortForwardedEndpointsRequest {
     }
 
     private UpdateSoapPortForwardedEndpointsRequest(final Builder builder) {
-        this.portIds = Objects.requireNonNull(builder.portIds);
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
+        this.portIds = Objects.requireNonNull(builder.portIds, "portIds");
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint, "forwardedEndpoint");
     }
 
     public Set<String> getPortIds() {
@@ -26,10 +26,10 @@ public class UpdateSoapPortForwardedEndpointsRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateSoapPortForwardedEndpointsRequest that = (UpdateSoapPortForwardedEndpointsRequest) o;
+        final UpdateSoapPortForwardedEndpointsRequest that = (UpdateSoapPortForwardedEndpointsRequest) o;
         return Objects.equals(portIds, that.portIds) &&
                 Objects.equals(forwardedEndpoint, that.forwardedEndpoint);
     }

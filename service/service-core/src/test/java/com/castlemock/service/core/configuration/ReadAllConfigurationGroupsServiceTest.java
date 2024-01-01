@@ -54,16 +54,17 @@ public class ReadAllConfigurationGroupsServiceTest {
 
     @Test
     public void testProcess(){
-        List<ConfigurationGroup> configurationGroups = new ArrayList<>();
-        ConfigurationGroup configurationGroup = new ConfigurationGroup();
-        configurationGroup.setId("123");
-        configurationGroup.setName("Configuration group");
-        configurationGroup.setConfigurations(new ArrayList<>());
-        Configuration configuration = new Configuration();
-        configuration.setKey("Key");
-        configuration.setValue("Value");
-        configuration.setType(ConfigurationType.BOOLEAN);
-        configurationGroup.getConfigurations().add(configuration);
+        final List<ConfigurationGroup> configurationGroups = new ArrayList<>();
+        final Configuration configuration = Configuration.builder()
+                .key("Key")
+                .value("Value")
+                .type(ConfigurationType.BOOLEAN)
+                .build();
+        final ConfigurationGroup configurationGroup = ConfigurationGroup.builder()
+                .id("123")
+                .name("Configuration group")
+                .configurations(List.of(configuration))
+                .build();
         configurationGroups.add(configurationGroup);
 
         Mockito.when(repository.findAll()).thenReturn(configurationGroups);

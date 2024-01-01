@@ -42,7 +42,7 @@ public class DocumentationController {
 
     @Autowired
     public DocumentationController(final ServletContext servletContext){
-        this.servletContext = Objects.requireNonNull(servletContext);
+        this.servletContext = Objects.requireNonNull(servletContext, "servletContext");
     }
 
     /**

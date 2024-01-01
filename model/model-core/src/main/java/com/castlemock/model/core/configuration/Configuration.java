@@ -57,13 +57,6 @@ public class Configuration {
         return key;
     }
 
-    /**
-     * Sets the configuration key
-     * @param key The new configuration key
-     */
-    public void setKey(final String key) {
-        this.key = key;
-    }
 
     /**
      * Returns the value for the configuration
@@ -74,13 +67,6 @@ public class Configuration {
         return value;
     }
 
-    /**
-     * Sets the configuration value
-     * @param value The new configuration value
-     */
-    public void setValue(final String value) {
-        this.value = value;
-    }
 
     /**
      * Returns the configuration type
@@ -89,14 +75,6 @@ public class Configuration {
     @XmlElement
     public ConfigurationType getType() {
         return type;
-    }
-
-    /**
-     * Sets the configuration type
-     * @param type The new configuration type
-     */
-    public void setType(ConfigurationType type) {
-        this.type = type;
     }
 
 

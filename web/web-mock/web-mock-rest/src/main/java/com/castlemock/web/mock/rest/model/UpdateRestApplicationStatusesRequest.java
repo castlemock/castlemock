@@ -15,8 +15,8 @@ public class UpdateRestApplicationStatusesRequest {
     }
 
     private UpdateRestApplicationStatusesRequest(final Builder builder) {
-        this.applicationIds = Objects.requireNonNull(builder.applicationIds);
-        this.status = Objects.requireNonNull(builder.status);
+        this.applicationIds = Objects.requireNonNull(builder.applicationIds, "applicationIds");
+        this.status = Objects.requireNonNull(builder.status, "status");
     }
 
     public Set<String> getApplicationIds() {
@@ -28,10 +28,10 @@ public class UpdateRestApplicationStatusesRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateRestApplicationStatusesRequest that = (UpdateRestApplicationStatusesRequest) o;
+        final UpdateRestApplicationStatusesRequest that = (UpdateRestApplicationStatusesRequest) o;
         return Objects.equals(applicationIds, that.applicationIds) &&
                 status == that.status;
     }

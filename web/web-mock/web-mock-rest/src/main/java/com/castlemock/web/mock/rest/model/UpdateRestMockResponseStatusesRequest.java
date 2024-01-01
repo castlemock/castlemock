@@ -15,8 +15,8 @@ public class UpdateRestMockResponseStatusesRequest {
     }
 
     private UpdateRestMockResponseStatusesRequest(final Builder builder) {
-        this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds);
-        this.status = Objects.requireNonNull(builder.status);
+        this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds, "mockResponseIds");
+        this.status = Objects.requireNonNull(builder.status, "status");
     }
 
     public Set<String> getMockResponseIds() {
@@ -28,10 +28,10 @@ public class UpdateRestMockResponseStatusesRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateRestMockResponseStatusesRequest that = (UpdateRestMockResponseStatusesRequest) o;
+        final UpdateRestMockResponseStatusesRequest that = (UpdateRestMockResponseStatusesRequest) o;
         return Objects.equals(mockResponseIds, that.mockResponseIds) &&
                 status == that.status;
     }

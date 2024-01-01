@@ -512,7 +512,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
         when(httpServletRequest.getContentType()).thenReturn(APPLICATION_JSON);
 
         Enumeration<String> parameterName = Mockito.mock(Enumeration.class);
-        Enumeration<String> headerNames = Collections.enumeration(Arrays.asList("Content-Type", "Accept"));
+        Enumeration<String> headerNames = Collections.enumeration(Arrays.asList(CONTENT_TYPE_HEADER, ACCEPT_HEADER));
         when(httpServletRequest.getParameterNames()).thenReturn(parameterName);
         when(httpServletRequest.getHeaderNames()).thenReturn(headerNames);
         when(httpServletRequest.getHeader(CONTENT_TYPE_HEADER)).thenReturn(APPLICATION_JSON);

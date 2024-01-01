@@ -50,7 +50,7 @@ public class ProjectCoreRestController extends AbstractRestController {
     public ProjectCoreRestController(final ServiceProcessor serviceProcessor,
                                      final ProjectServiceFacade projectServiceFacade){
         super(serviceProcessor);
-        this.projectServiceFacade = Objects.requireNonNull(projectServiceFacade);
+        this.projectServiceFacade = Objects.requireNonNull(projectServiceFacade, "projectServiceFacade");
     }
 
 

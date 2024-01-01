@@ -16,6 +16,8 @@
 
 package com.castlemock.model.core.system;
 
+import java.util.Objects;
+
 /**
  * The {@link SystemInformation} contains information about the system
  * which the application is running on.
@@ -36,22 +38,20 @@ public class SystemInformation {
     private final int availableProcessors;
     private final String castleMockHomeDirectory;
     private final boolean showCastleMockHomeDirectory;
-    private final boolean showMongoProperties;
 
     public SystemInformation(final Builder builder){
-        this.operatingSystemName = builder.operatingSystemName;
-        this.javaVersion = builder.javaVersion;
-        this.javaVendor = builder.javaVendor;
-        this.tomcatBuilt = builder.tomcatBuilt;
-        this.tomcatInfo = builder.tomcatInfo;
-        this.tomcatVersion = builder.tomcatVersion;
-        this.totalMemory = builder.totalMemory;
-        this.maxMemory = builder.maxMemory;
-        this.freeMemory = builder.freeMemory;
-        this.availableProcessors = builder.availableProcessors;
-        this.castleMockHomeDirectory = builder.castleMockHomeDirectory;
-        this.showCastleMockHomeDirectory = builder.showCastleMockHomeDirectory;
-        this.showMongoProperties = builder.showMongoProperties;
+        this.operatingSystemName = Objects.requireNonNull(builder.operatingSystemName, "operatingSystemName");
+        this.javaVersion = Objects.requireNonNull(builder.javaVersion, "javaVersion");
+        this.javaVendor = Objects.requireNonNull(builder.javaVendor, "javaVendor");
+        this.tomcatBuilt = Objects.requireNonNull(builder.tomcatBuilt, "tomcatBuilt");
+        this.tomcatInfo = Objects.requireNonNull(builder.tomcatInfo, "tomcatInfo");
+        this.tomcatVersion = Objects.requireNonNull(builder.tomcatVersion, "tomcatVersion");
+        this.totalMemory = Objects.requireNonNull(builder.totalMemory, "totalMemory");
+        this.maxMemory = Objects.requireNonNull(builder.maxMemory, "maxMemory");
+        this.freeMemory = Objects.requireNonNull(builder.freeMemory, "freeMemory");
+        this.availableProcessors = Objects.requireNonNull(builder.availableProcessors, "availableProcessors");
+        this.castleMockHomeDirectory = Objects.requireNonNull(builder.castleMockHomeDirectory, "castleMockHomeDirectory");
+        this.showCastleMockHomeDirectory = Objects.requireNonNull(builder.showCastleMockHomeDirectory, "showCastleMockHomeDirectory");
     }
 
     public String getOperatingSystemName() {
@@ -102,10 +102,6 @@ public class SystemInformation {
         return showCastleMockHomeDirectory;
     }
 
-    public boolean isShowMongoProperties() {
-        return showMongoProperties;
-    }
-
     public static Builder builder() {
         return new Builder();
     }
@@ -117,13 +113,12 @@ public class SystemInformation {
         private String tomcatBuilt;
         private String tomcatInfo;
         private String tomcatVersion;
-        private long totalMemory;
-        private long maxMemory;
-        private long freeMemory;
-        private int availableProcessors;
+        private Long totalMemory;
+        private Long maxMemory;
+        private Long freeMemory;
+        private Integer availableProcessors;
         private String castleMockHomeDirectory;
-        private boolean showCastleMockHomeDirectory;
-        private boolean showMongoProperties;
+        private Boolean showCastleMockHomeDirectory;
 
         private Builder() {
         }
@@ -186,11 +181,6 @@ public class SystemInformation {
 
         public Builder showCastleMockHomeDirectory(final boolean showCastleMockHomeDirectory) {
             this.showCastleMockHomeDirectory = showCastleMockHomeDirectory;
-            return this;
-        }
-
-        public Builder showMongoProperties(final boolean showMongoProperties) {
-            this.showMongoProperties = showMongoProperties;
             return this;
         }
 

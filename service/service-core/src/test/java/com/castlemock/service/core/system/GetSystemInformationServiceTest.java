@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
 
 public class GetSystemInformationServiceTest {
 
@@ -28,17 +29,15 @@ public class GetSystemInformationServiceTest {
 
     @Before
     public void setup() {
-        final org.springframework.core.env.Profiles mongoProfiles =
-                org.springframework.core.env.Profiles.of(Profiles.MONGODB);
         final org.springframework.core.env.Profiles fileProfiles =
                 org.springframework.core.env.Profiles.of(Profiles.FILE);
 
         MockitoAnnotations.openMocks(this);
+        ReflectionTestUtils.setField(service, "castleMockHomeDirectory", "baseDirector");
 
         Mockito.when(environment.getServerBuilt()).thenReturn("");
         Mockito.when(environment.getServerInfo()).thenReturn("");
         Mockito.when(environment.getServerNumber()).thenReturn("");
-        Mockito.when(springEnvironment.acceptsProfiles(mongoProfiles)).thenReturn(false);
         Mockito.when(springEnvironment.acceptsProfiles(fileProfiles)).thenReturn(true);
     }
 

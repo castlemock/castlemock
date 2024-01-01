@@ -30,13 +30,13 @@ public class UpdateRestResourceRequest {
     private String name;
     private String uri;
 
-    public UpdateRestResourceRequest(){
+    private UpdateRestResourceRequest(){
 
     }
 
     private UpdateRestResourceRequest(final Builder builder){
-        this.name = Objects.requireNonNull(builder.name);
-        this.uri = Objects.requireNonNull(builder.uri);
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.uri = Objects.requireNonNull(builder.uri, "uri");
     }
 
     @XmlElement
@@ -44,24 +44,16 @@ public class UpdateRestResourceRequest {
         return name;
     }
 
-    public void setName(final String name) {
-        this.name = name;
-    }
-
     @XmlElement
     public String getUri() {
         return uri;
     }
 
-    public void setUri(final String uri) {
-        this.uri = uri;
-    }
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateRestResourceRequest that = (UpdateRestResourceRequest) o;
+        final UpdateRestResourceRequest that = (UpdateRestResourceRequest) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(uri, that.uri);
     }

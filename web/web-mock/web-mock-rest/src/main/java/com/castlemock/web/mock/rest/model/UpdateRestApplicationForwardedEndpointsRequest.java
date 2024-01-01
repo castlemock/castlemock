@@ -13,8 +13,8 @@ public class UpdateRestApplicationForwardedEndpointsRequest {
     }
 
     private UpdateRestApplicationForwardedEndpointsRequest(final Builder builder) {
-        this.applicationIds = Objects.requireNonNull(builder.applicationIds);
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
+        this.applicationIds = Objects.requireNonNull(builder.applicationIds, "applicationIds");
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint, "forwardedEndpoint");
     }
 
     public Set<String> getApplicationIds() {
@@ -26,10 +26,10 @@ public class UpdateRestApplicationForwardedEndpointsRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateRestApplicationForwardedEndpointsRequest that = (UpdateRestApplicationForwardedEndpointsRequest) o;
+        final UpdateRestApplicationForwardedEndpointsRequest that = (UpdateRestApplicationForwardedEndpointsRequest) o;
         return Objects.equals(applicationIds, that.applicationIds) &&
                 Objects.equals(forwardedEndpoint, that.forwardedEndpoint);
     }

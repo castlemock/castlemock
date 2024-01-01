@@ -12,7 +12,7 @@ public class DuplicateRestMockOperationsRequest {
     }
 
     private DuplicateRestMockOperationsRequest(final Builder builder) {
-        this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds);
+        this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds, "mockResponseIds");
     }
 
     public Set<String> getMockResponseIds() {
@@ -20,10 +20,10 @@ public class DuplicateRestMockOperationsRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DuplicateRestMockOperationsRequest that = (DuplicateRestMockOperationsRequest) o;
+        final DuplicateRestMockOperationsRequest that = (DuplicateRestMockOperationsRequest) o;
         return Objects.equals(mockResponseIds, that.mockResponseIds);
     }
 

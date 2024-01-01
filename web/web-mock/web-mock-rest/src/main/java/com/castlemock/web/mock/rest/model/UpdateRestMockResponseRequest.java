@@ -74,17 +74,9 @@ public class UpdateRestMockResponseRequest {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @XmlElement
     public String getBody() {
         return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
     }
 
     @XmlElement
@@ -92,26 +84,14 @@ public class UpdateRestMockResponseRequest {
         return status;
     }
 
-    public void setStatus(RestMockResponseStatus status) {
-        this.status = status;
-    }
-
     @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
-    }
-
     @XmlElement
     public boolean isUsingExpressions() {
         return usingExpressions;
-    }
-
-    public void setUsingExpressions(boolean usingExpressions) {
-        this.usingExpressions = usingExpressions;
     }
 
     @XmlElementWrapper(name = "httpHeaders")
@@ -120,18 +100,10 @@ public class UpdateRestMockResponseRequest {
         return httpHeaders;
     }
 
-    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
-        this.httpHeaders = httpHeaders;
-    }
-
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
-    }
-
-    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
-        this.contentEncodings = contentEncodings;
     }
 
     @XmlElementWrapper(name = "parameterQueries")
@@ -140,30 +112,16 @@ public class UpdateRestMockResponseRequest {
         return parameterQueries;
     }
 
-    public void setParameterQueries(List<RestParameterQuery> parameterQueries) {
-        this.parameterQueries = parameterQueries;
-    }
-
-
     @XmlElementWrapper(name = "xpathExpressions")
     @XmlElement(name = "xpathExpression")
     public List<RestXPathExpression> getXpathExpressions() {
         return xpathExpressions;
     }
 
-    public void setXpathExpressions(List<RestXPathExpression> xpathExpressions) {
-        this.xpathExpressions = xpathExpressions;
-    }
-
-
     @XmlElementWrapper(name = "jsonPathExpressions")
     @XmlElement(name = "jsonPathExpression")
     public List<RestJsonPathExpression> getJsonPathExpressions() {
         return jsonPathExpressions;
-    }
-
-    public void setJsonPathExpressions(List<RestJsonPathExpression> jsonPathExpressions) {
-        this.jsonPathExpressions = jsonPathExpressions;
     }
 
     @XmlElementWrapper(name = "headerQueries")
@@ -172,15 +130,11 @@ public class UpdateRestMockResponseRequest {
         return headerQueries;
     }
 
-    public void setHeaderQueries(List<RestHeaderQuery> headerQueries) {
-        this.headerQueries = headerQueries;
-    }
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateRestMockResponseRequest that = (UpdateRestMockResponseRequest) o;
+        final UpdateRestMockResponseRequest that = (UpdateRestMockResponseRequest) o;
         return usingExpressions == that.usingExpressions &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(body, that.body) &&

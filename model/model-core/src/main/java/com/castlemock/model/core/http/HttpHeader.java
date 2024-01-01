@@ -19,7 +19,6 @@ package com.castlemock.model.core.http;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -37,7 +36,7 @@ public class HttpHeader {
 
     private HttpHeader(final Builder builder){
         this.name = Objects.requireNonNull(builder.name, "name");
-        this.value = Optional.ofNullable(builder.value).orElse("");
+        this.value = Objects.requireNonNull(builder.value, "value");
     }
 
     @XmlElement

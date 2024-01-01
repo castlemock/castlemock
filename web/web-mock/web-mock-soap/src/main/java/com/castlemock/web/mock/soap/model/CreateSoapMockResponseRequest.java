@@ -42,8 +42,8 @@ public class CreateSoapMockResponseRequest {
     }
 
     private CreateSoapMockResponseRequest(final Builder builder){
-        this.name = Objects.requireNonNull(builder.name);
-        this.status = Objects.requireNonNull(builder.status);
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.status = Objects.requireNonNull(builder.status, "status");
         this.body = builder.body;
         this.httpStatusCode = builder.httpStatusCode;
         this.usingExpressions = builder.usingExpressions;
@@ -55,56 +55,28 @@ public class CreateSoapMockResponseRequest {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public SoapMockResponseStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(SoapMockResponseStatus status) {
-        this.status = status;
     }
 
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
     public Integer getHttpStatusCode() {
         return httpStatusCode;
-    }
-
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
     }
 
     public Boolean getUsingExpressions() {
         return usingExpressions;
     }
 
-    public void setUsingExpressions(Boolean usingExpressions) {
-        this.usingExpressions = usingExpressions;
-    }
-
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }
 
-    public void setHttpHeaders(List<HttpHeader> httpHeaders) {
-        this.httpHeaders = httpHeaders;
-    }
-
     public List<SoapXPathExpression> getXpathExpressions() {
         return xpathExpressions;
-    }
-
-    public void setXpathExpressions(List<SoapXPathExpression> xpathExpressions) {
-        this.xpathExpressions = xpathExpressions;
     }
 
     public static Builder builder() {

@@ -49,7 +49,7 @@ public final class HeaderMatchUtility {
         return false;
     }
 
-    private static boolean validate(String headerString) {
+    private static boolean validate(final String headerString) {
         Matcher matcher = VALID_HEADER_REGEX.matcher(headerString);
         return matcher.find();
     }

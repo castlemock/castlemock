@@ -12,7 +12,7 @@ public class DuplicateSoapMockOperationsRequest {
     }
 
     private DuplicateSoapMockOperationsRequest(final Builder builder) {
-        this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds);
+        this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds, "mockResponseIds");
     }
 
     public Set<String> getMockResponseIds() {

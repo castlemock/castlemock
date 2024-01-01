@@ -15,8 +15,8 @@ public class UpdateSoapPortStatusesRequest {
     }
 
     private UpdateSoapPortStatusesRequest(final Builder builder) {
-        this.portIds = Objects.requireNonNull(builder.portIds);
-        this.status = Objects.requireNonNull(builder.status);
+        this.portIds = Objects.requireNonNull(builder.portIds, "portIds");
+        this.status = Objects.requireNonNull(builder.status, "status");
     }
 
     public Set<String> getPortIds() {
@@ -28,10 +28,10 @@ public class UpdateSoapPortStatusesRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateSoapPortStatusesRequest that = (UpdateSoapPortStatusesRequest) o;
+        final UpdateSoapPortStatusesRequest that = (UpdateSoapPortStatusesRequest) o;
         return Objects.equals(portIds, that.portIds) &&
                 status == that.status;
     }
@@ -61,12 +61,12 @@ public class UpdateSoapPortStatusesRequest {
         private Builder() {
         }
 
-        public Builder portIds(Set<String> portIds) {
+        public Builder portIds(final Set<String> portIds) {
             this.portIds = portIds;
             return this;
         }
 
-        public Builder status(SoapOperationStatus status) {
+        public Builder status(final SoapOperationStatus status) {
             this.status = status;
             return this;
         }

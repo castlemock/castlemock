@@ -13,8 +13,8 @@ public class UpdateRestResourceForwardedEndpointsRequest {
     }
 
     private UpdateRestResourceForwardedEndpointsRequest(final Builder builder) {
-        this.resourceIds = Objects.requireNonNull(builder.resourceIds);
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
+        this.resourceIds = Objects.requireNonNull(builder.resourceIds, "resourceIds");
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint, "forwardedEndpoint");
     }
 
     public Set<String> getResourceIds() {
@@ -26,10 +26,10 @@ public class UpdateRestResourceForwardedEndpointsRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateRestResourceForwardedEndpointsRequest that = (UpdateRestResourceForwardedEndpointsRequest) o;
+        final UpdateRestResourceForwardedEndpointsRequest that = (UpdateRestResourceForwardedEndpointsRequest) o;
         return Objects.equals(resourceIds, that.resourceIds) &&
                 Objects.equals(forwardedEndpoint, that.forwardedEndpoint);
     }

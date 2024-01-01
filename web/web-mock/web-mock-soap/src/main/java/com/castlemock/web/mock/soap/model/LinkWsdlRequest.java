@@ -24,6 +24,16 @@ public class LinkWsdlRequest {
     private Boolean generateResponse;
     private Boolean includeImports;
 
+    private LinkWsdlRequest() {
+
+    }
+
+    private LinkWsdlRequest(final Builder builder) {
+        this.url = Objects.requireNonNull(builder.url, "url");
+        this.generateResponse = Objects.requireNonNull(builder.generateResponse, "generateResponse");
+        this.includeImports = Objects.requireNonNull(builder.includeImports, "includeImports");
+    }
+
     public String getUrl() {
         return url;
     }
@@ -37,10 +47,10 @@ public class LinkWsdlRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LinkWsdlRequest that = (LinkWsdlRequest) o;
+        final LinkWsdlRequest that = (LinkWsdlRequest) o;
         return Objects.equals(url, that.url) &&
                 Objects.equals(generateResponse, that.generateResponse) &&
                 Objects.equals(includeImports, that.includeImports);
@@ -58,5 +68,37 @@ public class LinkWsdlRequest {
                 ", generateResponse=" + generateResponse +
                 ", includeImports=" + includeImports +
                 '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String url;
+        private Boolean generateResponse;
+        private Boolean includeImports;
+
+        private Builder() {
+        }
+
+        public Builder url(final String url) {
+            this.url = url;
+            return this;
+        }
+
+        public Builder generateResponse(final Boolean generateResponse) {
+            this.generateResponse = generateResponse;
+            return this;
+        }
+
+        public Builder includeImports(final Boolean includeImports) {
+            this.includeImports = includeImports;
+            return this;
+        }
+
+        public LinkWsdlRequest build() {
+            return new LinkWsdlRequest(this);
+        }
     }
 }

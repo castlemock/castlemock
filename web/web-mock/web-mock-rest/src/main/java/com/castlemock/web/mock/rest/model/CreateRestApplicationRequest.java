@@ -29,12 +29,12 @@ public class CreateRestApplicationRequest {
 
     private String name;
 
-    public CreateRestApplicationRequest(){
+    private CreateRestApplicationRequest(){
 
     }
 
     private CreateRestApplicationRequest(final Builder builder){
-        this.name = Objects.requireNonNull(builder.name);
+        this.name = Objects.requireNonNull(builder.name, "name");
     }
 
     @XmlElement
@@ -42,15 +42,11 @@ public class CreateRestApplicationRequest {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CreateRestApplicationRequest that = (CreateRestApplicationRequest) o;
+        final CreateRestApplicationRequest that = (CreateRestApplicationRequest) o;
         return Objects.equals(name, that.name);
     }
 

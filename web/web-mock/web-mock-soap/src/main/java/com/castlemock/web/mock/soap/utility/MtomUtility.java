@@ -37,9 +37,13 @@ import java.nio.charset.StandardCharsets;
  * @author Karl Dahlgren
  * @since 1.18
  */
-public class MtomUtility {
+public final class MtomUtility {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MtomUtility.class);
+
+    private MtomUtility() {
+
+    }
 
     /**
      * The method provides support to extract the main body from an incoming MTOM SOAP request.

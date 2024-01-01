@@ -32,13 +32,13 @@ public class CreateRestMethodRequest {
     private String name;
     private HttpMethod httpMethod;
 
-    public CreateRestMethodRequest(){
+    private CreateRestMethodRequest(){
 
     }
 
     private CreateRestMethodRequest(final Builder builder){
-        this.name = Objects.requireNonNull(builder.name);
-        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
     }
 
     @XmlElement
@@ -46,24 +46,16 @@ public class CreateRestMethodRequest {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
 
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
-    }
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CreateRestMethodRequest that = (CreateRestMethodRequest) o;
+        final CreateRestMethodRequest that = (CreateRestMethodRequest) o;
         return Objects.equals(name, that.name) && httpMethod == that.httpMethod;
     }
 

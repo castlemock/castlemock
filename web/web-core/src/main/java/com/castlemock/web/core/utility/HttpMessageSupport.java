@@ -48,7 +48,7 @@ import java.util.zip.InflaterInputStream;
  * @author Karl Dahlgren
  * @since 1.0
  */
-public class HttpMessageSupport {
+public final class HttpMessageSupport {
 
     private static final String TRANSFER_ENCODING = "Transfer-Encoding";
     private static final String CONTENT_LENGTH = "Content-Length";

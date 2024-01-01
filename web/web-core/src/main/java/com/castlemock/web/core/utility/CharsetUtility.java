@@ -30,12 +30,16 @@ import java.util.regex.Pattern;
  * @author Karl Dahlgren
  * @since 1.18
  */
-public class CharsetUtility {
+public final class CharsetUtility {
 
     private static final Pattern charsetPattern = Pattern.compile("(?i)\\bcharset=\\s*\"?([^\\s;\"]*)");
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String DEFAULT_CHARSET = "UTF-8";
     private static final Logger LOGGER = LoggerFactory.getLogger(CharsetUtility.class);
+
+    private CharsetUtility() {
+
+    }
 
     /**
      * Extract the charset from a list of provided {@link HttpHeader}.

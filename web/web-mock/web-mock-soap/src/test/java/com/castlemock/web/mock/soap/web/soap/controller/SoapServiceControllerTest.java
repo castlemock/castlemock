@@ -592,7 +592,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         when(httpServletRequest.getContentType()).thenReturn(APPLICATION_XML);
 
         Enumeration<String> parameterName = Mockito.mock(Enumeration.class);
-        Enumeration<String> headerNames = Collections.enumeration(Arrays.asList("Content-Type", "Accept"));
+        Enumeration<String> headerNames = Collections.enumeration(Arrays.asList(CONTENT_TYPE_HEADER, ACCEPT_HEADER));
         when(httpServletRequest.getParameterNames()).thenReturn(parameterName);
         when(httpServletRequest.getHeaderNames()).thenReturn(headerNames);
         when(httpServletRequest.getHeader(CONTENT_TYPE_HEADER)).thenReturn(APPLICATION_XML);
@@ -617,10 +617,10 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
 
         when(multipartHttpServletRequest.getReader()).thenReturn(httpServletRequestWrapper.getReader());
         Enumeration<String> parameterName = Mockito.mock(Enumeration.class);
-        Enumeration<String> headerNames = Collections.enumeration(Arrays.asList("Content-Type", "Accept"));
+        Enumeration<String> headerNames = Collections.enumeration(Arrays.asList(CONTENT_TYPE_HEADER, ACCEPT_HEADER));
         when(multipartHttpServletRequest.getParameterNames()).thenReturn(parameterName);
         when(multipartHttpServletRequest.getHeaderNames()).thenReturn(headerNames);
-        when(multipartHttpServletRequest.getHeader(contextType)).thenReturn(APPLICATION_XML);
+        when(multipartHttpServletRequest.getHeader(CONTENT_TYPE_HEADER)).thenReturn(contextType);
         when(multipartHttpServletRequest.getHeader(ACCEPT_HEADER)).thenReturn(APPLICATION_XML);
         when(multipartHttpServletRequest.getMethod()).thenReturn("POST");
 

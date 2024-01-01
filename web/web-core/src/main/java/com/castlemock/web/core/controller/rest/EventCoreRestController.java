@@ -49,7 +49,7 @@ public class EventCoreRestController extends AbstractRestController {
     public EventCoreRestController(final ServiceProcessor serviceProcessor,
                                    final EventServiceFacade eventServiceFacade){
         super(serviceProcessor);
-        this.eventServiceFacade = Objects.requireNonNull(eventServiceFacade);
+        this.eventServiceFacade = Objects.requireNonNull(eventServiceFacade, "eventServiceFacade");
     }
 
     /**

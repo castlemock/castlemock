@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -90,7 +91,7 @@ public class TextParser {
     }
     
     public TextParser(final Map<String,Expression> expressions) {
-        this.expressions = expressions;
+        this.expressions = Objects.requireNonNull(expressions, "expressions");
     }
     
     /**

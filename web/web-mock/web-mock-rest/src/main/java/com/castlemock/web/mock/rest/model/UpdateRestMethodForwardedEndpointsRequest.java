@@ -13,8 +13,8 @@ public class UpdateRestMethodForwardedEndpointsRequest {
     }
 
     private UpdateRestMethodForwardedEndpointsRequest(final Builder builder) {
-        this.methodIds = Objects.requireNonNull(builder.methodIds);
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
+        this.methodIds = Objects.requireNonNull(builder.methodIds, "methodIds");
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint, "forwardedEndpoint");
     }
 
     public Set<String> getMethodIds() {
@@ -26,10 +26,10 @@ public class UpdateRestMethodForwardedEndpointsRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateRestMethodForwardedEndpointsRequest that = (UpdateRestMethodForwardedEndpointsRequest) o;
+        final UpdateRestMethodForwardedEndpointsRequest that = (UpdateRestMethodForwardedEndpointsRequest) o;
         return Objects.equals(methodIds, that.methodIds) &&
                 Objects.equals(forwardedEndpoint, that.forwardedEndpoint);
     }

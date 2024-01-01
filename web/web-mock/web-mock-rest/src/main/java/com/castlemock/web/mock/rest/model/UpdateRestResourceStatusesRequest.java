@@ -15,8 +15,8 @@ public class UpdateRestResourceStatusesRequest {
     }
 
     private UpdateRestResourceStatusesRequest(final Builder builder) {
-        this.resourceIds = Objects.requireNonNull(builder.resourceIds);
-        this.status = Objects.requireNonNull(builder.status);
+        this.resourceIds = Objects.requireNonNull(builder.resourceIds, "resourceIds");
+        this.status = Objects.requireNonNull(builder.status, "status");
     }
 
     public Set<String> getResourceIds() {
@@ -28,10 +28,10 @@ public class UpdateRestResourceStatusesRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UpdateRestResourceStatusesRequest that = (UpdateRestResourceStatusesRequest) o;
+        final UpdateRestResourceStatusesRequest that = (UpdateRestResourceStatusesRequest) o;
         return Objects.equals(resourceIds, that.resourceIds) &&
                 status == that.status;
     }

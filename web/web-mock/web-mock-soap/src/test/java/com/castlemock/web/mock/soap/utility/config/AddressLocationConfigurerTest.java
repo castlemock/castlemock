@@ -33,13 +33,13 @@ public class AddressLocationConfigurerTest {
 
 	@Test
 	public void testWsdlWithAddressLocation() {
-		String wsdlModified = new AddressLocationConfigurer().configureAddressLocation(ORIGINAL_WSDL_WITH_ADDRESS_LOCATION, "http://localhost:8080/other-path");
+		String wsdlModified = AddressLocationConfigurer.configureAddressLocation(ORIGINAL_WSDL_WITH_ADDRESS_LOCATION, "http://localhost:8080/other-path");
 		Assertions.assertEquals(MODIFIED_WSDL_WITH_ADDRESS_LOCATION, wsdlModified);
 	}
 	
 	@Test
 	public void testWsdlWithoutAddressLocation() {
-		String wsdlResult = new AddressLocationConfigurer().configureAddressLocation(WSDL_WITHOU_ADDRESS_LOCATION, "http://localhost:8080/other-path");
+		String wsdlResult = AddressLocationConfigurer.configureAddressLocation(WSDL_WITHOU_ADDRESS_LOCATION, "http://localhost:8080/other-path");
 		Assertions.assertEquals(WSDL_WITHOU_ADDRESS_LOCATION, wsdlResult);
 	}
 

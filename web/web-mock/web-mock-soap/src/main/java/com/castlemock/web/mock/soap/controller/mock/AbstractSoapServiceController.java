@@ -151,7 +151,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                 if (parameterName.equalsIgnoreCase("wsdl")) {
                     String wsdl = getWsdl(projectId);
 
-                    wsdl = new AddressLocationConfigurer().configureAddressLocation(wsdl, httpServletRequest.getRequestURL().toString());
+                    wsdl = AddressLocationConfigurer.configureAddressLocation(wsdl, httpServletRequest.getRequestURL().toString());
 
                     final HttpHeaders responseHeaders = new HttpHeaders();
                     responseHeaders.put(CONTENT_TYPE, List.of("text/xml; " + DEFAULT_CHAR_SET));

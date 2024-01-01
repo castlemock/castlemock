@@ -39,7 +39,7 @@ public class ConfigurationGroup {
     private String name;
     private List<Configuration> configurations;
 
-    public ConfigurationGroup(){
+    private ConfigurationGroup(){
 
     }
 
@@ -59,14 +59,6 @@ public class ConfigurationGroup {
     }
 
     /**
-     * Sets a new id value for the configuration group
-     * @param id The new id for the configuration group
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
      * Returns the name of the configuration group
      * @return The new of the configuration group
      */
@@ -75,13 +67,6 @@ public class ConfigurationGroup {
         return name;
     }
 
-    /**
-     * Sets a new name of the configuration group
-     * @param name The new name for the configuration group
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
 
     /**
      * Returns a list of configurations the belongs to the group
@@ -93,13 +78,6 @@ public class ConfigurationGroup {
         return configurations;
     }
 
-    /**
-     * Set a new list of configurations that belong to the configuration group
-     * @param configurations The new list of configurations
-     */
-    public void setConfigurations(List<Configuration> configurations) {
-        this.configurations = configurations;
-    }
 
     public static Builder builder() {
         return new Builder();

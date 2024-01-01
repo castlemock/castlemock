@@ -31,15 +31,11 @@ public class UpdateSoapPortRequest {
     }
 
     private UpdateSoapPortRequest(final Builder builder){
-        this.uri = Objects.requireNonNull(builder.uri);
+        this.uri = Objects.requireNonNull(builder.uri, "uri");
     }
 
     public String getUri() {
         return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
     }
 
     public static Builder builder() {

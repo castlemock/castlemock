@@ -1,8 +1,12 @@
 package com.castlemock.web.mock.soap.utility.config;
 
 public class AddressLocationConfigurer {
+
+	private AddressLocationConfigurer() {
+
+	}
 	
-	public String configureAddressLocation(String wsdl, String correctAddressLocation) {
+	public static String configureAddressLocation(final String wsdl, final String correctAddressLocation) {
 		final String adressLocationTag = "<soap:address location=\"";
 		final int beginIndexAdressLocationTag = wsdl.indexOf(adressLocationTag);
 		if (beginIndexAdressLocationTag >= 0) {
