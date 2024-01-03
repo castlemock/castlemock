@@ -55,7 +55,9 @@ public class ServiceProcessorImplTest {
         Service service = Mockito.mock(Service.class);
         Input input = Mockito.mock(Input.class);
         Output output = Mockito.mock(Output.class);
-        ServiceResult<Output> serviceResult = new ServiceResult<>(output);
+        ServiceResult<Output> serviceResult = ServiceResult.builder()
+                .output(output)
+                .build();
         Mockito.when(serviceRegistry.getService(Mockito.any(Input.class))).thenReturn(service);
         Mockito.when(service.process(Mockito.any(ServiceTask.class))).thenReturn(serviceResult);
         Output serviceOutput = serviceProcessor.process(input);

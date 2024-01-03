@@ -33,8 +33,8 @@ public final class UpdateCurrentUserOutput implements Output {
     @NotNull
     private final User updatedUser;
 
-    public UpdateCurrentUserOutput(final User updatedUser) {
-        this.updatedUser = Objects.requireNonNull(updatedUser, "updatedUser");
+    private UpdateCurrentUserOutput(final Builder builder) {
+        this.updatedUser = Objects.requireNonNull(builder.updatedUser, "updatedUser");
     }
 
     public User getUpdatedUser() {
@@ -59,5 +59,25 @@ public final class UpdateCurrentUserOutput implements Output {
         return "UpdateCurrentUserOutput{" +
                 "updatedUser=" + updatedUser +
                 '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private User updatedUser;
+
+        private Builder() {
+        }
+
+        public Builder updatedUser(final User updatedUser) {
+            this.updatedUser = updatedUser;
+            return this;
+        }
+
+        public UpdateCurrentUserOutput build() {
+            return new UpdateCurrentUserOutput(this);
+        }
     }
 }

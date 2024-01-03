@@ -68,7 +68,8 @@ public class UpdateCurrentUserService extends AbstractUserService implements Ser
         final User user = builder.build();
 
         update(user.getId(), user);
-        final UpdateCurrentUserOutput output = new UpdateCurrentUserOutput(user);
-        return createServiceResult(output);
+        return createServiceResult(UpdateCurrentUserOutput.builder()
+                .updatedUser(user)
+                .build());
     }
 }
