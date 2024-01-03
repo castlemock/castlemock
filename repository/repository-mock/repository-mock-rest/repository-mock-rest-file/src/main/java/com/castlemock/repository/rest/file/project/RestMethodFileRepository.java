@@ -36,8 +36,6 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -85,7 +83,7 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      * @see #save
      */
     @Override
-    protected void checkType(RestMethodFile type) {
+    protected void checkType(final RestMethodFile type) {
 
     }
 
@@ -110,15 +108,12 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<RestMethod> search(SearchQuery query) {
-        final List<RestMethod> result = new LinkedList<>();
-        for(RestMethodFile restMethodFile : collection.values()){
-            if(SearchValidator.validate(restMethodFile.getName(), query.getQuery())){
-                RestMethod restMethod = mapper.map(restMethodFile, RestMethod.class);
-                result.add(restMethod);
-            }
-        }
-        return result;
+    public List<RestMethod> search(final SearchQuery query) {
+        return collection.values()
+                .stream()
+                .filter(method -> SearchValidator.validate(method.getName(), query.getQuery()))
+                .map(method -> mapper.map(method, RestMethod.class))
+                .toList();
     }
 
 
@@ -143,14 +138,13 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      * @param resourceId The id of the resource.
      */
     @Override
-    public void deleteWithResourceId(String resourceId) {
-        Iterator<RestMethodFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            RestMethodFile method = iterator.next();
-            if(method.getResourceId().equals(resourceId)){
-                delete(method.getId());
-            }
-        }
+    public void deleteWithResourceId(final String resourceId) {
+        this.collection.values()
+                .stream()
+                .filter(method -> method.getResourceId().equals(resourceId))
+                .map(RestMethodFile::getId)
+                .toList()
+                .forEach(this::delete);
     }
 
     /**
@@ -162,7 +156,7 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      * @since 1.20
      */
     @Override
-    public List<RestMethod> findWithResourceId(String resourceId) {
+    public List<RestMethod> findWithResourceId(final String resourceId) {
         final List<RestMethod> methods = new ArrayList<>();
         for(RestMethodFile methodFile : this.collection.values()){
             if(methodFile.getResourceId().equals(resourceId)){
@@ -182,7 +176,7 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      * @since 1.20
      */
     @Override
-    public List<String> findIdsWithResourceId(String resourceId) {
+    public List<String> findIdsWithResourceId(final String resourceId) {
         final List<String> ids = new ArrayList<>();
         for(RestMethodFile methodFile : this.collection.values()){
             if(methodFile.getResourceId().equals(resourceId)){
@@ -201,7 +195,7 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      * @since 1.20
      */
     @Override
-    public String getResourceId(String methodId) {
+    public String getResourceId(final String methodId) {
         final RestMethodFile methodFile = this.collection.get(methodId);
 
         if(methodFile == null){

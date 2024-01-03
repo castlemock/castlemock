@@ -16,6 +16,8 @@
 
 package com.castlemock.model.core.utility.parser.expression.argument;
 
+import org.springframework.lang.NonNull;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -68,6 +70,7 @@ public class ExpressionArgumentArray extends ExpressionArgument<List<ExpressionA
     }
 
     @Override
+    @NonNull
     public Iterator<ExpressionArgument<?>> iterator() {
         return super.value.iterator();
     }

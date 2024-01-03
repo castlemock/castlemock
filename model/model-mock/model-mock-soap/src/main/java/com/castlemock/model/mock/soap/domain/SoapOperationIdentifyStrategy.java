@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  * @since 1.25
  */
 @XmlType
-@XmlEnum(String.class)
+@XmlEnum
 public enum SoapOperationIdentifyStrategy {
 
     ELEMENT, ELEMENT_NAMESPACE

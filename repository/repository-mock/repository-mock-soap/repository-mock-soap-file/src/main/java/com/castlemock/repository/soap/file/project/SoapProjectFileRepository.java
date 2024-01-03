@@ -29,7 +29,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,7 +100,7 @@ public class SoapProjectFileRepository extends AbstractProjectFileRepository<Soa
      * @see #save
      */
     @Override
-    protected void checkType(SoapProjectFile soapProject) {
+    protected void checkType(final SoapProjectFile soapProject) {
 
     }
 
@@ -128,14 +127,11 @@ public class SoapProjectFileRepository extends AbstractProjectFileRepository<Soa
      */
     @Override
     public List<SoapProject> search(final SearchQuery query) {
-        final List<SoapProject> soapProjects = new LinkedList<>();
-        for(SoapProjectFile soapProjectFile : collection.values()){
-            if(SearchValidator.validate(soapProjectFile.getName(), query.getQuery())){
-                SoapProject soapProject = mapper.map(soapProjectFile, SoapProject.class);
-                soapProjects.add(soapProject);
-            }
-        }
-        return soapProjects;
+        return this.collection.values()
+                .stream()
+                .filter(project -> SearchValidator.validate(project.getName(), query.getQuery()))
+                .map(project -> mapper.map(project, SoapProject.class))
+                .toList();
     }
 
     @XmlRootElement(name = "soapProject")

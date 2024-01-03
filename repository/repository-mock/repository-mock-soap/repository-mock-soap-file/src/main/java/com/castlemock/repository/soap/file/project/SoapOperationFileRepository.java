@@ -39,8 +39,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,7 +87,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
      * @see #save
      */
     @Override
-    protected void checkType(SoapOperationFile type) {
+    protected void checkType(final SoapOperationFile type) {
 
     }
 
@@ -133,37 +131,32 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SoapOperation> search(SearchQuery query) {
-        final List<SoapOperation> result = new LinkedList<>();
-        for(SoapOperationFile soapOperationFile : collection.values()){
-            if(SearchValidator.validate(soapOperationFile.getName(), query.getQuery())){
-                SoapOperation soapOperation = mapper.map(soapOperationFile, SoapOperation.class);
-                result.add(soapOperation);
-            }
-        }
-        return result;
+    public List<SoapOperation> search(final SearchQuery query) {
+        return this.collection.values()
+                .stream()
+                .filter(operation -> SearchValidator.validate(operation.getName(), query.getQuery()))
+                .map(operation -> mapper.map(operation, SoapOperation.class))
+                .toList();
     }
 
     @Override
-    public void deleteWithPortId(String portId) {
-        for (SoapOperationFile operation : this.collection.values()) {
-            if (operation.getPortId().equals(portId)) {
-                delete(operation.getId());
-            }
-        }
+    public void deleteWithPortId(final String portId) {
+        this.collection.values()
+                .stream()
+                .filter(operation -> operation.getPortId().equals(portId))
+                .map(SoapOperationFile::getId)
+                .toList()
+                .forEach(this::delete);
     }
 
 
     @Override
-    public List<SoapOperation> findWithPortId(String portId) {
-        final List<SoapOperation> operations = new ArrayList<>();
-        for(SoapOperationFile operationFile : this.collection.values()){
-            if(operationFile.getPortId().equals(portId)){
-                SoapOperation operation = this.mapper.map(operationFile, SoapOperation.class);
-                operations.add(operation);
-            }
-        }
-        return operations;
+    public List<SoapOperation> findWithPortId(final String portId) {
+        return this.collection.values()
+                .stream()
+                .filter(operation -> operation.getPortId().equals(portId))
+                .map(operation -> this.mapper.map(operation, SoapOperation.class))
+                .toList();
     }
 
     /**

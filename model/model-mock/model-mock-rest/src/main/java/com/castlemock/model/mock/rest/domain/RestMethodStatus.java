@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  * @since 1.0
  */
 @XmlType
-@XmlEnum(String.class)
+@XmlEnum
 public enum RestMethodStatus {
     MOCKED, DISABLED, FORWARDED, RECORDING, RECORD_ONCE, ECHO
 }

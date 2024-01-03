@@ -15,12 +15,12 @@ public final class RestMockResponseTestBuilder {
     private Integer httpStatusCode;
     private RestMockResponseStatus status;
     private Boolean usingExpressions;
-    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<>();
-    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
-    private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<>();
-    private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<>();
-    private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<>();
-    private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<>();
+    private List<HttpHeader> httpHeaders;
+    private List<ContentEncoding> contentEncodings;
+    private List<RestParameterQuery> parameterQueries;
+    private List<RestXPathExpression> xpathExpressions;
+    private List<RestJsonPathExpression> jsonPathExpressions;
+    private List<RestHeaderQuery> headerQueries;
 
     private RestMockResponseTestBuilder() {
         this.id = "r1eXT3";

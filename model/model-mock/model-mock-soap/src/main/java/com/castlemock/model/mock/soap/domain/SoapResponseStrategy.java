@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  * @since 1.0
  */
 @XmlType
-@XmlEnum(String.class)
+@XmlEnum
 public enum SoapResponseStrategy {
 
     RANDOM, SEQUENCE, XPATH_INPUT

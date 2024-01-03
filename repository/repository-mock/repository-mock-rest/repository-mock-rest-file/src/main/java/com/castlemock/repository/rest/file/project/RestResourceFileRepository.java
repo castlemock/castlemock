@@ -34,8 +34,6 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,7 +82,7 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      * @see #save
      */
     @Override
-    protected void checkType(RestResourceFile type) {
+    protected void checkType(final RestResourceFile type) {
 
     }
 
@@ -95,15 +93,12 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<RestResource> search(SearchQuery query) {
-        final List<RestResource> result = new LinkedList<>();
-        for(RestResourceFile restResourceFile : collection.values()){
-            if(SearchValidator.validate(restResourceFile.getName(), query.getQuery())){
-                RestResource restResource = mapper.map(restResourceFile, RestResource.class);
-                result.add(restResource);
-            }
-        }
-        return result;
+    public List<RestResource> search(final SearchQuery query) {
+        return this.collection.values()
+                .stream()
+                .filter(resource -> SearchValidator.validate(resource.getName(), query.getQuery()))
+                .map(resource -> mapper.map(resource, RestResource.class))
+                .toList();
     }
 
     /**
@@ -113,14 +108,13 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      * @param applicationId The id of the applicationId.
      */
     @Override
-    public void deleteWithApplicationId(String applicationId) {
-        Iterator<RestResourceFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            RestResourceFile resource = iterator.next();
-            if(resource.getApplicationId().equals(applicationId)){
-                delete(resource.getId());
-            }
-        }
+    public void deleteWithApplicationId(final String applicationId) {
+        this.collection.values()
+                .stream()
+                .filter(resource -> resource.getApplicationId().equals(applicationId))
+                .map(RestResourceFile::getId)
+                .toList()
+                .forEach(this::delete);
     }
 
     /**
@@ -132,7 +126,7 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      * @since 1.20
      */
     @Override
-    public List<RestResource> findWithApplicationId(String applicationId) {
+    public List<RestResource> findWithApplicationId(final String applicationId) {
         final List<RestResource> resources = new ArrayList<>();
         for(RestResourceFile resourceFile : this.collection.values()){
             if(resourceFile.getApplicationId().equals(applicationId)){
@@ -152,7 +146,7 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      * @since 1.20
      */
     @Override
-    public List<String> findIdsWithApplicationId(String applicationId) {
+    public List<String> findIdsWithApplicationId(final String applicationId) {
         final List<String> ids = new ArrayList<>();
         for(RestResourceFile resourceFile : this.collection.values()){
             if(resourceFile.getApplicationId().equals(applicationId)){
@@ -173,7 +167,7 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      * @see RestResource
      */
     @Override
-    public Optional<RestResource> findRestResourceByUri(String applicationId, String resourceUri) {
+    public Optional<RestResource> findRestResourceByUri(final String applicationId, final String resourceUri) {
         for(RestResourceFile resourceFile : this.collection.values()){
             if(resourceFile.getApplicationId().equals(applicationId) &&
                     resourceUri.equalsIgnoreCase(resourceFile.getUri())){
@@ -192,7 +186,7 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      * @since 1.20
      */
     @Override
-    public Optional<String> getApplicationId(String resourceId) {
+    public Optional<String> getApplicationId(final String resourceId) {
         return Optional.ofNullable(this.collection.get(resourceId))
                 .map(RestResourceFile::getApplicationId);
     }

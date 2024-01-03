@@ -20,8 +20,6 @@ import com.castlemock.web.mock.soap.utility.MtomUtility;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
-
 /**
  * @author Karl Dahlgren
  * @since 1.18
@@ -29,7 +27,7 @@ import java.io.IOException;
 public class MtomUtilityTest {
 
     @Test
-    public void extractMtomBodyTest() throws IOException {
+    public void extractMtomBodyTest() {
         String body = """
                 ------=_Part_64_1526053806.1517665317492
                 Content-Type: text/xml; charset=UTF-8

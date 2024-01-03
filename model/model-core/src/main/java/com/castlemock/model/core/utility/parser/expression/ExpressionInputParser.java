@@ -64,7 +64,6 @@ public final class ExpressionInputParser {
      * a String input into an {@link ExpressionInput}.
      * @param input The input that will be converted into an {@link ExpressionInput}.
      * @return an {@link ExpressionInput} based on the provided <code>input</code>.
-     * @see {@link ExpressionInputParser#parseArgument(ExpressionParser.ArgumentValueContext)}.
      */
     public static ExpressionInput parse(final String input){
         // Parse the input

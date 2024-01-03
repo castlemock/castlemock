@@ -34,8 +34,6 @@ import org.springframework.stereotype.Repository;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -94,17 +92,6 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
     }
 
     /**
-     * The initialize method is responsible for initiating the file repository. This procedure involves loading
-     * the types (TYPE) from the file system and store them in the collection.
-     * @see #postInitiate()
-     */
-    @Override
-    public void initialize(){
-        super.initialize();
-    }
-
-
-    /**
      * The service finds the oldest event
      * @return The oldest event
      */
@@ -129,13 +116,11 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
      */
     @Override
     public List<RestEvent> findEventsByMethodId(final String restMethodId) {
-        final List<RestEventFile> events = new ArrayList<>();
-        for(RestEventFile event : collection.values()){
-            if(event.getMethodId().equals(restMethodId)){
-                events.add(event);
-            }
-        }
-        return toDtoList(events, RestEvent.class);
+        return this.collection.values()
+                .stream()
+                .filter(event -> event.getMethodId().equals(restMethodId))
+                .map(event ->  this.mapper.map(event, RestEvent.class))
+                .toList();
     }
 
     /**
@@ -144,7 +129,7 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<RestEvent> search(SearchQuery query) {
+    public List<RestEvent> search(final SearchQuery query) {
         throw new UnsupportedOperationException();
     }
 
@@ -155,8 +140,8 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
      */
     @Override
     public synchronized RestEvent deleteOldestEvent(){
-        RestEvent event = getOldestEvent();
-        delete(event.getId());
+        final RestEvent event = getOldestEvent();
+        this.delete(event.getId());
         return event;
     }
 
@@ -166,11 +151,11 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
      */
     @Override
     public void clearAll() {
-        Iterator<RestEventFile> iterator = collection.values().iterator();
-        while(iterator.hasNext()){
-            RestEventFile restEvent = iterator.next();
-            delete(restEvent.getId());
-        }
+        this.collection.values()
+                .stream()
+                .map(RestEventFile::getId)
+                .toList()
+                .forEach(this::delete);
     }
 
     @XmlRootElement(name = "restEvent")

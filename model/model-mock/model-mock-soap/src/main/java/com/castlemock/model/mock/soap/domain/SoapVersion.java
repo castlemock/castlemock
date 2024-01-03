@@ -25,7 +25,7 @@ import java.util.Objects;
  * @since 1.0
  */
 @XmlType
-@XmlEnum(String.class)
+@XmlEnum
 public enum SoapVersion {
 
     SOAP11("SOAP 1.1", "text/xml"), SOAP12("SOAP 1.2", "application/soap+xml");

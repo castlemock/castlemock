@@ -37,7 +37,6 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -78,16 +77,6 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
     }
 
     /**
-     * The initialize method is responsible for initiating the file repository. This procedure involves loading
-     * the types (TYPE) from the file system and store them in the collection.
-     * @see #postInitiate()
-     */
-    @Override
-    public void initialize(){
-        super.initialize();
-    }
-
-    /**
      * The method is responsible for controller that the type that is about the be saved to the file system is valid.
      * The method should check if the type contains all the necessary values and that the values are valid. This method
      * will always be called before a type is about to be saved. The main reason for why this is vital and done before
@@ -111,7 +100,7 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
      * @return Returns a list of events
      */
     @Override
-    public List<SoapEvent> findEventsByOperationId(String operationId) {
+    public List<SoapEvent> findEventsByOperationId(final String operationId) {
         final List<SoapEventFile> events = new ArrayList<>();
         for(SoapEventFile event : collection.values()){
             if(event.getOperationId().equals(operationId)){
@@ -145,7 +134,7 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SoapEvent> search(SearchQuery query) {
+    public List<SoapEvent> search(final SearchQuery query) {
         throw new UnsupportedOperationException();
     }
 
@@ -167,11 +156,10 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
      */
     @Override
     public void clearAll() {
-        Iterator<SoapEventFile> iterator = collection.values().iterator();
-        while(iterator.hasNext()){
-            SoapEventFile soapEvent = iterator.next();
-            delete(soapEvent.getId());
-        }
+        collection.values().stream()
+                .map(SoapEventFile::getId)
+                .toList()
+                .forEach(this::delete);
     }
 
     @XmlRootElement(name = "soapEvent")

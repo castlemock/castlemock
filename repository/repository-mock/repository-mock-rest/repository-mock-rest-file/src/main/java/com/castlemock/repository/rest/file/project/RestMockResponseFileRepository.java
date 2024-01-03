@@ -37,9 +37,8 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
@@ -123,15 +122,12 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<RestMockResponse> search(SearchQuery query) {
-        final List<RestMockResponse> result = new LinkedList<>();
-        for(RestMockResponseFile restMockResponseFile : collection.values()){
-            if(SearchValidator.validate(restMockResponseFile.getName(), query.getQuery())){
-                RestMockResponse restMockResponse = mapper.map(restMockResponseFile, RestMockResponse.class);
-                result.add(restMockResponse);
-            }
-        }
-        return result;
+    public List<RestMockResponse> search(final SearchQuery query) {
+        return collection.values()
+                .stream()
+                .filter(mockResponse -> SearchValidator.validate(mockResponse.getName(), query.getQuery()))
+                .map(mockResponse -> mapper.map(mockResponse, RestMockResponse.class))
+                .toList();
     }
 
     /**
@@ -141,14 +137,13 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
      * @param methodId The id of the method.
      */
     @Override
-    public void deleteWithMethodId(String methodId) {
-        Iterator<RestMockResponseFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            RestMockResponseFile response = iterator.next();
-            if(response.getMethodId().equals(methodId)){
-                delete(response.getId());
-            }
-        }
+    public void deleteWithMethodId(final String methodId) {
+        this.collection.values()
+                .stream()
+                .filter(mockResponse -> mockResponse.getMethodId().equals(methodId))
+                .map(RestMockResponseFile::getId)
+                .toList()
+                .forEach(this::delete);
     }
 
     /**
@@ -352,7 +347,7 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
             if (!(o instanceof RestMockResponseFile that))
                 return false;
 
-            return id != null ? id.equals(that.id) : that.id == null;
+            return Objects.equals(id, that.id);
         }
 
         @Override

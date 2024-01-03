@@ -438,7 +438,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      */
     private Optional<Element> getXmlElement(String name, final Property property, final Map<String, Model> definitions,
                                   final Document document) {
-        Element element = null;
+        Element element;
         if(name == null){
             name = property.getType();
         }
@@ -645,7 +645,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * @see 1.13
      */
     private Optional<String> getExpressionIdentifier(final Property property){
-        ExpressionInput expressionInput = null;
+        ExpressionInput expressionInput;
         switch (property) {
             case IntegerProperty integerProperty ->
                     expressionInput = new ExpressionInput(RandomIntegerExpression.IDENTIFIER);

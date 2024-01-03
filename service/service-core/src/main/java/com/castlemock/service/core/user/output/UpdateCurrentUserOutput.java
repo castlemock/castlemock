@@ -21,6 +21,8 @@ import com.castlemock.model.core.user.User;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.user.input.UpdateCurrentUserInput;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -31,12 +33,31 @@ public final class UpdateCurrentUserOutput implements Output {
     @NotNull
     private final User updatedUser;
 
-    public UpdateCurrentUserOutput(User updatedUser) {
-        this.updatedUser = updatedUser;
+    public UpdateCurrentUserOutput(final User updatedUser) {
+        this.updatedUser = Objects.requireNonNull(updatedUser, "updatedUser");
     }
 
     public User getUpdatedUser() {
         return updatedUser;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UpdateCurrentUserOutput that = (UpdateCurrentUserOutput) o;
+        return Objects.equals(updatedUser, that.updatedUser);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(updatedUser);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateCurrentUserOutput{" +
+                "updatedUser=" + updatedUser +
+                '}';
+    }
 }

@@ -58,8 +58,8 @@ public class RandomEmailExpression extends AbstractExpression {
         final ExpressionArgument<?> minArgument = input.getArgument(MIN_ARGUMENT);
         final ExpressionArgument<?> maxArgument = input.getArgument(MAX_ARGUMENT);
 
-        String domain = null;
-        String topDomain = null;
+        String domain;
+        String topDomain;
         int minLength = MIN_LENGTH;
         int maxLength = MAX_LENGTH;
 

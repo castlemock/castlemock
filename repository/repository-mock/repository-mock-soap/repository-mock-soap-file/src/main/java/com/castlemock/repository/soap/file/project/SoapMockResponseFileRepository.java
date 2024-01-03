@@ -37,10 +37,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
@@ -88,7 +87,7 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
      * @see #save
      */
     @Override
-    protected void checkType(SoapMockResponseFile type) {
+    protected void checkType(final SoapMockResponseFile type) {
 
     }
 
@@ -129,7 +128,7 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SoapMockResponse> search(SearchQuery query) {
+    public List<SoapMockResponse> search(final SearchQuery query) {
         final List<SoapMockResponse> result = new LinkedList<>();
         for(SoapMockResponseFile soapMockResponseFile : collection.values()){
             if(SearchValidator.validate(soapMockResponseFile.getName(), query.getQuery())){
@@ -141,26 +140,22 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
     }
 
     @Override
-    public void deleteWithOperationId(String operationId) {
-        Iterator<SoapMockResponseFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            SoapMockResponseFile mockResponse = iterator.next();
-            if(mockResponse.getOperationId().equals(operationId)){
-                delete(mockResponse.getId());
-            }
-        }
+    public void deleteWithOperationId(final String operationId) {
+        this.collection.values()
+                .stream()
+                .filter(mockResponse -> mockResponse.getOperationId().equals(operationId))
+                .map(SoapMockResponseFile::getId)
+                .toList()
+                .forEach(this::delete);
     }
 
     @Override
     public List<SoapMockResponse> findWithOperationId(final String operationId) {
-        final List<SoapMockResponse> mockResponses = new ArrayList<>();
-        for(SoapMockResponseFile mockResponse : this.collection.values()){
-            if(operationId.equals(mockResponse.getOperationId())){
-                SoapMockResponse operation = this.mapper.map(mockResponse, SoapMockResponse.class);
-                mockResponses.add(operation);
-            }
-        }
-        return mockResponses;
+        return this.collection.values()
+                .stream()
+                .filter(mockResponse -> mockResponse.getOperationId().equals(operationId))
+                .map(mockResponse -> this.mapper.map(mockResponse, SoapMockResponse.class))
+                .toList();
     }
 
     /**
@@ -172,7 +167,7 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
      * @since 1.20
      */
     @Override
-    public String getOperationId(String mockResponseId) {
+    public String getOperationId(final String mockResponseId) {
         final SoapMockResponseFile mockResponse = this.collection.get(mockResponseId);
 
         if(mockResponse == null){
@@ -308,7 +303,7 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             if (!(o instanceof SoapMockResponseFile that))
                 return false;
 
-            return id != null ? id.equals(that.id) : that.id == null;
+            return Objects.equals(id, that.id);
         }
 
         @Override

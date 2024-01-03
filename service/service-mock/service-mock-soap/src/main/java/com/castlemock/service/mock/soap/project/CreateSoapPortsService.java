@@ -58,7 +58,7 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
         final CreateSoapPortsInput input = serviceTask.getInput();
         final String soapProjectId = input.getProjectId();
 
-        Set<SoapPortConverterResult> results = null;
+        Set<SoapPortConverterResult> results;
         try {
             if(input.getFiles() != null){
                 results = soapPortConverter.getSoapPorts(input.getFiles(), soapProjectId, input.isGenerateResponse());

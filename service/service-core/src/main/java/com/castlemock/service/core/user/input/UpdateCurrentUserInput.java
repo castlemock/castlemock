@@ -20,6 +20,7 @@ import com.castlemock.model.core.Input;
 import com.castlemock.service.core.user.output.UpdateCurrentUserOutput;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Update the current logged in user
@@ -29,17 +30,13 @@ import java.util.Objects;
  */
 public final class UpdateCurrentUserInput implements Input {
 
-    private String username;
-    private String password;
-    private String email;
-    private String fullName;
-
-    private UpdateCurrentUserInput() {
-
-    }
+    private final String username;
+    private final String password;
+    private final String email;
+    private final String fullName;
 
     private UpdateCurrentUserInput(final Builder builder){
-        this.username = Objects.requireNonNull(builder.username);
+        this.username = Objects.requireNonNull(builder.username, "username");
         this.password = builder.password;
         this.email = builder.email;
         this.fullName = builder.fullName;
@@ -49,16 +46,16 @@ public final class UpdateCurrentUserInput implements Input {
         return username;
     }
 
-    public String getPassword() {
-        return password;
+    public Optional<String> getPassword() {
+        return Optional.ofNullable(password);
     }
 
-    public String getEmail() {
-        return email;
+    public Optional<String> getEmail() {
+        return Optional.ofNullable(email);
     }
 
-    public String getFullName() {
-        return fullName;
+    public Optional<String> getFullName() {
+        return Optional.ofNullable(fullName);
     }
 
     public static Builder builder() {

@@ -25,7 +25,7 @@ import java.util.Optional;
  * @since 1.0
  */
 @XmlType
-@XmlEnum(String.class)
+@XmlEnum
 public enum HttpMethod {
     GET, POST, PUT, HEAD, DELETE, OPTIONS, TRACE, PATCH;
 

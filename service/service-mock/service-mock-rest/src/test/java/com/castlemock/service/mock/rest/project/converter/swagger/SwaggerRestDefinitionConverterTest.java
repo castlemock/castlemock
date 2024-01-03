@@ -15,6 +15,7 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 
 public class SwaggerRestDefinitionConverterTest {
 
@@ -23,7 +24,7 @@ public class SwaggerRestDefinitionConverterTest {
     public void testConvert() throws URISyntaxException {
         final SwaggerRestDefinitionConverter converter = new SwaggerRestDefinitionConverter();
         final URL url = SwaggerRestDefinitionConverter.class.getResource("full.json");
-        final File file = new File(url.toURI());
+        final File file = new File(Objects.requireNonNull(url).toURI());
         final List<RestApplication> restApplications = converter.convert(file, "1", false);
         this.verifyResult(restApplications, false);
     }
@@ -32,7 +33,7 @@ public class SwaggerRestDefinitionConverterTest {
     public void testConvertGenerateResponse() throws URISyntaxException {
         final SwaggerRestDefinitionConverter converter = new SwaggerRestDefinitionConverter();
         final URL url = SwaggerRestDefinitionConverter.class.getResource("full.json");
-        final File file = new File(url.toURI());
+        final File file = new File(Objects.requireNonNull(url).toURI());
         final List<RestApplication> restApplications = converter.convert(file,"1", true);
         this.verifyResult(restApplications, true);
     }
@@ -55,7 +56,7 @@ public class SwaggerRestDefinitionConverterTest {
         final RestResource mockResource = restApplication.getResources().stream()
                 .filter(resource -> resource.getName().equals("/mock"))
                 .findFirst()
-                .get();
+                .orElse(null);
 
         Assert.assertNotNull(mockResource);
         Assert.assertEquals("/mock", mockResource.getName());
@@ -66,7 +67,7 @@ public class SwaggerRestDefinitionConverterTest {
         RestMethod getAllMockServicesMethod = mockResource.getMethods().stream()
                 .filter(method -> method.getName().equals("getAllMockServices"))
                 .findFirst()
-                .get();
+                .orElse(null);
 
         Assert.assertNotNull(getAllMockServicesMethod);
         Assert.assertEquals("getAllMockServices", getAllMockServicesMethod.getName());
@@ -85,8 +86,9 @@ public class SwaggerRestDefinitionConverterTest {
             RestMockResponse response200Xml = getAllMockServicesMethod.getMockResponses().stream()
                     .filter(method -> method.getName().equals("successful operation (application/xml)"))
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            Assert.assertNotNull(response200Xml);
             Assert.assertEquals("successful operation (application/xml)", response200Xml.getName());
             Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
                     "<Mock><name>${RANDOM_STRING()}</name><id>${RANDOM_LONG()}</id><createdBy>${RANDOM_STRING()}</createdBy>" +
@@ -104,8 +106,9 @@ public class SwaggerRestDefinitionConverterTest {
             RestMockResponse response200Json = getAllMockServicesMethod.getMockResponses().stream()
                     .filter(method -> method.getName().equals("successful operation (application/json)"))
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            Assert.assertNotNull(response200Json);
             Assert.assertEquals("successful operation (application/json)", response200Json.getName());
             Assert.assertEquals("{\"name\":\"${RANDOM_STRING()}\",\"id\":\"${RANDOM_LONG()}\"," +
                     "\"createdBy\":\"${RANDOM_STRING()}\",\"mockStatus\":\"${RANDOM_INTEGER()}\"}",
@@ -124,8 +127,9 @@ public class SwaggerRestDefinitionConverterTest {
             RestMockResponse invalidMockResponse = getAllMockServicesMethod.getMockResponses().stream()
                     .filter(method -> method.getName().equals("Invalid mock id supplied"))
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            Assert.assertNotNull(invalidMockResponse);
             Assert.assertEquals("Invalid mock id supplied", invalidMockResponse.getName());
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
@@ -138,8 +142,9 @@ public class SwaggerRestDefinitionConverterTest {
             RestMockResponse notFoundResponse = getAllMockServicesMethod.getMockResponses().stream()
                     .filter(method -> method.getName().equals("Mock not found"))
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            Assert.assertNotNull(notFoundResponse);
             Assert.assertEquals("Mock not found", notFoundResponse.getName());
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
@@ -157,7 +162,7 @@ public class SwaggerRestDefinitionConverterTest {
         RestMethod createMockMethod = mockResource.getMethods().stream()
                 .filter(method -> method.getName().equals("createMock"))
                 .findFirst()
-                .get();
+                .orElse(null);
 
         Assert.assertNotNull(createMockMethod);
         Assert.assertEquals("createMock", createMockMethod.getName());
@@ -176,8 +181,9 @@ public class SwaggerRestDefinitionConverterTest {
             RestMockResponse invalidMockResponse = getAllMockServicesMethod.getMockResponses().stream()
                     .filter(method -> method.getName().equals("Invalid mock id supplied"))
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            Assert.assertNotNull(invalidMockResponse);
             Assert.assertEquals("Invalid mock id supplied", invalidMockResponse.getName());
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
@@ -199,7 +205,7 @@ public class SwaggerRestDefinitionConverterTest {
         RestMethod headMockMethod = mockResource.getMethods().stream()
                 .filter(method -> method.getName().equals("headMock"))
                 .findFirst()
-                .get();
+                .orElse(null);
 
         Assert.assertNotNull(headMockMethod);
         Assert.assertEquals("headMock", headMockMethod.getName());
@@ -216,7 +222,7 @@ public class SwaggerRestDefinitionConverterTest {
         RestMethod optionsMockMethod = mockResource.getMethods().stream()
                 .filter(method -> method.getName().equals("optionsMock"))
                 .findFirst()
-                .get();
+                .orElse(null);
 
         Assert.assertNotNull(optionsMockMethod);
         Assert.assertEquals("optionsMock", optionsMockMethod.getName());
@@ -233,7 +239,7 @@ public class SwaggerRestDefinitionConverterTest {
         final RestResource mockWithParameterResource = restApplication.getResources().stream()
                 .filter(resource -> resource.getName().equals("/mock/{mockId}"))
                 .findFirst()
-                .get();
+                .orElse(null);
 
         Assert.assertNotNull(mockWithParameterResource);
         Assert.assertEquals("/mock/{mockId}", mockWithParameterResource.getName());
@@ -244,7 +250,7 @@ public class SwaggerRestDefinitionConverterTest {
         RestMethod getMockByIdMethod = mockWithParameterResource.getMethods().stream()
                 .filter(method -> method.getName().equals("Get mock by mock id"))
                 .findFirst()
-                .get();
+                .orElse(null);
 
         Assert.assertNotNull(getMockByIdMethod);
         Assert.assertEquals("Get mock by mock id", getMockByIdMethod.getName());
@@ -263,8 +269,9 @@ public class SwaggerRestDefinitionConverterTest {
             RestMockResponse response200Xml = getMockByIdMethod.getMockResponses().stream()
                     .filter(method -> method.getName().equals("successful operation (application/xml)"))
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            Assert.assertNotNull(response200Xml);
             Assert.assertEquals("successful operation (application/xml)", response200Xml.getName());
             Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
                     "<Mock><name>${RANDOM_STRING()}" +
@@ -283,8 +290,9 @@ public class SwaggerRestDefinitionConverterTest {
             RestMockResponse response200Json = getMockByIdMethod.getMockResponses().stream()
                     .filter(method -> method.getName().equals("successful operation (application/json)"))
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            Assert.assertNotNull(response200Json);
             Assert.assertEquals("successful operation (application/json)", response200Json.getName());
             Assert.assertEquals("{\"name\":\"${RANDOM_STRING()}\",\"id\":\"${RANDOM_LONG()}\",\"createdBy\":\"" +
                             "${RANDOM_STRING()}\",\"mockStatus\":\"${RANDOM_INTEGER()}\"}",
@@ -303,8 +311,9 @@ public class SwaggerRestDefinitionConverterTest {
             RestMockResponse invalidMockResponse = getMockByIdMethod.getMockResponses().stream()
                     .filter(method -> method.getName().equals("Invalid mock id supplied"))
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            Assert.assertNotNull(invalidMockResponse);
             Assert.assertEquals("Invalid mock id supplied", invalidMockResponse.getName());
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
@@ -317,8 +326,9 @@ public class SwaggerRestDefinitionConverterTest {
             RestMockResponse notFoundResponse = getMockByIdMethod.getMockResponses().stream()
                     .filter(method -> method.getName().equals("Mock not found"))
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            Assert.assertNotNull(notFoundResponse);
             Assert.assertEquals("Mock not found", notFoundResponse.getName());
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
@@ -336,7 +346,7 @@ public class SwaggerRestDefinitionConverterTest {
         RestMethod updateMockMethod = mockWithParameterResource.getMethods().stream()
                 .filter(method -> method.getName().equals("updateMock"))
                 .findFirst()
-                .get();
+                .orElse(null);
 
         Assert.assertNotNull(updateMockMethod);
         Assert.assertEquals("updateMock", updateMockMethod.getName());
@@ -355,8 +365,9 @@ public class SwaggerRestDefinitionConverterTest {
             RestMockResponse invalidMockResponse = updateMockMethod.getMockResponses().stream()
                     .filter(method -> method.getName().equals("Invalid mock supplied"))
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            Assert.assertNotNull(invalidMockResponse);
             Assert.assertEquals("Invalid mock supplied", invalidMockResponse.getName());
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
@@ -369,8 +380,9 @@ public class SwaggerRestDefinitionConverterTest {
             RestMockResponse notFoundResponse = updateMockMethod.getMockResponses().stream()
                     .filter(method -> method.getName().equals("Mock not found"))
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            Assert.assertNotNull(notFoundResponse);
             Assert.assertEquals("Mock not found", notFoundResponse.getName());
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
@@ -387,7 +399,7 @@ public class SwaggerRestDefinitionConverterTest {
         RestMethod deleteMockMethod = mockWithParameterResource.getMethods().stream()
                 .filter(method -> method.getName().equals("deleteMock"))
                 .findFirst()
-                .get();
+                .orElse(null);
 
         Assert.assertNotNull(deleteMockMethod);
         Assert.assertEquals("deleteMock", deleteMockMethod.getName());
@@ -406,8 +418,9 @@ public class SwaggerRestDefinitionConverterTest {
             RestMockResponse notFoundResponse = deleteMockMethod.getMockResponses().stream()
                     .filter(method -> method.getName().equals("Mock not found"))
                     .findFirst()
-                    .get();
+                    .orElse(null);
 
+            Assert.assertNotNull(notFoundResponse);
             Assert.assertEquals("Mock not found", notFoundResponse.getName());
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());

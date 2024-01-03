@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  * @since 1.18
  */
 @XmlType
-@XmlEnum(String.class)
+@XmlEnum
 public enum ContentEncoding {
 
     GZIP, DEFLATE

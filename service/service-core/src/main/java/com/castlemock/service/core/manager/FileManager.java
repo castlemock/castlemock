@@ -68,11 +68,8 @@ public class FileManager {
         LOGGER.debug("Uploading file: " + fileName);
         final File serverFile = new File(fileDirectory, fileName);
         final byte[] bytes = file.getBytes();
-        final BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-        try{
+        try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
             stream.write(bytes);
-        }finally {
-            stream.close();
         }
 
         return serverFile;
@@ -115,18 +112,9 @@ public class FileManager {
     public void deleteUploadedFile(final File file){
         Preconditions.checkNotNull(file, "Uploaded file cannot be null");
         LOGGER.debug("Deleting: " + file.getName());
-        file.delete();
-    }
-
-    /**
-     * The method takes a filename for a file that has been uploaded to the server and deletes them
-     * @param filename The filename of the file that will be deleted
-     */
-    public void deleteUploadedFile(final String filename){
-        Preconditions.checkNotNull(filename, "The filename cannot be null");
-        final File file = new File(filename);
-        if(file.exists() && file.isFile()) {
-            file.delete();
+        final boolean deleted = file.delete();
+        if(!deleted) {
+            LOGGER.warn("Unable to delete the following file: " + file.getName());
         }
     }
 
@@ -135,30 +123,9 @@ public class FileManager {
      * @param file The file that will be deleted.
      * @return The result of the deletion.
      */
-    public boolean deleteFile(File file){
+    public boolean deleteFile(final File file){
         return file.delete();
     }
-
-    /**
-     * The method provides the functionality to rename a directory from one name to another.
-     * @param oldFolderPath The path to the directory that should receive the new name. Note that the path contains
-     *                      the old directory name.
-     * @param newFolderPath The new path to the directory that should be renamed. Note that the path contains
-     *                      the new directory name.
-     * @return Returns the result of the rename operation.
-     */
-    public boolean renameDirectory(final String oldFolderPath, final String newFolderPath){
-        File oldFileDirectory = new File(oldFolderPath);
-        if (!oldFileDirectory.exists() || !oldFileDirectory.isDirectory()) {
-            // The directory was not found and therefore no rename operation was accomplished.
-            return false;
-        }
-
-        File newFileDirectory = new File(newFolderPath);
-        return oldFileDirectory.renameTo(newFileDirectory);
-    }
-
-
 
     private String generateNewFileName(){
         return "UploadedFile-" + RandomStringUtils.random(6, true, true);

@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  * @see User
  */
 @XmlType
-@XmlEnum(String.class)
+@XmlEnum
 public enum Role {
     @XmlEnumValue("READER")
     READER,

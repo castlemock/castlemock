@@ -54,7 +54,7 @@ public class RandomDoubleExpression extends AbstractExpression {
         }
 
         final int randomValue = RANDOM.nextInt(maxLength) + minLength;
-        return Double.toString((double) randomValue);
+        return Double.toString(randomValue);
     }
 
     /**

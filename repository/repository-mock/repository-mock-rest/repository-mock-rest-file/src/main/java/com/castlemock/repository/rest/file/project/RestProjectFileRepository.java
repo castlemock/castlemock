@@ -29,7 +29,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,7 +94,7 @@ public class RestProjectFileRepository extends AbstractProjectFileRepository<Res
      * @see #save
      */
     @Override
-    protected void checkType(RestProjectFile restProject) {
+    protected void checkType(final RestProjectFile restProject) {
 
     }
 
@@ -117,15 +116,12 @@ public class RestProjectFileRepository extends AbstractProjectFileRepository<Res
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<RestProject> search(SearchQuery query) {
-        final List<RestProject> result = new LinkedList<>();
-        for(RestProjectFile restProjectFile : collection.values()){
-            if(SearchValidator.validate(restProjectFile.getName(), query.getQuery())){
-                RestProject restProject = mapper.map(restProjectFile, RestProject.class);
-                result.add(restProject);
-            }
-        }
-        return result;
+    public List<RestProject> search(final SearchQuery query) {
+        return collection.values()
+                .stream()
+                .filter(project -> SearchValidator.validate(project.getName(), query.getQuery()))
+                .map(project ->  mapper.map(project, RestProject.class))
+                .toList();
     }
 
     /**

@@ -32,10 +32,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @Profile(Profiles.FILE)
@@ -94,15 +92,12 @@ public class RestApplicationFileRepository extends FileRepository<RestApplicatio
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<RestApplication> search(SearchQuery query) {
-        final List<RestApplication> result = new LinkedList<>();
-        for(RestApplicationFile restApplicationFile : collection.values()){
-            if(SearchValidator.validate(restApplicationFile.getName(), query.getQuery())){
-                RestApplication restApplication = mapper.map(restApplicationFile, RestApplication.class);
-                result.add(restApplication);
-            }
-        }
-        return result;
+    public List<RestApplication> search(final SearchQuery query) {
+        return this.collection.values()
+               .stream()
+               .filter(application -> SearchValidator.validate(application.getName(), query.getQuery()))
+               .map(application -> mapper.map(application, RestApplication.class))
+               .collect(Collectors.toList());
     }
 
     /**
@@ -112,14 +107,13 @@ public class RestApplicationFileRepository extends FileRepository<RestApplicatio
      * @param projectId The id of the project.
      */
     @Override
-    public void deleteWithProjectId(String projectId) {
-        Iterator<RestApplicationFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            RestApplicationFile application = iterator.next();
-            if(application.getProjectId().equals(projectId)){
-                delete(application.getId());
-            }
-        }
+    public void deleteWithProjectId(final String projectId) {
+        this.collection.values()
+                .stream()
+                .filter(application -> application.getProjectId().equals(projectId))
+                .map(RestApplicationFile::getId)
+                .toList()
+                .forEach(this::delete);
     }
 
     /**
@@ -130,15 +124,12 @@ public class RestApplicationFileRepository extends FileRepository<RestApplicatio
      * @return A list of {@link RestApplication}.
      */
     @Override
-    public List<RestApplication> findWithProjectId(String projectId) {
-        final List<RestApplication> applications = new ArrayList<>();
-        for(RestApplicationFile applicationFile : this.collection.values()){
-            if(applicationFile.getProjectId().equals(projectId)){
-                RestApplication application = this.mapper.map(applicationFile, RestApplication.class);
-                applications.add(application);
-            }
-        }
-        return applications;
+    public List<RestApplication> findWithProjectId(final String projectId) {
+        return this.collection.values()
+                .stream()
+                .filter(application -> application.getProjectId().equals(projectId))
+                .map(application -> this.mapper.map(application, RestApplication.class))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -150,7 +141,7 @@ public class RestApplicationFileRepository extends FileRepository<RestApplicatio
      * @since 1.20
      */
     @Override
-    public String getProjectId(String applicationId) {
+    public String getProjectId(final String applicationId) {
         final RestApplicationFile applicationFile = this.collection.get(applicationId);
 
         if(applicationFile == null){

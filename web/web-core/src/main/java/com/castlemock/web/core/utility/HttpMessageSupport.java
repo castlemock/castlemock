@@ -225,13 +225,12 @@ public final class HttpMessageSupport {
      * @param body The body that will be sent in the request. No body will be sent if the value <code>null</code> has been provided.
      * @param headers The headers that will be added to the request.
      * @return An established connection towards the endpoint.
-     * @throws IOException Due to being unable to close buffered reader
      * @since 1.18
      */
     public static HttpURLConnection establishConnection(final String endpoint,
                                                         final HttpMethod httpMethod,
                                                         final String body,
-                                                        final List<HttpHeader> headers) throws IOException {
+                                                        final List<HttpHeader> headers) {
         OutputStream outputStream = null;
         try {
             final URL url = new URI(endpoint).toURL();

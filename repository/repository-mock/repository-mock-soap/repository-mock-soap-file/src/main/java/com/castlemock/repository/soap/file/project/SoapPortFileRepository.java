@@ -33,11 +33,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @Profile(Profiles.FILE)
@@ -84,7 +82,7 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
      * @see #save
      */
     @Override
-    protected void checkType(SoapPortFile type) {
+    protected void checkType(final SoapPortFile type) {
 
     }
 
@@ -95,38 +93,31 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SoapPort> search(SearchQuery query) {
-        final List<SoapPort> result = new LinkedList<>();
-        for(SoapPortFile soapPortFile : collection.values()){
-            if(SearchValidator.validate(soapPortFile.getName(), query.getQuery())){
-                SoapPort soapPort = mapper.map(soapPortFile, SoapPort.class);
-                result.add(soapPort);
-            }
-        }
-        return result;
+    public List<SoapPort> search(final SearchQuery query) {
+        return this.collection.values()
+                .stream()
+                .filter(port -> SearchValidator.validate(port.getName(), query.getQuery()))
+                .map(port -> mapper.map(port, SoapPort.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void deleteWithProjectId(String projectId) {
-        final Iterator<SoapPortFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            final SoapPortFile port = iterator.next();
-            if(port.getProjectId().equals(projectId)){
-                delete(port.getId());
-            }
-        }
+    public void deleteWithProjectId(final String projectId) {
+        this.collection.values()
+                .stream()
+                .filter(port -> port.getProjectId().equals(projectId))
+                .map(SoapPortFile::getId)
+                .toList()
+                .forEach(this::delete);
     }
 
     @Override
-    public List<SoapPort> findWithProjectId(String projectId) {
-        final List<SoapPort> ports = new ArrayList<>();
-        for(SoapPortFile portFile : this.collection.values()){
-            if(portFile.getProjectId().equals(projectId)){
-                final SoapPort port = this.mapper.map(portFile, SoapPort.class);
-                ports.add(port);
-            }
-        }
-        return ports;
+    public List<SoapPort> findWithProjectId(final String projectId) {
+        return this.collection.values()
+                .stream()
+                .filter(port -> port.getProjectId().equals(projectId))
+                .map(port -> this.mapper.map(port, SoapPort.class))
+                .toList();
     }
 
     /**
@@ -152,7 +143,7 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
      * @return A {@link SoapPort} that matches the provided search criteria.
      */
     @Override
-    public Optional<SoapPort> findWithUri(String projectId, String uri) {
+    public Optional<SoapPort> findWithUri(final String projectId, final String uri) {
         for(SoapPortFile soapPort : collection.values()){
             if(soapPort.getProjectId().equals(projectId) &&
                     soapPort.getUri().equals(uri)){
@@ -171,7 +162,7 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
      * @since 1.20
      */
     @Override
-    public String getProjectId(String portId) {
+    public String getProjectId(final String portId) {
         final SoapPortFile portFile = this.collection.get(portId);
 
         if(portFile == null){

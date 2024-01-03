@@ -49,7 +49,6 @@ public class ImportSoapResourceService extends AbstractSoapProjectService implem
         final String raw = input.getRaw();
         final SoapResource result;
         if(projectId.isPresent()){
-
             if(SoapResourceType.WSDL.equals(soapResource.getType())){
                 // Remove the already existing WSDL file if a new one is being uploaded.
                 this.resourceRepository.findSoapResources(projectId.get(), SoapResourceType.WSDL)
@@ -57,10 +56,9 @@ public class ImportSoapResourceService extends AbstractSoapProjectService implem
                         .map(SoapResource::getId)
                         .forEach(this.resourceRepository::deleteWithProjectId);
             }
-            result = this.resourceRepository.saveSoapResource(soapResource, raw);
-        } else {
-            result = this.resourceRepository.saveSoapResource(soapResource, raw);
         }
+
+        result = this.resourceRepository.saveSoapResource(soapResource, raw);
 
 
         return createServiceResult(ImportSoapResourceOutput.builder()

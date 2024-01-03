@@ -42,8 +42,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -98,7 +96,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
      * @see #save
      */
     @Override
-    protected void checkType(SoapResourceFile type) {
+    protected void checkType(final SoapResourceFile type) {
 
     }
 
@@ -109,30 +107,26 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
      * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
      */
     @Override
-    public List<SoapResource> search(SearchQuery query) {
-        final List<SoapResource> result = new LinkedList<>();
-        for(SoapResourceFile soapResourceFile : collection.values()){
-            if(SearchValidator.validate(soapResourceFile.getName(), query.getQuery())){
-                SoapResource soapResource = mapper.map(soapResourceFile, SoapResource.class);
-                result.add(soapResource);
-            }
-        }
-        return result;
+    public List<SoapResource> search(final SearchQuery query) {
+        return this.collection.values()
+                .stream()
+                .filter(resource -> SearchValidator.validate(resource.getName(), query.getQuery()))
+                .map(resource -> mapper.map(resource, SoapResource.class))
+                .toList();
     }
 
     @Override
-    public void deleteWithProjectId(String projectId) {
-        Iterator<SoapResourceFile> iterator = this.collection.values().iterator();
-        while (iterator.hasNext()){
-            SoapResourceFile resource = iterator.next();
-            if(resource.getProjectId().equals(projectId)){
-                delete(resource.getId());
-            }
-        }
+    public void deleteWithProjectId(final String projectId) {
+        this.collection.values()
+                .stream()
+                .filter(resource -> resource.getProjectId().equals(projectId))
+                .map(SoapResourceFile::getId)
+                .toList()
+                .forEach(this::delete);
     }
 
     @Override
-    public List<SoapResource> findWithProjectId(String projectId) {
+    public List<SoapResource> findWithProjectId(final String projectId) {
         final List<SoapResource> resources = new ArrayList<>();
         for(SoapResourceFile resourceFile : this.collection.values()){
             if(resourceFile.getProjectId().equals(projectId)){
@@ -153,7 +147,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
      * @since 1.16
      */
     @Override
-    public String loadSoapResource(String soapResourceId) {
+    public String loadSoapResource(final String soapResourceId) {
         Preconditions.checkNotNull(soapResourceId, "Resource id cannot be null");
         final SoapResourceFile soapResource = this.collection.get(soapResourceId);
         String path = this.fileDirectory + File.separator;
@@ -223,7 +217,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
                 // This operation can fail and that is expected.
                 // The reason for this is if you import a project,
                 // it might not have all the resource included.
-                // If that is the case, the we should only log
+                // If that is the case, we should only log
                 // that we weren't able to delete the resource file.
                 this.fileRepositorySupport.delete(path, soapResource.getId() + this.fileExtension);
             } catch (IllegalStateException e){
@@ -272,7 +266,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
      * @since 1.20
      */
     @Override
-    public String getProjectId(String portId) {
+    public String getProjectId(final String portId) {
         final SoapResourceFile resourceFile = this.collection.get(portId);
 
         if(resourceFile == null){

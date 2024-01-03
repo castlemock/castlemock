@@ -34,7 +34,7 @@ public class Configuration {
     private String value;
     private ConfigurationType type;
 
-    public Configuration(){
+    private Configuration(){
 
     }
 
