@@ -47,7 +47,7 @@
         <antlr.maven.version>4.13.1</antlr.maven.version>
         <raml.parser.version>1.0.51</raml.parser.version>
         <jaxb.runtime.version>2.3.3</jaxb.runtime.version>
-        <swagger.core.version>2.2.16</swagger.core.version>
+        <swagger.core.version>2.2.19</swagger.core.version>
         <commons.lang.version>3.14.0</commons.lang.version>
         <mockito.core.version>3.6.28</mockito.core.version>
         <commons.codec.version>1.16.0</commons.codec.version>
