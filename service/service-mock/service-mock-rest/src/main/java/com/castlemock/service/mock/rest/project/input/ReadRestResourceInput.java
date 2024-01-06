@@ -35,9 +35,9 @@ public final class ReadRestResourceInput implements Input {
     private final String restResourceId;
 
     private ReadRestResourceInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId, "restApplicationId");
+        this.restResourceId = Objects.requireNonNull(builder.restResourceId, "restResourceId");
     }
 
     public String getRestProjectId() {

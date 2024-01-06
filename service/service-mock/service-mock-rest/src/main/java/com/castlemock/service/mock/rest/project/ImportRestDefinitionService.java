@@ -63,15 +63,17 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
 
         List<RestApplication> newRestApplications = new ArrayList<>();
 
-        if(input.getLocation() != null){
-            List<RestApplication> result = restDefinitionConverter.convert(input.getLocation(), projectId, input.isGenerateResponse());
+        if(input.getLocation().isPresent()){
+            List<RestApplication> result = restDefinitionConverter.convert(input.getLocation().get(),
+                    projectId, input.getGenerateResponse().orElse(false));
             newRestApplications.addAll(result);
         }
 
         // Parse all incoming files and convert them to REST applications
         if(input.getFiles() != null){
             for(File file : input.getFiles()){
-                List<RestApplication> result = restDefinitionConverter.convert(file, projectId, input.isGenerateResponse());
+                List<RestApplication> result = restDefinitionConverter.convert(file,
+                        projectId, input.getGenerateResponse().orElse(false));
                 newRestApplications.addAll(result);
             }
         }

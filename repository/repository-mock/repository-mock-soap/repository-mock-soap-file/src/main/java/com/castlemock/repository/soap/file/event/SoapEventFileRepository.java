@@ -18,26 +18,22 @@ package com.castlemock.repository.soap.file.event;
 
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
-import com.castlemock.model.core.http.ContentEncoding;
-import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.soap.domain.SoapEvent;
-import com.castlemock.model.mock.soap.domain.SoapVersion;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.core.file.event.AbstractEventFileRepository;
 import com.castlemock.repository.soap.event.SoapEventRepository;
+import com.castlemock.repository.soap.file.event.converter.SoapEventConverter;
+import com.castlemock.repository.soap.file.event.converter.SoapEventFileConverter;
+import com.castlemock.repository.soap.file.event.model.SoapEventFile;
 import com.google.common.base.Preconditions;
-import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -50,12 +46,16 @@ import java.util.List;
  */
 @Repository
 @Profile(Profiles.FILE)
-public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEventFileRepository.SoapEventFile, SoapEvent> implements SoapEventRepository {
+public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEventFile, SoapEvent> implements SoapEventRepository {
 
     @Value(value = "${soap.event.file.directory}")
     private String soapEventFileDirectory;
     @Value(value = "${soap.event.file.extension}")
     private String soapEventFileExtension;
+
+    protected SoapEventFileRepository() {
+        super(SoapEventFileConverter::toSoapEvent, SoapEventConverter::toSoapEventFile);
+    }
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -101,13 +101,11 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
      */
     @Override
     public List<SoapEvent> findEventsByOperationId(final String operationId) {
-        final List<SoapEventFile> events = new ArrayList<>();
-        for(SoapEventFile event : collection.values()){
-            if(event.getOperationId().equals(operationId)){
-                events.add(event);
-            }
-        }
-        return toDtoList(events, SoapEvent.class);
+        return this.collection.values()
+                .stream()
+                .filter(event -> event.getOperationId().equals(operationId))
+                .map(SoapEventFileConverter::toSoapEvent)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -116,8 +114,8 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
      */
     @Override
     public SoapEvent getOldestEvent() {
-        EventFile oldestEvent = null;
-        for(EventFile event : collection.values()){
+        SoapEventFile oldestEvent = null;
+        for(SoapEventFile event : collection.values()){
             if(oldestEvent == null){
                 oldestEvent = event;
             } else if(event.getStartDate().before(oldestEvent.getStartDate())){
@@ -125,7 +123,9 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
             }
         }
 
-        return oldestEvent == null ? null : mapper.map(oldestEvent, SoapEvent.class);
+        return Optional.ofNullable(oldestEvent)
+                .map(SoapEventFileConverter::toSoapEvent)
+                .orElse(null);
     }
 
     /**
@@ -160,277 +160,6 @@ public class SoapEventFileRepository extends AbstractEventFileRepository<SoapEve
                 .map(SoapEventFile::getId)
                 .toList()
                 .forEach(this::delete);
-    }
-
-    @XmlRootElement(name = "soapEvent")
-    protected static class SoapEventFile extends AbstractEventFileRepository.EventFile {
-
-        @Mapping("request")
-        private SoapRequestFile request;
-        @Mapping("response")
-        private SoapResponseFile response;
-        @Mapping("projectId")
-        private String projectId;
-        @Mapping("portId")
-        private String portId;
-        @Mapping("operationId")
-        private String operationId;
-
-
-        @XmlElement
-        public SoapRequestFile getRequest() {
-            return request;
-        }
-
-        public void setRequest(SoapRequestFile request) {
-            this.request = request;
-        }
-
-        @XmlElement
-        public SoapResponseFile getResponse() {
-            return response;
-        }
-
-        public void setResponse(SoapResponseFile response) {
-            this.response = response;
-        }
-
-        @XmlElement
-        public String getProjectId() {
-            return projectId;
-        }
-
-        public void setProjectId(String projectId) {
-            this.projectId = projectId;
-        }
-
-        @XmlElement
-        public String getPortId() {
-            return portId;
-        }
-
-        public void setPortId(String portId) {
-            this.portId = portId;
-        }
-
-        @XmlElement
-        public String getOperationId() {
-            return operationId;
-        }
-
-        public void setOperationId(String operationId) {
-            this.operationId = operationId;
-        }
-
-
-    }
-
-    @XmlRootElement(name = "soapRequest")
-    protected static class SoapRequestFile {
-
-        @Mapping("body")
-        private String body;
-        @Mapping("envelope")
-        private String envelope;
-        @Mapping("contentType")
-        private String contentType;
-        @Mapping("uri")
-        private String uri;
-        @Mapping("httpMethod")
-        private HttpMethod httpMethod;
-        @Mapping("operationName")
-        private String operationName;
-        @Mapping("operationIdentifier")
-        private SoapOperationIdentifierFile operationIdentifier;
-        @Mapping("soapVersion")
-        private SoapVersion soapVersion;
-        @Mapping("httpHeaders")
-        private List<HttpHeaderFile> httpHeaders;
-
-        @XmlElement
-        public String getBody() {
-            return body;
-        }
-
-        public void setBody(String body) {
-            this.body = body;
-        }
-
-        @XmlElement
-        public String getEnvelope() {
-            return envelope;
-        }
-
-        public void setEnvelope(String envelope) {
-            this.envelope = envelope;
-        }
-
-        @XmlElement
-        public String getContentType() {
-            return contentType;
-        }
-
-        public void setContentType(String contentType) {
-            this.contentType = contentType;
-        }
-
-        @XmlElement
-        public String getUri() {
-            return uri;
-        }
-
-        public void setUri(String uri) {
-            this.uri = uri;
-        }
-
-        @XmlElement
-        public HttpMethod getHttpMethod() {
-            return httpMethod;
-        }
-
-        public void setHttpMethod(HttpMethod httpMethod) {
-            this.httpMethod = httpMethod;
-        }
-
-        @XmlElement
-        public String getOperationName() {
-            return operationName;
-        }
-
-        public void setOperationName(String operationName) {
-            this.operationName = operationName;
-        }
-
-        @XmlElement
-        public SoapOperationIdentifierFile getOperationIdentifier() {
-            return operationIdentifier;
-        }
-
-        public void setOperationIdentifier(SoapOperationIdentifierFile operationIdentifier) {
-            this.operationIdentifier = operationIdentifier;
-        }
-
-        @XmlElement
-        public SoapVersion getSoapVersion() {
-            return soapVersion;
-        }
-
-        public void setSoapVersion(SoapVersion soapVersion) {
-            this.soapVersion = soapVersion;
-        }
-
-        @XmlElementWrapper(name = "httpHeaders")
-        @XmlElement(name = "httpHeader")
-        public List<HttpHeaderFile> getHttpHeaders() {
-            return httpHeaders;
-        }
-
-        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
-            this.httpHeaders = httpHeaders;
-        }
-    }
-
-
-    @XmlRootElement(name = "soapResponse")
-    @XmlSeeAlso(HttpHeaderFile.class)
-    protected static class SoapResponseFile {
-
-        @Mapping("body")
-        private String body;
-        @Mapping("mockResponseName")
-        private String mockResponseName;
-        @Mapping("httpStatusCode")
-        private Integer httpStatusCode;
-        @Mapping("contentType")
-        private String contentType;
-        @Mapping("httpHeaders")
-        private List<HttpHeaderFile> httpHeaders;
-        @Mapping("contentEncodings")
-        private List<ContentEncoding> contentEncodings;
-
-        @XmlElement
-        public String getBody() {
-            return body;
-        }
-
-        public void setBody(String body) {
-            this.body = body;
-        }
-
-        @XmlElement
-        public String getMockResponseName() {
-            return mockResponseName;
-        }
-
-        public void setMockResponseName(String mockResponseName) {
-            this.mockResponseName = mockResponseName;
-        }
-
-        @XmlElement
-        public Integer getHttpStatusCode() {
-            return httpStatusCode;
-        }
-
-        public void setHttpStatusCode(Integer httpStatusCode) {
-            this.httpStatusCode = httpStatusCode;
-        }
-
-        @XmlElement
-        public String getContentType() {
-            return contentType;
-        }
-
-        public void setContentType(String contentType) {
-            this.contentType = contentType;
-        }
-
-        @XmlElementWrapper(name = "httpHeaders")
-        @XmlElement(name = "httpHeader")
-        public List<HttpHeaderFile> getHttpHeaders() {
-            return httpHeaders;
-        }
-
-        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
-            this.httpHeaders = httpHeaders;
-        }
-
-        @XmlElementWrapper(name = "contentEncodings")
-        @XmlElement(name = "contentEncoding")
-        public List<ContentEncoding> getContentEncodings() {
-            return contentEncodings;
-        }
-
-        public void setContentEncodings(List<ContentEncoding> contentEncodings) {
-            this.contentEncodings = contentEncodings;
-        }
-    }
-
-    @XmlRootElement(name = "soapOperationIdentifier")
-    protected static class SoapOperationIdentifierFile {
-
-        @Mapping("name")
-        private String name;
-        @Mapping("namespace")
-        private String namespace;
-
-        @XmlElement
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @XmlElement
-        public String getNamespace() {
-            return namespace;
-        }
-
-        public void setNamespace(String namespace) {
-            this.namespace = namespace;
-        }
-
     }
 
 }

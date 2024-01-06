@@ -64,7 +64,7 @@ public class UpdateSoapMockResponseServiceTest {
                 .httpStatusCode(mockResponse.getHttpStatusCode())
                 .name(mockResponse.getName())
                 .status(mockResponse.getStatus())
-                .usingExpressions(mockResponse.isUsingExpressions())
+                .usingExpressions(mockResponse.getUsingExpressions())
                 .xpathExpressions(mockResponse.getXpathExpressions())
                 .build();
         final ServiceTask<UpdateSoapMockResponseInput> serviceTask = ServiceTask.of(input, "user");
@@ -85,7 +85,7 @@ public class UpdateSoapMockResponseServiceTest {
         Assert.assertEquals(mockResponse.getBody(), returnedSoapMockResponse.getBody());
         Assert.assertEquals(mockResponse.getHttpStatusCode(), returnedSoapMockResponse.getHttpStatusCode());
         Assert.assertEquals(mockResponse.getStatus(), returnedSoapMockResponse.getStatus());
-        Assert.assertEquals(mockResponse.isUsingExpressions(), returnedSoapMockResponse.isUsingExpressions());
+        Assert.assertEquals(mockResponse.getUsingExpressions(), returnedSoapMockResponse.getUsingExpressions());
         Assert.assertEquals(mockResponse.getXpathExpressions(), returnedSoapMockResponse.getXpathExpressions());
     }
 }

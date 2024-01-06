@@ -41,13 +41,14 @@ public class RestProject extends Project {
 
     private RestProject(final Builder builder){
         super(builder);
-        this.applications = Optional.ofNullable(builder.applications).orElseGet(CopyOnWriteArrayList::new);
+        this.applications = Optional.ofNullable(builder.applications)
+                .orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "applications")
     @XmlElement(name = "application")
     public List<RestApplication> getApplications() {
-        return applications;
+        return List.copyOf(applications);
     }
 
     @Override

@@ -50,7 +50,8 @@ public class UpdateSoapMockResponseService extends AbstractSoapProjectService im
                 .httpStatusCode(input.getHttpStatusCode())
                 .status(input.getStatus())
                 .httpHeaders(input.getHttpHeaders())
-                .usingExpressions(input.isUsingExpressions())
+                .usingExpressions(input.getUsingExpressions()
+                        .orElse(false))
                 .xpathExpressions(input.getXpathExpressions())
                 .build();
         

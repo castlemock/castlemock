@@ -25,7 +25,6 @@ import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -50,24 +49,26 @@ public final class UpdateSoapMockResponseInput implements Input {
     @NotNull
     private final Integer httpStatusCode;
     @NotNull
-    private final boolean usingExpressions;
-    @NotNull
     private final List<HttpHeader> httpHeaders;
     @NotNull
     private final List<SoapXPathExpression> xpathExpressions;
+    private final Boolean usingExpressions;
+
 
     public UpdateSoapMockResponseInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
-        this.mockResponseId = Objects.requireNonNull(builder.mockResponseId);
-        this.name = Objects.requireNonNull(builder.name);
-        this.body = Objects.requireNonNull(builder.body);
-        this.status = Objects.requireNonNull(builder.status);
-        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
-        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions);
-        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
-        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
+        this.mockResponseId = Objects.requireNonNull(builder.mockResponseId, "mockResponseId");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.body = Objects.requireNonNull(builder.body, "body");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
+        this.usingExpressions = builder.usingExpressions;
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders)
+                .orElseGet(List::of);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions)
+                .orElseGet(List::of);
     }
 
     public String getProjectId() {
@@ -102,16 +103,16 @@ public final class UpdateSoapMockResponseInput implements Input {
         return httpStatusCode;
     }
 
-    public boolean isUsingExpressions() {
-        return usingExpressions;
+    public Optional<Boolean> getUsingExpressions() {
+        return Optional.ofNullable(usingExpressions);
     }
 
     public List<HttpHeader> getHttpHeaders() {
-        return httpHeaders;
+        return List.copyOf(httpHeaders);
     }
 
     public List<SoapXPathExpression> getXpathExpressions() {
-        return xpathExpressions;
+        return List.copyOf(xpathExpressions);
     }
 
     public static Builder builder(){

@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
@@ -43,25 +42,28 @@ public class SoapMockResponse {
     private SoapMockResponseStatus status;
     private Integer httpStatusCode;
     private boolean usingExpressions;
-    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<>();
-    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
-    private List<SoapXPathExpression> xpathExpressions = new CopyOnWriteArrayList<>();
+    private List<HttpHeader> httpHeaders;
+    private List<ContentEncoding> contentEncodings;
+    private List<SoapXPathExpression> xpathExpressions;
 
     private SoapMockResponse(){
 
     }
 
     private SoapMockResponse(final Builder builder){
-        this.id = builder.id;
-        this.name = Objects.requireNonNull(builder.name);
-        this.body = Objects.requireNonNull(builder.body);
-        this.operationId = Objects.requireNonNull(builder.operationId);
-        this.status = Objects.requireNonNull(builder.status);
-        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
-        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions);
-        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
-        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(CopyOnWriteArrayList::new);
-        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
+        this.id = Objects.requireNonNull(builder.id, "id");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.body = Objects.requireNonNull(builder.body, "body");
+        this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
+        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions, "usingExpressions");
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders)
+                .orElseGet(List::of);
+        this.contentEncodings = Optional.ofNullable(builder.contentEncodings)
+                .orElseGet(List::of);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions)
+                .orElseGet(List::of);
     }
 
     @XmlElement
@@ -95,7 +97,7 @@ public class SoapMockResponse {
     }
 
     @XmlElement
-    public boolean isUsingExpressions() {
+    public boolean getUsingExpressions() {
         return usingExpressions;
     }
 
@@ -188,9 +190,9 @@ public class SoapMockResponse {
         private SoapMockResponseStatus status;
         private Integer httpStatusCode;
         private Boolean usingExpressions;
-        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<>();
-        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
-        private List<SoapXPathExpression> xpathExpressions = new CopyOnWriteArrayList<>();
+        private List<HttpHeader> httpHeaders;
+        private List<ContentEncoding> contentEncodings;
+        private List<SoapXPathExpression> xpathExpressions;
 
         private Builder() {
         }

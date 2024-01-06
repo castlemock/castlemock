@@ -19,11 +19,12 @@ package com.castlemock.service.mock.soap.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.service.mock.soap.project.input.CreateSoapMockResponseInput;
 import com.castlemock.service.mock.soap.project.output.CreateSoapMockResponseOutput;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.List;
 
 /**
  * @author Karl Dahlgren
@@ -44,15 +45,16 @@ public class CreateSoapMockResponseService extends AbstractSoapProjectService im
     public ServiceResult<CreateSoapMockResponseOutput> process(final ServiceTask<CreateSoapMockResponseInput> serviceTask) {
         final CreateSoapMockResponseInput input = serviceTask.getInput();
         final SoapMockResponse mockResponse = SoapMockResponse.builder()
+                .id(IdUtility.generateId())
                 .name(input.getName())
                 .body(input.getBody().orElse(""))
-                .httpStatusCode(input.getHttpStatusCode().orElse(200))
+                .httpStatusCode(input.getHttpStatusCode())
                 .usingExpressions(input.getUsingExpressions().orElse(false))
                 .status(input.getStatus())
                 .operationId(input.getOperationId())
-                .httpHeaders(input.getHttpHeaders().orElseGet(CopyOnWriteArrayList::new))
-                .contentEncodings(new CopyOnWriteArrayList<>())
-                .xpathExpressions(input.getXpathExpressions().orElseGet(CopyOnWriteArrayList::new))
+                .httpHeaders(input.getHttpHeaders())
+                .contentEncodings(List.of())
+                .xpathExpressions(input.getXpathExpressions())
                 .build();
         final SoapMockResponse createdSoapMockResponse = this.mockResponseRepository.save(mockResponse);
         return createServiceResult(CreateSoapMockResponseOutput.builder()

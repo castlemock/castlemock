@@ -1,6 +1,7 @@
 package com.castlemock.web.core.model.project;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class UpdateProjectRequest {
 
@@ -13,15 +14,15 @@ public class UpdateProjectRequest {
 
     private UpdateProjectRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name);
-        this.description = Objects.requireNonNull(builder.description);
+        this.description = builder.description;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDescription() {
-        return description;
+    public Optional<String> getDescription() {
+        return Optional.ofNullable(description);
     }
 
     @Override

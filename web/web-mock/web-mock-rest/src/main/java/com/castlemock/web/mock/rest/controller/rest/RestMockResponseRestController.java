@@ -144,7 +144,8 @@ public class RestMockResponseRestController extends AbstractRestController {
                 .name(request.getName())
                 .parameterQueries(request.getParameterQueries())
                 .status(request.getStatus())
-                .usingExpressions(request.isUsingExpressions())
+                .usingExpressions(request.getUsingExpressions()
+                        .orElse(null))
                 .xpathExpressions(request.getXpathExpressions())
                 .build());
         return ResponseEntity.ok(output.getUpdatedRestMockResponse());

@@ -22,13 +22,15 @@ import com.castlemock.model.core.SearchValidator;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.project.AbstractProjectFileRepository;
+import com.castlemock.repository.soap.file.project.converter.SoapProjectConverter;
+import com.castlemock.repository.soap.file.project.converter.SoapProjectFileConverter;
+import com.castlemock.repository.soap.file.project.model.SoapProjectFile;
 import com.castlemock.repository.soap.project.SoapProjectRepository;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +44,7 @@ import java.util.Optional;
  */
 @Repository
 @Profile(Profiles.FILE)
-public class SoapProjectFileRepository extends AbstractProjectFileRepository<SoapProjectFileRepository.SoapProjectFile, SoapProject> implements SoapProjectRepository {
+public class SoapProjectFileRepository extends AbstractProjectFileRepository<SoapProjectFile, SoapProject> implements SoapProjectRepository {
 
     @Value(value = "${soap.project.file.directory}")
     private String soapProjectFileDirectory;
@@ -52,6 +54,10 @@ public class SoapProjectFileRepository extends AbstractProjectFileRepository<Soa
     private String soapResourceFileDirectory;
     @Value(value = "${soap.resource.file.extension}")
     private String soapResourceFileExtension;
+
+    public SoapProjectFileRepository() {
+        super(SoapProjectFileConverter::toSoapProject, SoapProjectConverter::toSoapProjectFile);
+    }
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -81,12 +87,11 @@ public class SoapProjectFileRepository extends AbstractProjectFileRepository<Soa
     public Optional<SoapProject> findSoapProjectWithName(final String name) {
         Preconditions.checkNotNull(name, "Project name cannot be null");
         Preconditions.checkArgument(!name.isEmpty(), "Project name cannot be empty");
-        for(SoapProjectFile soapProject : collection.values()){
-            if(soapProject.getName().equalsIgnoreCase(name)) {
-                return Optional.ofNullable(mapper.map(soapProject, SoapProject.class));
-            }
-        }
-        return Optional.empty();
+        return this.collection.values()
+                .stream()
+                .filter(project -> project.getName().equals(name))
+                .findFirst()
+                .map(SoapProjectFileConverter::toSoapProject);
     }
 
     /**
@@ -130,13 +135,8 @@ public class SoapProjectFileRepository extends AbstractProjectFileRepository<Soa
         return this.collection.values()
                 .stream()
                 .filter(project -> SearchValidator.validate(project.getName(), query.getQuery()))
-                .map(project -> mapper.map(project, SoapProject.class))
+                .map(SoapProjectFileConverter::toSoapProject)
                 .toList();
-    }
-
-    @XmlRootElement(name = "soapProject")
-    protected static class SoapProjectFile extends AbstractProjectFileRepository.ProjectFile {
-
     }
 
 }

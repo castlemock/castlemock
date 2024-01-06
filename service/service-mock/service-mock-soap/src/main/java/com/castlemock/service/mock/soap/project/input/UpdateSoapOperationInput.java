@@ -41,18 +41,14 @@ public final class UpdateSoapOperationInput implements Input {
     private final SoapResponseStrategy responseStrategy;
     @NotNull
     private final SoapOperationStatus status;
-    @NotNull
     private final String forwardedEndpoint;
-    @NotNull
     private final Boolean simulateNetworkDelay;
-    @NotNull
     private final Long networkDelay;
     private final String defaultMockResponseId;
-    @NotNull
     private final Boolean mockOnFailure;
     @NotNull
     private final SoapOperationIdentifyStrategy identifyStrategy;
-    @NotNull
+
     private final Boolean automaticForward;
 
     public UpdateSoapOperationInput(final Builder builder) {
@@ -61,14 +57,14 @@ public final class UpdateSoapOperationInput implements Input {
         this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
         this.responseStrategy = Objects.requireNonNull(builder.responseStrategy, "responseStrategy");
         this.status = Objects.requireNonNull(builder.status, "status");
-        this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure, "mockOnFailure");
         this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy, "identifyStrategy");
-        this.automaticForward = Objects.requireNonNull(builder.automaticForward, "automaticForward");
 
+        this.automaticForward = builder.automaticForward;
         this.simulateNetworkDelay = builder.simulateNetworkDelay;
         this.defaultMockResponseId = builder.defaultMockResponseId;
         this.networkDelay = builder.networkDelay;
         this.forwardedEndpoint = builder.forwardedEndpoint;
+        this.mockOnFailure = builder.mockOnFailure;
     }
 
     public String getProjectId() {
@@ -107,16 +103,16 @@ public final class UpdateSoapOperationInput implements Input {
         return Optional.ofNullable(defaultMockResponseId);
     }
 
-    public Boolean getMockOnFailure() {
-        return mockOnFailure;
+    public Optional<Boolean> getMockOnFailure() {
+        return Optional.ofNullable(mockOnFailure);
     }
 
     public SoapOperationIdentifyStrategy getIdentifyStrategy() {
         return identifyStrategy;
     }
 
-    public boolean getAutomaticForward() {
-        return automaticForward;
+    public Optional<Boolean> getAutomaticForward() {
+        return Optional.ofNullable(automaticForward);
     }
 
     public static Builder builder(){

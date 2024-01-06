@@ -46,15 +46,15 @@ public class SoapRequest {
     }
 
     private SoapRequest(final Builder builder){
-        this.body = Objects.requireNonNull(builder.body);
+        this.body = Objects.requireNonNull(builder.body, "body");
         this.envelope = builder.envelope;
         this.contentType = builder.contentType;
-        this.uri = Objects.requireNonNull(builder.uri);
-        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
+        this.uri = Objects.requireNonNull(builder.uri, "uri");
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
         this.operationName = builder.operationName;
-        this.soapVersion = Objects.requireNonNull(builder.soapVersion);
-        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders);
-        this.operationIdentifier = Objects.requireNonNull(builder.operationIdentifier);
+        this.soapVersion = Objects.requireNonNull(builder.soapVersion, "soapVersion");
+        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders, "httpHeaders");
+        this.operationIdentifier = Objects.requireNonNull(builder.operationIdentifier, "operationIdentifier");
     }
 
 

@@ -35,9 +35,9 @@ public final class ReadSoapOperationInput implements Input {
     private final String operationId;
 
     private ReadSoapOperationInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
     }
 
     public String getProjectId() {

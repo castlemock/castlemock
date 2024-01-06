@@ -18,7 +18,7 @@ public class UpdateRestResourceForwardedEndpointsRequest {
     }
 
     public Set<String> getResourceIds() {
-        return resourceIds;
+        return Set.copyOf(resourceIds);
     }
 
     public String getForwardedEndpoint() {

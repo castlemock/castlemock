@@ -36,9 +36,9 @@ public final class UpdateSoapPortsForwardedEndpointInput implements Input {
     private final String forwardedEndpoint;
 
     public UpdateSoapPortsForwardedEndpointInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portIds = Objects.requireNonNull(builder.portIds);
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portIds = Objects.requireNonNull(builder.portIds, "portIds");
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint, "forwardedEndpoint");
     }
 
     public String getProjectId() {

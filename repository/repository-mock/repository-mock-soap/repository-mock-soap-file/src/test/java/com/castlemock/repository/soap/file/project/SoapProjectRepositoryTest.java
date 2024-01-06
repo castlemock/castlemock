@@ -20,6 +20,7 @@ package com.castlemock.repository.soap.file.project;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
+import com.castlemock.repository.soap.file.project.model.SoapProjectFile;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,7 +65,7 @@ public class SoapProjectRepositoryTest {
         soapProjects.add(soapProject);
         Mockito.when(fileRepositorySupport.load(SoapProject.class, DIRECTORY, EXTENSION)).thenReturn(soapProjects);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(SoapProjectFileRepository.SoapProjectFile.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(SoapProjectFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test
@@ -89,7 +90,7 @@ public class SoapProjectRepositoryTest {
     @Test
     public void testSave(){
         save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(SoapProjectFileRepository.SoapProjectFile.class), Mockito.anyString());
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(SoapProjectFile.class), Mockito.anyString());
     }
 
     @Test

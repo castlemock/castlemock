@@ -48,7 +48,7 @@ public class UpdateSoapProjectService extends AbstractSoapProjectService impleme
         final SoapProject soapProject = find(soapProjectId);
         final Optional<SoapProject> updatedSoapProject = update(soapProjectId, soapProject.toBuilder()
                 .name(input.getName())
-                .description(input.getDescription())
+                .description(input.getDescription().orElse(null))
                 .updated(new Date())
                 .build());
         return createServiceResult(UpdateSoapProjectOutput.builder()

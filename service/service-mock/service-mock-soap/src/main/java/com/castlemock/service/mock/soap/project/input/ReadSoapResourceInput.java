@@ -33,8 +33,8 @@ public final class ReadSoapResourceInput implements Input {
     private final String resourceId;
 
     public ReadSoapResourceInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.resourceId = Objects.requireNonNull(builder.resourceId);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.resourceId = Objects.requireNonNull(builder.resourceId, "resourceId");
     }
 
     public String getProjectId() {

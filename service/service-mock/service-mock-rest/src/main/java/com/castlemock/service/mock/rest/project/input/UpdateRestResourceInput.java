@@ -39,11 +39,11 @@ public final class UpdateRestResourceInput implements Input {
     private final String uri;
 
     private UpdateRestResourceInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
-        this.name = Objects.requireNonNull(builder.name);
-        this.uri = Objects.requireNonNull(builder.uri);
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId, "restApplicationId");
+        this.restResourceId = Objects.requireNonNull(builder.restResourceId, "restResourceId");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.uri = Objects.requireNonNull(builder.uri, "uri");
     }
 
     public String getRestProjectId() {

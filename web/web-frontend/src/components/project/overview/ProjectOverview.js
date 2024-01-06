@@ -258,7 +258,7 @@ class ProjectOverview extends PureComponent {
         data.append('file', this.state.importProjectSelectedFile);
 
         axios
-            .post(process.env.PUBLIC_URL + "/api/rest/core/project/" + this.state.importProjectProjectType +  "/import", data, {})
+            .post(process.env.PUBLIC_URL + "/api/rest/"  + this.state.importProjectProjectType + "/project/import", data, {})
             .then(response => {
                 this.getProjects();
             })
@@ -283,7 +283,7 @@ class ProjectOverview extends PureComponent {
     onDeleteProjectsClick() {
         Array.from(this.state.selectedProjects).forEach(project => {
             axios
-                .delete(process.env.PUBLIC_URL + "/api/rest/core/project/" + project.type + "/" + project.id)
+                .delete(process.env.PUBLIC_URL + "/api/rest/" + project.type + "/project/" + project.id)
                 .then(response => {
                     this.getProjects();
                 })

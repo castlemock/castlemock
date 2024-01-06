@@ -31,7 +31,7 @@ public final class ReadSoapProjectInput implements Input {
     private final String projectId;
 
     private ReadSoapProjectInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
     }
 
     public String getProjectId() {

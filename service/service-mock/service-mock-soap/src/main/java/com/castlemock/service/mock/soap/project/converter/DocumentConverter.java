@@ -81,7 +81,8 @@ public final class DocumentConverter {
                 .map(SoapPort::getOperations)
                 .flatMap(List::stream)
                 .forEach(operation -> operation.getMockResponses()
-                        .add(createSoapMockResponse(operation.getDefaultBody(), operation.getId())));
+                        .add(createSoapMockResponse(operation.getDefaultBody()
+                                .orElse(null), operation.getId())));
         }
 
         return ports;

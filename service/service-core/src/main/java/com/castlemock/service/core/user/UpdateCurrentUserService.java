@@ -61,15 +61,12 @@ public class UpdateCurrentUserService extends AbstractUserService implements Ser
                         .fullName(input.getFullName().orElse(null))
                         .updated(new Date());
 
-        input.getPassword()
-            .map(PASSWORD_ENCODER::encode)
-            .ifPresent(builder::password);
+        input.getPassword().ifPresent(builder::password);
 
         final User user = builder.build();
-
-        update(user.getId(), user);
         return createServiceResult(UpdateCurrentUserOutput.builder()
-                .updatedUser(user)
+                .updatedUser(update(user.getId(), user)
+                        .orElseThrow(() -> new IllegalStateException("Unable to update user")))
                 .build());
     }
 }

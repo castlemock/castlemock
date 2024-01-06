@@ -280,7 +280,7 @@ public class WADLRestDefinitionConverterTest {
             Assert.assertEquals(RestMockResponseStatus.ENABLED, restMockResponse.getStatus());
             Assert.assertTrue(restMockResponse.getContentEncodings().isEmpty());
             Assert.assertTrue(restMockResponse.getHttpHeaders().isEmpty());
-            Assert.assertTrue(restMockResponse.isUsingExpressions());
+            Assert.assertTrue(restMockResponse.getUsingExpressions());
 
             Assert.assertNull(restMockResponse.getBody().orElse(null));
 

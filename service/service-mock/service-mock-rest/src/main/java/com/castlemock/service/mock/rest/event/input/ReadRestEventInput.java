@@ -19,6 +19,8 @@ package com.castlemock.service.mock.rest.event.input;
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.validation.NotNull;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -28,8 +30,8 @@ public final class ReadRestEventInput implements Input {
     @NotNull
     private final String restEventId;
 
-    private ReadRestEventInput(String restEventId) {
-        this.restEventId = restEventId;
+    private ReadRestEventInput(final Builder builder) {
+        this.restEventId = Objects.requireNonNull(builder.restEventId, "restEventId");
     }
 
     public String getRestEventId() {
@@ -50,7 +52,7 @@ public final class ReadRestEventInput implements Input {
         }
 
         public ReadRestEventInput build(){
-            return new ReadRestEventInput(restEventId);
+            return new ReadRestEventInput(this);
         }
 
     }

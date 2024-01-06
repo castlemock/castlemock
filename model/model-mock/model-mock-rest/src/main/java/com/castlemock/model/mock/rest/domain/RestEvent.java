@@ -44,11 +44,11 @@ public class RestEvent extends Event {
     private RestEvent(final Builder builder){
         super(builder);
         this.request = Objects.requireNonNull(builder.request, "request");
-        this.response = builder.response;
         this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
         this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
         this.resourceId = Objects.requireNonNull(builder.resourceId, "resourceId");
         this.methodId = Objects.requireNonNull(builder.methodId, "methodId");
+        this.response = builder.response;
     }
 
     @XmlElement

@@ -31,7 +31,7 @@ class DeleteProjectModal extends PureComponent {
 
     onDeleteProjectClick() {
         axios
-            .delete(process.env.PUBLIC_URL + "/api/rest/core/project/soap/" + this.props.projectId)
+            .delete(process.env.PUBLIC_URL + "/api/rest/soap/project/" + this.props.projectId)
             .then(response => {
                 this.props.history.push("/web");
             })

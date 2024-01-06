@@ -40,11 +40,11 @@ public final class UpdateRestMethodsForwardedEndpointInput implements Input {
     private final String forwardedEndpoint;
 
     private UpdateRestMethodsForwardedEndpointInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.applicationId = Objects.requireNonNull(builder.applicationId);
-        this.resourceId = Objects.requireNonNull(builder.resourceId);
-        this.methodIds = Objects.requireNonNull(builder.methodIds);
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
+        this.resourceId = Objects.requireNonNull(builder.resourceId, "resourceId");
+        this.methodIds = Objects.requireNonNull(builder.methodIds, "methodIds");
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint, "forwardedEndpoint");
     }
 
     public String getProjectId() {
@@ -60,7 +60,7 @@ public final class UpdateRestMethodsForwardedEndpointInput implements Input {
     }
 
     public Set<String> getMethodIds() {
-        return methodIds;
+        return Set.copyOf(methodIds);
     }
 
     public String getForwardedEndpoint() {

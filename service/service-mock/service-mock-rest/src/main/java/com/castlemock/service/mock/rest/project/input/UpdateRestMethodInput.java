@@ -48,28 +48,26 @@ public final class UpdateRestMethodInput implements Input {
     private final RestMethodStatus status;
     @NotNull
     private final RestResponseStrategy responseStrategy;
-    @NotNull
-    private final boolean simulateNetworkDelay;
-    @NotNull
-    private final long networkDelay;
+    private final Boolean simulateNetworkDelay;
+    private final Long networkDelay;
     private final String defaultMockResponseId;
-    @NotNull
-    private final boolean automaticForward;
+    private final Boolean automaticForward;
 
     private UpdateRestMethodInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
-        this.restMethodId = Objects.requireNonNull(builder.restMethodId);
-        this.name = Objects.requireNonNull(builder.name);
-        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId, "restApplicationId");
+        this.restResourceId = Objects.requireNonNull(builder.restResourceId, "restResourceId");
+        this.restMethodId = Objects.requireNonNull(builder.restMethodId, "restMethodId");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.responseStrategy = Objects.requireNonNull(builder.responseStrategy, "responseStrategy");
+
+        this.simulateNetworkDelay = builder.simulateNetworkDelay;
         this.forwardedEndpoint = builder.forwardedEndpoint;
-        this.status = Objects.requireNonNull(builder.status);
-        this.responseStrategy = Objects.requireNonNull(builder.responseStrategy);
-        this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay);
-        this.networkDelay = Objects.requireNonNull(builder.networkDelay);
+        this.networkDelay = builder.networkDelay;
         this.defaultMockResponseId = builder.defaultMockResponseId;
-        this.automaticForward = Objects.requireNonNull(builder.automaticForward);
+        this.automaticForward = builder.automaticForward;
     }
 
     public String getRestProjectId() {
@@ -108,20 +106,20 @@ public final class UpdateRestMethodInput implements Input {
         return responseStrategy;
     }
 
-    public boolean getSimulateNetworkDelay() {
-        return simulateNetworkDelay;
+    public Optional<Boolean> getSimulateNetworkDelay() {
+        return Optional.ofNullable(simulateNetworkDelay);
     }
 
-    public long getNetworkDelay() {
-        return networkDelay;
+    public Optional<Long> getNetworkDelay() {
+        return Optional.ofNullable(networkDelay);
     }
 
     public Optional<String> getDefaultMockResponseId() {
         return Optional.ofNullable(defaultMockResponseId);
     }
 
-    public boolean getAutomaticForward() {
-        return automaticForward;
+    public Optional<Boolean> getAutomaticForward() {
+        return Optional.ofNullable(automaticForward);
     }
 
     public static Builder builder(){

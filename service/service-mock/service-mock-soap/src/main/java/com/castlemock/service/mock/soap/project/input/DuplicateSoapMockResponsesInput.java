@@ -38,10 +38,10 @@ public final class DuplicateSoapMockResponsesInput implements Input {
     private final Set<String> mockResponseIds;
 
     public DuplicateSoapMockResponsesInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
-        this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
+        this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds, "mockResponseIds");
     }
 
     public String getProjectId() {

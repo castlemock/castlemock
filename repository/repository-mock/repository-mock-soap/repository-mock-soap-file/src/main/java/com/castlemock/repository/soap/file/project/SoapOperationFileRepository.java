@@ -17,7 +17,6 @@
 
 package com.castlemock.repository.soap.file.project;
 
-import com.castlemock.model.core.Saveable;
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.SearchValidator;
@@ -25,31 +24,35 @@ import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifyStrategy;
-import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
 import com.castlemock.model.mock.soap.domain.SoapPort;
-import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
 import com.castlemock.model.mock.soap.domain.SoapVersion;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.soap.file.project.converter.SoapOperationConverter;
+import com.castlemock.repository.soap.file.project.converter.SoapOperationFileConverter;
+import com.castlemock.repository.soap.file.project.model.SoapOperationFile;
+import com.castlemock.repository.soap.file.project.model.SoapOperationIdentifierFile;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
-import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 @Profile(Profiles.FILE)
-public class SoapOperationFileRepository extends FileRepository<SoapOperationFileRepository.SoapOperationFile, SoapOperation, String> implements SoapOperationRepository {
+public class SoapOperationFileRepository extends FileRepository<SoapOperationFile, SoapOperation, String> implements SoapOperationRepository {
 
     @Value(value = "${soap.operation.file.directory}")
     private String fileDirectory;
     @Value(value = "${soap.operation.file.extension}")
     private String fileExtension;
+
+
+    public SoapOperationFileRepository() {
+        super(SoapOperationFileConverter::toSoapOperation, SoapOperationConverter::toSoapOperationFile);
+    }
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -102,9 +105,9 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
     public void postInitiate(){
         for(SoapOperationFile soapOperation : this.collection.values()){
             if(soapOperation.getOperationIdentifier() == null){
-                SoapOperationIdentifierFile operationIdentifier =
-                        new SoapOperationIdentifierFile();
-                operationIdentifier.setName(soapOperation.getIdentifier());
+                SoapOperationIdentifierFile operationIdentifier = SoapOperationIdentifierFile.builder()
+                        .name(soapOperation.getIdentifier())
+                        .build();
 
                 soapOperation.setOperationIdentifier(operationIdentifier);
                 soapOperation.setIdentifier(null);
@@ -135,7 +138,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         return this.collection.values()
                 .stream()
                 .filter(operation -> SearchValidator.validate(operation.getName(), query.getQuery()))
-                .map(operation -> mapper.map(operation, SoapOperation.class))
+                .map(SoapOperationFileConverter::toSoapOperation)
                 .toList();
     }
 
@@ -155,7 +158,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         return this.collection.values()
                 .stream()
                 .filter(operation -> operation.getPortId().equals(portId))
-                .map(operation -> this.mapper.map(operation, SoapOperation.class))
+                .map(SoapOperationFileConverter::toSoapOperation)
                 .toList();
     }
 
@@ -168,13 +171,12 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
     @Override
     public Optional<SoapOperation> findWithName(final String soapPortId,
                                                final String soapOperationName){
-        for(SoapOperationFile soapOperation : this.collection.values()){
-            if(soapOperation.getPortId().equals(soapPortId) &&
-                    soapOperation.getName().equals(soapOperationName)){
-                return Optional.ofNullable(mapper.map(soapOperation, SoapOperation.class));
-            }
-        }
-        return Optional.empty();
+        return this.collection.values()
+                .stream()
+                .filter(operation -> operation.getPortId().equals(soapPortId))
+                .filter(operation -> operation.getName().equals(soapOperationName))
+                .findFirst()
+                .map(SoapOperationFileConverter::toSoapOperation);
     }
 
     /**
@@ -207,7 +209,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
                     if(operationIdentifierFile.getNamespace() == null ||
                             soapOperation.getIdentifyStrategy() == SoapOperationIdentifyStrategy.ELEMENT ||
                             operationIdentifierFile.getNamespace().equalsIgnoreCase(operationIdentifier.getNamespace().orElse(null))) {
-                        return Optional.ofNullable(this.mapper.map(soapOperation, SoapOperation.class));
+                        return Optional.of(SoapOperationFileConverter.toSoapOperation(soapOperation));
                     }
                 }
             }
@@ -246,250 +248,10 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
         return operationFile.getPortId();
     }
 
-    @XmlRootElement(name = "soapOperation")
-    protected static class SoapOperationFile implements Saveable<String> {
-
-        @Mapping("id")
-        private String id;
-        @Mapping("name")
-        private String name;
-        @Mapping("portId")
-        private String portId;
-        @Mapping("responseStrategy")
-        private SoapResponseStrategy responseStrategy;
-        @Mapping("identifier")
-        private String identifier;
-        @Mapping("operationIdentifier")
-        private SoapOperationIdentifierFile operationIdentifier;
-        @Mapping("status")
-        private SoapOperationStatus status;
-        @Mapping("httpMethod")
-        private HttpMethod httpMethod;
-        @Mapping("soapVersion")
-        private SoapVersion soapVersion;
-        @Mapping("defaultBody")
-        private String defaultBody;
-        @Mapping("currentResponseSequenceIndex")
-        private Integer currentResponseSequenceIndex;
-        @Mapping("forwardedEndpoint")
-        private String forwardedEndpoint;
-        @Mapping("originalEndpoint")
-        private String originalEndpoint;
-        @Mapping("defaultMockResponseId")
-        private String defaultMockResponseId;
-        @Mapping("simulateNetworkDelay")
-        private boolean simulateNetworkDelay;
-        @Mapping("networkDelay")
-        private long networkDelay;
-        @Mapping("mockOnFailure")
-        private boolean mockOnFailure;
-        @Mapping("identifyStrategy")
-        private SoapOperationIdentifyStrategy identifyStrategy;
-        @Mapping("automaticForward")
-        private boolean automaticForward;
-
-        @XmlElement
-        @Override
-        public String getId() {
-            return id;
-        }
-
-        @Override
-        public void setId(final String id) {
-            this.id = id;
-        }
-
-        @XmlElement
-        public String getName() {
-            return name;
-        }
-
-        public void setName(final String name) {
-            this.name = name;
-        }
-
-        @XmlElement
-        public String getIdentifier() {
-            return identifier;
-        }
-
-        public void setIdentifier(final String identifier) {
-            this.identifier = identifier;
-        }
-
-        @XmlElement
-        public SoapOperationIdentifierFile getOperationIdentifier() {
-            return operationIdentifier;
-        }
-
-        public void setOperationIdentifier(final SoapOperationIdentifierFile operationIdentifier) {
-            this.operationIdentifier = operationIdentifier;
-        }
-
-        @XmlElement
-        public String getPortId() {
-            return portId;
-        }
-
-        public void setPortId(final String portId) {
-            this.portId = portId;
-        }
-
-        @XmlElement
-        public SoapResponseStrategy getResponseStrategy() {
-            return responseStrategy;
-        }
-
-        public void setResponseStrategy(final SoapResponseStrategy responseStrategy) {
-            this.responseStrategy = responseStrategy;
-        }
-
-        @XmlElement
-        public SoapOperationStatus getStatus() {
-            return status;
-        }
-
-        public void setStatus(final SoapOperationStatus status) {
-            this.status = status;
-        }
-
-        @XmlElement
-        public HttpMethod getHttpMethod() {
-            return httpMethod;
-        }
-
-        public void setHttpMethod(final HttpMethod httpMethod) {
-            this.httpMethod = httpMethod;
-        }
-
-        @XmlElement
-        public SoapVersion getSoapVersion() {
-            return soapVersion;
-        }
-
-        public void setSoapVersion(final SoapVersion soapVersion) {
-            this.soapVersion = soapVersion;
-        }
-
-        @XmlElement
-        public String getDefaultBody() {
-            return defaultBody;
-        }
-
-        public void setDefaultBody(final String defaultBody) {
-            this.defaultBody = defaultBody;
-        }
-
-        @XmlElement
-        public Integer getCurrentResponseSequenceIndex() {
-            return currentResponseSequenceIndex;
-        }
-
-        public void setCurrentResponseSequenceIndex(final Integer currentResponseSequenceIndex) {
-            this.currentResponseSequenceIndex = currentResponseSequenceIndex;
-        }
-
-        @XmlElement
-        public String getForwardedEndpoint() {
-            return forwardedEndpoint;
-        }
-
-        public void setForwardedEndpoint(final String forwardedEndpoint) {
-            this.forwardedEndpoint = forwardedEndpoint;
-        }
-
-        @XmlElement
-        public String getOriginalEndpoint() {
-            return originalEndpoint;
-        }
-
-        public void setOriginalEndpoint(final String originalEndpoint) {
-            this.originalEndpoint = originalEndpoint;
-        }
-
-        @XmlElement
-        public boolean getSimulateNetworkDelay() {
-            return simulateNetworkDelay;
-        }
-
-        public void setSimulateNetworkDelay(final boolean simulateNetworkDelay) {
-            this.simulateNetworkDelay = simulateNetworkDelay;
-        }
-
-        @XmlElement
-        public long getNetworkDelay() {
-            return networkDelay;
-        }
-
-        public void setNetworkDelay(final long networkDelay) {
-            this.networkDelay = networkDelay;
-        }
-
-        @XmlElement
-        public boolean getMockOnFailure() {
-            return mockOnFailure;
-        }
-
-        public void setMockOnFailure(final boolean mockOnFailure) {
-            this.mockOnFailure = mockOnFailure;
-        }
-
-        @XmlElement
-        public SoapOperationIdentifyStrategy getIdentifyStrategy() {
-            return identifyStrategy;
-        }
-
-        public void setIdentifyStrategy(final SoapOperationIdentifyStrategy identifyStrategy) {
-            this.identifyStrategy = identifyStrategy;
-        }
-
-        @XmlElement
-        public String getDefaultMockResponseId() {
-            return defaultMockResponseId;
-        }
-
-        public void setDefaultMockResponseId(final String defaultMockResponseId) {
-            this.defaultMockResponseId = defaultMockResponseId;
-        }
-
-        @XmlElement
-        protected boolean getAutomaticForward() {
-            return automaticForward;
-        }
-
-        protected void setAutomaticForward(boolean automaticForward) {
-            this.automaticForward = automaticForward;
-        }
-    }
 
 
-    @XmlRootElement(name = "soapOperationIdentifier")
-    protected static class SoapOperationIdentifierFile {
 
-        @Mapping("name")
-        private String name;
-        @Mapping("namespace")
-        private String namespace;
 
-        @XmlElement
-        public String getName() {
-            return name;
-        }
-
-        public void setName(final String name) {
-            this.name = name;
-        }
-
-        @XmlElement
-        public String getNamespace() {
-            return namespace;
-        }
-
-        public void setNamespace(String namespace) {
-            this.namespace = namespace;
-        }
-
-    }
 
 }
 

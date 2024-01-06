@@ -16,36 +16,38 @@
 
 package com.castlemock.repository.rest.file.project;
 
-import com.castlemock.model.core.Saveable;
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.SearchValidator;
-import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.rest.domain.RestMethod;
-import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 import com.castlemock.model.mock.rest.domain.RestResource;
-import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.rest.file.project.converter.RestMethodConverter;
+import com.castlemock.repository.rest.file.project.converter.RestMethodFileConverter;
+import com.castlemock.repository.rest.file.project.model.RestMethodFile;
 import com.castlemock.repository.rest.project.RestMethodRepository;
-import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @Profile(Profiles.FILE)
-public class RestMethodFileRepository extends FileRepository<RestMethodFileRepository.RestMethodFile, RestMethod, String> implements RestMethodRepository {
+public class RestMethodFileRepository extends FileRepository<RestMethodFile, RestMethod, String> implements RestMethodRepository {
 
     @Value(value = "${rest.method.file.directory}")
     private String fileDirectory;
     @Value(value = "${rest.method.file.extension}")
     private String fileExtension;
+
+
+    public RestMethodFileRepository() {
+        super(RestMethodFileConverter::toRestMethod, RestMethodConverter::toRestMethod);
+    }
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -88,20 +90,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
     }
 
     /**
-     * The post initialize method can be used to run functionality for a specific service. The method is called when
-     * the method {@link #initialize} has finished successful.
-     *
-     * The method is responsible to validate the imported types and make certain that all the collections are
-     * initialized.
-     * @see #initialize
-     * @since 1.35
-     */
-    @Override
-    protected void postInitiate() {
-
-    }
-
-    /**
      * The method provides the functionality to search in the repository with a {@link SearchQuery}
      *
      * @param query The search query
@@ -112,7 +100,7 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
         return collection.values()
                 .stream()
                 .filter(method -> SearchValidator.validate(method.getName(), query.getQuery()))
-                .map(method -> mapper.map(method, RestMethod.class))
+                .map(RestMethodFileConverter::toRestMethod)
                 .toList();
     }
 
@@ -157,14 +145,11 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
      */
     @Override
     public List<RestMethod> findWithResourceId(final String resourceId) {
-        final List<RestMethod> methods = new ArrayList<>();
-        for(RestMethodFile methodFile : this.collection.values()){
-            if(methodFile.getResourceId().equals(resourceId)){
-                RestMethod method = this.mapper.map(methodFile, RestMethod.class);
-                methods.add(method);
-            }
-        }
-        return methods;
+        return this.collection.values()
+                .stream()
+                .filter(method -> method.getResourceId().equals(resourceId))
+                .map(RestMethodFileConverter::toRestMethod)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -204,153 +189,5 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFileRepos
         return methodFile.getResourceId();
     }
 
-    @XmlRootElement(name = "restMethod")
-    protected static class RestMethodFile implements Saveable<String> {
 
-        @Mapping("id")
-        private String id;
-        @Mapping("name")
-        private String name;
-        @Mapping("resourceId")
-        private String resourceId;
-        @Mapping("defaultBody")
-        private String defaultBody;
-        @Mapping("httpMethod")
-        private HttpMethod httpMethod;
-        @Mapping("forwardedEndpoint")
-        private String forwardedEndpoint;
-        @Mapping("status")
-        private RestMethodStatus status;
-        @Mapping("responseStrategy")
-        private RestResponseStrategy responseStrategy;
-        @Mapping("currentResponseSequenceIndex")
-        private Integer currentResponseSequenceIndex;
-        @Mapping("simulateNetworkDelay")
-        private boolean simulateNetworkDelay;
-        @Mapping("networkDelay")
-        private long networkDelay;
-        @Mapping("defaultMockResponseId")
-        private String defaultMockResponseId;
-        @Mapping("automaticForward")
-        private boolean automaticForward;
-
-        @Override
-        @XmlElement
-        public String getId() {
-            return id;
-        }
-
-        @Override
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        @XmlElement
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @XmlElement
-        public String getResourceId() {
-            return resourceId;
-        }
-
-        public void setResourceId(String resourceId) {
-            this.resourceId = resourceId;
-        }
-
-        @XmlElement
-        public String getDefaultBody() {
-            return defaultBody;
-        }
-
-        public void setDefaultBody(String defaultBody) {
-            this.defaultBody = defaultBody;
-        }
-
-        @XmlElement
-        public HttpMethod getHttpMethod() {
-            return httpMethod;
-        }
-
-        public void setHttpMethod(HttpMethod httpMethod) {
-            this.httpMethod = httpMethod;
-        }
-
-        @XmlElement
-        public String getForwardedEndpoint() {
-            return forwardedEndpoint;
-        }
-
-        public void setForwardedEndpoint(String forwardedEndpoint) {
-            this.forwardedEndpoint = forwardedEndpoint;
-        }
-
-        @XmlElement
-        public RestMethodStatus getStatus() {
-            return status;
-        }
-
-        public void setStatus(RestMethodStatus status) {
-            this.status = status;
-        }
-
-        @XmlElement
-        public RestResponseStrategy getResponseStrategy() {
-            return responseStrategy;
-        }
-
-        public void setResponseStrategy(RestResponseStrategy responseStrategy) {
-            this.responseStrategy = responseStrategy;
-        }
-
-        @XmlElement
-        public Integer getCurrentResponseSequenceIndex() {
-            return currentResponseSequenceIndex;
-        }
-
-        public void setCurrentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
-            this.currentResponseSequenceIndex = currentResponseSequenceIndex;
-        }
-
-        @XmlElement
-        public boolean getSimulateNetworkDelay() {
-            return simulateNetworkDelay;
-        }
-
-        public void setSimulateNetworkDelay(boolean simulateNetworkDelay) {
-            this.simulateNetworkDelay = simulateNetworkDelay;
-        }
-
-        @XmlElement
-        public long getNetworkDelay() {
-            return networkDelay;
-        }
-
-        public void setNetworkDelay(long networkDelay) {
-            this.networkDelay = networkDelay;
-        }
-
-        @XmlElement
-        public String getDefaultMockResponseId() {
-            return defaultMockResponseId;
-        }
-
-        public void setDefaultMockResponseId(String defaultMockResponseId) {
-            this.defaultMockResponseId = defaultMockResponseId;
-        }
-
-        @XmlElement
-        protected boolean getAutomaticForward() {
-            return automaticForward;
-        }
-
-        protected void setAutomaticForward(boolean automaticForward) {
-            this.automaticForward = automaticForward;
-        }
-    }
 }

@@ -6,6 +6,7 @@ import com.castlemock.model.core.user.Status;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.Optional;
 
 @XmlRootElement
 public class UpdateUserRequest {
@@ -22,12 +23,12 @@ public class UpdateUserRequest {
     }
 
     private UpdateUserRequest(final Builder builder){
-        this.username = Objects.requireNonNull(builder.username);
-        this.password = Objects.requireNonNull(builder.password);
+        this.username = Objects.requireNonNull(builder.username, "username");
+        this.password = builder.password;
         this.email = builder.email;
         this.fullName = builder.fullName;
-        this.status = Objects.requireNonNull(builder.status);
-        this.role = Objects.requireNonNull(builder.role);
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.role = Objects.requireNonNull(builder.role, "role");
     }
 
 
@@ -45,8 +46,8 @@ public class UpdateUserRequest {
      * @return Returns the user password
      */
     @XmlElement
-    public String getPassword() {
-        return password;
+    public Optional<String> getPassword() {
+        return Optional.ofNullable(password);
     }
 
     /**
@@ -54,13 +55,13 @@ public class UpdateUserRequest {
      * @return Returns user email
      */
     @XmlElement
-    public String getEmail() {
-        return email;
+    public Optional<String> getEmail() {
+        return Optional.ofNullable(email);
     }
 
     @XmlElement
-    public String getFullName() {
-        return fullName;
+    public Optional<String> getFullName() {
+        return Optional.ofNullable(fullName);
     }
 
     /**

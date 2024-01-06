@@ -36,9 +36,9 @@ public final class UpdateSoapPortsStatusInput implements Input {
     private final SoapOperationStatus operationStatus;
 
     public UpdateSoapPortsStatusInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationStatus = Objects.requireNonNull(builder.operationStatus);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.operationStatus = Objects.requireNonNull(builder.operationStatus, "operationStatus");
     }
 
     public String getProjectId() {

@@ -36,9 +36,9 @@ public final class UpdateRestApplicationsForwardedEndpointInput implements Input
     private final String forwardedEndpoint;
 
     private UpdateRestApplicationsForwardedEndpointInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.applicationIds = Objects.requireNonNull(builder.applicationIds);
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.applicationIds = Objects.requireNonNull(builder.applicationIds, "applicationIds");
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint, "forwardedEndpoint");
     }
 
     public String getProjectId() {

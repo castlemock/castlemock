@@ -380,10 +380,27 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .expression("//request/variable[text()='Value 1']")
                 .build();
 
+        final HttpHeader contentTypeHeader = HttpHeader.builder()
+                .name(CONTENT_TYPE_HEADER)
+                .value(APPLICATION_XML)
+                .build();
+
+        final HttpHeader acceptHeader = HttpHeader.builder()
+                .name(ACCEPT_HEADER)
+                .value(APPLICATION_XML)
+                .build();
+
         final RestMethod restMethod = getMockedRestMethod()
                 .responseStrategy(RestResponseStrategy.XPATH)
+                .mockResponses(List.of(RestMockResponseTestBuilder
+                        .builder()
+                        .body(XML_RESPONSE_BODY)
+                        .status(RestMockResponseStatus.ENABLED)
+                        .usingExpressions(Boolean.FALSE)
+                        .httpHeaders(Arrays.asList(contentTypeHeader, acceptHeader))
+                        .xpathExpressions(List.of(xPathExpression))
+                        .build()))
                 .build();
-        restMethod.getMockResponses().getFirst().getXpathExpressions().add(xPathExpression);
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)
@@ -417,10 +434,27 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .expression("$.request[?(@.variable == 'Value 1')]")
                 .build();
 
+        final HttpHeader contentTypeHeader = HttpHeader.builder()
+                .name(CONTENT_TYPE_HEADER)
+                .value(APPLICATION_XML)
+                .build();
+
+        final HttpHeader acceptHeader = HttpHeader.builder()
+                .name(ACCEPT_HEADER)
+                .value(APPLICATION_XML)
+                .build();
+
         final RestMethod restMethod = getMockedRestMethod()
                 .responseStrategy(RestResponseStrategy.JSON_PATH)
+                .mockResponses(List.of(RestMockResponseTestBuilder
+                        .builder()
+                        .body(XML_RESPONSE_BODY)
+                        .status(RestMockResponseStatus.ENABLED)
+                        .usingExpressions(Boolean.FALSE)
+                        .httpHeaders(Arrays.asList(contentTypeHeader, acceptHeader))
+                        .jsonPathExpressions(List.of(restJsonPathExpression))
+                        .build()))
                 .build();
-        restMethod.getMockResponses().getFirst().getJsonPathExpressions().add(restJsonPathExpression);
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
                 .restProjectId(PROJECT_ID)

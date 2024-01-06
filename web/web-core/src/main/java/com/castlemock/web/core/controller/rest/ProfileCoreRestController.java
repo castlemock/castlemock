@@ -94,9 +94,9 @@ public class ProfileCoreRestController extends AbstractRestController {
 
         final UpdateCurrentUserOutput updateCurrentUserOutput = serviceProcessor.process(UpdateCurrentUserInput.builder()
                 .username(request.getUsername())
-                .fullName(request.getFullName())
-                .email(request.getEmail())
-                .password(request.getPassword())
+                .fullName(request.getFullName().orElse(null))
+                .email(request.getEmail().orElse(null))
+                .password(request.getPassword().orElse(null))
                 .build());
 
         final User updatedUser = updateCurrentUserOutput.getUpdatedUser()

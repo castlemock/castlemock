@@ -35,9 +35,9 @@ public final class UpdateRestApplicationInput implements Input {
     private final String name;
 
     private UpdateRestApplicationInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.name = Objects.requireNonNull(builder.name);
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId, "restApplicationId");
+        this.name = Objects.requireNonNull(builder.name, "name");
     }
 
     public String getRestProjectId() {

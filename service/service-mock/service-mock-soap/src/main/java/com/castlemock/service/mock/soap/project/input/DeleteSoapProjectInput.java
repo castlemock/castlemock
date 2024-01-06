@@ -31,7 +31,7 @@ public final class DeleteSoapProjectInput implements Input{
     private final String projectId;
 
     private DeleteSoapProjectInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
     }
 
     public String getProjectId() {

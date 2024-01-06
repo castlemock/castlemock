@@ -84,12 +84,12 @@ public class UserCoreRestController extends AbstractRestController {
                     @RequestBody final UpdateUserRequest request) {
         final UpdateUserOutput output = serviceProcessor.process(UpdateUserInput.builder()
                 .id(userId)
-                .email(request.getEmail())
+                .email(request.getEmail().orElse(null))
                 .role(request.getRole())
                 .status(request.getStatus())
-                .fullName(request.getFullName())
+                .fullName(request.getFullName().orElse(null))
                 .username(request.getUsername())
-                .password(request.getPassword())
+                .password(request.getPassword().orElse(null))
                 .build());
         final User updatedUser = output.getUpdatedUser()
                 .toBuilder()

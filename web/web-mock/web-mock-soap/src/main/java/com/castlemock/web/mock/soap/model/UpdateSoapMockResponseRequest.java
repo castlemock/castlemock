@@ -26,7 +26,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -52,9 +51,9 @@ public class UpdateSoapMockResponseRequest {
         this.body = Objects.requireNonNull(builder.body, "body");
         this.status = Objects.requireNonNull(builder.status, "status");
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
-        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions, "usingExpressions");
-        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
-        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
+        this.usingExpressions = builder.usingExpressions;
+        this.httpHeaders = builder.httpHeaders;
+        this.xpathExpressions = builder.xpathExpressions;
     }
 
     @XmlElement
@@ -78,20 +77,20 @@ public class UpdateSoapMockResponseRequest {
     }
 
     @XmlElement
-    public boolean isUsingExpressions() {
-        return usingExpressions;
+    public Optional<Boolean> getUsingExpressions() {
+        return Optional.ofNullable(usingExpressions);
     }
 
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
-        return httpHeaders;
+        return Optional.ofNullable(httpHeaders).orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "xpathExpressions")
     @XmlElement(name = "xpathExpression")
     public List<SoapXPathExpression> getXpathExpressions() {
-        return xpathExpressions;
+        return Optional.ofNullable(xpathExpressions).orElseGet(List::of);
     }
 
 

@@ -20,6 +20,7 @@ package com.castlemock.repository.rest.file.event;
 import com.castlemock.model.mock.rest.domain.RestEvent;
 import com.castlemock.model.mock.rest.domain.RestEventTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
+import com.castlemock.repository.rest.file.event.model.RestEventFile;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,7 +65,7 @@ public class RestEventRepositoryTest {
         restEvents.add(restEvent);
         Mockito.when(fileRepositorySupport.load(RestEvent.class, DIRECTORY, EXTENSION)).thenReturn(restEvents);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(RestEventFileRepository.RestEventFile.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(RestEventFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test
@@ -93,7 +94,7 @@ public class RestEventRepositoryTest {
     @Test
     public void testSave(){
         final RestEvent restEvent = save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(RestEventFileRepository.RestEventFile.class), Mockito.anyString());
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(RestEventFile.class), Mockito.anyString());
     }
 
     @Test

@@ -19,6 +19,7 @@ package com.castlemock.repository.core.file.configuration;
 import com.castlemock.model.core.configuration.ConfigurationGroup;
 import com.castlemock.model.core.configuration.ConfigurationGroupTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
+import com.castlemock.repository.core.file.configuration.model.ConfigurationGroupFile;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,7 +65,7 @@ public class ConfigurationRepositoryTest {
         configurationGroups.add(configurationGroup);
         Mockito.when(fileRepositorySupport.load(ConfigurationGroup.class, DIRECTORY, EXTENSION)).thenReturn(configurationGroups);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(ConfigurationFileRepository.ConfigurationGroupFile.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(ConfigurationGroupFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test
@@ -87,7 +88,7 @@ public class ConfigurationRepositoryTest {
     @Test
     public void testSave(){
         save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(ConfigurationFileRepository.ConfigurationGroupFile.class), Mockito.anyString());
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(ConfigurationGroupFile.class), Mockito.anyString());
     }
 
     @Test

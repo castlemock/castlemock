@@ -24,8 +24,6 @@ import com.castlemock.model.mock.soap.domain.SoapResourceType;
 import com.castlemock.service.mock.soap.project.input.ImportSoapResourceInput;
 import com.castlemock.service.mock.soap.project.output.ImportSoapResourceOutput;
 
-import java.util.Optional;
-
 /**
  * @author Karl Dahlgren
  * @since 1.19
@@ -44,22 +42,19 @@ public class ImportSoapResourceService extends AbstractSoapProjectService implem
     @Override
     public ServiceResult<ImportSoapResourceOutput> process(final ServiceTask<ImportSoapResourceInput> serviceTask) {
         final ImportSoapResourceInput input = serviceTask.getInput();
-        final Optional<String> projectId = input.getProjectId();
+        final String projectId = input.getProjectId();
         final SoapResource soapResource = input.getResource();
         final String raw = input.getRaw();
-        final SoapResource result;
-        if(projectId.isPresent()){
-            if(SoapResourceType.WSDL.equals(soapResource.getType())){
-                // Remove the already existing WSDL file if a new one is being uploaded.
-                this.resourceRepository.findSoapResources(projectId.get(), SoapResourceType.WSDL)
-                        .stream()
-                        .map(SoapResource::getId)
-                        .forEach(this.resourceRepository::deleteWithProjectId);
-            }
+
+        if(SoapResourceType.WSDL.equals(soapResource.getType())){
+            // Remove the already existing WSDL file if a new one is being uploaded.
+            this.resourceRepository.findSoapResources(projectId, SoapResourceType.WSDL)
+                    .stream()
+                    .map(SoapResource::getId)
+                    .forEach(this.resourceRepository::deleteWithProjectId);
         }
 
-        result = this.resourceRepository.saveSoapResource(soapResource, raw);
-
+        final SoapResource result = this.resourceRepository.saveSoapResource(soapResource, raw);
 
         return createServiceResult(ImportSoapResourceOutput.builder()
                 .resource(result)

@@ -20,6 +20,7 @@ import com.castlemock.model.core.Input;
 import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -31,13 +32,12 @@ public final class UpdateSoapProjectInput implements Input {
     private final String projectId;
     @NotNull
     private final String name;
-    @NotNull
     private final String description;
 
     private UpdateSoapProjectInput(final Builder builder) {
         this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
         this.name = Objects.requireNonNull(builder.name, "name");
-        this.description = Objects.requireNonNull(builder.description, "description");
+        this.description = builder.description;
     }
 
     public String getProjectId() {
@@ -48,8 +48,8 @@ public final class UpdateSoapProjectInput implements Input {
         return name;
     }
 
-    public String getDescription() {
-        return description;
+    public Optional<String> getDescription() {
+        return Optional.ofNullable(description);
     }
 
     public static Builder builder(){

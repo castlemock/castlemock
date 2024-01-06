@@ -33,8 +33,8 @@ public final class DeleteRestApplicationInput implements Input{
     private final String restApplicationId;
 
     private DeleteRestApplicationInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId, "restApplicationId");
     }
 
     public String getRestProjectId() {

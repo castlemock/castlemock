@@ -46,12 +46,12 @@ public class RestRequest {
     }
 
     private RestRequest(final Builder builder){
-        this.body = builder.body;
-        this.contentType = builder.contentType;
         this.uri = Objects.requireNonNull(builder.uri, "uri");
         this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
-        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders, "httpHeaders");
-        this.httpParameters = Objects.requireNonNull(builder.httpParameters, "httpParameters");
+        this.body = builder.body;
+        this.contentType = builder.contentType;
+        this.httpHeaders = builder.httpHeaders;
+        this.httpParameters = builder.httpParameters;
     }
 
     @XmlElement
@@ -77,13 +77,17 @@ public class RestRequest {
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
-        return httpHeaders;
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "httpParameters")
     @XmlElement(name = "httpParameter")
     public List<HttpParameter> getHttpParameters() {
-        return httpParameters;
+        return Optional.ofNullable(httpParameters)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @Override

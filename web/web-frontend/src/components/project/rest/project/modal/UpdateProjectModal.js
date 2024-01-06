@@ -73,7 +73,7 @@ class UpdateProjectModal extends PureComponent {
 
     onUpdateProjectClick() {
         axios
-            .put(process.env.PUBLIC_URL + "/api/rest/core/project/rest/" + this.props.projectId, this.state.updateProject)
+            .put(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId, this.state.updateProject)
             .then(response => {
                 this.props.getProject();
             })

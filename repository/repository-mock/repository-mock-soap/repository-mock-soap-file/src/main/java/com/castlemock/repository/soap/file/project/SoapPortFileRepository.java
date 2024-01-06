@@ -17,7 +17,6 @@
 
 package com.castlemock.repository.soap.file.project;
 
-import com.castlemock.model.core.Saveable;
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.SearchValidator;
@@ -25,26 +24,30 @@ import com.castlemock.model.mock.soap.domain.SoapPort;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.soap.file.project.converter.SoapPortConverter;
+import com.castlemock.repository.soap.file.project.converter.SoapPortFileConverter;
+import com.castlemock.repository.soap.file.project.model.SoapPortFile;
 import com.castlemock.repository.soap.project.SoapPortRepository;
-import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
 @Profile(Profiles.FILE)
-public class SoapPortFileRepository extends FileRepository<SoapPortFileRepository.SoapPortFile, SoapPort, String> implements SoapPortRepository {
+public class SoapPortFileRepository extends FileRepository<SoapPortFile, SoapPort, String> implements SoapPortRepository {
 
     @Value(value = "${soap.port.file.directory}")
     private String fileDirectory;
     @Value(value = "${soap.port.file.extension}")
     private String fileExtension;
+
+    public SoapPortFileRepository() {
+        super(SoapPortFileConverter::toSoapPortFile, SoapPortConverter::toSoapPort);
+    }
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -97,7 +100,7 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
         return this.collection.values()
                 .stream()
                 .filter(port -> SearchValidator.validate(port.getName(), query.getQuery()))
-                .map(port -> mapper.map(port, SoapPort.class))
+                .map(SoapPortFileConverter::toSoapPortFile)
                 .collect(Collectors.toList());
     }
 
@@ -116,7 +119,7 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
         return this.collection.values()
                 .stream()
                 .filter(port -> port.getProjectId().equals(projectId))
-                .map(port -> this.mapper.map(port, SoapPort.class))
+                .map(SoapPortFileConverter::toSoapPortFile)
                 .toList();
     }
 
@@ -127,13 +130,12 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
      */
     @Override
     public Optional<SoapPort> findWithName(final String projectId, final String soapPortName) {
-        for(SoapPortFile soapPort : collection.values()){
-            if(soapPort.getProjectId().equals(projectId) &&
-                    soapPort.getName().equals(soapPortName)){
-                return Optional.ofNullable(mapper.map(soapPort, SoapPort.class));
-            }
-        }
-        return Optional.empty();
+        return this.collection.values()
+                .stream()
+                .filter(port -> port.getProjectId().equals(projectId))
+                .filter(port -> port.getName().equals(soapPortName))
+                .findFirst()
+                .map(SoapPortFileConverter::toSoapPortFile);
     }
 
     /**
@@ -144,13 +146,12 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
      */
     @Override
     public Optional<SoapPort> findWithUri(final String projectId, final String uri) {
-        for(SoapPortFile soapPort : collection.values()){
-            if(soapPort.getProjectId().equals(projectId) &&
-                    soapPort.getUri().equals(uri)){
-                return Optional.ofNullable(mapper.map(soapPort, SoapPort.class));
-            }
-        }
-        return Optional.empty();
+        return this.collection.values()
+                .stream()
+                .filter(port -> port.getProjectId().equals(projectId))
+                .filter(port -> port.getUri().equals(uri))
+                .findFirst()
+                .map(SoapPortFileConverter::toSoapPortFile);
     }
 
     /**
@@ -171,55 +172,6 @@ public class SoapPortFileRepository extends FileRepository<SoapPortFileRepositor
         return portFile.getProjectId();
     }
 
-    @XmlRootElement(name = "soapPort")
-    protected static class SoapPortFile implements Saveable<String> {
 
-        @Mapping("id")
-        private String id;
-        @Mapping("name")
-        private String name;
-        @Mapping("uri")
-        private String uri;
-        @Mapping("projectId")
-        private String projectId;
-
-        @XmlElement
-        @Override
-        public String getId() {
-            return id;
-        }
-
-        @Override
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        @XmlElement
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @XmlElement
-        public String getUri() {
-            return uri;
-        }
-
-        public void setUri(String uri) {
-            this.uri = uri;
-        }
-
-        @XmlElement
-        public String getProjectId() {
-            return projectId;
-        }
-
-        public void setProjectId(String projectId) {
-            this.projectId = projectId;
-        }
-    }
 
 }

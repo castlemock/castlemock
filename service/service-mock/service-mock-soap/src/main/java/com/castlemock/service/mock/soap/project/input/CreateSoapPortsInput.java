@@ -22,6 +22,7 @@ import com.castlemock.model.core.validation.NotNull;
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -31,17 +32,17 @@ public final class CreateSoapPortsInput implements Input {
 
     @NotNull
     private final String projectId;
-    @NotNull
-    private final boolean generateResponse;
 
-    private final boolean includeImports;
+    private final Boolean generateResponse;
+
+    private final Boolean includeImports;
 
     private final List<File> files;
     private final String location;
 
 
     private CreateSoapPortsInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
         this.includeImports = builder.includeImports;
         this.generateResponse = builder.generateResponse;
         this.files = builder.files;
@@ -52,20 +53,22 @@ public final class CreateSoapPortsInput implements Input {
         return projectId;
     }
 
-    public boolean isGenerateResponse() {
-        return generateResponse;
+    public Optional<Boolean> getGenerateResponse() {
+        return Optional.ofNullable(generateResponse);
     }
 
     public List<File> getFiles() {
-        return files;
+        return Optional.ofNullable(files)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
-    public String getLocation() {
-        return location;
+    public Optional<String> getLocation() {
+        return Optional.ofNullable(location);
     }
 
-    public boolean isIncludeImports() {
-        return includeImports;
+    public Optional<Boolean> getIncludeImports() {
+        return Optional.ofNullable(includeImports);
     }
 
     public static Builder builder(){

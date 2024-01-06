@@ -31,7 +31,7 @@ public final class ImportRestProjectInput implements Input {
     private final String projectRaw;
 
     private ImportRestProjectInput(final Builder builder) {
-        this.projectRaw = Objects.requireNonNull(builder.projectRaw);
+        this.projectRaw = Objects.requireNonNull(builder.projectRaw, "projectRaw");
     }
 
     public String getProjectRaw() {

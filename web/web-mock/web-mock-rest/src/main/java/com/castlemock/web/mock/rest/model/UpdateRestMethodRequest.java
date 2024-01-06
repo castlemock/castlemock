@@ -23,6 +23,7 @@ import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -36,10 +37,10 @@ public class UpdateRestMethodRequest {
     private String forwardedEndpoint;
     private RestMethodStatus status;
     private RestResponseStrategy responseStrategy;
-    private boolean simulateNetworkDelay;
-    private long networkDelay;
+    private Boolean simulateNetworkDelay;
+    private Long networkDelay;
     private String defaultMockResponseId;
-    private boolean automaticForward;
+    private Boolean automaticForward;
 
     public UpdateRestMethodRequest(){
 
@@ -48,13 +49,14 @@ public class UpdateRestMethodRequest {
     private UpdateRestMethodRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name, "name");
         this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint, "forwardedEndpoint");
         this.status = Objects.requireNonNull(builder.status, "status");
         this.responseStrategy = Objects.requireNonNull(builder.responseStrategy, "responseStrategy");
-        this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay, "simulateNetworkDelay");
-        this.networkDelay = Objects.requireNonNull(builder.networkDelay, "networkDelay");
-        this.defaultMockResponseId = Objects.requireNonNull(builder.defaultMockResponseId, "defaultMockResponseId");
-        this.automaticForward = Objects.requireNonNull(builder.automaticForward, "automaticForward");
+
+        this.forwardedEndpoint = builder.forwardedEndpoint;
+        this.simulateNetworkDelay = builder.simulateNetworkDelay;
+        this.networkDelay = builder.networkDelay;
+        this.defaultMockResponseId = builder.defaultMockResponseId;
+        this.automaticForward = builder.automaticForward;
     }
 
     @XmlElement
@@ -68,8 +70,8 @@ public class UpdateRestMethodRequest {
     }
 
     @XmlElement
-    public String getForwardedEndpoint() {
-        return forwardedEndpoint;
+    public Optional<String> getForwardedEndpoint() {
+        return Optional.ofNullable(forwardedEndpoint);
     }
 
     @XmlElement
@@ -83,22 +85,22 @@ public class UpdateRestMethodRequest {
     }
 
     @XmlElement
-    public boolean getSimulateNetworkDelay() {
-        return simulateNetworkDelay;
+    public Optional<Boolean> getSimulateNetworkDelay() {
+        return Optional.ofNullable(simulateNetworkDelay);
     }
 
     @XmlElement
-    public long getNetworkDelay() {
-        return networkDelay;
+    public Optional<Long> getNetworkDelay() {
+        return Optional.ofNullable(networkDelay);
     }
 
     @XmlElement
-    public String getDefaultMockResponseId() {
-        return defaultMockResponseId;
+    public Optional<String> getDefaultMockResponseId() {
+        return Optional.ofNullable(defaultMockResponseId);
     }
 
-    public boolean getAutomaticForward() {
-        return automaticForward;
+    public Optional<Boolean> getAutomaticForward() {
+        return Optional.ofNullable(automaticForward);
     }
 
     @Override

@@ -39,8 +39,8 @@ public class RestResource {
     private String uri;
     private String applicationId;
     private String invokeAddress;
-    private List<RestMethod> methods = new CopyOnWriteArrayList<>();
-    private Map<RestMethodStatus, Integer> statusCount = new HashMap<>();
+    private List<RestMethod> methods;
+    private Map<RestMethodStatus, Integer> statusCount;
 
     private RestResource(){
 
@@ -52,8 +52,10 @@ public class RestResource {
         this.uri = Objects.requireNonNull(builder.uri, "uri");
         this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
         this.invokeAddress = builder.invokeAddress;
-        this.methods = Optional.ofNullable(builder.methods).orElseGet(CopyOnWriteArrayList::new);
-        this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(HashMap::new);
+        this.methods = Optional.ofNullable(builder.methods)
+                .orElseGet(List::of);
+        this.statusCount = Optional.ofNullable(builder.statusCount)
+                .orElseGet(Map::of);
     }
 
     @XmlElement
@@ -79,7 +81,7 @@ public class RestResource {
     @XmlElementWrapper(name = "methods")
     @XmlElement(name = "method")
     public List<RestMethod> getMethods() {
-        return methods;
+        return List.copyOf(methods);
     }
 
     @XmlElement
@@ -89,7 +91,7 @@ public class RestResource {
 
     @XmlTransient
     public Map<RestMethodStatus, Integer> getStatusCount() {
-        return statusCount;
+        return Map.copyOf(this.statusCount);
     }
 
     @Override

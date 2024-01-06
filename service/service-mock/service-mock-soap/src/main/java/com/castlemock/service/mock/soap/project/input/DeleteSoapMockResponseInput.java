@@ -37,10 +37,10 @@ public final class DeleteSoapMockResponseInput implements Input{
     private final String mockResponseId;
 
     private DeleteSoapMockResponseInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
-        this.mockResponseId = Objects.requireNonNull(builder.mockResponseId);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
+        this.mockResponseId = Objects.requireNonNull(builder.mockResponseId, "mockResponseId");
     }
 
     public String getProjectId() {

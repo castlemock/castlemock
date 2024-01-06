@@ -43,16 +43,20 @@ public class UpdateUserService extends AbstractUserService implements Service<Up
     @Override
     public ServiceResult<UpdateUserOutput> process(final ServiceTask<UpdateUserInput> serviceTask) {
         final UpdateUserInput input = serviceTask.getInput();
-        final User user = find(input.getId())
+        final User.Builder builder = find(input.getId())
                 .toBuilder()
                 .username(input.getUsername())
-                .password(input.getPassword())
-                .fullName(input.getFullName())
-                .email(input.getEmail())
+                .fullName(input.getFullName().orElse(null))
+                .email(input.getEmail().orElse(null))
                 .role(input.getRole())
                 .status(input.getStatus())
-                .updated(new Date())
-                .build();
+                .updated(new Date());
+
+        input.getPassword()
+                 .ifPresent(password -> builder.password(input.getPassword().orElse(null)));
+
+        final User user = builder.build();
+
         update(user.getId(), user);
         return createServiceResult(UpdateUserOutput.builder()
                 .updatedUser(user)

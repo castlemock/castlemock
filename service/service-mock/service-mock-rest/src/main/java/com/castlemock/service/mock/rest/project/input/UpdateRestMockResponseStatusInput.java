@@ -23,12 +23,12 @@ public class UpdateRestMockResponseStatusInput implements Input {
     private final RestMockResponseStatus status;
 
     public UpdateRestMockResponseStatusInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.applicationId = Objects.requireNonNull(builder.applicationId);
-        this.resourceId = Objects.requireNonNull(builder.resourceId);
-        this.methodId = Objects.requireNonNull(builder.methodId);
-        this.mockResponseId = Objects.requireNonNull(builder.mockResponseId);
-        this.status = Objects.requireNonNull(builder.status);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
+        this.resourceId = Objects.requireNonNull(builder.resourceId, "resourceId");
+        this.methodId = Objects.requireNonNull(builder.methodId, "methodId");
+        this.mockResponseId = Objects.requireNonNull(builder.mockResponseId, "mockResponseId");
+        this.status = Objects.requireNonNull(builder.status, "status");
     }
 
     public String getProjectId() {

@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -43,7 +42,7 @@ public class UpdateRestMockResponseRequest {
     private String body;
     private Integer httpStatusCode;
     private RestMockResponseStatus status;
-    private boolean usingExpressions;
+    private Boolean usingExpressions;
     private List<HttpHeader> httpHeaders;
     private List<ContentEncoding> contentEncodings;
     private List<RestParameterQuery> parameterQueries;
@@ -56,17 +55,17 @@ public class UpdateRestMockResponseRequest {
     }
 
     private UpdateRestMockResponseRequest(final Builder builder){
-        this.name = Objects.requireNonNull(builder.name);
-        this.body = Objects.requireNonNull(builder.body);
-        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
-        this.status = Objects.requireNonNull(builder.status);
-        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions);
-        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
-        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(CopyOnWriteArrayList::new);
-        this.parameterQueries = Optional.ofNullable(builder.parameterQueries).orElseGet(CopyOnWriteArrayList::new);
-        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
-        this.jsonPathExpressions = Optional.ofNullable(builder.jsonPathExpressions).orElseGet(CopyOnWriteArrayList::new);
-        this.headerQueries = Optional.ofNullable(builder.headerQueries).orElseGet(CopyOnWriteArrayList::new);
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.body = Objects.requireNonNull(builder.body, "body");
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.usingExpressions = builder.usingExpressions;
+        this.httpHeaders = builder.httpHeaders;
+        this.contentEncodings = builder.contentEncodings;
+        this.parameterQueries = builder.parameterQueries;
+        this.xpathExpressions = builder.xpathExpressions;
+        this.jsonPathExpressions = builder.jsonPathExpressions;
+        this.headerQueries = builder.headerQueries;
     }
 
     @XmlElement
@@ -90,44 +89,44 @@ public class UpdateRestMockResponseRequest {
     }
 
     @XmlElement
-    public boolean isUsingExpressions() {
-        return usingExpressions;
+    public Optional<Boolean> getUsingExpressions() {
+        return Optional.ofNullable(usingExpressions);
     }
 
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
-        return httpHeaders;
+        return Optional.ofNullable(httpHeaders).orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
-        return contentEncodings;
+        return Optional.ofNullable(contentEncodings).orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "parameterQueries")
     @XmlElement(name = "parameterQuery")
     public List<RestParameterQuery> getParameterQueries() {
-        return parameterQueries;
+        return Optional.ofNullable(parameterQueries).orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "xpathExpressions")
     @XmlElement(name = "xpathExpression")
     public List<RestXPathExpression> getXpathExpressions() {
-        return xpathExpressions;
+        return Optional.ofNullable(xpathExpressions).orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "jsonPathExpressions")
     @XmlElement(name = "jsonPathExpression")
     public List<RestJsonPathExpression> getJsonPathExpressions() {
-        return jsonPathExpressions;
+        return Optional.ofNullable(jsonPathExpressions).orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "headerQueries")
     @XmlElement(name = "headerQuery")
     public List<RestHeaderQuery> getHeaderQueries() {
-        return headerQueries;
+        return Optional.ofNullable(headerQueries).orElseGet(List::of);
     }
 
     @Override

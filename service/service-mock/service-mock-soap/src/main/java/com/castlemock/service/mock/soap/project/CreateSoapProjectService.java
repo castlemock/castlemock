@@ -47,7 +47,7 @@ public class CreateSoapProjectService extends AbstractSoapProjectService impleme
         final SoapProject soapProject = SoapProject.builder()
                 .id(IdUtility.generateId())
                 .name(input.getName())
-                .description(input.getDescription())
+                .description(input.getDescription().orElse(null))
                 .created(new Date())
                 .updated(new Date())
                 .build();

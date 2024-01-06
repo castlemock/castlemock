@@ -38,10 +38,10 @@ public final class UpdateSoapOperationsForwardedEndpointInput implements Input {
     private final String forwardedEndpoint;
 
     public UpdateSoapOperationsForwardedEndpointInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationIds = Objects.requireNonNull(builder.operationIds);
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.operationIds = Objects.requireNonNull(builder.operationIds, "operationIds");
+        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint, "forwardedEndpoint");
     }
 
     public String getProjectId() {

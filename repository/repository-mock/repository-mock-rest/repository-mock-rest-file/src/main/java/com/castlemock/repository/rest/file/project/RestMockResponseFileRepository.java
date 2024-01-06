@@ -16,39 +16,40 @@
 
 package com.castlemock.repository.rest.file.project;
 
-import com.castlemock.model.core.Saveable;
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.SearchValidator;
-import com.castlemock.model.core.http.ContentEncoding;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
-import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.rest.file.project.converter.RestMockResponseConverter;
+import com.castlemock.repository.rest.file.project.converter.RestMockResponseFileConverter;
+import com.castlemock.repository.rest.file.project.model.RestHeaderQueryFile;
+import com.castlemock.repository.rest.file.project.model.RestMockResponseFile;
+import com.castlemock.repository.rest.file.project.model.RestParameterQueryFile;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
-import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 @Repository
 @Profile(Profiles.FILE)
-public class RestMockResponseFileRepository extends FileRepository<RestMockResponseFileRepository.RestMockResponseFile, RestMockResponse, String> implements RestMockResponseRepository {
+public class RestMockResponseFileRepository extends FileRepository<RestMockResponseFile, RestMockResponse, String> implements RestMockResponseRepository {
 
     @Value(value = "${rest.response.file.directory}")
     private String fileDirectory;
     @Value(value = "${rest.response.file.extension}")
     private String fileExtension;
+
+
+    public RestMockResponseFileRepository() {
+        super(RestMockResponseFileConverter::toRestMockResponse, RestMockResponseConverter::toRestMockResponse);
+    }
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -126,7 +127,7 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         return collection.values()
                 .stream()
                 .filter(mockResponse -> SearchValidator.validate(mockResponse.getName(), query.getQuery()))
-                .map(mockResponse -> mapper.map(mockResponse, RestMockResponse.class))
+                .map(RestMockResponseFileConverter::toRestMockResponse)
                 .toList();
     }
 
@@ -154,15 +155,12 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
      * @return A list of {@link RestMockResponse}.
      */
     @Override
-    public List<RestMockResponse> findWithMethodId(String methodId) {
-        final List<RestMockResponse> applications = new ArrayList<>();
-        for(RestMockResponseFile responseFile : this.collection.values()){
-            if(responseFile.getMethodId().equals(methodId)){
-                RestMockResponse response = this.mapper.map(responseFile, RestMockResponse.class);
-                applications.add(response);
-            }
-        }
-        return applications;
+    public List<RestMockResponse> findWithMethodId(final String methodId) {
+        return this.collection.values()
+                .stream()
+                .filter(response -> response.getMethodId().equals(methodId))
+                .map(RestMockResponseFileConverter::toRestMockResponse)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -184,327 +182,12 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
     }
 
 
-    @XmlRootElement(name = "restMockResponse")
-    @XmlSeeAlso(HttpHeaderFile.class)
-    protected static class RestMockResponseFile implements Saveable<String> {
 
-        @Mapping("id")
-        private String id;
-        @Mapping("name")
-        private String name;
-        @Mapping("body")
-        private String body;
-        @Mapping("methodId")
-        private String methodId;
-        @Mapping("status")
-        private RestMockResponseStatus status;
-        @Mapping("httpStatusCode")
-        private Integer httpStatusCode;
-        @Mapping("usingExpressions")
-        private boolean usingExpressions;
-        @Mapping("httpHeaders")
-        private List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<>();
-        @Mapping("contentEncodings")
-        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
-        @Mapping("parameterQueries")
-        private List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<>();
-        @Mapping("xpathExpressions")
-        private List<RestXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<>();
-        @Mapping("jsonPathExpressions")
-        private List<RestJsonPathExpressionFile> jsonPathExpressions = new CopyOnWriteArrayList<>();
-        @Mapping("headerQueries")
-        private List<RestHeaderQueryFile> headerQueries = new CopyOnWriteArrayList<>();
 
-        @Override
-        @XmlElement
-        public String getId() {
-            return id;
-        }
 
-        @Override
-        public void setId(String id) {
-            this.id = id;
-        }
 
-        @XmlElement
-        public String getName() {
-            return name;
-        }
 
-        public void setName(String name) {
-            this.name = name;
-        }
 
-        @XmlElement
-        public String getBody() {
-            return body;
-        }
 
-        public void setBody(String body) {
-            this.body = body;
-        }
 
-        @XmlElement
-        public String getMethodId() {
-            return methodId;
-        }
-
-        public void setMethodId(String methodId) {
-            this.methodId = methodId;
-        }
-
-        @XmlElement
-        public RestMockResponseStatus getStatus() {
-            return status;
-        }
-
-        public void setStatus(RestMockResponseStatus status) {
-            this.status = status;
-        }
-
-        @XmlElement
-        public Integer getHttpStatusCode() {
-            return httpStatusCode;
-        }
-
-        public void setHttpStatusCode(Integer httpStatusCode) {
-            this.httpStatusCode = httpStatusCode;
-        }
-
-        @XmlElement
-        public boolean isUsingExpressions() {
-            return usingExpressions;
-        }
-
-        public void setUsingExpressions(boolean usingExpressions) {
-            this.usingExpressions = usingExpressions;
-        }
-
-        @XmlElementWrapper(name = "httpHeaders")
-        @XmlElement(name = "httpHeader")
-        public List<HttpHeaderFile> getHttpHeaders() {
-            return httpHeaders;
-        }
-
-        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
-            this.httpHeaders = httpHeaders;
-        }
-
-        @XmlElementWrapper(name = "contentEncodings")
-        @XmlElement(name = "contentEncoding")
-        public List<ContentEncoding> getContentEncodings() {
-            return contentEncodings;
-        }
-
-        public void setContentEncodings(List<ContentEncoding> contentEncodings) {
-            this.contentEncodings = contentEncodings;
-        }
-
-        @XmlElementWrapper(name = "parameterQueries")
-        @XmlElement(name = "parameterQuery")
-        public List<RestParameterQueryFile> getParameterQueries() {
-            return parameterQueries;
-        }
-
-        public void setParameterQueries(List<RestParameterQueryFile> parameterQueries) {
-            this.parameterQueries = parameterQueries;
-        }
-
-        @XmlElementWrapper(name = "xpathExpressions")
-        @XmlElement(name = "xpathExpression")
-        public List<RestXPathExpressionFile> getXpathExpressions() {
-            return xpathExpressions;
-        }
-
-        public void setXpathExpressions(List<RestXPathExpressionFile> xpathExpressions) {
-            this.xpathExpressions = xpathExpressions;
-        }
-
-        @XmlElementWrapper(name = "jsonPathExpressions")
-        @XmlElement(name = "jsonPathExpression")
-        public List<RestJsonPathExpressionFile> getJsonPathExpressions() {
-            return jsonPathExpressions;
-        }
-
-        public void setJsonPathExpressions(List<RestJsonPathExpressionFile> jsonPathExpressions) {
-            this.jsonPathExpressions = jsonPathExpressions;
-        }
-
-        @XmlElementWrapper(name = "headerQueries")
-        @XmlElement(name = "headerQuery")
-        public List<RestHeaderQueryFile> getHeaderQueries() {
-            return headerQueries;
-        }
-
-        public void setHeaderQueries(List<RestHeaderQueryFile> headerQueries) {
-            this.headerQueries = headerQueries;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o)
-                return true;
-            if (!(o instanceof RestMockResponseFile that))
-                return false;
-
-            return Objects.equals(id, that.id);
-        }
-
-        @Override
-        public int hashCode() {
-            return id != null ? id.hashCode() : 0;
-        }
-    }
-
-    @XmlRootElement(name = "restParameterQuery")
-    protected static class RestParameterQueryFile {
-
-        private String parameter;
-        private String query;
-        private boolean matchCase;
-        private boolean matchAny;
-        private boolean matchRegex;
-        private boolean urlEncoded;
-
-        @XmlElement
-        public String getParameter() {
-            return parameter;
-        }
-
-        public void setParameter(String parameter) {
-            this.parameter = parameter;
-        }
-
-        @XmlElement
-        public String getQuery() {
-            return query;
-        }
-
-        public void setQuery(String query) {
-            this.query = query;
-        }
-
-        @XmlElement
-        public boolean getMatchCase() {
-            return matchCase;
-        }
-
-        public void setMatchCase(boolean matchCase) {
-            this.matchCase = matchCase;
-        }
-
-        @XmlElement
-        public boolean getMatchAny() {
-            return matchAny;
-        }
-
-        public void setMatchAny(boolean matchAny) {
-            this.matchAny = matchAny;
-        }
-
-        @XmlElement
-        public boolean getMatchRegex() {
-            return matchRegex;
-        }
-
-        public void setMatchRegex(boolean matchRegex) {
-            this.matchRegex = matchRegex;
-        }
-
-        @XmlElement
-        public boolean getUrlEncoded() {
-            return urlEncoded;
-        }
-
-        public void setUrlEncoded(boolean urlEncoded) {
-            this.urlEncoded = urlEncoded;
-        }
-    }
-
-    @XmlRootElement(name = "restHeaderQuery")
-    protected static class RestHeaderQueryFile {
-
-        private String header;
-        private String query;
-        private boolean matchCase;
-        private boolean matchAny;
-        private boolean matchRegex;
-
-        @XmlElement
-        public String getHeader() {
-            return header;
-        }
-
-        public void setHeader(String header) {
-            this.header = header;
-        }
-
-        @XmlElement
-        public String getQuery() {
-            return query;
-        }
-
-        public void setQuery(String query) {
-            this.query = query;
-        }
-
-        @XmlElement
-        public boolean getMatchCase() {
-            return matchCase;
-        }
-
-        public void setMatchCase(boolean matchCase) {
-            this.matchCase = matchCase;
-        }
-
-        @XmlElement
-        public boolean getMatchAny() {
-            return matchAny;
-        }
-
-        public void setMatchAny(boolean matchAny) {
-            this.matchAny = matchAny;
-        }
-
-        @XmlElement
-        public boolean getMatchRegex() {
-            return matchRegex;
-        }
-
-        public void setMatchRegex(boolean matchRegex) {
-            this.matchRegex = matchRegex;
-        }
-    }
-
-    @XmlRootElement(name = "restXPathExpression")
-    protected static class RestXPathExpressionFile {
-
-        private String expression;
-
-        @XmlElement
-        public String getExpression() {
-            return expression;
-        }
-
-        public void setExpression(String expression) {
-            this.expression = expression;
-        }
-
-    }
-
-    @XmlRootElement(name = "restJsonPathExpression")
-    protected static class RestJsonPathExpressionFile {
-
-        private String expression;
-
-        @XmlElement
-        public String getExpression() {
-            return expression;
-        }
-
-        public void setExpression(String expression) {
-            this.expression = expression;
-        }
-
-    }
 }

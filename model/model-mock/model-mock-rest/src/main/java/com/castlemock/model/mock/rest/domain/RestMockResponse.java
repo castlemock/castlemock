@@ -42,13 +42,13 @@ public class RestMockResponse {
     private String methodId;
     private Integer httpStatusCode;
     private RestMockResponseStatus status;
-    private boolean usingExpressions;
-    private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<>();
-    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
-    private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<>();
-    private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<>();
-    private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<>();
-    private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<>();
+    private Boolean usingExpressions;
+    private List<HttpHeader> httpHeaders;
+    private List<ContentEncoding> contentEncodings;
+    private List<RestParameterQuery> parameterQueries;
+    private List<RestXPathExpression> xpathExpressions;
+    private List<RestJsonPathExpression> jsonPathExpressions;
+    private List<RestHeaderQuery> headerQueries;
 
     private RestMockResponse(){
 
@@ -56,18 +56,24 @@ public class RestMockResponse {
 
     private RestMockResponse(final Builder builder){
         this.id = Objects.requireNonNull(builder.id, "id");
+        this.status = Objects.requireNonNull(builder.status, "status");
         this.name = Objects.requireNonNull(builder.name, "name");
-        this.body = builder.body;
         this.methodId = Objects.requireNonNull(builder.methodId, "methodId");
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
-        this.status = Objects.requireNonNull(builder.status, "status");
         this.usingExpressions = Objects.requireNonNull(builder.usingExpressions, "usingExpressions");
-        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
-        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(CopyOnWriteArrayList::new);
-        this.parameterQueries = Optional.ofNullable(builder.parameterQueries).orElseGet(CopyOnWriteArrayList::new);
-        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
-        this.jsonPathExpressions = Optional.ofNullable(builder.jsonPathExpressions).orElseGet(CopyOnWriteArrayList::new);
-        this.headerQueries = Optional.ofNullable(builder.headerQueries).orElseGet(CopyOnWriteArrayList::new);
+        this.body = builder.body;
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders)
+                .orElseGet(List::of);
+        this.contentEncodings = Optional.ofNullable(builder.contentEncodings)
+                .orElseGet(List::of);
+        this.parameterQueries = Optional.ofNullable(builder.parameterQueries)
+                .orElseGet(List::of);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions)
+                .orElseGet(List::of);
+        this.jsonPathExpressions = Optional.ofNullable(builder.jsonPathExpressions)
+                .orElseGet(List::of);
+        this.headerQueries = Optional.ofNullable(builder.headerQueries)
+                .orElseGet(List::of);
     }
 
     @XmlElement
@@ -101,44 +107,44 @@ public class RestMockResponse {
     }
 
     @XmlElement
-    public boolean isUsingExpressions() {
+    public boolean getUsingExpressions() {
         return usingExpressions;
     }
 
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
-        return httpHeaders;
+        return List.copyOf(httpHeaders);
     }
 
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
-        return contentEncodings;
+        return List.copyOf(contentEncodings);
     }
 
     @XmlElementWrapper(name = "parameterQueries")
     @XmlElement(name = "parameterQuery")
     public List<RestParameterQuery> getParameterQueries() {
-        return parameterQueries;
+        return List.copyOf(parameterQueries);
     }
 
     @XmlElementWrapper(name = "xpathExpressions")
     @XmlElement(name = "xpathExpression")
     public List<RestXPathExpression> getXpathExpressions() {
-        return xpathExpressions;
+        return List.copyOf(xpathExpressions);
     }
 
     @XmlElementWrapper(name = "jsonPathExpressions")
     @XmlElement(name = "jsonPathExpression")
     public List<RestJsonPathExpression> getJsonPathExpressions() {
-        return jsonPathExpressions;
+        return List.copyOf(jsonPathExpressions);
     }
 
     @XmlElementWrapper(name = "headerQueries")
     @XmlElement(name = "headerQuery")
     public List<RestHeaderQuery> getHeaderQueries() {
-        return headerQueries;
+        return List.copyOf(headerQueries);
     }
 
     @Override

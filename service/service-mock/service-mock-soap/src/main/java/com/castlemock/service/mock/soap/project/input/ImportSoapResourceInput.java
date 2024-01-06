@@ -21,7 +21,6 @@ import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.soap.domain.SoapResource;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -29,6 +28,7 @@ import java.util.Optional;
  */
 public final class ImportSoapResourceInput implements Input {
 
+    @NotNull
     private final String projectId;
     @NotNull
     private final SoapResource resource;
@@ -36,13 +36,13 @@ public final class ImportSoapResourceInput implements Input {
     private final String raw;
 
     private ImportSoapResourceInput(final Builder builder) {
-        this.projectId = builder.projectId;
-        this.resource = Objects.requireNonNull(builder.resource);
-        this.raw = Objects.requireNonNull(builder.raw);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.resource = Objects.requireNonNull(builder.resource, "resource");
+        this.raw = Objects.requireNonNull(builder.raw, "raw");
     }
 
-    public Optional<String> getProjectId() {
-        return Optional.ofNullable(projectId);
+    public String getProjectId() {
+        return projectId;
     }
 
     public SoapResource getResource() {

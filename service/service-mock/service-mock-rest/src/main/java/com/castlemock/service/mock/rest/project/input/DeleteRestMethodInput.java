@@ -37,10 +37,10 @@ public final class DeleteRestMethodInput implements Input{
     private final String restMethodId;
 
     private DeleteRestMethodInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
-        this.restMethodId = Objects.requireNonNull(builder.restMethodId);
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId, "restApplicationId");
+        this.restResourceId = Objects.requireNonNull(builder.restResourceId, "restResourceId");
+        this.restMethodId = Objects.requireNonNull(builder.restMethodId, "restMethodId");
     }
 
     public String getRestProjectId() {

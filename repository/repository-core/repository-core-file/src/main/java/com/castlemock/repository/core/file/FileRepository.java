@@ -18,21 +18,20 @@ package com.castlemock.repository.core.file;
 
 import com.castlemock.model.core.Saveable;
 import com.castlemock.repository.Repository;
+import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 
@@ -52,14 +51,15 @@ import static java.util.stream.Collectors.toList;
 @org.springframework.stereotype.Repository
 public abstract class FileRepository<T extends Saveable<I>, D, I extends Serializable> implements Repository<D, I> {
 
-    @Autowired
-    protected DozerBeanMapper mapper;
+
     @Autowired
     protected FileRepositorySupport fileRepositorySupport;
 
+    private final Function<T, D> typeConverter;
+    private final Function<D, T> objectConverter;
+
     private final Class<T> entityClass;
 
-    private final Class<D> dtoClass;
     protected final Map<I, T> collection = new ConcurrentHashMap<>();
     private final Map<I, Semaphore> writeLocks = new ConcurrentHashMap<>();
     private static final Logger LOGGER = LoggerFactory.getLogger(FileRepository.class);
@@ -70,10 +70,11 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      * with the file system.
      */
     @SuppressWarnings("unchecked")
-    public FileRepository() {
+    public FileRepository(final Function<T, D> typeConverter, final Function<D, T> objectConverter) {
         final ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
-        this.dtoClass = (Class<D>) genericSuperclass.getActualTypeArguments()[1];
+        this.typeConverter = Objects.requireNonNull(typeConverter, "typeConverter");
+        this.objectConverter = Objects.requireNonNull(objectConverter, "objectConverter");
     }
 
 
@@ -103,8 +104,9 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
     public D findOne(final I id) {
         Preconditions.checkNotNull(id, "The provided id cannot be null");
         LOGGER.debug("Retrieving " + entityClass.getSimpleName() + " with id " + id);
-        T type = collection.get(id);
-        return type != null ? mapper.map(type, dtoClass) : null;
+        return Optional.ofNullable(collection.get(id))
+                .map(this.typeConverter)
+                .orElse(null);
     }
 
     /**
@@ -114,7 +116,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
     @Override
     public List<D> findAll() {
         LOGGER.debug("Retrieving all instances for " + entityClass.getSimpleName());
-        return toDtoList(collection.values(), dtoClass);
+        return toDtoList(collection.values());
     }
 
     /**
@@ -126,8 +128,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      */
     @Override
     public D save(final D dto) {
-        T type = mapper.map(dto, entityClass);
-        return save(type);
+        return save(this.objectConverter.apply(dto));
     }
 
     /**
@@ -151,17 +152,17 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      *         have an identifier, then the method will generate a new identifier for the type.
      */
     protected D save(final T type){
-        I id = type.getId();
-        checkType(type);
+        final I id = type.getId();
+        this.checkType(type);
         final String filename = getFilename(id);
 
         final Semaphore writeLock = getWriteLock(id);
 
         try {
             writeLock.acquire();
-            fileRepositorySupport.save(type, filename);
-            collection.put(id, type);
-            return mapper.map(type, dtoClass);
+            this.fileRepositorySupport.save(type, filename);
+            this.collection.put(id, type);
+            return this.typeConverter.apply(type);
         } catch (InterruptedException e) {
             throw new IllegalStateException("Unable to acquire the write lock", e);
         } finally {
@@ -212,13 +213,13 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
         Preconditions.checkNotNull(id, "The provided id cannot be null");
         final String filename = getFilename(id);
         LOGGER.debug("Start the deletion of " + entityClass.getSimpleName() + " with id " + id);
-        Semaphore writeLock = getWriteLock(id);
+        final Semaphore writeLock = getWriteLock(id);
         try {
             writeLock.acquire();
-            fileRepositorySupport.delete(filename);
-            T type = collection.remove(id);
+            this.fileRepositorySupport.delete(filename);
+            final T type = collection.remove(id);
             LOGGER.debug("Deletion of " + entityClass.getSimpleName() + " with id " + id + " was successfully completed");
-            return mapper.map(type, dtoClass);
+            return this.typeConverter.apply(type);
         } catch (InterruptedException e) {
             throw new IllegalStateException("Unable to accuire the write lock", e);
         } finally {
@@ -307,67 +308,12 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
     /**
      * The method provides the functionality to convert a Collection of TYPE instances into a list of DTO instances
      * @param types The collection that will be converted into a list of DTO
-     * @param clazz CLass of the DTO type (D)
      * @return The provided collection but converted into the DTO class
      */
-    protected List<D> toDtoList(final Collection<T> types, final Class<D> clazz) {
+    protected List<D> toDtoList(final Collection<T> types) {
         return types.stream()
-                .map(type -> mapper.map(type, clazz))
+                .map(this.typeConverter)
                 .collect(toList());
-    }
-
-    @XmlRootElement(name = "httpHeader")
-    public static class HttpHeaderFile {
-
-        @Mapping("name")
-        private String name;
-        @Mapping("value")
-        private String value;
-
-        @XmlElement
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @XmlElement
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-    }
-
-    @XmlRootElement(name = "httpParameter")
-    public static class HttpParameterFile {
-
-        @Mapping("name")
-        private String name;
-        @Mapping("value")
-        private String value;
-
-        @XmlElement
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @XmlElement
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
     }
 
 }

@@ -20,6 +20,7 @@ package com.castlemock.repository.core.file.user;
 import com.castlemock.model.core.user.User;
 import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
+import com.castlemock.repository.core.file.user.model.UserFile;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,7 +66,7 @@ public class UserRepositoryTest {
         users.add(user);
         Mockito.when(fileRepositorySupport.load(User.class, DIRECTORY, EXTENSION)).thenReturn(users);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(UserFileRepository.UserFile.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(UserFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test
@@ -91,7 +92,7 @@ public class UserRepositoryTest {
     @Test
     public void testSave(){
         final User user = save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(UserFileRepository.UserFile.class), Mockito.anyString());
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(UserFile.class), Mockito.anyString());
     }
 
     @Test

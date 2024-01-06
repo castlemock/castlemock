@@ -33,8 +33,8 @@ public final class DeleteSoapPortInput implements Input{
     private final String portId;
 
     private DeleteSoapPortInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
     }
 
     public String getProjectId() {

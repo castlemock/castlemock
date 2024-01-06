@@ -45,12 +45,14 @@ public class RestResponse {
     }
 
     private RestResponse(final Builder builder){
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
         this.body = builder.body;
         this.contentType = builder.contentType;
         this.mockResponseName = builder.mockResponseName;
-        this.contentEncodings = builder.contentEncodings;
-        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
-        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders, "httpHeaders");
+        this.contentEncodings = Optional.ofNullable(builder.contentEncodings)
+                .orElseGet(List::of);
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders)
+                .orElseGet(List::of);
 
     }
 
@@ -77,13 +79,13 @@ public class RestResponse {
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
-        return httpHeaders;
+        return List.copyOf(httpHeaders);
     }
 
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
-        return contentEncodings;
+        return List.copyOf(contentEncodings);
     }
 
     @Override

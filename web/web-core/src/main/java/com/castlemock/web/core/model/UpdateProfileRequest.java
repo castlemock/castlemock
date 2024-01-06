@@ -17,6 +17,7 @@
 package com.castlemock.web.core.model;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class UpdateProfileRequest {
 
@@ -30,8 +31,8 @@ public class UpdateProfileRequest {
     }
 
     private UpdateProfileRequest(final Builder builder){
-        this.username = Objects.requireNonNull(builder.username);
-        this.password = Objects.requireNonNull(builder.password);
+        this.username = Objects.requireNonNull(builder.username, "username");
+        this.password = builder.password;
         this.email = builder.email;
         this.fullName = builder.fullName;
     }
@@ -40,16 +41,16 @@ public class UpdateProfileRequest {
         return username;
     }
 
-    public String getPassword() {
-        return password;
+    public Optional<String> getPassword() {
+        return Optional.ofNullable(password);
     }
 
-    public String getEmail() {
-        return email;
+    public Optional<String> getEmail() {
+        return Optional.ofNullable(email);
     }
 
-    public String getFullName() {
-        return fullName;
+    public Optional<String> getFullName() {
+        return Optional.ofNullable(fullName);
     }
 
     public static Builder builder() {

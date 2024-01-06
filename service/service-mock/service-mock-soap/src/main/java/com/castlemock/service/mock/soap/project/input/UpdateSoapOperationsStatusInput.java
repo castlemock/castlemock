@@ -38,10 +38,10 @@ public final class UpdateSoapOperationsStatusInput implements Input {
     private final SoapOperationStatus operationStatus;
 
     public UpdateSoapOperationsStatusInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
-        this.operationStatus = Objects.requireNonNull(builder.operationStatus);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
+        this.operationStatus = Objects.requireNonNull(builder.operationStatus, "operationStatus");
     }
 
     public String getProjectId() {

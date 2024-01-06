@@ -64,7 +64,7 @@ public class SoapResourceRestController extends AbstractRestController {
     public SoapResourceRestController(final ServiceProcessor serviceProcessor,
                                      final FileManager fileManager){
         super(serviceProcessor);
-        this.fileManager = Objects.requireNonNull(fileManager);
+        this.fileManager = Objects.requireNonNull(fileManager, "fileManager");
     }
 
     @Operation(summary =  "Get SOAP resource")

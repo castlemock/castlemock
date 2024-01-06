@@ -21,6 +21,7 @@ import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
 import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -36,7 +37,7 @@ public class UpdateSoapOperationRequest {
     private String defaultMockResponseId;
     private Boolean mockOnFailure;
     private SoapOperationIdentifyStrategy identifyStrategy;
-    private boolean automaticForward;
+    private Boolean automaticForward;
 
     public UpdateSoapOperationRequest(){
 
@@ -45,13 +46,13 @@ public class UpdateSoapOperationRequest {
     private UpdateSoapOperationRequest(final Builder builder){
         this.responseStrategy = Objects.requireNonNull(builder.responseStrategy, "responseStrategy");
         this.status = Objects.requireNonNull(builder.status, "status");
-        this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint, "forwardedEndpoint");
-        this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay, "simulateNetworkDelay");
-        this.networkDelay = Objects.requireNonNull(builder.networkDelay, "networkDelay");
-        this.defaultMockResponseId = builder.defaultMockResponseId;
-        this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure, "mockOnFailure");
         this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy, "identifyStrategy");
-        this.automaticForward = Objects.requireNonNull(builder.automaticForward, "automaticForward");
+        this.forwardedEndpoint = builder.forwardedEndpoint;
+        this.simulateNetworkDelay = builder.simulateNetworkDelay;
+        this.networkDelay = builder.networkDelay;
+        this.defaultMockResponseId = builder.defaultMockResponseId;
+        this.mockOnFailure = builder.mockOnFailure;
+        this.automaticForward = builder.automaticForward;
     }
 
     public SoapResponseStrategy getResponseStrategy() {
@@ -62,32 +63,32 @@ public class UpdateSoapOperationRequest {
         return status;
     }
 
-    public String getForwardedEndpoint() {
-        return forwardedEndpoint;
+    public Optional<String> getForwardedEndpoint() {
+        return Optional.ofNullable(forwardedEndpoint);
     }
 
-    public Boolean getSimulateNetworkDelay() {
-        return simulateNetworkDelay;
+    public Optional<Boolean> getSimulateNetworkDelay() {
+        return Optional.ofNullable(simulateNetworkDelay);
     }
 
-    public Long getNetworkDelay() {
-        return networkDelay;
+    public Optional<Long> getNetworkDelay() {
+        return Optional.ofNullable(networkDelay);
     }
 
-    public Boolean getMockOnFailure() {
-        return mockOnFailure;
+    public Optional<Boolean> getMockOnFailure() {
+        return Optional.ofNullable(mockOnFailure);
     }
 
     public SoapOperationIdentifyStrategy getIdentifyStrategy() {
         return identifyStrategy;
     }
 
-    public String getDefaultMockResponseId() {
-        return defaultMockResponseId;
+    public Optional<String> getDefaultMockResponseId() {
+        return Optional.ofNullable(defaultMockResponseId);
     }
 
-    public boolean getAutomaticForward() {
-        return automaticForward;
+    public Optional<Boolean> getAutomaticForward() {
+        return Optional.ofNullable(automaticForward);
     }
 
     public static Builder builder() {

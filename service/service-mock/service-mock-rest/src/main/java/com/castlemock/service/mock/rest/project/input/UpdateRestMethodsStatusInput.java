@@ -40,11 +40,11 @@ public final class UpdateRestMethodsStatusInput implements Input {
     private final RestMethodStatus methodStatus;
 
     private UpdateRestMethodsStatusInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.applicationId = Objects.requireNonNull(builder.applicationId);
-        this.resourceId = Objects.requireNonNull(builder.resourceId);
-        this.methodId = Objects.requireNonNull(builder.methodId);
-        this.methodStatus = Objects.requireNonNull(builder.methodStatus);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
+        this.resourceId = Objects.requireNonNull(builder.resourceId, "resourceId");
+        this.methodId = Objects.requireNonNull(builder.methodId, "methodId");
+        this.methodStatus = Objects.requireNonNull(builder.methodStatus, "methodStatus");
     }
 
     public String getProjectId() {

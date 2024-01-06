@@ -78,7 +78,7 @@ public class SoapProjectRestController extends AbstractRestController {
     public SoapProjectRestController(final ServiceProcessor serviceProcessor,
                                      final FileManager fileManager){
         super(serviceProcessor);
-        this.fileManager = Objects.requireNonNull(fileManager);
+        this.fileManager = Objects.requireNonNull(fileManager, "fileManager");
     }
 
     @Operation(summary =  "Get Project")
@@ -104,7 +104,7 @@ public class SoapProjectRestController extends AbstractRestController {
     public @ResponseBody ResponseEntity<SoapProject> createSoapProject(@RequestBody final CreateProjectRequest request) {
         final CreateSoapProjectOutput output = super.serviceProcessor.process(CreateSoapProjectInput.builder()
                 .name(request.getName())
-                .description(request.getDescription())
+                .description(request.getDescription().orElse(null))
                 .build());
 
         return ResponseEntity.ok(output.getProject());
@@ -124,7 +124,7 @@ public class SoapProjectRestController extends AbstractRestController {
         final UpdateSoapProjectOutput output = super.serviceProcessor.process(UpdateSoapProjectInput.builder()
                 .projectId(projectId)
                 .name(request.getName())
-                .description(request.getDescription())
+                .description(request.getDescription().orElse(null))
                 .build());
         return ResponseEntity.ok(output.getProject());
     }
@@ -230,7 +230,7 @@ public class SoapProjectRestController extends AbstractRestController {
      */
     @Operation(summary =  "Import project",
             description = "Import project. Required authorization: Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/import")
+    @RequestMapping(method = RequestMethod.POST, value = "/project/import")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Project> importProject(

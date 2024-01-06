@@ -46,10 +46,14 @@ public class UpdateRestMethodService extends AbstractRestProjectService implemen
                 .httpMethod(input.getHttpMethod())
                 .responseStrategy(input.getResponseStrategy())
                 .status(input.getStatus())
-                .forwardedEndpoint(input.getForwardedEndpoint().orElse(null))
-                .networkDelay(input.getNetworkDelay())
-                .simulateNetworkDelay(input.getSimulateNetworkDelay())
-                .automaticForward(input.getAutomaticForward())
+                .forwardedEndpoint(input.getForwardedEndpoint()
+                        .orElse(null))
+                .networkDelay(input.getNetworkDelay()
+                        .orElse(null))
+                .simulateNetworkDelay(input.getSimulateNetworkDelay()
+                        .orElse(null))
+                .automaticForward(input.getAutomaticForward()
+                        .orElse(null))
                 .build();
 
         final RestMethod updated = this.methodRepository.update(input.getRestMethodId(), existing);

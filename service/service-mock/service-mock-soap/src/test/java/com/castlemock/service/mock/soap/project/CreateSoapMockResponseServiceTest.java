@@ -73,6 +73,7 @@ public class CreateSoapMockResponseServiceTest {
                 .operationId(soapOperation.getId())
                 .name(soapMockResponse.getName())
                 .status(soapMockResponse.getStatus())
+                .httpStatusCode(200)
                 .build();
         final ServiceTask<CreateSoapMockResponseInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateSoapMockResponseOutput> serviceResult = service.process(serviceTask);

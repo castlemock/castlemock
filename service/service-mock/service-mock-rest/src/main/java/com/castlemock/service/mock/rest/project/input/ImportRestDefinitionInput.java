@@ -23,6 +23,7 @@ import com.castlemock.model.mock.rest.RestDefinitionType;
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -33,19 +34,19 @@ public final class ImportRestDefinitionInput implements Input {
     @NotNull
     private final String restProjectId;
     @NotNull
-    private final boolean generateResponse;
-    @NotNull
     private final RestDefinitionType definitionType;
 
+    private final Boolean generateResponse;
     private final List<File> files;
     private final String location;
 
     private ImportRestDefinitionInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.files = builder.files;
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
+        this.definitionType = Objects.requireNonNull(builder.definitionType, "definitionType");
         this.location = builder.location;
         this.generateResponse = builder.generateResponse;
-        this.definitionType = Objects.requireNonNull(builder.definitionType);
+        this.files = Optional.ofNullable(builder.files)
+                .orElseGet(List::of);
     }
 
     public String getRestProjectId() {
@@ -56,12 +57,12 @@ public final class ImportRestDefinitionInput implements Input {
         return files;
     }
 
-    public String getLocation() {
-        return location;
+    public Optional<String> getLocation() {
+        return Optional.ofNullable(location);
     }
 
-    public boolean isGenerateResponse() {
-        return generateResponse;
+    public Optional<Boolean> getGenerateResponse() {
+        return Optional.ofNullable(generateResponse);
     }
 
     public RestDefinitionType getDefinitionType() {

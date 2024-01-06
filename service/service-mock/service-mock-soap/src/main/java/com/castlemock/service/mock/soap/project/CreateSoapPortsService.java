@@ -61,9 +61,11 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
         Set<SoapPortConverterResult> results;
         try {
             if(input.getFiles() != null){
-                results = soapPortConverter.getSoapPorts(input.getFiles(), soapProjectId, input.isGenerateResponse());
-            } else if(input.getLocation() != null){
-                results = soapPortConverter.getSoapPorts(input.getLocation(), soapProjectId, input.isGenerateResponse(), input.isIncludeImports());
+                results = soapPortConverter.getSoapPorts(input.getFiles(), soapProjectId, input.getGenerateResponse()
+                        .orElse(false));
+            } else if(input.getLocation().isPresent()){
+                results = soapPortConverter.getSoapPorts(input.getLocation().get(), soapProjectId,
+                        input.getGenerateResponse().orElse(false), input.getIncludeImports().orElse(false));
             } else {
                 throw new IllegalArgumentException("Neither files or links were provided when importing SOAP ports");
             }
@@ -103,7 +105,8 @@ public class CreateSoapPortsService extends AbstractSoapProjectService implement
                     if(existingSoapOperation != null){
                         this.operationRepository.update(existingSoapOperation.getId(), existingSoapOperation
                                 .toBuilder()
-                                .originalEndpoint(newSoapOperation.getOriginalEndpoint())
+                                .originalEndpoint(newSoapOperation.getOriginalEndpoint()
+                                        .orElse(null))
                                 .soapVersion(newSoapOperation.getSoapVersion())
                                 .build());
                     } else {

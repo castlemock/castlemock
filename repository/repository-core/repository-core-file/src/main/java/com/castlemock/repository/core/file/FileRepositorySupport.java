@@ -16,6 +16,8 @@
 
 package com.castlemock.repository.core.file;
 
+import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
+import com.castlemock.repository.core.file.http.model.HttpParameterFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -112,7 +114,7 @@ public class FileRepositorySupport {
     private <T> Optional<T> load(final File file, final Class<T> entityClass){
         try(final InputStream inputStream= new FileInputStream(file)) {
             try(final Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)){
-                final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass, FileRepository.HttpHeaderFile.class, FileRepository.HttpParameterFile.class);
+                final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass, HttpHeaderFile.class, HttpParameterFile.class);
                 final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
                 LOGGER.debug("\tLoaded " + file.getName());
                 return Optional.ofNullable((T) jaxbUnmarshaller.unmarshal(reader));

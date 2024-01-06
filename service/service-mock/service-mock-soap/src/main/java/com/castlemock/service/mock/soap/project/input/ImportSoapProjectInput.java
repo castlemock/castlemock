@@ -31,7 +31,7 @@ public final class ImportSoapProjectInput implements Input {
     private final String projectRaw;
 
     private ImportSoapProjectInput(final Builder builder) {
-        this.projectRaw = Objects.requireNonNull(builder.projectRaw);
+        this.projectRaw = Objects.requireNonNull(builder.projectRaw, "projectRaw");
     }
 
     public String getProjectRaw() {

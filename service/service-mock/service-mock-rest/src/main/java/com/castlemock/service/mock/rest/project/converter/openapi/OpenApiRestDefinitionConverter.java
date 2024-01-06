@@ -114,59 +114,63 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
             throw new IllegalArgumentException("Unable to parse the OpenApi content.");
         }
 
-        final RestApplication restApplication = RestApplication.builder()
-                .id(IdUtility.generateId())
-                .projectId(projectId)
-                .name(this.getApplicationName(openAPI))
-                .build();
 
+        final String applicationId = IdUtility.generateId();
         final String forwardAddress = getForwardAddress(openAPI);
-
+        final List<RestResource> resources = new ArrayList<>();
         for (Map.Entry<String, PathItem> pathEntry : openAPI.getPaths().entrySet()) {
             final String resourceName = pathEntry.getKey();
             final PathItem resourcePath = pathEntry.getValue();
-            final RestResource restResource = RestResource.builder()
-                    .id(IdUtility.generateId())
-                    .applicationId(restApplication.getId())
-                    .name(resourceName)
-                    .uri(resourceName)
-                    .build();
+
+            final String resourceId = IdUtility.generateId();
+            final List<RestMethod> methods = new ArrayList<>();
 
             if (resourcePath.getGet() != null) {
                 Operation operation = resourcePath.getGet();
-                RestMethod restMethod = createRestMethod(operation, HttpMethod.GET, forwardAddress, restResource.getId(), generateResponse);
-                restResource.getMethods().add(restMethod);
+                RestMethod restMethod = createRestMethod(operation, HttpMethod.GET, forwardAddress, resourceId, generateResponse);
+                methods.add(restMethod);
             }
             if (resourcePath.getPost() != null) {
                 Operation operation = resourcePath.getPost();
-                RestMethod restMethod = createRestMethod(operation, HttpMethod.POST, forwardAddress, restResource.getId(), generateResponse);
-                restResource.getMethods().add(restMethod);
+                RestMethod restMethod = createRestMethod(operation, HttpMethod.POST, forwardAddress, resourceId, generateResponse);
+                methods.add(restMethod);
             }
             if (resourcePath.getPut() != null) {
                 Operation operation = resourcePath.getPut();
-                RestMethod restMethod = createRestMethod(operation, HttpMethod.PUT, forwardAddress, restResource.getId(), generateResponse);
-                restResource.getMethods().add(restMethod);
+                RestMethod restMethod = createRestMethod(operation, HttpMethod.PUT, forwardAddress, resourceId, generateResponse);
+                methods.add(restMethod);
             }
             if (resourcePath.getDelete() != null) {
                 Operation operation = resourcePath.getDelete();
-                RestMethod restMethod = createRestMethod(operation, HttpMethod.DELETE, forwardAddress, restResource.getId(), generateResponse);
-                restResource.getMethods().add(restMethod);
+                RestMethod restMethod = createRestMethod(operation, HttpMethod.DELETE, forwardAddress, resourceId, generateResponse);
+                methods.add(restMethod);
             }
             if (resourcePath.getHead() != null) {
                 Operation operation = resourcePath.getHead();
-                RestMethod restMethod = createRestMethod(operation, HttpMethod.HEAD, forwardAddress, restResource.getId(), generateResponse);
-                restResource.getMethods().add(restMethod);
+                RestMethod restMethod = createRestMethod(operation, HttpMethod.HEAD, forwardAddress, resourceId, generateResponse);
+                methods.add(restMethod);
             }
             if (resourcePath.getOptions() != null) {
                 Operation operation = resourcePath.getOptions();
-                RestMethod restMethod = createRestMethod(operation, HttpMethod.OPTIONS, forwardAddress, restResource.getId(), generateResponse);
-                restResource.getMethods().add(restMethod);
+                RestMethod restMethod = createRestMethod(operation, HttpMethod.OPTIONS, forwardAddress, resourceId, generateResponse);
+                methods.add(restMethod);
             }
 
-            restApplication.getResources().add(restResource);
+            resources.add(RestResource.builder()
+                    .id(resourceId)
+                    .applicationId(applicationId)
+                    .name(resourceName)
+                    .uri(resourceName)
+                    .methods(methods)
+                    .build());
         }
 
-        return restApplication;
+        return RestApplication.builder()
+                .id(applicationId)
+                .projectId(projectId)
+                .name(this.getApplicationName(openAPI))
+                .resources(resources)
+                .build();
     }
 
     /**

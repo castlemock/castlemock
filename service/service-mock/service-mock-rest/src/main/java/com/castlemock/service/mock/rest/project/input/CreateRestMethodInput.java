@@ -40,11 +40,11 @@ public final class CreateRestMethodInput implements Input {
     private final HttpMethod httpMethod;
 
     private CreateRestMethodInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.applicationId = Objects.requireNonNull(builder.applicationId);
-        this.resourceId = Objects.requireNonNull(builder.resourceId);
-        this.name = Objects.requireNonNull(builder.name);
-        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
+        this.resourceId = Objects.requireNonNull(builder.resourceId, "resourceId");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
     }
 
     public String getProjectId() {

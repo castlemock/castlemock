@@ -33,8 +33,8 @@ public final class CreateRestApplicationInput implements Input {
     private final String name;
 
     private CreateRestApplicationInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.name = Objects.requireNonNull(builder.name);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.name = Objects.requireNonNull(builder.name, "name");
     }
 
     public String getProjectId() {

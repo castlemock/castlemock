@@ -16,7 +16,6 @@
 
 package com.castlemock.repository.rest.file.project;
 
-import com.castlemock.model.core.Saveable;
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.SearchValidator;
@@ -25,26 +24,30 @@ import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.rest.file.project.converter.RestResourceConverter;
+import com.castlemock.repository.rest.file.project.converter.RestResourceFileConverter;
+import com.castlemock.repository.rest.file.project.model.RestResourceFile;
 import com.castlemock.repository.rest.project.RestResourceRepository;
-import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @Profile(Profiles.FILE)
-public class RestResourceFileRepository extends FileRepository<RestResourceFileRepository.RestResourceFile, RestResource, String> implements RestResourceRepository {
+public class RestResourceFileRepository extends FileRepository<RestResourceFile, RestResource, String> implements RestResourceRepository {
 
     @Value(value = "${rest.resource.file.directory}")
     private String fileDirectory;
     @Value(value = "${rest.resource.file.extension}")
     private String fileExtension;
+
+    public RestResourceFileRepository() {
+        super(RestResourceFileConverter::toRestResource, RestResourceConverter::toRestResourceFile);
+    }
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -97,7 +100,7 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
         return this.collection.values()
                 .stream()
                 .filter(resource -> SearchValidator.validate(resource.getName(), query.getQuery()))
-                .map(resource -> mapper.map(resource, RestResource.class))
+                .map(RestResourceFileConverter::toRestResource)
                 .toList();
     }
 
@@ -127,14 +130,11 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      */
     @Override
     public List<RestResource> findWithApplicationId(final String applicationId) {
-        final List<RestResource> resources = new ArrayList<>();
-        for(RestResourceFile resourceFile : this.collection.values()){
-            if(resourceFile.getApplicationId().equals(applicationId)){
-                RestResource resource = this.mapper.map(resourceFile, RestResource.class);
-                resources.add(resource);
-            }
-        }
-        return resources;
+        return collection.values()
+                .stream()
+                .filter(resource -> resource.getApplicationId().equals(applicationId))
+                .map(RestResourceFileConverter::toRestResource)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -147,13 +147,11 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      */
     @Override
     public List<String> findIdsWithApplicationId(final String applicationId) {
-        final List<String> ids = new ArrayList<>();
-        for(RestResourceFile resourceFile : this.collection.values()){
-            if(resourceFile.getApplicationId().equals(applicationId)){
-                ids.add(resourceFile.getId());
-            }
-        }
-        return ids;
+        return this.collection.values()
+                .stream()
+                .filter(resource -> resource.getApplicationId().equals(applicationId))
+                .map(RestResourceFile::getId)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -168,13 +166,12 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
      */
     @Override
     public Optional<RestResource> findRestResourceByUri(final String applicationId, final String resourceUri) {
-        for(RestResourceFile resourceFile : this.collection.values()){
-            if(resourceFile.getApplicationId().equals(applicationId) &&
-                    resourceUri.equalsIgnoreCase(resourceFile.getUri())){
-                return Optional.ofNullable(this.mapper.map(resourceFile, RestResource.class));
-            }
-        }
-        return Optional.empty();
+        return this.collection.values()
+                .stream()
+                .filter(resource -> resource.getApplicationId().equals(applicationId) &&
+                        resourceUri.equals(resource.getUri()))
+                .map(RestResourceFileConverter::toRestResource)
+                .findFirst();
     }
 
     /**
@@ -189,57 +186,6 @@ public class RestResourceFileRepository extends FileRepository<RestResourceFileR
     public Optional<String> getApplicationId(final String resourceId) {
         return Optional.ofNullable(this.collection.get(resourceId))
                 .map(RestResourceFile::getApplicationId);
-    }
-
-    @XmlRootElement(name = "restResource")
-    protected static class RestResourceFile implements Saveable<String> {
-
-        @Mapping("id")
-        private String id;
-        @Mapping("name")
-        private String name;
-        @Mapping("uri")
-        private String uri;
-        @Mapping("applicationId")
-        private String applicationId;
-
-        @Override
-        @XmlElement
-        public String getId() {
-            return id;
-        }
-
-        @Override
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        @XmlElement
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @XmlElement
-        public String getUri() {
-            return uri;
-        }
-
-        public void setUri(String uri) {
-            this.uri = uri;
-        }
-
-        @XmlElement
-        public String getApplicationId() {
-            return applicationId;
-        }
-
-        public void setApplicationId(String applicationId) {
-            this.applicationId = applicationId;
-        }
     }
 
 }

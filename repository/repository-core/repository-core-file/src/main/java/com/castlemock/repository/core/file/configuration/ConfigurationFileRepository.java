@@ -16,22 +16,20 @@
 
 package com.castlemock.repository.core.file.configuration;
 
-import com.castlemock.model.core.Saveable;
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.configuration.ConfigurationGroup;
-import com.castlemock.model.core.configuration.ConfigurationType;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.configuration.ConfigurationRepository;
 import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.core.file.configuration.converter.ConfigurationGroupConverter;
+import com.castlemock.repository.core.file.configuration.converter.ConfigurationGroupFileConverter;
+import com.castlemock.repository.core.file.configuration.model.ConfigurationFile;
+import com.castlemock.repository.core.file.configuration.model.ConfigurationGroupFile;
 import com.google.common.base.Preconditions;
-import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
@@ -44,12 +42,21 @@ import java.util.List;
  */
 @Repository
 @Profile(Profiles.FILE)
-public class ConfigurationFileRepository extends FileRepository<ConfigurationFileRepository.ConfigurationGroupFile, ConfigurationGroup, String> implements ConfigurationRepository {
+public class ConfigurationFileRepository extends FileRepository<ConfigurationGroupFile, ConfigurationGroup, String> implements ConfigurationRepository {
 
     @Value(value = "${configuration.file.directory}")
     private String configurationFileDirectory;
     @Value(value = "${configuration.file.extension}")
     private String configurationFileExtension;
+
+    /**
+     * The default constructor for the AbstractRepositoryImpl class. The constructor will extract class instances of the
+     * generic types (TYPE and ID). These instances could later be used to identify the types for when interacting
+     * with the file system.
+     */
+    public ConfigurationFileRepository() {
+        super(ConfigurationGroupFileConverter::toConfigurationGroup, ConfigurationGroupConverter::toConfigurationGroupFile);
+    }
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -103,139 +110,5 @@ public class ConfigurationFileRepository extends FileRepository<ConfigurationFil
     public List<ConfigurationGroup> search(SearchQuery query) {
         throw new UnsupportedOperationException("Search method is not supported in the Configuration repository");
     }
-
-    @XmlRootElement(name = "configuration")
-    protected static class ConfigurationFile {
-
-        @Mapping("key")
-        private String key;
-        @Mapping("value")
-        private String value;
-        @Mapping("type")
-        private ConfigurationType type;
-
-        /**
-         * Returns the identifier for the configuration
-         * @return The configuration key
-         */
-        @XmlElement
-        public String getKey() {
-            return key;
-        }
-
-        /**
-         * Sets the configuration key
-         * @param key The new configuration key
-         */
-        public void setKey(String key) {
-            this.key = key;
-        }
-
-        /**
-         * Returns the value for the configuration
-         * @return Configuration value
-         */
-        @XmlElement
-        public String getValue() {
-            return value;
-        }
-
-        /**
-         * Sets the configuration value
-         * @param value The new configuration value
-         */
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        /**
-         * Returns the configuration type
-         * @return The configuration type
-         */
-        @XmlElement
-        public ConfigurationType getType() {
-            return type;
-        }
-
-        /**
-         * Sets the configuration type
-         * @param type The new configuration type
-         */
-        public void setType(ConfigurationType type) {
-            this.type = type;
-        }
-    }
-
-    /**
-     * The configuration group is responsible for grouping configurations together.
-     * @author Karl Dahlgren
-     * @since 1.0
-     */
-    @XmlRootElement(name = "configurationGroup")
-    protected static class ConfigurationGroupFile implements Saveable<String> {
-
-        @Mapping("id")
-        private String id;
-        @Mapping("name")
-        private String name;
-        @Mapping("configurations")
-        private List<ConfigurationFile> configurations;
-
-        /**
-         * Returns the configuration group id
-         * @return The configuration group id
-         */
-        @XmlElement
-        @Override
-        public String getId() {
-            return id;
-        }
-
-        /**
-         * Sets a new id value for the configuration group
-         * @param id The new id for the configuration group
-         */
-        @Override
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        /**
-         * Returns the name of the configuration group
-         * @return The new of the configuration group
-         */
-        @XmlElement
-        public String getName() {
-            return name;
-        }
-
-        /**
-         * Sets a new name of the configuration group
-         * @param name The new name for the configuration group
-         */
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        /**
-         * Returns a list of configurations the belongs to the group
-         * @return Configurations that belongs to the configuration group
-         */
-        @XmlElementWrapper(name = "configurations")
-        @XmlElement(name = "configuration")
-        public List<ConfigurationFile> getConfigurations() {
-            return configurations;
-        }
-
-        /**
-         * Set a new list of configurations that belong to the configuration group
-         * @param configurations The new list of configurations
-         */
-        public void setConfigurations(List<ConfigurationFile> configurations) {
-            this.configurations = configurations;
-        }
-
-    }
-
 
 }

@@ -18,23 +18,21 @@ package com.castlemock.repository.rest.file.event;
 
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
-import com.castlemock.model.core.http.ContentEncoding;
-import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.rest.domain.RestEvent;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.core.file.event.AbstractEventFileRepository;
 import com.castlemock.repository.rest.event.RestEventRepository;
+import com.castlemock.repository.rest.file.event.converter.RestEventConverter;
+import com.castlemock.repository.rest.file.event.converter.RestEventFileConverter;
+import com.castlemock.repository.rest.file.event.model.RestEventFile;
 import com.google.common.base.Preconditions;
-import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The class is an implementation of the REST event repository and provides the functionality to interact with the file system.
@@ -47,12 +45,16 @@ import java.util.List;
  */
 @Repository
 @Profile(Profiles.FILE)
-public class RestEventFileRepository extends AbstractEventFileRepository<RestEventFileRepository.RestEventFile, RestEvent> implements RestEventRepository {
+public class RestEventFileRepository extends AbstractEventFileRepository<RestEventFile, RestEvent> implements RestEventRepository {
 
     @Value(value = "${rest.event.file.directory}")
     private String restEventFileDirectory;
     @Value(value = "${rest.event.file.extension}")
     private String restEventFileExtension;
+
+    public RestEventFileRepository() {
+        super(RestEventFileConverter::toRestEvent, RestEventConverter::toRestEventFile);
+    }
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -106,7 +108,9 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
             }
         }
 
-        return oldestEvent == null ? null : mapper.map(oldestEvent, RestEvent.class);
+        return Optional.ofNullable(oldestEvent)
+                .map(RestEventFileConverter::toRestEvent)
+                .orElse(null);
     }
 
     /**
@@ -119,7 +123,7 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
         return this.collection.values()
                 .stream()
                 .filter(event -> event.getMethodId().equals(restMethodId))
-                .map(event ->  this.mapper.map(event, RestEvent.class))
+                .map(RestEventFileConverter::toRestEvent)
                 .toList();
     }
 
@@ -157,217 +161,5 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
                 .toList()
                 .forEach(this::delete);
     }
-
-    @XmlRootElement(name = "restEvent")
-    protected static class RestEventFile extends AbstractEventFileRepository.EventFile {
-
-        @Mapping("request")
-        private RestRequestFile request;
-        @Mapping("response")
-        private RestResponseFile response;
-        @Mapping("projectId")
-        private String projectId;
-        @Mapping("applicationId")
-        private String applicationId;
-        @Mapping("resourceId")
-        private String resourceId;
-        @Mapping("methodId")
-        private String methodId;
-
-        public RestRequestFile getRequest() {
-            return request;
-        }
-
-        public void setRequest(RestRequestFile request) {
-            this.request = request;
-        }
-
-        public RestResponseFile getResponse() {
-            return response;
-        }
-
-        public void setResponse(RestResponseFile response) {
-            this.response = response;
-        }
-
-        public String getProjectId() {
-            return projectId;
-        }
-
-        public void setProjectId(String projectId) {
-            this.projectId = projectId;
-        }
-
-        public String getApplicationId() {
-            return applicationId;
-        }
-
-        public void setApplicationId(String applicationId) {
-            this.applicationId = applicationId;
-        }
-
-        public String getResourceId() {
-            return resourceId;
-        }
-
-        public void setResourceId(String resourceId) {
-            this.resourceId = resourceId;
-        }
-
-        public String getMethodId() {
-            return methodId;
-        }
-
-        public void setMethodId(String methodId) {
-            this.methodId = methodId;
-        }
-    }
-
-    @XmlRootElement(name = "restRequest")
-    protected static class RestRequestFile {
-
-        @Mapping("body")
-        private String body;
-        @Mapping("contentType")
-        private String contentType;
-        @Mapping("uri")
-        private String uri;
-        @Mapping("httpMethod")
-        private HttpMethod httpMethod;
-        @Mapping("httpParameters")
-        private List<FileRepository.HttpParameterFile> httpParameters;
-        @Mapping("httpHeaders")
-        private List<HttpHeaderFile> httpHeaders;
-
-        @XmlElement
-        public String getBody() {
-            return body;
-        }
-
-        public void setBody(String body) {
-            this.body = body;
-        }
-
-        @XmlElement
-        public String getContentType() {
-            return contentType;
-        }
-
-        public void setContentType(String contentType) {
-            this.contentType = contentType;
-        }
-
-        @XmlElement
-        public String getUri() {
-            return uri;
-        }
-
-        public void setUri(String uri) {
-            this.uri = uri;
-        }
-
-        @XmlElement
-        public HttpMethod getHttpMethod() {
-            return httpMethod;
-        }
-
-        public void setHttpMethod(HttpMethod httpMethod) {
-            this.httpMethod = httpMethod;
-        }
-
-        @XmlElementWrapper(name = "httpHeaders")
-        @XmlElement(name = "httpHeader")
-        public List<HttpHeaderFile> getHttpHeaders() {
-            return httpHeaders;
-        }
-
-        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
-            this.httpHeaders = httpHeaders;
-        }
-
-        @XmlElementWrapper(name = "httpParameters")
-        @XmlElement(name = "httpParameter")
-        public List<FileRepository.HttpParameterFile> getHttpParameters() {
-            return httpParameters;
-        }
-
-        public void setHttpParameters(List<FileRepository.HttpParameterFile> httpParameters) {
-            this.httpParameters = httpParameters;
-        }
-    }
-
-    @XmlRootElement(name = "restResponse")
-    protected static class RestResponseFile {
-
-        @Mapping("body")
-        private String body;
-        @Mapping("mockResponseName")
-        private String mockResponseName;
-        @Mapping("httpStatusCode")
-        private Integer httpStatusCode;
-        @Mapping("contentType")
-        private String contentType;
-        @Mapping("httpHeaders")
-        private List<HttpHeaderFile> httpHeaders;
-        @Mapping("contentEncodings")
-        private List<ContentEncoding> contentEncodings;
-
-        @XmlElement
-        public String getBody() {
-            return body;
-        }
-
-        public void setBody(String body) {
-            this.body = body;
-        }
-
-        @XmlElement
-        public String getMockResponseName() {
-            return mockResponseName;
-        }
-
-        public void setMockResponseName(String mockResponseName) {
-            this.mockResponseName = mockResponseName;
-        }
-
-        @XmlElement
-        public Integer getHttpStatusCode() {
-            return httpStatusCode;
-        }
-
-        public void setHttpStatusCode(Integer httpStatusCode) {
-            this.httpStatusCode = httpStatusCode;
-        }
-
-        @XmlElement
-        public String getContentType() {
-            return contentType;
-        }
-
-        public void setContentType(String contentType) {
-            this.contentType = contentType;
-        }
-
-        @XmlElementWrapper(name = "httpHeaders")
-        @XmlElement(name = "httpHeader")
-        public List<HttpHeaderFile> getHttpHeaders() {
-            return httpHeaders;
-        }
-
-        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
-            this.httpHeaders = httpHeaders;
-        }
-
-        @XmlElementWrapper(name = "contentEncodings")
-        @XmlElement(name = "contentEncoding")
-        public List<ContentEncoding> getContentEncodings() {
-            return contentEncodings;
-        }
-
-        public void setContentEncodings(List<ContentEncoding> contentEncodings) {
-            this.contentEncodings = contentEncodings;
-        }
-    }
-
 
 }

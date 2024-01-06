@@ -50,43 +50,35 @@ public final class UpdateRestMockResponseInput implements Input {
     @NotNull
     private final String name;
     @NotNull
-    private final String body;
-    @NotNull
     private final Integer httpStatusCode;
     @NotNull
     private final RestMockResponseStatus status;
-    @NotNull
-    private final boolean usingExpressions;
-    @NotNull
+    private final String body;
+    private final Boolean usingExpressions;
     private final List<HttpHeader> httpHeaders;
-    @NotNull
     private final List<ContentEncoding> contentEncodings;
-    @NotNull
     private final List<RestParameterQuery> parameterQueries;
-    @NotNull
     private final List<RestXPathExpression> xpathExpressions;
-    @NotNull
     private final List<RestJsonPathExpression> jsonPathExpressions;
-    @NotNull
     private final List<RestHeaderQuery> headerQueries;
 
     private UpdateRestMockResponseInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
-        this.restMethodId = Objects.requireNonNull(builder.restMethodId);
-        this.restMockResponseId = Objects.requireNonNull(builder.restMockResponseId);
-        this.name = Objects.requireNonNull(builder.name);
-        this.body = Objects.requireNonNull(builder.body);
-        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode);
-        this.status = Objects.requireNonNull(builder.status);
-        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions);
-        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
-        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(CopyOnWriteArrayList::new);
-        this.parameterQueries = Optional.ofNullable(builder.parameterQueries).orElseGet(CopyOnWriteArrayList::new);
-        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
-        this.jsonPathExpressions = Optional.ofNullable(builder.jsonPathExpressions).orElseGet(CopyOnWriteArrayList::new);
-        this.headerQueries = Optional.ofNullable(builder.headerQueries).orElseGet(CopyOnWriteArrayList::new);
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId, "restApplicationId");
+        this.restResourceId = Objects.requireNonNull(builder.restResourceId, "restResourceId");
+        this.restMethodId = Objects.requireNonNull(builder.restMethodId, "restMethodId");
+        this.restMockResponseId = Objects.requireNonNull(builder.restMockResponseId, "restMockResponseId");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.body = builder.body;
+        this.usingExpressions = builder.usingExpressions;
+        this.httpHeaders = builder.httpHeaders;
+        this.contentEncodings = builder.contentEncodings;
+        this.parameterQueries = builder.parameterQueries;
+        this.xpathExpressions = builder.xpathExpressions;
+        this.jsonPathExpressions = builder.jsonPathExpressions;
+        this.headerQueries = builder.headerQueries;
     }
 
     public String getRestProjectId() {
@@ -113,8 +105,8 @@ public final class UpdateRestMockResponseInput implements Input {
         return name;
     }
 
-    public String getBody() {
-        return body;
+    public Optional<String> getBody() {
+        return Optional.ofNullable(body);
     }
 
     public Integer getHttpStatusCode() {
@@ -125,32 +117,44 @@ public final class UpdateRestMockResponseInput implements Input {
         return status;
     }
 
-    public boolean isUsingExpressions() {
-        return usingExpressions;
+    public Optional<Boolean> getUsingExpressions() {
+        return Optional.ofNullable(usingExpressions);
     }
 
     public List<HttpHeader> getHttpHeaders() {
-        return httpHeaders;
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<ContentEncoding> getContentEncodings() {
-        return contentEncodings;
+        return Optional.ofNullable(contentEncodings)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<RestParameterQuery> getParameterQueries() {
-        return parameterQueries;
+        return Optional.ofNullable(parameterQueries)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<RestXPathExpression> getXpathExpressions() {
-        return xpathExpressions;
+        return Optional.ofNullable(xpathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<RestJsonPathExpression> getJsonPathExpressions() {
-        return jsonPathExpressions;
+        return Optional.ofNullable(jsonPathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<RestHeaderQuery> getHeaderQueries() {
-        return headerQueries;
+        return Optional.ofNullable(headerQueries)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public static Builder builder(){

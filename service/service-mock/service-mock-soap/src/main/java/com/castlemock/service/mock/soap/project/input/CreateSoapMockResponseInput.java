@@ -42,24 +42,31 @@ public final class CreateSoapMockResponseInput implements Input {
     private final String name;
     @NotNull
     private final SoapMockResponseStatus status;
+    @NotNull
     private final String body;
+    @NotNull
     private final Integer httpStatusCode;
-    private final Boolean usingExpressions;
+    @NotNull
     private final List<HttpHeader> httpHeaders;
+    @NotNull
     private final List<SoapXPathExpression> xpathExpressions;
+
+    private final Boolean usingExpressions;
 
 
     private CreateSoapMockResponseInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
-        this.name = Objects.requireNonNull(builder.name);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
+        this.name = Objects.requireNonNull(builder.name,"name");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders)
+                .orElseGet(List::of);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions)
+                .orElseGet(List::of);
         this.body = builder.body;
-        this.status = Objects.requireNonNull(builder.status);
-        this.httpStatusCode = builder.httpStatusCode;
         this.usingExpressions = builder.usingExpressions;
-        this.httpHeaders = builder.httpHeaders;
-        this.xpathExpressions = builder.xpathExpressions;
     }
 
     public String getProjectId() {
@@ -86,20 +93,20 @@ public final class CreateSoapMockResponseInput implements Input {
         return Optional.ofNullable(body);
     }
 
-    public Optional<Integer> getHttpStatusCode() {
-        return Optional.ofNullable(httpStatusCode);
+    public Integer getHttpStatusCode() {
+        return httpStatusCode;
     }
 
     public Optional<Boolean> getUsingExpressions() {
         return Optional.ofNullable(usingExpressions);
     }
 
-    public Optional<List<HttpHeader>> getHttpHeaders() {
-        return Optional.ofNullable(httpHeaders);
+    public List<HttpHeader> getHttpHeaders() {
+        return List.copyOf(httpHeaders);
     }
 
-    public Optional<List<SoapXPathExpression>> getXpathExpressions() {
-        return Optional.ofNullable(xpathExpressions);
+    public List<SoapXPathExpression> getXpathExpressions() {
+        return List.copyOf(xpathExpressions);
     }
 
     public static Builder builder(){

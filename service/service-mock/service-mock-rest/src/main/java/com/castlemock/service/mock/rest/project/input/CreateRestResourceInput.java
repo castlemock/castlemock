@@ -37,10 +37,10 @@ public final class CreateRestResourceInput implements Input {
     private final String uri;
 
     private CreateRestResourceInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.name = Objects.requireNonNull(builder.name);
-        this.uri = Objects.requireNonNull(builder.uri);
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
+        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId, "restApplicationId");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.uri = Objects.requireNonNull(builder.uri, "uri");
     }
 
     public String getRestProjectId() {

@@ -23,6 +23,7 @@ import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.user.output.UpdateUserOutput;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Update a user with a specific user id
@@ -48,7 +49,7 @@ public final class UpdateUserInput implements Input {
     public UpdateUserInput(final Builder builder) {
         this.id = Objects.requireNonNull(builder.id, "id");
         this.username = Objects.requireNonNull(builder.username, "username");
-        this.password = Objects.requireNonNull(builder.password, "password");
+        this.password = builder.password;
         this.email = builder.email;
         this.fullName = builder.fullName;
         this.status = Objects.requireNonNull(builder.status, "status");
@@ -63,16 +64,16 @@ public final class UpdateUserInput implements Input {
         return username;
     }
 
-    public String getPassword() {
-        return password;
+    public Optional<String> getPassword() {
+        return Optional.ofNullable(password);
     }
 
-    public String getEmail() {
-        return email;
+    public Optional<String> getEmail() {
+        return Optional.ofNullable(email);
     }
 
-    public String getFullName() {
-        return fullName;
+    public Optional<String> getFullName() {
+        return Optional.ofNullable(fullName);
     }
 
     public Status getStatus() {

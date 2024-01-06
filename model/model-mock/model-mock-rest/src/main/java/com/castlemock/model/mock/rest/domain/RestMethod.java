@@ -41,12 +41,12 @@ public class RestMethod {
     private String forwardedEndpoint;
     private RestMethodStatus status;
     private RestResponseStrategy responseStrategy;
-    private Integer currentResponseSequenceIndex = 0;
+    private Integer currentResponseSequenceIndex;
     private Boolean simulateNetworkDelay;
     private Long networkDelay;
     private String defaultMockResponseId;
 
-    private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<>();
+    private List<RestMockResponse> mockResponses;
     private String uri;
     private String defaultResponseName;
     private Boolean automaticForward;
@@ -56,22 +56,23 @@ public class RestMethod {
     }
 
     private RestMethod(final Builder builder){
-        this.id = Objects.requireNonNull(builder.id);
-        this.name = Objects.requireNonNull(builder.name);
-        this.resourceId = Objects.requireNonNull(builder.resourceId);
+        this.id = Objects.requireNonNull(builder.id, "id");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.resourceId = Objects.requireNonNull(builder.resourceId, "resourceId");
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
+        this.responseStrategy = Objects.requireNonNull(builder.responseStrategy, "responseStrategy");
+        this.currentResponseSequenceIndex = Objects.requireNonNull(builder.currentResponseSequenceIndex, "currentResponseSequenceIndex");
         this.defaultBody = builder.defaultBody;
-        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
         this.forwardedEndpoint = builder.forwardedEndpoint;
-        this.status = Objects.requireNonNull(builder.status);
-        this.responseStrategy = Objects.requireNonNull(builder.responseStrategy);
-        this.currentResponseSequenceIndex = Objects.requireNonNull(builder.currentResponseSequenceIndex);
         this.simulateNetworkDelay = builder.simulateNetworkDelay;
         this.networkDelay = builder.networkDelay;
         this.defaultMockResponseId = builder.defaultMockResponseId;
         this.uri = builder.uri;
         this.defaultResponseName = builder.defaultResponseName;
-        this.mockResponses = Optional.ofNullable(builder.mockResponses).orElseGet(CopyOnWriteArrayList::new);
         this.automaticForward = builder.automaticForward;
+        this.mockResponses = Optional.ofNullable(builder.mockResponses)
+                .orElseGet(List::of);
     }
 
 
@@ -103,7 +104,7 @@ public class RestMethod {
     @XmlElementWrapper(name = "mockResponses")
     @XmlElement(name = "mockResponse")
     public List<RestMockResponse> getMockResponses() {
-        return mockResponses;
+        return List.copyOf(mockResponses);
     }
 
     @XmlElement
@@ -226,7 +227,6 @@ public class RestMethod {
         private Integer currentResponseSequenceIndex = 0;
         private Boolean simulateNetworkDelay;
         private Long networkDelay;
-        private String defaultQueryMockResponseId;
         private String defaultMockResponseId;
         private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<>();
         private String uri;

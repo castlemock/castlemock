@@ -17,7 +17,6 @@
 
 package com.castlemock.repository.soap.file.project;
 
-import com.castlemock.model.core.Saveable;
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.SearchValidator;
@@ -27,9 +26,11 @@ import com.castlemock.model.mock.soap.domain.SoapResourceType;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.core.file.FileRepositorySupport;
+import com.castlemock.repository.soap.file.project.converter.SoapResourceConverter;
+import com.castlemock.repository.soap.file.project.converter.SoapResourceFileConverter;
+import com.castlemock.repository.soap.file.project.model.SoapResourceFile;
 import com.castlemock.repository.soap.project.SoapResourceRepository;
 import com.google.common.base.Preconditions;
-import org.dozer.Mapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,16 +38,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @Profile(Profiles.FILE)
-public class SoapResourceFileRepository extends FileRepository<SoapResourceFileRepository.SoapResourceFile, SoapResource, String> implements SoapResourceRepository {
+public class SoapResourceFileRepository extends FileRepository<SoapResourceFile, SoapResource, String> implements SoapResourceRepository {
 
     private static final String WSDL_DIRECTORY = "wsdl";
     private static final String SCHEMA_DIRECTORY = "schema";
@@ -60,6 +61,11 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
 
     @Autowired
     private FileRepositorySupport fileRepositorySupport;
+
+    public SoapResourceFileRepository() {
+        super(SoapResourceFileConverter::toSoapResource, SoapResourceConverter::toSoapResourceFile);
+    }
+
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
      * where files should be saved and loaded from. The method is abstract and every subclass is responsible for
@@ -111,7 +117,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
         return this.collection.values()
                 .stream()
                 .filter(resource -> SearchValidator.validate(resource.getName(), query.getQuery()))
-                .map(resource -> mapper.map(resource, SoapResource.class))
+                .map(SoapResourceFileConverter::toSoapResource)
                 .toList();
     }
 
@@ -127,14 +133,11 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
 
     @Override
     public List<SoapResource> findWithProjectId(final String projectId) {
-        final List<SoapResource> resources = new ArrayList<>();
-        for(SoapResourceFile resourceFile : this.collection.values()){
-            if(resourceFile.getProjectId().equals(projectId)){
-                SoapResource resource = this.mapper.map(resourceFile, SoapResource.class);
-                resources.add(resource);
-            }
-        }
-        return resources;
+        return this.collection.values()
+                .stream()
+                .filter(resource -> resource.getProjectId().equals(projectId))
+                .map(SoapResourceFileConverter::toSoapResource)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -175,7 +178,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
         final SoapResource saveSoapResource = save(soapResource);
 
         if(resource != null) {
-            final SoapResourceFile resourceFile = mapper.map(soapResource, SoapResourceFile.class);
+            final SoapResourceFile resourceFile = SoapResourceConverter.toSoapResourceFile(soapResource);
             final StringBuilder path = new StringBuilder(this.fileDirectory)
                     .append(File.separator);
             if(SoapResourceType.WSDL.equals(resourceFile.getType())){
@@ -225,7 +228,9 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
             }
 
         }
-        return soapResource != null ? mapper.map(soapResource, SoapResource.class) : null;
+        return Optional.ofNullable(soapResource)
+                .map(SoapResourceFileConverter::toSoapResource)
+                .orElse(null);
     }
 
 
@@ -242,19 +247,13 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
     @Override
     public Collection<SoapResource> findSoapResources(final String soapProjectId, final SoapResourceType... types) {
         Preconditions.checkNotNull(soapProjectId, "Project id cannot be null");
-
-        final List<SoapResource> soapResources = new ArrayList<>();
-        for(SoapResourceFile soapResourceFile : this.collection.values()){
-            if(soapResourceFile.getProjectId().equals(soapProjectId)){
-                for(SoapResourceType type : types){
-                    if(type.equals(soapResourceFile.getType())){
-                        SoapResource soapResource = mapper.map(soapResourceFile, SoapResource.class);
-                        soapResources.add(soapResource);
-                    }
-                }
-            }
-        }
-        return soapResources;
+        return this.collection.values()
+                .stream()
+                .filter(resource -> resource.getProjectId().equals(soapProjectId))
+                .filter(resource -> Arrays.stream(types)
+                        .anyMatch(type -> resource.getType().equals(type)))
+                .map(SoapResourceFileConverter::toSoapResource)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -275,55 +274,6 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFileR
         return resourceFile.getProjectId();
     }
 
-    @XmlRootElement(name = "soapResource")
-    protected static class SoapResourceFile implements Saveable<String> {
 
-        @Mapping("id")
-        private String id;
-        @Mapping("name")
-        private String name;
-        @Mapping("projectId")
-        private String projectId;
-        @Mapping("type")
-        private SoapResourceType type;
-
-        @XmlElement
-        @Override
-        public String getId() {
-            return id;
-        }
-
-        @Override
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        @XmlElement
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @XmlElement
-        public SoapResourceType getType() {
-            return type;
-        }
-
-        public void setType(SoapResourceType type) {
-            this.type = type;
-        }
-
-        @XmlElement
-        public String getProjectId() {
-            return projectId;
-        }
-
-        public void setProjectId(String projectId) {
-            this.projectId = projectId;
-        }
-    }
 
 }

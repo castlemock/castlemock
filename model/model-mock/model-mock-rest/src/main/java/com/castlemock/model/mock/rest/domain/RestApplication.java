@@ -37,19 +37,21 @@ public class RestApplication {
     private String id;
     private String name;
     private String projectId;
-    private List<RestResource> resources = new CopyOnWriteArrayList<>();
-    private Map<RestMethodStatus, Integer> statusCount = new HashMap<>();
+    private List<RestResource> resources;
+    private Map<RestMethodStatus, Integer> statusCount;
 
     private RestApplication(){
 
     }
 
     private RestApplication(final Builder builder){
-        this.id = Objects.requireNonNull(builder.id);
-        this.name = Objects.requireNonNull(builder.name);
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.resources = Optional.ofNullable(builder.resources).orElseGet(CopyOnWriteArrayList::new);
-        this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(HashMap::new);
+        this.id = Objects.requireNonNull(builder.id, "id");
+        this.name = Objects.requireNonNull(builder.name, "name");
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.resources = Optional.ofNullable(builder.resources)
+                .orElseGet(List::of);
+        this.statusCount = Optional.ofNullable(builder.statusCount)
+                .orElseGet(Map::of);
     }
 
     @XmlElement
@@ -70,12 +72,12 @@ public class RestApplication {
     @XmlElementWrapper(name = "resources")
     @XmlElement(name = "resource")
     public List<RestResource> getResources() {
-        return resources;
+        return List.copyOf(resources);
     }
 
     @XmlTransient
     public Map<RestMethodStatus, Integer> getStatusCount() {
-        return statusCount;
+        return Map.copyOf(statusCount);
     }
 
     @Override

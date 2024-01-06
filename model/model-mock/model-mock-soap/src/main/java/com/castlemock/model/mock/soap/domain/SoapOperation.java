@@ -54,7 +54,7 @@ public class SoapOperation {
     private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<>();
     private String invokeAddress;
     private String defaultResponseName;
-    private boolean automaticForward;
+    private Boolean automaticForward;
 
     private SoapOperation(){
 
@@ -69,22 +69,22 @@ public class SoapOperation {
         this.status = Objects.requireNonNull(builder.status, "status");
         this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
         this.soapVersion = Objects.requireNonNull(builder.soapVersion, "soapVersion");
-        this.defaultBody = Objects.requireNonNull(builder.defaultBody, "defaultBody");
         this.currentResponseSequenceIndex = Objects.requireNonNull(builder.currentResponseSequenceIndex, "currentResponseSequenceIndex");
-        this.originalEndpoint = Objects.requireNonNull(builder.originalEndpoint, "originalEndpoint");
-        this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay, "simulateNetworkDelay");
         this.portId = Objects.requireNonNull(builder.portId, "portId");
-        this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure, "mockOnFailure");
         this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy, "identifyStrategy");
-        this.automaticForward = Objects.requireNonNull(builder.automaticForward, "automaticForward");
 
+        this.simulateNetworkDelay = builder.simulateNetworkDelay;
+        this.defaultBody = builder.defaultBody;
+        this.originalEndpoint = builder.originalEndpoint;
         this.forwardedEndpoint = builder.forwardedEndpoint;
         this.networkDelay = builder.networkDelay;
         this.defaultMockResponseId = builder.defaultMockResponseId;
         this.invokeAddress = builder.invokeAddress;
         this.defaultResponseName = builder.defaultResponseName;
+        this.mockOnFailure = builder.mockOnFailure;
+        this.automaticForward = builder.automaticForward;
         this.mockResponses = Optional.ofNullable(builder.mockResponses)
-                .orElseGet(CopyOnWriteArrayList::new);
+                .orElseGet(List::of);
     }
 
     @XmlElement
@@ -134,8 +134,8 @@ public class SoapOperation {
     }
 
     @XmlElement
-    public String getDefaultBody() {
-        return defaultBody;
+    public Optional<String> getDefaultBody() {
+        return Optional.ofNullable(defaultBody);
     }
 
     @XmlElement
@@ -159,8 +159,8 @@ public class SoapOperation {
     }
 
     @XmlElement
-    public String getOriginalEndpoint() {
-        return originalEndpoint;
+    public Optional<String> getOriginalEndpoint() {
+        return Optional.ofNullable(originalEndpoint);
     }
 
     @XmlElement
@@ -179,8 +179,8 @@ public class SoapOperation {
     }
 
     @XmlElement
-    public Boolean getMockOnFailure() {
-        return mockOnFailure;
+    public Optional<Boolean> getMockOnFailure() {
+        return Optional.ofNullable(mockOnFailure);
     }
 
     @XmlElement
@@ -193,8 +193,8 @@ public class SoapOperation {
         return Optional.ofNullable(defaultMockResponseId);
     }
 
-    public boolean getAutomaticForward() {
-        return automaticForward;
+    public Optional<Boolean> getAutomaticForward() {
+        return Optional.ofNullable(automaticForward);
     }
 
     @Override

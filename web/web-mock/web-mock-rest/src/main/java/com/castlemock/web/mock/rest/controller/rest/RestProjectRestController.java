@@ -81,7 +81,7 @@ public class RestProjectRestController extends AbstractRestController {
     public RestProjectRestController(final ServiceProcessor serviceProcessor,
                                      final FileManager fileManager){
         super(serviceProcessor);
-        this.fileManager = Objects.requireNonNull(fileManager);
+        this.fileManager = Objects.requireNonNull(fileManager, "fileManager");
     }
 
     @Operation(summary =  "Get REST Project")
@@ -110,7 +110,7 @@ public class RestProjectRestController extends AbstractRestController {
     public @ResponseBody ResponseEntity<RestProject> createRestProject(@RequestBody final CreateProjectRequest request) {
         final CreateRestProjectOutput output = super.serviceProcessor.process(CreateRestProjectInput.builder()
                 .name(request.getName())
-                .description(request.getDescription())
+                .description(request.getDescription().orElse(null))
                 .build());
 
         return ResponseEntity.ok(output.getSavedRestProject());
@@ -130,7 +130,7 @@ public class RestProjectRestController extends AbstractRestController {
         final UpdateRestProjectOutput output = super.serviceProcessor.process(UpdateRestProjectInput.builder()
                 .projectId(projectId)
                 .name(request.getName())
-                .description(request.getDescription())
+                .description(request.getDescription().orElse(null))
                 .build());
         return ResponseEntity.ok(output.getUpdatedRestProject());
     }
@@ -245,7 +245,7 @@ public class RestProjectRestController extends AbstractRestController {
      */
     @Operation(summary =  "Import project",
             description = "Import project. Required authorization: Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/import")
+    @RequestMapping(method = RequestMethod.POST, value = "/project/import")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Project> importProject(

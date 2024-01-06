@@ -31,7 +31,7 @@ public final class ExportRestProjectInput implements Input {
     private final String restProjectId;
 
     private ExportRestProjectInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
+        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
     }
 
     public String getRestProjectId() {

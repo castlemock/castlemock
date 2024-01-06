@@ -35,9 +35,9 @@ public final class UpdateSoapPortInput implements Input {
     private final String uri;
 
     public UpdateSoapPortInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.uri = Objects.requireNonNull(builder.uri);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.uri = Objects.requireNonNull(builder.uri, "uri");
     }
 
     public String getProjectId() {

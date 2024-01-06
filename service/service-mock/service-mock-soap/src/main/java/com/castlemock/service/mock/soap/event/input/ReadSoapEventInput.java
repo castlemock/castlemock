@@ -18,6 +18,8 @@ package com.castlemock.service.mock.soap.event.input;
 
 import com.castlemock.model.core.Input;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -26,8 +28,8 @@ public final class ReadSoapEventInput implements Input {
 
     private final String soapEventId;
 
-    private ReadSoapEventInput(String soapEventId) {
-        this.soapEventId = soapEventId;
+    private ReadSoapEventInput(final Builder builder) {
+        this.soapEventId = Objects.requireNonNull(builder.soapEventId, "soapEventId");
     }
 
     public String getSoapEventId() {
@@ -48,7 +50,7 @@ public final class ReadSoapEventInput implements Input {
         }
 
         public ReadSoapEventInput build(){
-            return new ReadSoapEventInput(soapEventId);
+            return new ReadSoapEventInput(this);
         }
 
     }

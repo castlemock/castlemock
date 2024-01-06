@@ -45,15 +45,15 @@ public class User {
     }
 
     private User(final Builder builder){
-        this.id = Objects.requireNonNull(builder.id);
-        this.username = Objects.requireNonNull(builder.username);
-        this.password = Objects.requireNonNull(builder.password);
+        this.id = Objects.requireNonNull(builder.id, "id");
+        this.username = Objects.requireNonNull(builder.username, "username");
+        this.password = Objects.requireNonNull(builder.password, "password");
         this.email = builder.email;
         this.fullName = builder.fullName;
-        this.updated = Objects.requireNonNull(builder.updated);
-        this.created = Objects.requireNonNull(builder.created);
-        this.status = Objects.requireNonNull(builder.status);
-        this.role = Objects.requireNonNull(builder.role);
+        this.updated = Objects.requireNonNull(builder.updated, "updated");
+        this.created = Objects.requireNonNull(builder.created, "created");
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.role = Objects.requireNonNull(builder.role, "role");
     }
 
     /**

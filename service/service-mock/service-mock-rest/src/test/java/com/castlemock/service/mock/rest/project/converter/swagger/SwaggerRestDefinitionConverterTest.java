@@ -96,7 +96,7 @@ public class SwaggerRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(200), response200Xml.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response200Xml.getStatus());
-            Assert.assertTrue(response200Xml.isUsingExpressions());
+            Assert.assertTrue(response200Xml.getUsingExpressions());
             Assert.assertTrue(response200Xml.getContentEncodings().isEmpty());
             Assert.assertEquals(1, response200Xml.getHttpHeaders().size());
             Assert.assertEquals("Content-Type", response200Xml.getHttpHeaders().getFirst().getName());
@@ -116,7 +116,7 @@ public class SwaggerRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(200), response200Json.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response200Json.getStatus());
-            Assert.assertTrue(response200Json.isUsingExpressions());
+            Assert.assertTrue(response200Json.getUsingExpressions());
             Assert.assertTrue(response200Json.getContentEncodings().isEmpty());
             Assert.assertEquals(1, response200Json.getHttpHeaders().size());
             Assert.assertEquals("Content-Type", response200Json.getHttpHeaders().getFirst().getName());
@@ -134,7 +134,7 @@ public class SwaggerRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.isUsingExpressions());
+            Assert.assertTrue(invalidMockResponse.getUsingExpressions());
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
@@ -149,7 +149,7 @@ public class SwaggerRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
-            Assert.assertTrue(notFoundResponse.isUsingExpressions());
+            Assert.assertTrue(notFoundResponse.getUsingExpressions());
             Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
@@ -188,7 +188,7 @@ public class SwaggerRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.isUsingExpressions());
+            Assert.assertTrue(invalidMockResponse.getUsingExpressions());
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
@@ -280,7 +280,7 @@ public class SwaggerRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(200), response200Xml.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response200Xml.getStatus());
-            Assert.assertTrue(response200Xml.isUsingExpressions());
+            Assert.assertTrue(response200Xml.getUsingExpressions());
             Assert.assertTrue(response200Xml.getContentEncodings().isEmpty());
             Assert.assertEquals(1, response200Xml.getHttpHeaders().size());
             Assert.assertEquals("Content-Type", response200Xml.getHttpHeaders().getFirst().getName());
@@ -300,7 +300,7 @@ public class SwaggerRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(200), response200Json.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response200Json.getStatus());
-            Assert.assertTrue(response200Json.isUsingExpressions());
+            Assert.assertTrue(response200Json.getUsingExpressions());
             Assert.assertTrue(response200Json.getContentEncodings().isEmpty());
             Assert.assertEquals(1, response200Json.getHttpHeaders().size());
             Assert.assertEquals("Content-Type", response200Json.getHttpHeaders().getFirst().getName());
@@ -318,7 +318,7 @@ public class SwaggerRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.isUsingExpressions());
+            Assert.assertTrue(invalidMockResponse.getUsingExpressions());
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
@@ -333,7 +333,7 @@ public class SwaggerRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
-            Assert.assertTrue(notFoundResponse.isUsingExpressions());
+            Assert.assertTrue(notFoundResponse.getUsingExpressions());
             Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
@@ -372,7 +372,7 @@ public class SwaggerRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.isUsingExpressions());
+            Assert.assertTrue(invalidMockResponse.getUsingExpressions());
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
@@ -387,7 +387,7 @@ public class SwaggerRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
-            Assert.assertTrue(notFoundResponse.isUsingExpressions());
+            Assert.assertTrue(notFoundResponse.getUsingExpressions());
             Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
@@ -425,7 +425,7 @@ public class SwaggerRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
-            Assert.assertTrue(notFoundResponse.isUsingExpressions());
+            Assert.assertTrue(notFoundResponse.getUsingExpressions());
             Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {

@@ -22,13 +22,15 @@ import com.castlemock.model.core.SearchValidator;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.project.AbstractProjectFileRepository;
+import com.castlemock.repository.rest.file.project.converter.RestProjectConverter;
+import com.castlemock.repository.rest.file.project.converter.RestProjectFileConverter;
+import com.castlemock.repository.rest.file.project.model.RestProjectFile;
 import com.castlemock.repository.rest.project.RestProjectRepository;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,12 +44,16 @@ import java.util.Optional;
  */
 @Repository
 @Profile(Profiles.FILE)
-public class RestProjectFileRepository extends AbstractProjectFileRepository<RestProjectFileRepository.RestProjectFile, RestProject> implements RestProjectRepository {
+public class RestProjectFileRepository extends AbstractProjectFileRepository<RestProjectFile, RestProject> implements RestProjectRepository {
 
     @Value(value = "${rest.project.file.directory}")
     private String restProjectFileDirectory;
     @Value(value = "${rest.project.file.extension}")
     private String restProjectFileExtension;
+
+    public RestProjectFileRepository() {
+        super(RestProjectFileConverter::toRestProject, RestProjectConverter::toRestProjectFile);
+    }
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -120,7 +126,7 @@ public class RestProjectFileRepository extends AbstractProjectFileRepository<Res
         return collection.values()
                 .stream()
                 .filter(project -> SearchValidator.validate(project.getName(), query.getQuery()))
-                .map(project ->  mapper.map(project, RestProject.class))
+                .map(RestProjectFileConverter::toRestProject)
                 .toList();
     }
 
@@ -134,18 +140,11 @@ public class RestProjectFileRepository extends AbstractProjectFileRepository<Res
     public Optional<RestProject> findRestProjectWithName(final String restProjectName) {
         Preconditions.checkNotNull(restProjectName, "Project name cannot be null");
         Preconditions.checkArgument(!restProjectName.isEmpty(), "Project name cannot be empty");
-        for(RestProjectFile restProject : collection.values()){
-            if(restProject.getName().equalsIgnoreCase(restProjectName)) {
-                return Optional.ofNullable(mapper.map(restProject, RestProject.class));
-            }
-        }
-        return Optional.empty();
+        return collection.values()
+                .stream()
+                .filter(project -> project.getName().equalsIgnoreCase(restProjectName))
+                .map(RestProjectFileConverter::toRestProject)
+                .findFirst();
     }
-
-    @XmlRootElement(name = "restProject")
-    protected static class RestProjectFile extends AbstractProjectFileRepository.ProjectFile {
-
-    }
-
 
 }

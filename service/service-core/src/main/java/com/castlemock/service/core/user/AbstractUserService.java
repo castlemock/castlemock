@@ -133,7 +133,7 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
             userBuilder.password((PASSWORD_ENCODER.encode(updatedUser.getPassword())));
         }
         final User savedUser = super.save(userBuilder.build());
-        sessionTokenRepository.updateToken(oldUsername, user.getUsername());
+        sessionTokenRepository.updateToken(oldUsername, savedUser.getUsername());
         return Optional.of(savedUser);
     }
 

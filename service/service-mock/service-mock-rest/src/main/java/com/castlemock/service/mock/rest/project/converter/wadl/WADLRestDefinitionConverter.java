@@ -70,37 +70,26 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
      */
     @Override
     public List<RestApplication> convert(final File file, final String projectId, final boolean generateResponse){
-        List<RestApplication> applications = new LinkedList<>();
+        final List<RestApplication> applications = new LinkedList<>();
         try {
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            Document document = documentBuilder.parse(file);
+            final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            final Document document = documentBuilder.parse(file);
             document.getDocumentElement().normalize();
 
-            List<Element> applicationElements = getApplications(document);
-
+            final String applicationId = IdUtility.generateId();
+            final List<Element> applicationElements = getApplications(document);
             for(Element applicationElement : applicationElements){
                 final String applicationName = file.getName().replace(".wadl", "");
                 final Optional<String> baseUri = getResourceBase(applicationElement);
-                final RestApplication restApplication = RestApplication.builder()
-                        .name(applicationName)
-                        .id(IdUtility.generateId())
-                        .projectId(projectId)
-                        .build();
-                applications.add(restApplication);
 
                 final List<Element> resourceElements = getResources(applicationElement);
+                final List<RestResource> resources = new ArrayList<>();
                 for(Element resourceElement : resourceElements){
+                    final String resourceId = IdUtility.generateId();
                     final String resourceName = resourceElement.getAttribute("path");
-                    final RestResource restResource = RestResource.builder()
-                            .id(IdUtility.generateId())
-                            .applicationId(restApplication.getId())
-                            .name(resourceName)
-                            .uri(baseUri.orElse("") + resourceName)
-                            .build();
-                    restApplication.getResources().add(restResource);
-
                     final List<Element> methodElements = getMethods(resourceElement);
+                    final List<RestMethod> methods = new ArrayList<>();
                     for(Element methodElement : methodElements){
                         final String methodName = methodElement.getAttribute("id");
                         final String methodType = methodElement.getAttribute("name");
@@ -111,9 +100,9 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
                             mockResponses.add(generateResponse(methodId));
                         }
 
-                        restResource.getMethods().add(RestMethod.builder()
+                        methods.add(RestMethod.builder()
                                 .id(methodId)
-                                .resourceId(restResource.getId())
+                                .resourceId(resourceId)
                                 .name(methodName)
                                 .httpMethod(HttpMethod.valueOf(methodType))
                                 .status(RestMethodStatus.MOCKED)
@@ -123,7 +112,21 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
                                 .automaticForward(false)
                                 .build());
                     }
+                    resources.add(RestResource.builder()
+                            .id(resourceId)
+                            .applicationId(applicationId)
+                            .name(resourceName)
+                            .uri(baseUri.orElse("") + resourceName)
+                            .methods(methods)
+                            .build());
                 }
+
+                applications.add(RestApplication.builder()
+                        .name(applicationName)
+                        .id(applicationId)
+                        .projectId(projectId)
+                        .resources(resources)
+                        .build());
             }
         } catch (Exception e) {
             throw new IllegalArgumentException("Unable parse WADL file", e);

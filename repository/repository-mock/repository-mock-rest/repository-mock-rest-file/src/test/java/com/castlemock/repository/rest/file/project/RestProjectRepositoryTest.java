@@ -20,6 +20,7 @@ package com.castlemock.repository.rest.file.project;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.model.mock.rest.domain.RestProjectTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
+import com.castlemock.repository.rest.file.project.model.RestProjectFile;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,7 +65,7 @@ public class RestProjectRepositoryTest {
         restProjects.add(restProject);
         Mockito.when(fileRepositorySupport.load(RestProject.class, DIRECTORY, EXTENSION)).thenReturn(restProjects);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(RestProjectFileRepository.RestProjectFile.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(RestProjectFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test
@@ -89,7 +90,7 @@ public class RestProjectRepositoryTest {
     @Test
     public void testSave(){
         final RestProject restProject = save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(RestProjectFileRepository.RestProjectFile.class), Mockito.anyString());
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(RestProjectFile.class), Mockito.anyString());
     }
 
     @Test

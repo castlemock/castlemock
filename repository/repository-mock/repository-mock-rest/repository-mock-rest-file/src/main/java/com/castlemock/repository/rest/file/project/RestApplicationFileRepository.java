@@ -16,7 +16,6 @@
 
 package com.castlemock.repository.rest.file.project;
 
-import com.castlemock.model.core.Saveable;
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.SearchValidator;
@@ -24,25 +23,29 @@ import com.castlemock.model.mock.rest.domain.RestApplication;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.rest.file.project.converter.RestApplicationConverter;
+import com.castlemock.repository.rest.file.project.converter.RestApplicationFileConverter;
+import com.castlemock.repository.rest.file.project.model.RestApplicationFile;
 import com.castlemock.repository.rest.project.RestApplicationRepository;
-import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
 @Profile(Profiles.FILE)
-public class RestApplicationFileRepository extends FileRepository<RestApplicationFileRepository.RestApplicationFile, RestApplication, String> implements RestApplicationRepository {
+public class RestApplicationFileRepository extends FileRepository<RestApplicationFile, RestApplication, String> implements RestApplicationRepository {
 
     @Value(value = "${rest.application.file.directory}")
     private String fileDirectory;
     @Value(value = "${rest.application.file.extension}")
     private String fileExtension;
+
+    public RestApplicationFileRepository() {
+        super(RestApplicationFileConverter::toRestApplication, RestApplicationConverter::toRestApplicationFile);
+    }
 
 
     /**
@@ -96,7 +99,7 @@ public class RestApplicationFileRepository extends FileRepository<RestApplicatio
         return this.collection.values()
                .stream()
                .filter(application -> SearchValidator.validate(application.getName(), query.getQuery()))
-               .map(application -> mapper.map(application, RestApplication.class))
+               .map(RestApplicationFileConverter::toRestApplication)
                .collect(Collectors.toList());
     }
 
@@ -128,7 +131,7 @@ public class RestApplicationFileRepository extends FileRepository<RestApplicatio
         return this.collection.values()
                 .stream()
                 .filter(application -> application.getProjectId().equals(projectId))
-                .map(application -> this.mapper.map(application, RestApplication.class))
+                .map(RestApplicationFileConverter::toRestApplication)
                 .collect(Collectors.toList());
     }
 
@@ -150,45 +153,6 @@ public class RestApplicationFileRepository extends FileRepository<RestApplicatio
         return applicationFile.getProjectId();
     }
 
-    @XmlRootElement(name = "restApplication")
-    protected static class RestApplicationFile implements Saveable<String> {
 
-        @Mapping("id")
-        private String id;
-        @Mapping("name")
-        private String name;
-        @Mapping("projectId")
-        private String projectId;
-
-        @Override
-        @XmlElement
-        public String getId() {
-            return id;
-        }
-
-        @Override
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        @XmlElement
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @XmlElement
-        public String getProjectId() {
-            return projectId;
-        }
-
-        public void setProjectId(String projectId) {
-            this.projectId = projectId;
-        }
-
-    }
 
 }

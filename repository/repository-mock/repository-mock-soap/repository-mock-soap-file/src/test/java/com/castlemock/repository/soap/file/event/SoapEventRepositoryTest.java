@@ -19,6 +19,7 @@ package com.castlemock.repository.soap.file.event;
 import com.castlemock.model.mock.soap.domain.SoapEvent;
 import com.castlemock.model.mock.soap.domain.SoapEventTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
+import com.castlemock.repository.soap.file.event.model.SoapEventFile;
 import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -63,7 +64,7 @@ public class SoapEventRepositoryTest {
         soapEvents.add(soapEvent);
         Mockito.when(fileRepositorySupport.load(SoapEvent.class, DIRECTORY, EXTENSION)).thenReturn(soapEvents);
         repository.initialize();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(SoapEventFileRepository.SoapEventFile.class, DIRECTORY, EXTENSION);
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).load(SoapEventFile.class, DIRECTORY, EXTENSION);
     }
 
     @Test
@@ -95,7 +96,7 @@ public class SoapEventRepositoryTest {
     @Test
     public void testSave(){
         save();
-        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(SoapEventFileRepository.SoapEventFile.class), Mockito.anyString());
+        Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(SoapEventFile.class), Mockito.anyString());
     }
 
     @Test

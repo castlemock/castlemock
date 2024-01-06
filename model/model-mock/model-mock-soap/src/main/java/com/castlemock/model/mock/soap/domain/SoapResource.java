@@ -42,8 +42,8 @@ public class SoapResource {
         this.id = Objects.requireNonNull(builder.id, "id");
         this.name = Objects.requireNonNull(builder.name, "name");
         this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
-        this.content = builder.content;
         this.type = Objects.requireNonNull(builder.type, "type");
+        this.content = builder.content;
     }
 
     @XmlElement

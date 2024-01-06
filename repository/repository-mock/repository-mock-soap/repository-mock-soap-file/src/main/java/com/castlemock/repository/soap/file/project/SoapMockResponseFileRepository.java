@@ -17,39 +17,39 @@
 
 package com.castlemock.repository.soap.file.project;
 
-import com.castlemock.model.core.Saveable;
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.SearchValidator;
 import com.castlemock.model.core.http.ContentEncoding;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
-import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
+import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
+import com.castlemock.repository.soap.file.project.converter.SoapMockResponseConverter;
+import com.castlemock.repository.soap.file.project.converter.SoapMockResponseFileConverter;
+import com.castlemock.repository.soap.file.project.model.SoapMockResponseFile;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
-import org.dozer.Mapping;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 @Repository
 @Profile(Profiles.FILE)
-public class SoapMockResponseFileRepository extends FileRepository<SoapMockResponseFileRepository.SoapMockResponseFile, SoapMockResponse, String> implements SoapMockResponseRepository {
+public class SoapMockResponseFileRepository extends FileRepository<SoapMockResponseFile, SoapMockResponse, String> implements SoapMockResponseRepository {
 
     @Value(value = "${soap.response.file.directory}")
     private String fileDirectory;
     @Value(value = "${soap.response.file.extension}")
     private String fileExtension;
+
+    public SoapMockResponseFileRepository() {
+        super(SoapMockResponseFileConverter::toSoapMockResponse, SoapMockResponseConverter::toSoapMockResponseFile);
+    }
 
     /**
      * The method returns the directory for the specific file repository. The directory will be used to indicate
@@ -129,14 +129,11 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
      */
     @Override
     public List<SoapMockResponse> search(final SearchQuery query) {
-        final List<SoapMockResponse> result = new LinkedList<>();
-        for(SoapMockResponseFile soapMockResponseFile : collection.values()){
-            if(SearchValidator.validate(soapMockResponseFile.getName(), query.getQuery())){
-                SoapMockResponse mockResponse = mapper.map(soapMockResponseFile, SoapMockResponse.class);
-                result.add(mockResponse);
-            }
-        }
-        return result;
+        return this.collection.values()
+                .stream()
+                .filter(mockResponse -> SearchValidator.validate(mockResponse.getName(), query.getQuery()))
+                .map(SoapMockResponseFileConverter::toSoapMockResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -154,7 +151,7 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         return this.collection.values()
                 .stream()
                 .filter(mockResponse -> mockResponse.getOperationId().equals(operationId))
-                .map(mockResponse -> this.mapper.map(mockResponse, SoapMockResponse.class))
+                .map(SoapMockResponseFileConverter::toSoapMockResponse)
                 .toList();
     }
 
@@ -176,155 +173,4 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
         return mockResponse.getOperationId();
     }
 
-    @XmlRootElement(name = "soapMockResponse")
-    @XmlSeeAlso({HttpHeaderFile.class, SoapXPathExpressionFile.class})
-    public static class SoapMockResponseFile implements Saveable<String> {
-
-        @Mapping("id")
-        private String id;
-        @Mapping("name")
-        private String name;
-        @Mapping("body")
-        private String body;
-        @Mapping("operationId")
-        private String operationId;
-        @Mapping("status")
-        private SoapMockResponseStatus status;
-        @Mapping("httpStatusCode")
-        private Integer httpStatusCode;
-        @Mapping("usingExpressions")
-        private boolean usingExpressions;
-        @Mapping("httpHeaders")
-        private List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<>();
-        @Mapping("contentEncodings")
-        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
-        @Mapping("xpathExpressions")
-        private List<SoapXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<>();
-
-        @XmlElement
-        @Override
-        public String getId() {
-            return id;
-        }
-
-        @Override
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        @XmlElement
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        @XmlElement
-        public String getBody() {
-            return body;
-        }
-
-        public void setBody(String body) {
-            this.body = body;
-        }
-
-        @XmlElement
-        public String getOperationId() {
-            return operationId;
-        }
-
-        public void setOperationId(String operationId) {
-            this.operationId = operationId;
-        }
-
-        @XmlElement
-        public SoapMockResponseStatus getStatus() {
-            return status;
-        }
-
-        public void setStatus(SoapMockResponseStatus status) {
-            this.status = status;
-        }
-
-        @XmlElement
-        public Integer getHttpStatusCode() {
-            return httpStatusCode;
-        }
-
-        public void setHttpStatusCode(Integer httpStatusCode) {
-            this.httpStatusCode = httpStatusCode;
-        }
-
-        @XmlElement
-        public boolean isUsingExpressions() {
-            return usingExpressions;
-        }
-
-        public void setUsingExpressions(boolean usingExpressions) {
-            this.usingExpressions = usingExpressions;
-        }
-
-        @XmlElementWrapper(name = "httpHeaders")
-        @XmlElement(name = "httpHeader")
-        public List<HttpHeaderFile> getHttpHeaders() {
-            return httpHeaders;
-        }
-
-        public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
-            this.httpHeaders = httpHeaders;
-        }
-
-        @XmlElementWrapper(name = "contentEncodings")
-        @XmlElement(name = "contentEncoding")
-        public List<ContentEncoding> getContentEncodings() {
-            return contentEncodings;
-        }
-
-        public void setContentEncodings(List<ContentEncoding> contentEncodings) {
-            this.contentEncodings = contentEncodings;
-        }
-
-        @XmlElementWrapper(name = "xpathExpressions")
-        @XmlElement(name = "xpathExpression")
-        public List<SoapXPathExpressionFile> getXpathExpressions() {
-            return xpathExpressions;
-        }
-
-        public void setXpathExpressions(List<SoapXPathExpressionFile> xpathExpressions) {
-            this.xpathExpressions = xpathExpressions;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o)
-                return true;
-            if (!(o instanceof SoapMockResponseFile that))
-                return false;
-
-            return Objects.equals(id, that.id);
-        }
-
-        @Override
-        public int hashCode() {
-            return id != null ? id.hashCode() : 0;
-        }
-    }
-
-    @XmlRootElement(name = "soapXPathExpression")
-    public static class SoapXPathExpressionFile {
-
-        private String expression;
-
-        @XmlElement
-        public String getExpression() {
-            return expression;
-        }
-
-        public void setExpression(String expression) {
-            this.expression = expression;
-        }
-
-    }
 }

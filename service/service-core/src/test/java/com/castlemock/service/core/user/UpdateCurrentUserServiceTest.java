@@ -85,7 +85,7 @@ public class UpdateCurrentUserServiceTest {
 
         Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
         Mockito.when(repository.findAll()).thenReturn(users);
-        Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(user);
+        Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(updatedUser);
         final UpdateCurrentUserInput input = UpdateCurrentUserInput.builder()
                 .fullName(updatedUser.getFullName()
                         .orElse(null))
@@ -102,7 +102,7 @@ public class UpdateCurrentUserServiceTest {
         final User returnedUser = output.getUpdatedUser();
         Assert.assertNotNull(returnedUser);
         Assert.assertEquals(updatedUser.getId(), returnedUser.getId());
-        Assert.assertNotEquals(updatedUser.getPassword(), returnedUser.getPassword());
+        Assert.assertEquals(updatedUser.getPassword(), returnedUser.getPassword());
         Assert.assertNotEquals(encodedPassword, returnedUser.getPassword());
         Assert.assertEquals(updatedUser.getEmail(), returnedUser.getEmail());
         Assert.assertEquals(updatedUser.getRole(), returnedUser.getRole());

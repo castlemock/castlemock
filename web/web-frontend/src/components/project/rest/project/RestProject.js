@@ -170,7 +170,7 @@ class RestProject extends PureComponent {
 
     onExportProjectClick() {
         axios({
-            url:  process.env.PUBLIC_URL + "/api/rest/core/project/rest/" + this.state.projectId + "/export",
+            url:  process.env.PUBLIC_URL + "/api/rest/rest/project/rest/" + this.state.projectId + "/export",
             method: 'GET',
             responseType: 'blob'
         }).then((response) => {

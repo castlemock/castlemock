@@ -353,7 +353,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
 
         SoapMockResponse mockResponse = null;
         if (mockResponses.isEmpty()) {
-            if (soapOperation.getAutomaticForward() && soapOperation.getForwardedEndpoint().isPresent()) {
+            if (soapOperation.getAutomaticForward().orElse(false) && soapOperation.getForwardedEndpoint().isPresent()) {
                 return forwardRequest(request, soapProjectId, soapPortId, soapOperation, httpServletRequest);
             }
         } else if (soapOperation.getResponseStrategy().equals(SoapResponseStrategy.RANDOM)) {
@@ -386,7 +386,8 @@ public abstract class AbstractSoapServiceController extends AbstractController {
                 LOGGER.info("Unable to match the input XPath to a response");
                 mockResponse = this.getDefaultMockResponse(soapOperation, mockResponses).orElse(null);
 
-                if (mockResponse == null && soapOperation.getAutomaticForward() && soapOperation.getForwardedEndpoint().isPresent()) {
+                if (mockResponse == null && soapOperation.getAutomaticForward().orElse(false
+                ) && soapOperation.getForwardedEndpoint().isPresent()) {
                     return forwardRequest(request, soapProjectId, soapPortId, soapOperation, httpServletRequest);
                 }
             }
@@ -397,7 +398,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
         }
 
         String body = mockResponse.getBody();
-        if (mockResponse.isUsingExpressions()) {
+        if (mockResponse.getUsingExpressions()) {
 
             final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder()
                     .requestUrl(httpServletRequest.getRequestURL().toString())
@@ -452,7 +453,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
             if (response.getHttpStatusCode() >= ERROR_CODE) {
                 // Check if the response code is an error code
                 // If so, then we should check if we should mock instead.
-                if (soapOperation.getMockOnFailure()) {
+                if (soapOperation.getMockOnFailure().orElse(false)) {
                     // Instead of using the forwarded
                     LOGGER.debug("SOAP Operation with the following id has been configured" +
                             " to mock response upon error: " + soapOperation.getId());
@@ -490,7 +491,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
 
             return response;
         } else {
-            if (soapOperation.getMockOnFailure()) {
+            if (soapOperation.getMockOnFailure().orElse(false)) {
                 LOGGER.debug("SOAP Operation with the following id has been configured" +
                         " to mock response upon error: " + soapOperation.getId());
                 return this.mockResponse(request, soapProjectId, soapPortId, soapOperation, httpServletRequest);

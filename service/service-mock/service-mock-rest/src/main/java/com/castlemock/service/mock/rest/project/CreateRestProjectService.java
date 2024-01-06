@@ -47,7 +47,7 @@ public class CreateRestProjectService extends AbstractRestProjectService impleme
         final RestProject restProject = RestProject.builder()
                 .id(IdUtility.generateId())
                 .name(input.getName())
-                .description(input.getDescription())
+                .description(input.getDescription().orElse(null))
                 .created(new Date())
                 .updated(new Date())
                 .build();
