@@ -41,7 +41,7 @@ public class SoapMockResponse {
     private String operationId;
     private SoapMockResponseStatus status;
     private Integer httpStatusCode;
-    private boolean usingExpressions;
+    private Boolean usingExpressions;
     private List<HttpHeader> httpHeaders;
     private List<ContentEncoding> contentEncodings;
     private List<SoapXPathExpression> xpathExpressions;
@@ -57,7 +57,7 @@ public class SoapMockResponse {
         this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
         this.status = Objects.requireNonNull(builder.status, "status");
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
-        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions, "usingExpressions");
+        this.usingExpressions = builder.usingExpressions;
         this.httpHeaders = Optional.ofNullable(builder.httpHeaders)
                 .orElseGet(List::of);
         this.contentEncodings = Optional.ofNullable(builder.contentEncodings)
@@ -97,8 +97,8 @@ public class SoapMockResponse {
     }
 
     @XmlElement
-    public boolean getUsingExpressions() {
-        return usingExpressions;
+    public Optional<Boolean> getUsingExpressions() {
+        return Optional.ofNullable(usingExpressions);
     }
 
     @XmlElementWrapper(name = "httpHeaders")

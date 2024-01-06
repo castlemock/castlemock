@@ -398,7 +398,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
         }
 
         String body = mockResponse.getBody();
-        if (mockResponse.getUsingExpressions()) {
+        if (mockResponse.getUsingExpressions().orElse(false)) {
 
             final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder()
                     .requestUrl(httpServletRequest.getRequestURL().toString())

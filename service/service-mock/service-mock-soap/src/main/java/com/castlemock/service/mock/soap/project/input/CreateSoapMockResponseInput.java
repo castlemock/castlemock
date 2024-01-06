@@ -42,7 +42,7 @@ public final class CreateSoapMockResponseInput implements Input {
     private final String name;
     @NotNull
     private final SoapMockResponseStatus status;
-    @NotNull
+
     private final String body;
     @NotNull
     private final Integer httpStatusCode;

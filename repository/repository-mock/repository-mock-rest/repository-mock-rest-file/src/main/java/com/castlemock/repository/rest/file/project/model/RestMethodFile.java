@@ -144,11 +144,11 @@ public class RestMethodFile implements Saveable<String> {
     }
 
     @XmlElement
-    public boolean getSimulateNetworkDelay() {
+    public Boolean getSimulateNetworkDelay() {
         return simulateNetworkDelay;
     }
 
-    public void setSimulateNetworkDelay(boolean simulateNetworkDelay) {
+    public void setSimulateNetworkDelay(Boolean simulateNetworkDelay) {
         this.simulateNetworkDelay = simulateNetworkDelay;
     }
 
@@ -175,7 +175,7 @@ public class RestMethodFile implements Saveable<String> {
         return automaticForward;
     }
 
-    public void setAutomaticForward(boolean automaticForward) {
+    public void setAutomaticForward(Boolean automaticForward) {
         this.automaticForward = automaticForward;
     }
 

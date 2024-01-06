@@ -23,12 +23,6 @@ import java.util.List;
 
 public interface RestMockResponseRepository extends Repository<RestMockResponse, String> {
 
-    /**
-     * Delete all {@link RestMockResponse} that matches the provided
-     * <code>methodId</code>.
-     * @param methodId The id of the method.
-     */
-    void deleteWithMethodId(String methodId);
 
     /**
      * Find all {@link RestMockResponse} that matches the provided

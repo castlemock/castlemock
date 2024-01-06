@@ -132,22 +132,6 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
     }
 
     /**
-     * Delete all {@link RestMockResponseFile} that matches the provided
-     * <code>methodId</code>.
-     *
-     * @param methodId The id of the method.
-     */
-    @Override
-    public void deleteWithMethodId(final String methodId) {
-        this.collection.values()
-                .stream()
-                .filter(mockResponse -> mockResponse.getMethodId().equals(methodId))
-                .map(RestMockResponseFile::getId)
-                .toList()
-                .forEach(this::delete);
-    }
-
-    /**
      * Find all {@link RestMockResponse} that matches the provided
      * <code>methodId</code>.
      *
@@ -180,14 +164,5 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
         }
         return mockResponseFile.getMethodId();
     }
-
-
-
-
-
-
-
-
-
 
 }

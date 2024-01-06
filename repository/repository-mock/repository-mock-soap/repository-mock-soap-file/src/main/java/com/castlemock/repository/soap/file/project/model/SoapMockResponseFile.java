@@ -51,7 +51,7 @@ public class SoapMockResponseFile implements Saveable<String> {
         this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
         this.status = Objects.requireNonNull(builder.status, "status");
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
-        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions, "usingExpressions");
+        this.usingExpressions = builder.usingExpressions;
         this.httpHeaders = Optional.ofNullable(builder.httpHeaders)
                 .orElseGet(List::of);
         this.contentEncodings = Optional.ofNullable(builder.contentEncodings)
@@ -219,7 +219,7 @@ public class SoapMockResponseFile implements Saveable<String> {
             return this;
         }
 
-        public Builder usingExpressions(boolean usingExpressions) {
+        public Builder usingExpressions(Boolean usingExpressions) {
             this.usingExpressions = usingExpressions;
             return this;
         }

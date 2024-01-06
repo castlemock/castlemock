@@ -64,7 +64,8 @@ public class UpdateSoapMockResponseServiceTest {
                 .httpStatusCode(mockResponse.getHttpStatusCode())
                 .name(mockResponse.getName())
                 .status(mockResponse.getStatus())
-                .usingExpressions(mockResponse.getUsingExpressions())
+                .usingExpressions(mockResponse.getUsingExpressions()
+                        .orElse(null))
                 .xpathExpressions(mockResponse.getXpathExpressions())
                 .build();
         final ServiceTask<UpdateSoapMockResponseInput> serviceTask = ServiceTask.of(input, "user");

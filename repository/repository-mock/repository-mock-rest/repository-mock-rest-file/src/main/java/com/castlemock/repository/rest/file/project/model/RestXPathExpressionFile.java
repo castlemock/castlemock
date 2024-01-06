@@ -9,6 +9,10 @@ public class RestXPathExpressionFile {
 
     private String expression;
 
+    private RestXPathExpressionFile() {
+
+    }
+
     private RestXPathExpressionFile(final Builder builder) {
         this.expression = Objects.requireNonNull(builder.expression, "expression");
     }
