@@ -46,7 +46,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * The {@link OpenApiRestDefinitionConverter} provides OpenAPI V3 related functionality.
@@ -211,7 +210,7 @@ public class OpenApiRestDefinitionConverter extends AbstractRestDefinitionConver
         }
 
         final List<RestMockResponse> mockResponses = new ArrayList<>();
-        final String methodId = UUID.randomUUID().toString();
+        final String methodId = IdUtility.generateId();
         if (generateResponse) {
             if (ObjectUtils.isNotEmpty(operation.getResponses())) {
                 mockResponses.addAll(generateResponse(operation.getResponses(), methodId));

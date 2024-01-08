@@ -68,12 +68,12 @@ public class SoapOperationFile implements Saveable<String> {
         this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
         this.soapVersion = Objects.requireNonNull(builder.soapVersion, "soapVersion");
         this.currentResponseSequenceIndex = Objects.requireNonNull(builder.currentResponseSequenceIndex, "currentResponseSequenceIndex");
-        this.simulateNetworkDelay = Objects.requireNonNull(builder.simulateNetworkDelay, "simulateNetworkDelay");
         this.portId = Objects.requireNonNull(builder.portId, "portId");
-        this.mockOnFailure = Objects.requireNonNull(builder.mockOnFailure, "mockOnFailure");
         this.identifyStrategy = Objects.requireNonNull(builder.identifyStrategy, "identifyStrategy");
-        this.automaticForward = Objects.requireNonNull(builder.automaticForward, "automaticForward");
 
+        this.mockOnFailure = builder.mockOnFailure;
+        this.automaticForward = builder.automaticForward;
+        this.simulateNetworkDelay = builder.simulateNetworkDelay;
         this.defaultBody = builder.defaultBody;
         this.originalEndpoint = builder.originalEndpoint;
         this.forwardedEndpoint = builder.forwardedEndpoint;

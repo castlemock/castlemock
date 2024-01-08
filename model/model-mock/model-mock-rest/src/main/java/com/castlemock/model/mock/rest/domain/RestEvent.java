@@ -18,6 +18,8 @@ package com.castlemock.model.mock.rest.domain;
 
 import com.castlemock.model.core.event.Event;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
@@ -28,13 +30,25 @@ import java.util.Optional;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestEvent extends Event {
 
+    @XmlElement
     private RestRequest request;
+
+    @XmlElement
     private RestResponse response;
+
+    @XmlElement
     private String projectId;
+
+    @XmlElement
     private String applicationId;
+
+    @XmlElement
     private String resourceId;
+
+    @XmlElement
     private String methodId;
 
     private RestEvent() {
@@ -51,32 +65,26 @@ public class RestEvent extends Event {
         this.response = builder.response;
     }
 
-    @XmlElement
     public RestRequest getRequest() {
         return request;
     }
 
-    @XmlElement
     public Optional<RestResponse> getResponse() {
         return Optional.ofNullable(response);
     }
 
-    @XmlElement
     public String getProjectId() {
         return projectId;
     }
 
-    @XmlElement
     public String getApplicationId() {
         return applicationId;
     }
 
-    @XmlElement
     public String getResourceId() {
         return resourceId;
     }
 
-    @XmlElement
     public String getMethodId() {
         return methodId;
     }

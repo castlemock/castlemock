@@ -19,6 +19,7 @@ package com.castlemock.web.core.controller.rest;
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.user.User;
 import com.castlemock.model.core.user.UserTestBuilder;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.service.core.user.input.DeleteUserInput;
 import com.castlemock.service.core.user.input.ReadAllUsersInput;
 import com.castlemock.service.core.user.input.ReadUserInput;
@@ -38,7 +39,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -81,7 +81,7 @@ class UserCoreRestControllerTest {
     @Test
     @DisplayName("Update user")
     void testUpdateUser(){
-        final String userId = UUID.randomUUID().toString();
+        final String userId = IdUtility.generateId();
         final UpdateUserRequest request = UpdateUserRequestTestBuilder.build();
         final User updatedUser = UserTestBuilder.build();
 

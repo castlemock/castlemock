@@ -1,17 +1,31 @@
 package com.castlemock.model.mock.rest.domain;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestParameterQuery {
 
+    @XmlElement
     private String parameter;
+
+    @XmlElement
     private String query;
+
+    @XmlElement
     private boolean matchCase;
+
+    @XmlElement
     private boolean matchAny;
+
+    @XmlElement
     private boolean matchRegex;
+
+    @XmlElement
     private boolean urlEncoded;
 
     private RestParameterQuery(){
@@ -27,32 +41,26 @@ public class RestParameterQuery {
         this.urlEncoded = Objects.requireNonNull(builder.urlEncoded, "urlEncoded");
     }
 
-    @XmlElement
     public String getParameter() {
         return parameter;
     }
 
-    @XmlElement
     public String getQuery() {
         return query;
     }
 
-    @XmlElement
     public boolean getMatchCase() {
         return matchCase;
     }
 
-    @XmlElement
     public boolean getMatchAny() {
         return matchAny;
     }
 
-    @XmlElement
     public boolean getMatchRegex() {
         return matchRegex;
     }
 
-    @XmlElement
     public boolean getUrlEncoded() {
         return urlEncoded;
     }

@@ -94,7 +94,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * The {@link SwaggerRestDefinitionConverter} provides Swagger related functionality.
@@ -164,11 +163,11 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
         final Map<String, Model> definitions = swagger.getDefinitions();
 
         final List<RestResource> resources = new ArrayList<>();
-        final String applicationId = UUID.randomUUID().toString();
+        final String applicationId = IdUtility.generateId();
         for(Map.Entry<String, Path> pathEntry : swagger.getPaths().entrySet()){
             final String resourceName = pathEntry.getKey();
             final Path resourcePath = pathEntry.getValue();
-            final String resourceId = UUID.randomUUID().toString();
+            final String resourceId = IdUtility.generateId();
 
             final List<RestMethod> methods = new ArrayList<>();
             if(resourcePath.getGet() != null){
@@ -265,7 +264,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             methodName = httpMethod.name();
         }
 
-        final String methodId = UUID.randomUUID().toString();
+        final String methodId = IdUtility.generateId();
         List<RestMockResponse> mockResponses = List.of();
         if(generateResponse){
             if(!operation.getResponses().isEmpty()){

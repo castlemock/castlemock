@@ -20,6 +20,8 @@ import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.http.HttpParameter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,13 +34,27 @@ import java.util.Optional;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestRequest {
 
+    @XmlElement
     private String body;
+
+    @XmlElement
     private String contentType;
+
+    @XmlElement
     private String uri;
+
+    @XmlElement
     private HttpMethod httpMethod;
+
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     private List<HttpHeader> httpHeaders;
+
+    @XmlElementWrapper(name = "httpParameters")
+    @XmlElement(name = "httpParameter")
     private List<HttpParameter> httpParameters;
 
     private RestRequest(){
@@ -54,36 +70,28 @@ public class RestRequest {
         this.httpParameters = builder.httpParameters;
     }
 
-    @XmlElement
     public Optional<String> getBody() {
         return Optional.ofNullable(body);
     }
 
-    @XmlElement
     public Optional<String> getContentType() {
         return Optional.ofNullable(contentType);
     }
 
-    @XmlElement
     public String getUri() {
         return uri;
     }
 
-    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
 
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return Optional.ofNullable(httpHeaders)
                 .map(List::copyOf)
                 .orElseGet(List::of);
     }
 
-    @XmlElementWrapper(name = "httpParameters")
-    @XmlElement(name = "httpParameter")
     public List<HttpParameter> getHttpParameters() {
         return Optional.ofNullable(httpParameters)
                 .map(List::copyOf)

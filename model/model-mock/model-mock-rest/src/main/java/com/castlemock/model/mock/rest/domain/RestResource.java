@@ -16,6 +16,8 @@
 
 package com.castlemock.model.mock.rest.domain;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,14 +34,29 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestResource {
 
+    @XmlElement
     private String id;
+
+    @XmlElement
     private String name;
+
+    @XmlElement
     private String uri;
+
+    @XmlElement
     private String applicationId;
+
+    @XmlElement
     private String invokeAddress;
+
+    @XmlElementWrapper(name = "methods")
+    @XmlElement(name = "method")
     private List<RestMethod> methods;
+
+    @XmlTransient
     private Map<RestMethodStatus, Integer> statusCount;
 
     private RestResource(){
@@ -58,38 +75,32 @@ public class RestResource {
                 .orElseGet(Map::of);
     }
 
-    @XmlElement
+
     public String getId() {
         return id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    @XmlElement
     public String getUri() {
         return uri;
     }
 
-    @XmlElement
     public String getApplicationId() {
         return applicationId;
     }
 
-    @XmlElementWrapper(name = "methods")
-    @XmlElement(name = "method")
     public List<RestMethod> getMethods() {
         return List.copyOf(methods);
     }
 
-    @XmlElement
     public Optional<String> getInvokeAddress() {
         return Optional.ofNullable(invokeAddress);
     }
 
-    @XmlTransient
+
     public Map<RestMethodStatus, Integer> getStatusCount() {
         return Map.copyOf(this.statusCount);
     }

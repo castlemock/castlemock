@@ -45,7 +45,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * The {@link WADLRestDefinitionConverter} class provides functionality related to WADL.
@@ -95,7 +94,7 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
                         final String methodType = methodElement.getAttribute("name");
 
                         final List<RestMockResponse> mockResponses = new ArrayList<>();
-                        final String methodId = UUID.randomUUID().toString();
+                        final String methodId = IdUtility.generateId();
                         if(generateResponse){
                             mockResponses.add(generateResponse(methodId));
                         }

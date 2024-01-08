@@ -23,6 +23,8 @@ import com.castlemock.model.mock.soap.domain.SoapPort;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapResource;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,12 +36,26 @@ import java.util.Objects;
  * @since 1.20
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapExportContainer extends ExportContainer {
 
+    @XmlElement
     private SoapProject project;
+
+    @XmlElementWrapper(name = "ports")
+    @XmlElement(name = "port")
     private List<SoapPort> ports;
+
+    @XmlElementWrapper(name = "resources")
+    @XmlElement(name = "resource")
     private List<SoapResource> resources;
+
+    @XmlElementWrapper(name = "operations")
+    @XmlElement(name = "operation")
     private List<SoapOperation> operations;
+
+    @XmlElementWrapper(name = "mockResponses")
+    @XmlElement(name = "mockResponse")
     private List<SoapMockResponse> mockResponses;
 
     private SoapExportContainer() {
@@ -54,31 +70,26 @@ public class SoapExportContainer extends ExportContainer {
         this.mockResponses = Objects.requireNonNull(builder.mockResponses, "mockResponses");
     }
 
-    @XmlElement
     public SoapProject getProject() {
         return project;
     }
 
-    @XmlElementWrapper(name = "ports")
-    @XmlElement(name = "port")
+
     public List<SoapPort> getPorts() {
         return ports;
     }
 
-    @XmlElementWrapper(name = "resources")
-    @XmlElement(name = "resource")
+
     public List<SoapResource> getResources() {
         return resources;
     }
 
-    @XmlElementWrapper(name = "operations")
-    @XmlElement(name = "operation")
+
     public List<SoapOperation> getOperations() {
         return operations;
     }
 
-    @XmlElementWrapper(name = "mockResponses")
-    @XmlElement(name = "mockResponse")
+
     public List<SoapMockResponse> getMockResponses() {
         return mockResponses;
     }

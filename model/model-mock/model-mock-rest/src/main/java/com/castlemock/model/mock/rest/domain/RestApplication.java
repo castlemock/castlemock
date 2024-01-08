@@ -16,6 +16,8 @@
 
 package com.castlemock.model.mock.rest.domain;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,12 +34,23 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestApplication {
 
+    @XmlElement
     private String id;
+
+    @XmlElement
     private String name;
+
+    @XmlElement
     private String projectId;
+
+    @XmlElementWrapper(name = "resources")
+    @XmlElement(name = "resource")
     private List<RestResource> resources;
+
+    @XmlTransient
     private Map<RestMethodStatus, Integer> statusCount;
 
     private RestApplication(){
@@ -54,28 +67,22 @@ public class RestApplication {
                 .orElseGet(Map::of);
     }
 
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    @XmlElement
     public String getProjectId() {
         return projectId;
     }
 
-    @XmlElementWrapper(name = "resources")
-    @XmlElement(name = "resource")
     public List<RestResource> getResources() {
         return List.copyOf(resources);
     }
 
-    @XmlTransient
     public Map<RestMethodStatus, Integer> getStatusCount() {
         return Map.copyOf(statusCount);
     }

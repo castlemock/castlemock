@@ -16,6 +16,10 @@
 
 package com.castlemock.model.core.system;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 /**
@@ -24,19 +28,44 @@ import java.util.Objects;
  * @author Karl Dahlgren
  * @since 1.7
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class SystemInformation {
 
+    @XmlElement
     private final String operatingSystemName;
+
+    @XmlElement
     private final String javaVersion;
+
+    @XmlElement
     private final String javaVendor;
+
+    @XmlElement
     private final String tomcatBuilt;
+
+    @XmlElement
     private final String tomcatInfo;
+
+    @XmlElement
     private final String tomcatVersion;
+
+    @XmlElement
     private final long totalMemory;
+
+    @XmlElement
     private final long maxMemory;
+
+    @XmlElement
     private final long freeMemory;
+
+    @XmlElement
     private final int availableProcessors;
+
+    @XmlElement
     private final String castleMockHomeDirectory;
+
+    @XmlElement
     private final boolean showCastleMockHomeDirectory;
 
     public SystemInformation(final Builder builder){

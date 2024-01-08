@@ -36,11 +36,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 1.0
  */
 @XmlRootElement(name = "soapProject")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapProject extends Project {
 
+    @XmlElementWrapper(name = "ports")
+    @XmlElement(name = "port")
     private List<SoapPort> ports;
+
+    @XmlElementWrapper(name = "resources")
+    @XmlElement(name = "resource")
     private List<SoapResource> resources;
+
+    @XmlTransient
     private Map<SoapOperationStatus, Integer> statusCount;
 
     private SoapProject() {
@@ -58,8 +65,6 @@ public class SoapProject extends Project {
      * Returns all the SOAP ports
      * @return The SOAP ports for the SOAP project
      */
-    @XmlElementWrapper(name = "ports")
-    @XmlElement(name = "port")
     public List<SoapPort> getPorts() {
         return ports;
     }
@@ -68,8 +73,6 @@ public class SoapProject extends Project {
      * Returns all the SOAP resources
      * @return The SOAP resources for the SOAP resources
      */
-    @XmlElementWrapper(name = "resources")
-    @XmlElement(name = "resource")
     public List<SoapResource> getResources() {
         return resources;
     }
@@ -78,7 +81,7 @@ public class SoapProject extends Project {
      * The status count is used in the GUI to information the user on the SOAP operation status distribution.
      * @return The status counts.
      */
-    @XmlTransient
+
     public Map<SoapOperationStatus, Integer> getStatusCount() {
         return statusCount;
     }

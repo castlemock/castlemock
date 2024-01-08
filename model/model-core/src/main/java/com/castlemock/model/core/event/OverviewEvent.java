@@ -1,10 +1,16 @@
 package com.castlemock.model.core.event;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class OverviewEvent extends Event {
 
+    @XmlElement
     private String type;
 
     private OverviewEvent() {
@@ -16,7 +22,6 @@ public class OverviewEvent extends Event {
         this.type = Objects.requireNonNull(builder.type, "type");
     }
 
-    @XmlElement
     public String getType() {
         return type;
     }

@@ -18,6 +18,8 @@ package com.castlemock.model.mock.rest.domain;
 
 import com.castlemock.model.core.http.HttpMethod;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,24 +33,56 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestMethod {
 
+    @XmlElement
     private String id;
+
+    @XmlElement
     private String name;
+
+    @XmlElement
     private String resourceId;
+
+    @XmlElement
     private String defaultBody;
+
+    @XmlElement
     private HttpMethod httpMethod;
+
+    @XmlElement
     private String forwardedEndpoint;
+
+    @XmlElement
     private RestMethodStatus status;
+
+    @XmlElement
     private RestResponseStrategy responseStrategy;
+
+    @XmlElement
     private Integer currentResponseSequenceIndex;
+
+    @XmlElement
     private Boolean simulateNetworkDelay;
+
+    @XmlElement
     private Long networkDelay;
+
+    @XmlElement
     private String defaultMockResponseId;
 
+    @XmlElementWrapper(name = "mockResponses")
+    @XmlElement(name = "mockResponse")
     private List<RestMockResponse> mockResponses;
+
+    @XmlElement
     private String uri;
+
+    @XmlElement
     private String defaultResponseName;
+
+    @XmlElement
     private Boolean automaticForward;
 
     private RestMethod(){
@@ -76,78 +110,62 @@ public class RestMethod {
     }
 
 
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    @XmlElement
     public Optional<String> getDefaultBody() {
         return Optional.ofNullable(defaultBody);
     }
 
-    @XmlElement
     public String getResourceId() {
         return resourceId;
     }
 
-    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
 
-    @XmlElementWrapper(name = "mockResponses")
-    @XmlElement(name = "mockResponse")
     public List<RestMockResponse> getMockResponses() {
         return List.copyOf(mockResponses);
     }
 
-    @XmlElement
     public Optional<String> getForwardedEndpoint() {
         return Optional.ofNullable(forwardedEndpoint);
     }
 
-    @XmlElement
     public RestMethodStatus getStatus() {
         return status;
     }
 
-    @XmlElement
     public RestResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
 
-    @XmlElement
     public Integer getCurrentResponseSequenceIndex() {
         return currentResponseSequenceIndex;
     }
 
-    @XmlElement
     public String getUri() {
         return uri;
     }
 
-    @XmlElement
     public Optional<Boolean> getSimulateNetworkDelay() {
         return Optional.ofNullable(simulateNetworkDelay);
     }
 
-    @XmlElement
     public Optional<Long> getNetworkDelay() {
         return Optional.ofNullable(networkDelay);
     }
 
-    @XmlElement
     public Optional<String> getDefaultResponseName() {
         return Optional.ofNullable(defaultResponseName);
     }
 
-    @XmlElement
     public Optional<String> getDefaultMockResponseId() {
         return Optional.ofNullable(defaultMockResponseId);
     }

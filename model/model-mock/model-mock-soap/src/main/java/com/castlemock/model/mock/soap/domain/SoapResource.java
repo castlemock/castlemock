@@ -16,6 +16,8 @@
 
 package com.castlemock.model.mock.soap.domain;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
@@ -26,12 +28,22 @@ import java.util.Optional;
  * @since 1.16
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapResource {
 
+    @XmlElement
     private String id;
+
+    @XmlElement
     private String name;
+
+    @XmlElement
     private String projectId;
+
+    @XmlElement
     private String content;
+
+    @XmlElement
     private SoapResourceType type;
 
     private SoapResource(){
@@ -46,27 +58,23 @@ public class SoapResource {
         this.content = builder.content;
     }
 
-    @XmlElement
+
     public String getId() {
         return id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    @XmlElement
     public SoapResourceType getType() {
         return type;
     }
 
-    @XmlElement
     public String getProjectId() {
         return projectId;
     }
 
-    @XmlElement
     public Optional<String> getContent() {
         return Optional.ofNullable(content);
     }

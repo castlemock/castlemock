@@ -16,6 +16,8 @@
 
 package com.castlemock.model.mock.soap.domain;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,15 +34,30 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapPort {
 
+    @XmlElement
     private String id;
+
+    @XmlElement
     private String name;
+
+    @XmlElement
     private String uri;
+
+    @XmlElement
     private String projectId;
+
+    @XmlTransient
     private String invokeAddress;
-    private List<SoapOperation> operations = new CopyOnWriteArrayList<>();
-    private Map<SoapOperationStatus, Integer> statusCount = new HashMap<>();
+
+    @XmlElementWrapper(name = "operations")
+    @XmlElement(name = "operation")
+    private List<SoapOperation> operations;
+
+    @XmlTransient
+    private Map<SoapOperationStatus, Integer> statusCount;
 
     private SoapPort(){
 
@@ -58,38 +75,34 @@ public class SoapPort {
                 .orElseGet(HashMap::new);
     }
 
-    @XmlElement
+
     public String getId() {
         return id;
     }
 
-    @XmlElementWrapper(name = "operations")
-    @XmlElement(name = "operation")
+
     public List<SoapOperation> getOperations() {
         return operations;
     }
 
-    @XmlTransient
+
     public Map<SoapOperationStatus, Integer> getStatusCount() {
         return statusCount;
     }
 
-    @XmlElement
+
     public String getName() {
         return name;
     }
 
-    @XmlElement
     public String getUri() {
         return uri;
     }
 
-    @XmlElement
     public String getProjectId() {
         return projectId;
     }
 
-    @XmlTransient
     public Optional<String> getInvokeAddress() {
         return Optional.ofNullable(invokeAddress);
     }

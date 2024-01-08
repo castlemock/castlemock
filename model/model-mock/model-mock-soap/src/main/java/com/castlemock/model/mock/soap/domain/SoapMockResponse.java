@@ -19,6 +19,8 @@ package com.castlemock.model.mock.soap.domain;
 import com.castlemock.model.core.http.ContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,17 +35,40 @@ import java.util.stream.Collectors;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapMockResponse {
 
+    @XmlElement
     private String id;
+
+    @XmlElement
     private String name;
+
+    @XmlElement
     private String body;
+
+    @XmlElement
     private String operationId;
+
+    @XmlElement
     private SoapMockResponseStatus status;
+
+    @XmlElement
     private Integer httpStatusCode;
+
+    @XmlElement
     private Boolean usingExpressions;
+
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     private List<HttpHeader> httpHeaders;
+
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
     private List<ContentEncoding> contentEncodings;
+
+    @XmlElementWrapper(name = "xpathExpressions")
+    @XmlElement(name = "xpathExpression")
     private List<SoapXPathExpression> xpathExpressions;
 
     private SoapMockResponse(){
@@ -66,55 +91,46 @@ public class SoapMockResponse {
                 .orElseGet(List::of);
     }
 
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    @XmlElement
     public String getBody() {
         return body;
     }
 
-    @XmlElement
     public String getOperationId() {
         return operationId;
     }
 
-    @XmlElement
     public SoapMockResponseStatus getStatus() {
         return status;
     }
 
-    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
 
-    @XmlElement
+
     public Optional<Boolean> getUsingExpressions() {
         return Optional.ofNullable(usingExpressions);
     }
 
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
+
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }
 
-    @XmlElementWrapper(name = "contentEncodings")
-    @XmlElement(name = "contentEncoding")
+
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
-    
-    @XmlElementWrapper(name = "xpathExpressions")
-    @XmlElement(name = "xpathExpression")
+
+
     public List<SoapXPathExpression> getXpathExpressions() {
         return xpathExpressions;
     }

@@ -64,9 +64,9 @@ public final class ExportContainerSerializer {
             final JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
             final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             return (T) jaxbUnmarshaller.unmarshal(byteArrayInputStream);
-        } catch (JAXBException e) {
+        } catch (Throwable e ) {
             LOGGER.error("Unable to deserialize", e);
-            throw new IllegalStateException("Unable to deserialize");
+            throw new IllegalStateException("Unable to deserialize", e);
         }
     }
 

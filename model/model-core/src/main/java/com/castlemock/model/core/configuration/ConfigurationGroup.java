@@ -16,6 +16,8 @@
 
 package com.castlemock.model.core.configuration;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,11 +34,17 @@ import java.util.Objects;
  * @see Configuration
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class ConfigurationGroup {
 
-
+    @XmlElement
     private String id;
+
+    @XmlElement
     private String name;
+
+    @XmlElementWrapper(name = "configurations")
+    @XmlElement(name = "configuration")
     private List<Configuration> configurations;
 
     private ConfigurationGroup(){
@@ -53,7 +61,6 @@ public class ConfigurationGroup {
      * Returns the configuration group id
      * @return The configuration group id
      */
-    @XmlElement
     public String getId() {
         return id;
     }
@@ -62,7 +69,6 @@ public class ConfigurationGroup {
      * Returns the name of the configuration group
      * @return The new of the configuration group
      */
-    @XmlElement
     public String getName() {
         return name;
     }
@@ -72,8 +78,6 @@ public class ConfigurationGroup {
      * Returns a list of configurations the belongs to the group
      * @return Configurations that belongs to the configuration group
      */
-    @XmlElementWrapper(name = "configurations")
-    @XmlElement(name = "configuration")
     public List<Configuration> getConfigurations() {
         return configurations;
     }

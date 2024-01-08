@@ -16,13 +16,17 @@
 
 package com.castlemock.model.mock.soap.domain;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapXPathExpression {
 
+    @XmlElement
     private String expression;
 
     private SoapXPathExpression(){
@@ -33,7 +37,7 @@ public class SoapXPathExpression {
         this.expression = Objects.requireNonNull(builder.expression, "expression");
     }
 
-    @XmlElement
+
     public String getExpression() {
         return expression;
     }

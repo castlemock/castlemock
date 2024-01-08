@@ -16,6 +16,8 @@
 
 package com.castlemock.model.core;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,5 +26,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @since 12.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class ExportContainer {
 }

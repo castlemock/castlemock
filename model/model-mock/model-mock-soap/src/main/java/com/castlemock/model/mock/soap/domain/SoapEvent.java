@@ -18,6 +18,8 @@ package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.event.Event;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
@@ -28,12 +30,22 @@ import java.util.Optional;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapEvent extends Event {
 
+    @XmlElement
     private SoapRequest request;
+
+    @XmlElement
     private SoapResponse response;
+
+    @XmlElement
     private String projectId;
+
+    @XmlElement
     private String portId;
+
+    @XmlElement
     private String operationId;
 
     private SoapEvent() {
@@ -53,7 +65,7 @@ public class SoapEvent extends Event {
      * Returns the SOAP request
      * @return The SOAP request
      */
-    @XmlElement
+
     public SoapRequest getRequest() {
         return request;
     }
@@ -62,7 +74,6 @@ public class SoapEvent extends Event {
      * Returns the SOAP response variable
      * @return The SOAP response variable. The SOAP response will be null if the event has not yet finished
      */
-    @XmlElement
     public Optional<SoapResponse> getResponse() {
         return Optional.ofNullable(response);
     }
@@ -71,7 +82,6 @@ public class SoapEvent extends Event {
      * Returns the SOAP operation id
      * @return The SOAP operation id
      */
-    @XmlElement
     public String getOperationId() {
         return operationId;
     }
@@ -81,7 +91,6 @@ public class SoapEvent extends Event {
      * event spans from
      * @return The id of the project which the event affected
      */
-    @XmlElement
     public String getProjectId() {
         return projectId;
     }
@@ -92,7 +101,6 @@ public class SoapEvent extends Event {
      * event spans from
      * @return The id of the port which the event affected
      */
-    @XmlElement
     public String getPortId() {
         return portId;
     }

@@ -16,6 +16,8 @@
 
 package com.castlemock.model.core.http;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
@@ -25,9 +27,13 @@ import java.util.Objects;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class HttpParameter {
 
+    @XmlElement
     private String name;
+
+    @XmlElement
     private String value;
     
     private HttpParameter() {
@@ -39,12 +45,10 @@ public class HttpParameter {
         this.value = Objects.requireNonNull(builder.value, "value");
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    @XmlElement
     public String getValue() {
         return value;
     }

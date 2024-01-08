@@ -19,6 +19,8 @@ package com.castlemock.model.mock.rest.domain;
 import com.castlemock.model.core.http.ContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,20 +36,52 @@ import java.util.stream.Collectors;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestMockResponse {
 
+    @XmlElement
     private String id;
+
+    @XmlElement
     private String name;
+
+    @XmlElement
     private String body;
+
+    @XmlElement
     private String methodId;
+
+    @XmlElement
     private Integer httpStatusCode;
+
+    @XmlElement
     private RestMockResponseStatus status;
+
+    @XmlElement
     private Boolean usingExpressions;
+
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     private List<HttpHeader> httpHeaders;
+
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
     private List<ContentEncoding> contentEncodings;
+
+    @XmlElementWrapper(name = "parameterQueries")
+    @XmlElement(name = "parameterQuery")
     private List<RestParameterQuery> parameterQueries;
+
+    @XmlElementWrapper(name = "xpathExpressions")
+    @XmlElement(name = "xpathExpression")
     private List<RestXPathExpression> xpathExpressions;
+
+    @XmlElementWrapper(name = "jsonPathExpressions")
+    @XmlElement(name = "jsonPathExpression")
     private List<RestJsonPathExpression> jsonPathExpressions;
+
+    @XmlElementWrapper(name = "headerQueries")
+    @XmlElement(name = "headerQuery")
     private List<RestHeaderQuery> headerQueries;
 
     private RestMockResponse(){
@@ -76,73 +110,54 @@ public class RestMockResponse {
                 .orElseGet(List::of);
     }
 
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    @XmlElement
     public Optional<String> getBody() {
         return Optional.ofNullable(body);
     }
 
-    @XmlElement
     public String getMethodId() {
         return methodId;
     }
 
-    @XmlElement
     public RestMockResponseStatus getStatus() {
         return status;
     }
 
-    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
 
-    @XmlElement
     public boolean getUsingExpressions() {
         return usingExpressions;
     }
 
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return List.copyOf(httpHeaders);
     }
 
-    @XmlElementWrapper(name = "contentEncodings")
-    @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return List.copyOf(contentEncodings);
     }
 
-    @XmlElementWrapper(name = "parameterQueries")
-    @XmlElement(name = "parameterQuery")
     public List<RestParameterQuery> getParameterQueries() {
         return List.copyOf(parameterQueries);
     }
 
-    @XmlElementWrapper(name = "xpathExpressions")
-    @XmlElement(name = "xpathExpression")
     public List<RestXPathExpression> getXpathExpressions() {
         return List.copyOf(xpathExpressions);
     }
 
-    @XmlElementWrapper(name = "jsonPathExpressions")
-    @XmlElement(name = "jsonPathExpression")
     public List<RestJsonPathExpression> getJsonPathExpressions() {
         return List.copyOf(jsonPathExpressions);
     }
 
-    @XmlElementWrapper(name = "headerQueries")
-    @XmlElement(name = "headerQuery")
     public List<RestHeaderQuery> getHeaderQueries() {
         return List.copyOf(headerQueries);
     }

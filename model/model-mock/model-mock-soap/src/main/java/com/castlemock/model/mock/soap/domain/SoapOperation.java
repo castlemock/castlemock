@@ -18,6 +18,8 @@ package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.http.HttpMethod;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,29 +33,74 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapOperation {
 
+    @XmlElement
     private String id;
+
+    @XmlElement
     private String name;
+
+    @XmlElement
     private String identifier;
+
+    @XmlElement
     private SoapOperationIdentifier operationIdentifier;
+
+    @XmlElement
     private SoapResponseStrategy responseStrategy;
+
+    @XmlElement
     private SoapOperationStatus status;
+
+    @XmlElement
     private HttpMethod httpMethod;
+
+    @XmlElement
     private SoapVersion soapVersion;
+
+    @XmlElement
     private String defaultBody;
+
+    @XmlElement
     private Integer currentResponseSequenceIndex;
+
+    @XmlElement
     private String forwardedEndpoint;
+
+    @XmlElement
     private String originalEndpoint;
+
+    @XmlElement
     private Boolean simulateNetworkDelay;
+
+    @XmlElement
     private Long networkDelay;
+
+    @XmlElement
     private String defaultMockResponseId;
+
+    @XmlElement
     private String portId;
+
+    @XmlElement
     private Boolean mockOnFailure;
+
+    @XmlElement
     private SoapOperationIdentifyStrategy identifyStrategy;
-    private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<>();
+
+    @XmlElementWrapper(name = "mockResponses")
+    @XmlElement(name = "mockResponse")
+    private List<SoapMockResponse> mockResponses;
+
+    @XmlElement
     private String invokeAddress;
+
+    @XmlElement
     private String defaultResponseName;
+
+    @XmlElement
     private Boolean automaticForward;
 
     private SoapOperation(){
@@ -87,108 +134,87 @@ public class SoapOperation {
                 .orElseGet(List::of);
     }
 
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    @XmlElement
     public String getIdentifier() {
         return identifier;
     }
 
-    @XmlElement
     public SoapOperationIdentifier getOperationIdentifier() {
         return operationIdentifier;
     }
 
-    @XmlElement
     public String getPortId() {
         return portId;
     }
 
-    @XmlElement
     public SoapResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
 
-    @XmlElement
     public SoapOperationStatus getStatus() {
         return status;
     }
 
-    @XmlElementWrapper(name = "mockResponses")
-    @XmlElement(name = "mockResponse")
+
     public List<SoapMockResponse> getMockResponses() {
         return mockResponses;
     }
 
-    @XmlElement
     public Optional<String> getInvokeAddress() {
         return Optional.ofNullable(invokeAddress);
     }
 
-    @XmlElement
     public Optional<String> getDefaultBody() {
         return Optional.ofNullable(defaultBody);
     }
 
-    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
 
-    @XmlElement
     public SoapVersion getSoapVersion() {
         return soapVersion;
     }
 
-    @XmlElement
     public Integer getCurrentResponseSequenceIndex() {
         return currentResponseSequenceIndex;
     }
 
-    @XmlElement
     public Optional<String> getForwardedEndpoint() {
         return Optional.ofNullable(forwardedEndpoint);
     }
 
-    @XmlElement
     public Optional<String> getOriginalEndpoint() {
         return Optional.ofNullable(originalEndpoint);
     }
 
-    @XmlElement
     public Optional<Boolean> getSimulateNetworkDelay() {
         return Optional.ofNullable(simulateNetworkDelay);
     }
 
-    @XmlElement
     public Optional<Long> getNetworkDelay() {
         return Optional.ofNullable(networkDelay);
     }
 
-    @XmlElement
     public Optional<String> getDefaultResponseName() {
         return Optional.ofNullable(defaultResponseName);
     }
 
-    @XmlElement
     public Optional<Boolean> getMockOnFailure() {
         return Optional.ofNullable(mockOnFailure);
     }
 
-    @XmlElement
     public SoapOperationIdentifyStrategy getIdentifyStrategy() {
         return identifyStrategy;
     }
 
-    @XmlElement
     public Optional<String> getDefaultMockResponseId() {
         return Optional.ofNullable(defaultMockResponseId);
     }

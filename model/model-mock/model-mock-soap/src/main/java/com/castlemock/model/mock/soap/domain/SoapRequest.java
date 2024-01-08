@@ -19,7 +19,10 @@ package com.castlemock.model.mock.soap.domain;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
@@ -29,16 +32,35 @@ import java.util.Objects;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapRequest {
 
+    @XmlElement
     private String body;
+
+    @XmlElement
     private String envelope;
+
+    @XmlElement
     private String contentType;
+
+    @XmlElement
     private String uri;
+
+    @XmlElement
     private HttpMethod httpMethod;
+
+    @XmlElement
     private String operationName;
+
+    @XmlElement
     private SoapVersion soapVersion;
+
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     private List<HttpHeader> httpHeaders;
+
+    @XmlElement
     private SoapOperationIdentifier operationIdentifier;
 
     private SoapRequest(){
@@ -58,47 +80,38 @@ public class SoapRequest {
     }
 
 
-    @XmlElement
     public String getBody() {
         return body;
     }
 
-    @XmlElement
     public String getEnvelope() {
         return envelope;
     }
 
-    @XmlElement
     public String getContentType() {
         return contentType;
     }
 
-    @XmlElement
     public String getUri() {
         return uri;
     }
 
-    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
 
-    @XmlElement
     public String getOperationName() {
         return operationName;
     }
 
-    @XmlElement
     public SoapOperationIdentifier getOperationIdentifier() {
         return operationIdentifier;
     }
 
-    @XmlElement
     public SoapVersion getSoapVersion() {
         return soapVersion;
     }
 
-    @XmlElement
     public List<HttpHeader> getHttpHeaders() {
         return httpHeaders;
     }

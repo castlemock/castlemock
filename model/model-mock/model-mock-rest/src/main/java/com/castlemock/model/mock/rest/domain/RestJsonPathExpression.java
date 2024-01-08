@@ -16,13 +16,17 @@
 
 package com.castlemock.model.mock.rest.domain;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestJsonPathExpression {
 
+    @XmlElement
     private String expression;
 
     private RestJsonPathExpression(){
@@ -33,7 +37,6 @@ public class RestJsonPathExpression {
         this.expression = Objects.requireNonNull(builder.expression, "expression");
     }
 
-    @XmlElement
     public String getExpression() {
         return expression;
     }

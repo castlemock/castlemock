@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public final class ServicePortConverter {
@@ -67,7 +66,7 @@ public final class ServicePortConverter {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Unable to find the port type"));
 
-        final String portId = UUID.randomUUID().toString();
+        final String portId = IdUtility.generateId();
         final List<SoapOperation> operations = binding.getOperations().stream()
                 .map(bindingOperation -> toSoapOperation(bindingOperation,portId, portType, messages, namespaces, servicePort.getAddress()))
                 .collect(Collectors.toList());

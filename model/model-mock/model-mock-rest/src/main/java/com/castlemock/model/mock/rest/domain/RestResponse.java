@@ -19,6 +19,8 @@ package com.castlemock.model.mock.rest.domain;
 import com.castlemock.model.core.http.ContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,13 +33,27 @@ import java.util.Optional;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestResponse {
 
+    @XmlElement
     private String body;
+
+    @XmlElement
     private String mockResponseName;
+
+    @XmlElement
     private Integer httpStatusCode;
+
+    @XmlElement
     private String contentType;
+
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     private List<HttpHeader> httpHeaders;
+
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
     private List<ContentEncoding> contentEncodings;
 
     public RestResponse(){
@@ -56,34 +72,26 @@ public class RestResponse {
 
     }
 
-    @XmlElement
     public Optional<String> getBody() {
         return Optional.ofNullable(body);
     }
 
-    @XmlElement
     public Optional<String> getMockResponseName() {
         return Optional.ofNullable(mockResponseName);
     }
 
-    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
 
-    @XmlElement
     public Optional<String> getContentType() {
         return Optional.ofNullable(contentType);
     }
 
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
         return List.copyOf(httpHeaders);
     }
 
-    @XmlElementWrapper(name = "contentEncodings")
-    @XmlElement(name = "contentEncoding")
     public List<ContentEncoding> getContentEncodings() {
         return List.copyOf(contentEncodings);
     }

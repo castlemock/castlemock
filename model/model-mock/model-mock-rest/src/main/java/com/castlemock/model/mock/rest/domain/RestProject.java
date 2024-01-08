@@ -18,6 +18,8 @@ package com.castlemock.model.mock.rest.domain;
 
 import com.castlemock.model.core.project.Project;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,8 +33,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestProject extends Project {
 
+    @XmlElementWrapper(name = "applications")
+    @XmlElement(name = "application")
     private List<RestApplication> applications;
 
     private RestProject() {
@@ -45,8 +50,6 @@ public class RestProject extends Project {
                 .orElseGet(List::of);
     }
 
-    @XmlElementWrapper(name = "applications")
-    @XmlElement(name = "application")
     public List<RestApplication> getApplications() {
         return List.copyOf(applications);
     }

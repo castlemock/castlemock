@@ -16,6 +16,8 @@
 
 package com.castlemock.model.core.user;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
@@ -28,16 +30,34 @@ import java.util.Optional;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class User {
 
+    @XmlElement
     private String id;
+
+    @XmlElement
     private String username;
+
+    @XmlElement
     private String password;
+
+    @XmlElement
     private String email;
+
+    @XmlElement
     private String fullName;
+
+    @XmlElement
     private Date updated;
+
+    @XmlElement
     private Date created;
+
+    @XmlElement
     private Status status;
+
+    @XmlElement
     private Role role;
 
     private User(){
@@ -60,7 +80,6 @@ public class User {
      * Get the user id
      * @return User id
      */
-    @XmlElement
     public String getId() {
         return id;
     }
@@ -69,7 +88,6 @@ public class User {
      * Get the user username
      * @return User username
      */
-    @XmlElement
     public String getUsername() {
         return username;
     }
@@ -78,7 +96,6 @@ public class User {
      * Get the user password
      * @return Returns the user password
      */
-    @XmlElement
     public String getPassword() {
         return password;
     }
@@ -87,7 +104,6 @@ public class User {
      * Get user email
      * @return Returns user email
      */
-    @XmlElement
     public Optional<String> getEmail() {
         return Optional.ofNullable(email);
     }
@@ -96,12 +112,10 @@ public class User {
      * Return the timestamp for when the user was updated
      * @return Updated timestamp
      */
-    @XmlElement
     public Date getUpdated() {
         return updated;
     }
 
-    @XmlElement
     public Optional<String> getFullName() {
         return Optional.ofNullable(fullName);
     }
@@ -110,7 +124,6 @@ public class User {
      * Returns the timestamp of when the user was created
      * @return Created timestamp
      */
-    @XmlElement
     public Date getCreated() {
         return created;
     }
@@ -119,7 +132,6 @@ public class User {
      * Get the current status of user
      * @return User status
      */
-    @XmlElement
     public Status getStatus() {
         return status;
     }
@@ -128,7 +140,6 @@ public class User {
      * Returns the users current role
      * @return User role
      */
-    @XmlElement
     public Role getRole() {
         return role;
     }

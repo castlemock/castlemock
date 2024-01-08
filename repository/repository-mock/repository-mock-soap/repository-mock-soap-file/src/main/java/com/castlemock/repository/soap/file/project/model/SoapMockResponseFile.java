@@ -116,7 +116,7 @@ public class SoapMockResponseFile implements Saveable<String> {
     }
 
     @XmlElement
-    public boolean getUsingExpressions() {
+    public Boolean getUsingExpressions() {
         return usingExpressions;
     }
 

@@ -16,6 +16,8 @@
 
 package com.castlemock.model.core.project;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
@@ -28,12 +30,22 @@ import java.util.Optional;
  * @since 1.0
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class Project {
 
+    @XmlElement
     protected String id;
+
+    @XmlElement
     protected String name;
+
+    @XmlElement
     protected Date updated;
+
+    @XmlElement
     protected Date created;
+
+    @XmlElement
     protected String description;
 
     protected Project() {
@@ -48,27 +60,23 @@ public class Project {
         this.description = builder.description;
     }
 
-    @XmlElement
+
     public String getId() {
         return id;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    @XmlElement
     public Date getUpdated() {
         return updated;
     }
 
-    @XmlElement
     public Date getCreated() {
         return created;
     }
 
-    @XmlElement
     public Optional<String> getDescription() {
         return Optional.ofNullable(description);
     }

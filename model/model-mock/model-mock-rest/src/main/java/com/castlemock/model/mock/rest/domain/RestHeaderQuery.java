@@ -16,17 +16,29 @@
 
 package com.castlemock.model.mock.rest.domain;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestHeaderQuery {
 
+    @XmlElement
     private String header;
+
+    @XmlElement
     private String query;
+
+    @XmlElement
     private boolean matchCase;
+
+    @XmlElement
     private boolean matchAny;
+
+    @XmlElement
     private boolean matchRegex;
 
     private RestHeaderQuery(){
@@ -41,27 +53,22 @@ public class RestHeaderQuery {
         this.matchRegex = Objects.requireNonNull(builder.matchRegex, "matchRegex");
     }
 
-    @XmlElement
     public String getHeader() {
         return header;
     }
 
-    @XmlElement
     public String getQuery() {
         return query;
     }
 
-    @XmlElement
     public boolean getMatchCase() {
         return matchCase;
     }
 
-    @XmlElement
     public boolean getMatchAny() {
         return matchAny;
     }
 
-    @XmlElement
     public boolean getMatchRegex() {
         return matchRegex;
     }

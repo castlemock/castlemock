@@ -16,6 +16,8 @@
 
 package com.castlemock.model.core.configuration;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
@@ -28,10 +30,16 @@ import java.util.Objects;
  * @see Configuration
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class Configuration {
 
+    @XmlElement
     private String key;
+
+    @XmlElement
     private String value;
+
+    @XmlElement
     private ConfigurationType type;
 
     private Configuration(){
@@ -52,7 +60,6 @@ public class Configuration {
      * Returns the identifier for the configuration
      * @return The configuration key
      */
-    @XmlElement
     public String getKey() {
         return key;
     }
@@ -62,7 +69,6 @@ public class Configuration {
      * Returns the value for the configuration
      * @return Configuration value
      */
-    @XmlElement
     public String getValue() {
         return value;
     }
@@ -72,7 +78,6 @@ public class Configuration {
      * Returns the configuration type
      * @return The configuration type
      */
-    @XmlElement
     public ConfigurationType getType() {
         return type;
     }

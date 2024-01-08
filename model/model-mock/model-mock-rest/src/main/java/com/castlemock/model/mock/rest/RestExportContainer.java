@@ -23,6 +23,8 @@ import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.model.mock.rest.domain.RestResource;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,12 +36,26 @@ import java.util.Objects;
  * @since 1.20
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestExportContainer extends ExportContainer {
 
+    @XmlElement
     private RestProject project;
+
+    @XmlElementWrapper(name = "applications")
+    @XmlElement(name = "application")
     private List<RestApplication> applications;
+
+    @XmlElementWrapper(name = "resources")
+    @XmlElement(name = "resource")
     private List<RestResource> resources;
+
+    @XmlElementWrapper(name = "methods")
+    @XmlElement(name = "method")
     private List<RestMethod> methods;
+
+    @XmlElementWrapper(name = "mockResponses")
+    @XmlElement(name = "mockResponse")
     private List<RestMockResponse> mockResponses;
 
     private RestExportContainer(){
@@ -54,31 +70,23 @@ public class RestExportContainer extends ExportContainer {
         this.mockResponses = Objects.requireNonNull(builder.mockResponses, "mockResponses");
     }
 
-    @XmlElement
+
     public RestProject getProject() {
         return project;
     }
 
-    @XmlElementWrapper(name = "applications")
-    @XmlElement(name = "application")
     public List<RestApplication> getApplications() {
         return applications;
     }
 
-    @XmlElementWrapper(name = "resources")
-    @XmlElement(name = "resource")
     public List<RestResource> getResources() {
         return resources;
     }
 
-    @XmlElementWrapper(name = "methods")
-    @XmlElement(name = "method")
     public List<RestMethod> getMethods() {
         return methods;
     }
 
-    @XmlElementWrapper(name = "mockResponses")
-    @XmlElement(name = "mockResponse")
     public List<RestMockResponse> getMockResponses() {
         return mockResponses;
     }

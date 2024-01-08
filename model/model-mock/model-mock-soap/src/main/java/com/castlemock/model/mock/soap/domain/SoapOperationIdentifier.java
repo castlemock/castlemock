@@ -17,15 +17,21 @@
 
 package com.castlemock.model.mock.soap.domain;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.Optional;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapOperationIdentifier {
 
+    @XmlElement
     private String name;
+
+    @XmlElement
     private String namespace;
 
     private SoapOperationIdentifier(){
@@ -38,12 +44,10 @@ public class SoapOperationIdentifier {
     }
 
 
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    @XmlElement
     public Optional<String> getNamespace() {
         return Optional.ofNullable(namespace);
     }

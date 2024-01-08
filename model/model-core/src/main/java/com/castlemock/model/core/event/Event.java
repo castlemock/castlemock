@@ -16,6 +16,8 @@
 
 package com.castlemock.model.core.event;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
@@ -28,11 +30,19 @@ import java.util.Objects;
  * @see Event
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public abstract class Event {
 
+    @XmlElement
     protected String id;
+
+    @XmlElement
     protected String resourceName;
+
+    @XmlElement
     protected Date startDate;
+
+    @XmlElement
     protected Date endDate;
 
     protected Event() {
@@ -46,22 +56,19 @@ public abstract class Event {
         this.endDate = Objects.requireNonNull(builder.endDate, "endDate");
     }
 
-    @XmlElement
+
     public String getId() {
         return id;
     }
 
-    @XmlElement
     public String getResourceName() {
         return resourceName;
     }
 
-    @XmlElement
     public Date getStartDate() {
         return startDate;
     }
 
-    @XmlElement
     public Date getEndDate() {
         return endDate;
     }
