@@ -26,7 +26,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -323,7 +322,7 @@ public class SoapOperation {
         private String portId;
         private Boolean mockOnFailure;
         private SoapOperationIdentifyStrategy identifyStrategy;
-        private List<SoapMockResponse> mockResponses = new CopyOnWriteArrayList<>();
+        private List<SoapMockResponse> mockResponses;
         private String invokeAddress;
         private String defaultResponseName;
         private Boolean automaticForward;

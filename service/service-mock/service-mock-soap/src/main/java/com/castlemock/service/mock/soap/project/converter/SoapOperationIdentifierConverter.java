@@ -31,7 +31,7 @@ public final class SoapOperationIdentifierConverter {
     public static String toDefaultBody(final SoapOperationIdentifier operationResponseIdentifier){
         final String prefix = "web";
         return "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:" +
-                prefix + "=\"" + operationResponseIdentifier.getNamespace() + "\">\n" +
+                prefix + "=\"" + operationResponseIdentifier.getNamespace().orElse("") + "\">\n" +
                 "   <soapenv:Header/>\n" +
                 "   <soapenv:Body>\n" +
                 "      <" + prefix + ":" + operationResponseIdentifier.getName() + ">?</" + prefix + ":" +
