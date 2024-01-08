@@ -112,11 +112,7 @@ public class SoapMockResponse {
     public List<ContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
-
-    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
-        this.contentEncodings = contentEncodings;
-    }
-
+    
     @XmlElementWrapper(name = "xpathExpressions")
     @XmlElement(name = "xpathExpression")
     public List<SoapXPathExpression> getXpathExpressions() {

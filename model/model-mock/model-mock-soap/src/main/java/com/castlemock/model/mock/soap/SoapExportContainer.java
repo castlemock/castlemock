@@ -36,11 +36,15 @@ import java.util.Objects;
 @XmlRootElement
 public class SoapExportContainer extends ExportContainer {
 
-    private final SoapProject project;
-    private final List<SoapPort> ports;
-    private final List<SoapResource> resources;
-    private final List<SoapOperation> operations;
-    private final List<SoapMockResponse> mockResponses;
+    private SoapProject project;
+    private List<SoapPort> ports;
+    private List<SoapResource> resources;
+    private List<SoapOperation> operations;
+    private List<SoapMockResponse> mockResponses;
+
+    private SoapExportContainer() {
+
+    }
 
     private SoapExportContainer(final Builder builder) {
         this.project = Objects.requireNonNull(builder.project, "project");

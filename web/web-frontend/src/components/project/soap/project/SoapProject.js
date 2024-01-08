@@ -245,7 +245,7 @@ class SoapProject extends PureComponent {
 
     onExportProjectClick() {
         axios({
-            url:  process.env.PUBLIC_URL + "/api/rest/soap/project/soap/" + this.state.projectId + "/export",
+            url:  process.env.PUBLIC_URL + "/api/rest/soap/project/" + this.state.projectId + "/export",
             method: 'GET',
             responseType: 'blob'
         }).then((response) => {

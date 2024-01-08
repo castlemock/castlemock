@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @XmlRootElement(name = "soapMockResponse")
 @XmlSeeAlso({HttpHeaderFile.class, SoapXPathExpressionFile.class})
@@ -34,11 +33,11 @@ public class SoapMockResponseFile implements Saveable<String> {
     @Mapping("usingExpressions")
     private Boolean usingExpressions;
     @Mapping("httpHeaders")
-    private List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<>();
+    private List<HttpHeaderFile> httpHeaders;
     @Mapping("contentEncodings")
-    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
+    private List<ContentEncoding> contentEncodings;
     @Mapping("xpathExpressions")
-    private List<SoapXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<>();
+    private List<SoapXPathExpressionFile> xpathExpressions;
 
     private SoapMockResponseFile() {
 
