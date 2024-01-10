@@ -1,16 +1,21 @@
 package com.castlemock.web.mock.soap.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.Set;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = UpdateSoapOperationForwardedEndpointsRequest.Builder.class)
 public class UpdateSoapOperationForwardedEndpointsRequest {
 
-    private Set<String> operationIds;
-    private String forwardedEndpoint;
-
-    private UpdateSoapOperationForwardedEndpointsRequest() {
-
-    }
+    private final Set<String> operationIds;
+    private final String forwardedEndpoint;
 
     private UpdateSoapOperationForwardedEndpointsRequest(final Builder builder) {
         this.operationIds = Objects.requireNonNull(builder.operationIds, "operationIds");
@@ -51,6 +56,7 @@ public class UpdateSoapOperationForwardedEndpointsRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private Set<String> operationIds;

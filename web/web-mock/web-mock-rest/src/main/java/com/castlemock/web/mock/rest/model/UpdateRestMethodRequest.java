@@ -19,6 +19,8 @@ package com.castlemock.web.mock.rest.model;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,21 +32,18 @@ import java.util.Optional;
  * @since 1.52
  */
 @XmlRootElement
+@JsonDeserialize(builder = UpdateRestMethodRequest.Builder.class)
 public class UpdateRestMethodRequest {
 
-    private String name;
-    private HttpMethod httpMethod;
-    private String forwardedEndpoint;
-    private RestMethodStatus status;
-    private RestResponseStrategy responseStrategy;
-    private Boolean simulateNetworkDelay;
-    private Long networkDelay;
-    private String defaultMockResponseId;
-    private Boolean automaticForward;
-
-    public UpdateRestMethodRequest(){
-
-    }
+    private final String name;
+    private final HttpMethod httpMethod;
+    private final String forwardedEndpoint;
+    private final RestMethodStatus status;
+    private final RestResponseStrategy responseStrategy;
+    private final Boolean simulateNetworkDelay;
+    private final Long networkDelay;
+    private final String defaultMockResponseId;
+    private final Boolean automaticForward;
 
     private UpdateRestMethodRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name, "name");
@@ -135,6 +134,7 @@ public class UpdateRestMethodRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String name;
         private HttpMethod httpMethod;

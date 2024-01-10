@@ -16,8 +16,10 @@
 
 package com.castlemock.model.mock.soap.domain;
 
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -34,31 +36,28 @@ import java.util.Optional;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = SoapResponse.Builder.class)
 public class SoapResponse {
 
     @XmlElement
-    private String body;
+    private final String body;
 
     @XmlElement
-    private String mockResponseName;
+    private final String mockResponseName;
 
     @XmlElement
-    private Integer httpStatusCode;
+    private final Integer httpStatusCode;
 
     @XmlElement
-    private String contentType;
+    private final String contentType;
 
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
-    private List<HttpHeader> httpHeaders;
+    private final List<HttpHeader> httpHeaders;
 
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
-    private List<ContentEncoding> contentEncodings;
-
-    private SoapResponse(){
-
-    }
+    private final List<HttpContentEncoding> contentEncodings;
 
     private SoapResponse(final Builder builder){
         this.body = Objects.requireNonNull(builder.body, "body");
@@ -89,7 +88,7 @@ public class SoapResponse {
         return httpHeaders;
     }
 
-    public List<ContentEncoding> getContentEncodings() {
+    public List<HttpContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
 
@@ -97,6 +96,7 @@ public class SoapResponse {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private String body;
@@ -104,7 +104,7 @@ public class SoapResponse {
         private Integer httpStatusCode;
         private String contentType;
         private List<HttpHeader> httpHeaders;
-        private List<ContentEncoding> contentEncodings;
+        private List<HttpContentEncoding> contentEncodings;
 
         private Builder() {
         }
@@ -134,7 +134,7 @@ public class SoapResponse {
             return this;
         }
 
-        public Builder contentEncodings(final List<ContentEncoding> contentEncodings) {
+        public Builder contentEncodings(final List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }

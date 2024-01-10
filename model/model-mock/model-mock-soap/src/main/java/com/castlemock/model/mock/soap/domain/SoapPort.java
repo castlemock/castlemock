@@ -16,6 +16,9 @@
 
 package com.castlemock.model.mock.soap.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -35,33 +38,30 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = SoapPort.Builder.class)
 public class SoapPort {
 
     @XmlElement
-    private String id;
+    private final String id;
 
     @XmlElement
-    private String name;
+    private final String name;
 
     @XmlElement
-    private String uri;
+    private final String uri;
 
     @XmlElement
-    private String projectId;
+    private final String projectId;
 
     @XmlTransient
-    private String invokeAddress;
+    private final String invokeAddress;
 
     @XmlElementWrapper(name = "operations")
     @XmlElement(name = "operation")
-    private List<SoapOperation> operations;
+    private final List<SoapOperation> operations;
 
     @XmlTransient
-    private Map<SoapOperationStatus, Integer> statusCount;
-
-    private SoapPort(){
-
-    }
+    private final Map<SoapOperationStatus, Integer> statusCount;
 
     private SoapPort(final Builder builder){
         this.id = Objects.requireNonNull(builder.id);
@@ -148,6 +148,7 @@ public class SoapPort {
                 '}';
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String id;
         private String name;

@@ -16,20 +16,26 @@
 
 package com.castlemock.web.core.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
  * @since 1.55
  */
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = ValidateExpressionRequest.Builder.class)
 public class ValidateExpressionRequest {
 
-    private String requestBody;
-    private String responseBody;
-
-    private ValidateExpressionRequest() {
-
-    }
+    private final String requestBody;
+    private final String responseBody;
 
     private ValidateExpressionRequest(final Builder builder) {
         this.responseBody = Objects.requireNonNull(builder.responseBody);
@@ -40,16 +46,8 @@ public class ValidateExpressionRequest {
         return requestBody;
     }
 
-    public void setRequestBody(String requestBody) {
-        this.requestBody = requestBody;
-    }
-
     public String getResponseBody() {
         return responseBody;
-    }
-
-    public void setResponseBody(String responseBody) {
-        this.responseBody = responseBody;
     }
 
     public static Builder builder() {
@@ -77,6 +75,7 @@ public class ValidateExpressionRequest {
                 '}';
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private String requestBody;

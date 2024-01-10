@@ -16,6 +16,9 @@
 
 package com.castlemock.model.core.http;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -28,17 +31,14 @@ import java.util.Objects;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = HttpHeader.Builder.class)
 public class HttpHeader {
 
     @XmlElement
-    private String name;
+    private final String name;
 
     @XmlElement
-    private String value;
-
-    private HttpHeader(){
-
-    }
+    private final String value;
 
     private HttpHeader(final Builder builder){
         this.name = Objects.requireNonNull(builder.name, "name");
@@ -63,6 +63,7 @@ public class HttpHeader {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String name;
         private String value;

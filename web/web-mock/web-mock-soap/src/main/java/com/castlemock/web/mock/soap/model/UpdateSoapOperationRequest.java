@@ -19,7 +19,12 @@ package com.castlemock.web.mock.soap.model;
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifyStrategy;
 import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
 import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -27,21 +32,21 @@ import java.util.Optional;
  * @author Karl Dahlgren
  * @since 1.52
  */
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = UpdateSoapOperationRequest.Builder.class)
 public class UpdateSoapOperationRequest {
 
-    private SoapResponseStrategy responseStrategy;
-    private SoapOperationStatus status;
-    private String forwardedEndpoint;
-    private Boolean simulateNetworkDelay;
-    private Long networkDelay;
-    private String defaultMockResponseId;
-    private Boolean mockOnFailure;
-    private SoapOperationIdentifyStrategy identifyStrategy;
-    private Boolean automaticForward;
-
-    public UpdateSoapOperationRequest(){
-
-    }
+    private final SoapResponseStrategy responseStrategy;
+    private final SoapOperationStatus status;
+    private final String forwardedEndpoint;
+    private final Boolean simulateNetworkDelay;
+    private final Long networkDelay;
+    private final String defaultMockResponseId;
+    private final Boolean mockOnFailure;
+    private final SoapOperationIdentifyStrategy identifyStrategy;
+    private final Boolean automaticForward;
 
     private UpdateSoapOperationRequest(final Builder builder){
         this.responseStrategy = Objects.requireNonNull(builder.responseStrategy, "responseStrategy");
@@ -95,6 +100,7 @@ public class UpdateSoapOperationRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private SoapResponseStrategy responseStrategy;

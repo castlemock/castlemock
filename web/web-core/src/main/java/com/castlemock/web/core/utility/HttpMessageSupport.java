@@ -16,7 +16,7 @@
 
 package com.castlemock.web.core.utility;
 
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.http.HttpParameter;
@@ -272,7 +272,7 @@ public final class HttpMessageSupport {
      * @since 1.18
      */
     public static String extractHttpBody(final HttpURLConnection connection,
-                                         final List<ContentEncoding> encodings,
+                                         final List<HttpContentEncoding> encodings,
                                          final String characterEncoding) throws IOException {
 
         final InputStream inputStream;
@@ -292,13 +292,13 @@ public final class HttpMessageSupport {
             }
 
             // Check if the content is encoded
-            if (encodings.contains(ContentEncoding.GZIP)) {
+            if (encodings.contains(HttpContentEncoding.GZIP)) {
                 // The content is GZIP encoded.
                 // Create a decoder and parse the response.
                 final InputStream gzipStream = new GZIPInputStream(inputStream);
                 final Reader decoder = new InputStreamReader(gzipStream);
                 bufferedReader = new BufferedReader(decoder);
-            } else if(encodings.contains(ContentEncoding.DEFLATE)){
+            } else if(encodings.contains(HttpContentEncoding.DEFLATE)){
                 // The content is DEFLATE encoded.
                 // Create a decoder and parse the response.
                 final InflaterInputStream inflaterInputStream = new InflaterInputStream(inputStream);
@@ -336,17 +336,17 @@ public final class HttpMessageSupport {
      * The method will extract all the encodings (Content-Encoding) from an established
      * {@link HttpURLConnection}.
      * @param connection The connection that the encodings will be extracted from.
-     * @return A list of {@link ContentEncoding} extracted from the provided {@link HttpURLConnection}.
+     * @return A list of {@link HttpContentEncoding} extracted from the provided {@link HttpURLConnection}.
      * @since 1.18
      */
-    public static List<ContentEncoding> extractContentEncoding(final HttpURLConnection connection){
-        final List<ContentEncoding> encodings = new ArrayList<>();
+    public static List<HttpContentEncoding> extractContentEncoding(final HttpURLConnection connection){
+        final List<HttpContentEncoding> encodings = new ArrayList<>();
         // Extract the content encoding
         String connectionContentEncoding = connection.getContentEncoding();
 
         if(connectionContentEncoding != null){
             connectionContentEncoding = connectionContentEncoding.toUpperCase();
-            for(ContentEncoding contentEncoding : ContentEncoding.values()){
+            for(HttpContentEncoding contentEncoding : HttpContentEncoding.values()){
                 int index = connectionContentEncoding.indexOf(contentEncoding.name());
                 if(index != -1){
                     encodings.add(contentEncoding);

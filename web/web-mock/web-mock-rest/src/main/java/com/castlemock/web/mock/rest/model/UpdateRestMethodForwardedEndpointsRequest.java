@@ -1,16 +1,18 @@
 package com.castlemock.web.mock.rest.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.Set;
 
+@XmlRootElement
+@JsonDeserialize(builder = UpdateRestMethodForwardedEndpointsRequest.Builder.class)
 public class UpdateRestMethodForwardedEndpointsRequest {
 
-    private Set<String> methodIds;
-    private String forwardedEndpoint;
-
-    private UpdateRestMethodForwardedEndpointsRequest() {
-
-    }
+    private final Set<String> methodIds;
+    private final String forwardedEndpoint;
 
     private UpdateRestMethodForwardedEndpointsRequest(final Builder builder) {
         this.methodIds = Objects.requireNonNull(builder.methodIds, "methodIds");
@@ -51,6 +53,7 @@ public class UpdateRestMethodForwardedEndpointsRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private Set<String> methodIds;

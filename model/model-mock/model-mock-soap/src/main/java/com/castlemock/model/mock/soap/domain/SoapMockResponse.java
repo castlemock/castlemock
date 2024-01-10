@@ -16,8 +16,10 @@
 
 package com.castlemock.model.mock.soap.domain;
 
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -36,44 +38,41 @@ import java.util.stream.Collectors;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = SoapMockResponse.Builder.class)
 public class SoapMockResponse {
 
     @XmlElement
-    private String id;
+    private final String id;
 
     @XmlElement
-    private String name;
+    private final String name;
 
     @XmlElement
-    private String body;
+    private final String body;
 
     @XmlElement
-    private String operationId;
+    private final String operationId;
 
     @XmlElement
-    private SoapMockResponseStatus status;
+    private final SoapMockResponseStatus status;
 
     @XmlElement
-    private Integer httpStatusCode;
+    private final Integer httpStatusCode;
 
     @XmlElement
-    private Boolean usingExpressions;
+    private final Boolean usingExpressions;
 
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
-    private List<HttpHeader> httpHeaders;
+    private final List<HttpHeader> httpHeaders;
 
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
-    private List<ContentEncoding> contentEncodings;
+    private final List<HttpContentEncoding> contentEncodings;
 
     @XmlElementWrapper(name = "xpathExpressions")
     @XmlElement(name = "xpathExpression")
-    private List<SoapXPathExpression> xpathExpressions;
-
-    private SoapMockResponse(){
-
-    }
+    private final List<SoapXPathExpression> xpathExpressions;
 
     private SoapMockResponse(final Builder builder){
         this.id = Objects.requireNonNull(builder.id, "id");
@@ -126,7 +125,7 @@ public class SoapMockResponse {
     }
 
 
-    public List<ContentEncoding> getContentEncodings() {
+    public List<HttpContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
 
@@ -194,6 +193,7 @@ public class SoapMockResponse {
                 '}';
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String id;
         private String name;
@@ -203,7 +203,7 @@ public class SoapMockResponse {
         private Integer httpStatusCode;
         private Boolean usingExpressions;
         private List<HttpHeader> httpHeaders;
-        private List<ContentEncoding> contentEncodings;
+        private List<HttpContentEncoding> contentEncodings;
         private List<SoapXPathExpression> xpathExpressions;
 
         private Builder() {
@@ -249,7 +249,7 @@ public class SoapMockResponse {
             return this;
         }
 
-        public Builder contentEncodings(final List<ContentEncoding> contentEncodings) {
+        public Builder contentEncodings(final List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }

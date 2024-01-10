@@ -1,5 +1,8 @@
 package com.castlemock.model.core.project;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,14 +11,11 @@ import java.util.Objects;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = OverviewProject.Builder.class)
 public class OverviewProject extends Project{
 
     @XmlElement
-    private String type;
-
-    private OverviewProject() {
-        super();
-    }
+    private final String type;
 
     private OverviewProject(final Builder builder){
         super(builder);
@@ -39,6 +39,7 @@ public class OverviewProject extends Project{
                 .description(other.description);
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder extends Project.Builder<Builder> {
 
         private String type;

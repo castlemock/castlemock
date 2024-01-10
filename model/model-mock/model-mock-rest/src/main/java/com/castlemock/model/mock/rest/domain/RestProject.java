@@ -17,6 +17,8 @@
 package com.castlemock.model.mock.rest.domain;
 
 import com.castlemock.model.core.project.Project;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -34,15 +36,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = RestProject.Builder.class)
 public class RestProject extends Project {
 
     @XmlElementWrapper(name = "applications")
     @XmlElement(name = "application")
-    private List<RestApplication> applications;
+    private final List<RestApplication> applications;
 
-    private RestProject() {
-
-    }
 
     private RestProject(final Builder builder){
         super(builder);
@@ -88,6 +88,7 @@ public class RestProject extends Project {
                 .applications(applications);
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder extends Project.Builder<Builder> {
         private List<RestApplication> applications = new CopyOnWriteArrayList<>();
 

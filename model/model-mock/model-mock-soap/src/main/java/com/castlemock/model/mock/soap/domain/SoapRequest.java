@@ -18,6 +18,8 @@ package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -33,39 +35,36 @@ import java.util.Objects;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = SoapRequest.Builder.class)
 public class SoapRequest {
 
     @XmlElement
-    private String body;
+    private final String body;
 
     @XmlElement
-    private String envelope;
+    private final String envelope;
 
     @XmlElement
-    private String contentType;
+    private final String contentType;
 
     @XmlElement
-    private String uri;
+    private final String uri;
 
     @XmlElement
-    private HttpMethod httpMethod;
+    private final HttpMethod httpMethod;
 
     @XmlElement
-    private String operationName;
+    private final String operationName;
 
     @XmlElement
-    private SoapVersion soapVersion;
+    private final SoapVersion soapVersion;
 
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
-    private List<HttpHeader> httpHeaders;
+    private final List<HttpHeader> httpHeaders;
 
     @XmlElement
-    private SoapOperationIdentifier operationIdentifier;
-
-    private SoapRequest(){
-
-    }
+    private final SoapOperationIdentifier operationIdentifier;
 
     private SoapRequest(final Builder builder){
         this.body = Objects.requireNonNull(builder.body, "body");
@@ -120,6 +119,7 @@ public class SoapRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private String body;

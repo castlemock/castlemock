@@ -16,6 +16,9 @@
 
 package com.castlemock.model.core.event;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -31,23 +34,20 @@ import java.util.Objects;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = Event.Builder.class)
 public abstract class Event {
 
     @XmlElement
-    protected String id;
+    protected final String id;
 
     @XmlElement
-    protected String resourceName;
+    protected final String resourceName;
 
     @XmlElement
-    protected Date startDate;
+    protected final Date startDate;
 
     @XmlElement
-    protected Date endDate;
-
-    protected Event() {
-
-    }
+    protected final Date endDate;
 
     protected Event(final Builder<?> builder){
         this.resourceName = Objects.requireNonNull(builder.resourceName, "resourceName");
@@ -73,6 +73,7 @@ public abstract class Event {
         return endDate;
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     @SuppressWarnings("unchecked")
     public static class Builder<B extends Builder<B>> {
 

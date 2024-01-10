@@ -17,7 +17,7 @@
 package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestHeaderQuery;
@@ -51,7 +51,7 @@ public final class CreateRestMockResponseInput implements Input {
     private final RestMockResponseStatus status;
     private final Boolean usingExpressions;
     private final List<HttpHeader> httpHeaders;
-    private final List<ContentEncoding> contentEncodings;
+    private final List<HttpContentEncoding> contentEncodings;
     private final List<RestParameterQuery> parameterQueries;
     private final List<RestXPathExpression> xpathExpressions;
     private final List<RestJsonPathExpression> jsonPathExpressions;
@@ -115,7 +115,7 @@ public final class CreateRestMockResponseInput implements Input {
         return Optional.ofNullable(httpHeaders);
     }
 
-    public Optional<List<ContentEncoding>> getContentEncodings() {
+    public Optional<List<HttpContentEncoding>> getContentEncodings() {
         return Optional.ofNullable(contentEncodings);
     }
 
@@ -150,7 +150,7 @@ public final class CreateRestMockResponseInput implements Input {
         private RestMockResponseStatus status;
         private Boolean usingExpressions;
         private List<HttpHeader> httpHeaders;
-        private List<ContentEncoding> contentEncodings;
+        private List<HttpContentEncoding> contentEncodings;
         private List<RestParameterQuery> parameterQueries;
         private List<RestXPathExpression> xpathExpressions;
         private List<RestJsonPathExpression> jsonPathExpressions;
@@ -206,7 +206,7 @@ public final class CreateRestMockResponseInput implements Input {
             return this;
         }
 
-        public Builder contentEncodings(final List<ContentEncoding> contentEncodings) {
+        public Builder contentEncodings(final List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }

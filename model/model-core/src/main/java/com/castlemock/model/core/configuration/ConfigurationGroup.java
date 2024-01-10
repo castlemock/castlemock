@@ -16,6 +16,9 @@
 
 package com.castlemock.model.core.configuration;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -35,21 +38,18 @@ import java.util.Objects;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = ConfigurationGroup.Builder.class)
 public class ConfigurationGroup {
 
     @XmlElement
-    private String id;
+    private final String id;
 
     @XmlElement
-    private String name;
+    private final String name;
 
     @XmlElementWrapper(name = "configurations")
     @XmlElement(name = "configuration")
-    private List<Configuration> configurations;
-
-    private ConfigurationGroup(){
-
-    }
+    private final List<Configuration> configurations;
 
     private ConfigurationGroup(final Builder builder){
         this.id = Objects.requireNonNull(builder.id, "id");
@@ -87,6 +87,7 @@ public class ConfigurationGroup {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String id;
         private String name;

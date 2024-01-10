@@ -19,7 +19,11 @@ package com.castlemock.web.mock.soap.model;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,20 +35,19 @@ import java.util.Optional;
  * @author Karl Dahlgren
  * @since 1.52
  */
+
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = UpdateSoapMockResponseRequest.Builder.class)
 @XmlRootElement
 public class UpdateSoapMockResponseRequest {
 
-    private String name;
-    private String body;
-    private SoapMockResponseStatus status;
-    private Integer httpStatusCode;
-    private Boolean usingExpressions;
-    private List<HttpHeader> httpHeaders;
-    private List<SoapXPathExpression> xpathExpressions;
-
-    public UpdateSoapMockResponseRequest(){
-
-    }
+    private final String name;
+    private final String body;
+    private final SoapMockResponseStatus status;
+    private final Integer httpStatusCode;
+    private final Boolean usingExpressions;
+    private final List<HttpHeader> httpHeaders;
+    private final List<SoapXPathExpression> xpathExpressions;
 
     private UpdateSoapMockResponseRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name, "name");
@@ -98,6 +101,7 @@ public class UpdateSoapMockResponseRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private String name;

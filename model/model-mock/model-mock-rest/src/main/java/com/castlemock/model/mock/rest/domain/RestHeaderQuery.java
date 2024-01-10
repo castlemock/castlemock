@@ -16,6 +16,9 @@
 
 package com.castlemock.model.mock.rest.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -24,26 +27,24 @@ import java.util.Objects;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = RestHeaderQuery.Builder.class)
 public class RestHeaderQuery {
 
     @XmlElement
-    private String header;
+    private final String header;
 
     @XmlElement
-    private String query;
+    private final String query;
 
     @XmlElement
-    private boolean matchCase;
+    private final boolean matchCase;
 
     @XmlElement
-    private boolean matchAny;
+    private final boolean matchAny;
 
     @XmlElement
-    private boolean matchRegex;
+    private final boolean matchRegex;
 
-    private RestHeaderQuery(){
-
-    }
 
     private RestHeaderQuery(final Builder builder){
         this.header = Objects.requireNonNull(builder.header, "header");
@@ -114,6 +115,7 @@ public class RestHeaderQuery {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String header;
         private String query;

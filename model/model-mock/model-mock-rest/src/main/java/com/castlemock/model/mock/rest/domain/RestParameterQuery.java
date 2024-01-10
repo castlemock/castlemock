@@ -1,5 +1,8 @@
 package com.castlemock.model.mock.rest.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,29 +11,26 @@ import java.util.Objects;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = RestParameterQuery.Builder.class)
 public class RestParameterQuery {
 
     @XmlElement
-    private String parameter;
+    private final String parameter;
 
     @XmlElement
-    private String query;
+    private final String query;
 
     @XmlElement
-    private boolean matchCase;
+    private final boolean matchCase;
 
     @XmlElement
-    private boolean matchAny;
+    private final boolean matchAny;
 
     @XmlElement
-    private boolean matchRegex;
+    private final boolean matchRegex;
 
     @XmlElement
-    private boolean urlEncoded;
-
-    private RestParameterQuery(){
-
-    }
+    private final boolean urlEncoded;
 
     private RestParameterQuery(final Builder builder){
         this.parameter = Objects.requireNonNull(builder.parameter, "parameter");
@@ -104,6 +104,7 @@ public class RestParameterQuery {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String parameter;
         private String query;

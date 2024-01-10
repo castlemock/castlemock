@@ -17,6 +17,8 @@
 package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.event.Event;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -31,26 +33,24 @@ import java.util.Optional;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = SoapEvent.Builder.class)
 public class SoapEvent extends Event {
 
     @XmlElement
-    private SoapRequest request;
+    private final SoapRequest request;
 
     @XmlElement
-    private SoapResponse response;
+    private final SoapResponse response;
 
     @XmlElement
-    private String projectId;
+    private final String projectId;
 
     @XmlElement
-    private String portId;
+    private final String portId;
 
     @XmlElement
-    private String operationId;
+    private final String operationId;
 
-    private SoapEvent() {
-
-    }
 
     private SoapEvent(final Builder builder){
         super(builder);
@@ -122,6 +122,7 @@ public class SoapEvent extends Event {
                 .projectId(this.projectId);
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder extends Event.Builder<Builder> {
 
         private SoapRequest request;

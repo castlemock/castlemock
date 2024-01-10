@@ -1,7 +1,7 @@
 package com.castlemock.repository.soap.file.project.model;
 
 import com.castlemock.model.core.Saveable;
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
 import org.dozer.Mapping;
@@ -35,7 +35,7 @@ public class SoapMockResponseFile implements Saveable<String> {
     @Mapping("httpHeaders")
     private List<HttpHeaderFile> httpHeaders;
     @Mapping("contentEncodings")
-    private List<ContentEncoding> contentEncodings;
+    private List<HttpContentEncoding> contentEncodings;
     @Mapping("xpathExpressions")
     private List<SoapXPathExpressionFile> xpathExpressions;
 
@@ -136,11 +136,11 @@ public class SoapMockResponseFile implements Saveable<String> {
 
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
-    public List<ContentEncoding> getContentEncodings() {
+    public List<HttpContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
 
-    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+    public void setContentEncodings(List<HttpContentEncoding> contentEncodings) {
         this.contentEncodings = contentEncodings;
     }
 
@@ -182,7 +182,7 @@ public class SoapMockResponseFile implements Saveable<String> {
         private Integer httpStatusCode;
         private Boolean usingExpressions;
         private List<HttpHeaderFile> httpHeaders;
-        private List<ContentEncoding> contentEncodings;
+        private List<HttpContentEncoding> contentEncodings;
         private List<SoapXPathExpressionFile> xpathExpressions;
 
         private Builder() {
@@ -228,7 +228,7 @@ public class SoapMockResponseFile implements Saveable<String> {
             return this;
         }
 
-        public Builder contentEncodings(List<ContentEncoding> contentEncodings) {
+        public Builder contentEncodings(List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }

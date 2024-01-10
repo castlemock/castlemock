@@ -16,19 +16,24 @@
 
 package com.castlemock.web.core.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.Optional;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = UpdateProfileRequest.Builder.class)
 public class UpdateProfileRequest {
 
-    private String username;
-    private String password;
-    private String email;
-    private String fullName;
-
-    private UpdateProfileRequest() {
-
-    }
+    private final String username;
+    private final String password;
+    private final String email;
+    private final String fullName;
 
     private UpdateProfileRequest(final Builder builder){
         this.username = Objects.requireNonNull(builder.username, "username");
@@ -57,6 +62,7 @@ public class UpdateProfileRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private String username;

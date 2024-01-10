@@ -16,6 +16,9 @@
 
 package com.castlemock.model.core.project;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -31,26 +34,23 @@ import java.util.Optional;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = Project.Builder.class)
 public class Project {
 
     @XmlElement
-    protected String id;
+    protected final String id;
 
     @XmlElement
-    protected String name;
+    protected final String name;
 
     @XmlElement
-    protected Date updated;
+    protected final Date updated;
 
     @XmlElement
-    protected Date created;
+    protected final Date created;
 
     @XmlElement
-    protected String description;
-
-    protected Project() {
-
-    }
+    protected final String description;
 
     protected Project(final Builder<?> builder){
         this.id = Objects.requireNonNull(builder.id, "id");
@@ -59,7 +59,6 @@ public class Project {
         this.created = Objects.requireNonNull(builder.created, "created");
         this.description = builder.description;
     }
-
 
     public String getId() {
         return id;
@@ -109,6 +108,7 @@ public class Project {
                 '}';
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     @SuppressWarnings("unchecked")
     public static class Builder<B extends Builder<B>> {
 

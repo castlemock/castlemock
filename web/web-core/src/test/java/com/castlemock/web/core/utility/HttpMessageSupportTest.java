@@ -16,7 +16,7 @@
 
 package com.castlemock.web.core.utility;
 
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpParameter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -263,21 +263,21 @@ public class HttpMessageSupportTest {
     public void testExtractContentEncodingAll(){
         final HttpURLConnection httpURLConnection = Mockito.mock(HttpURLConnection.class);
         Mockito.when(httpURLConnection.getContentEncoding()).thenReturn("gzip/deflate");
-        List<ContentEncoding> contentEncodings = HttpMessageSupport.extractContentEncoding(httpURLConnection);
+        List<HttpContentEncoding> contentEncodings = HttpMessageSupport.extractContentEncoding(httpURLConnection);
 
         Assert.assertEquals(2, contentEncodings.size());
-        Assert.assertTrue(contentEncodings.contains(ContentEncoding.GZIP));
-        Assert.assertTrue(contentEncodings.contains(ContentEncoding.DEFLATE));
+        Assert.assertTrue(contentEncodings.contains(HttpContentEncoding.GZIP));
+        Assert.assertTrue(contentEncodings.contains(HttpContentEncoding.DEFLATE));
     }
 
     @Test
     public void testExtractContentEncodingDeflate(){
         final HttpURLConnection httpURLConnection = Mockito.mock(HttpURLConnection.class);
         Mockito.when(httpURLConnection.getContentEncoding()).thenReturn("deflate");
-        List<ContentEncoding> contentEncodings = HttpMessageSupport.extractContentEncoding(httpURLConnection);
+        List<HttpContentEncoding> contentEncodings = HttpMessageSupport.extractContentEncoding(httpURLConnection);
 
         Assert.assertEquals(1, contentEncodings.size());
-        Assert.assertFalse(contentEncodings.contains(ContentEncoding.GZIP));
-        Assert.assertTrue(contentEncodings.contains(ContentEncoding.DEFLATE));
+        Assert.assertFalse(contentEncodings.contains(HttpContentEncoding.GZIP));
+        Assert.assertTrue(contentEncodings.contains(HttpContentEncoding.DEFLATE));
     }
 }

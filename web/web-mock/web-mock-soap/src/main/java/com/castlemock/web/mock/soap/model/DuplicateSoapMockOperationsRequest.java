@@ -1,15 +1,20 @@
 package com.castlemock.web.mock.soap.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.Set;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = DuplicateSoapMockOperationsRequest.Builder.class)
 public class DuplicateSoapMockOperationsRequest {
 
-    private Set<String> mockResponseIds;
-
-    private DuplicateSoapMockOperationsRequest() {
-
-    }
+    private final Set<String> mockResponseIds;
 
     private DuplicateSoapMockOperationsRequest(final Builder builder) {
         this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds, "mockResponseIds");
@@ -43,6 +48,7 @@ public class DuplicateSoapMockOperationsRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private Set<String> mockResponseIds;

@@ -17,6 +17,8 @@
 package com.castlemock.model.mock.rest.domain;
 
 import com.castlemock.model.core.http.HttpMethod;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -34,60 +36,57 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = RestMethod.Builder.class)
 public class RestMethod {
 
     @XmlElement
-    private String id;
+    private final String id;
 
     @XmlElement
-    private String name;
+    private final String name;
 
     @XmlElement
-    private String resourceId;
+    private final String resourceId;
 
     @XmlElement
-    private String defaultBody;
+    private final String defaultBody;
 
     @XmlElement
-    private HttpMethod httpMethod;
+    private final HttpMethod httpMethod;
 
     @XmlElement
-    private String forwardedEndpoint;
+    private final String forwardedEndpoint;
 
     @XmlElement
-    private RestMethodStatus status;
+    private final RestMethodStatus status;
 
     @XmlElement
-    private RestResponseStrategy responseStrategy;
+    private final RestResponseStrategy responseStrategy;
 
     @XmlElement
-    private Integer currentResponseSequenceIndex;
+    private final Integer currentResponseSequenceIndex;
 
     @XmlElement
-    private Boolean simulateNetworkDelay;
+    private final Boolean simulateNetworkDelay;
 
     @XmlElement
-    private Long networkDelay;
+    private final Long networkDelay;
 
     @XmlElement
-    private String defaultMockResponseId;
+    private final String defaultMockResponseId;
 
     @XmlElementWrapper(name = "mockResponses")
     @XmlElement(name = "mockResponse")
-    private List<RestMockResponse> mockResponses;
+    private final List<RestMockResponse> mockResponses;
 
     @XmlElement
-    private String uri;
+    private final String uri;
 
     @XmlElement
-    private String defaultResponseName;
+    private final String defaultResponseName;
 
     @XmlElement
-    private Boolean automaticForward;
-
-    private RestMethod(){
-
-    }
+    private final Boolean automaticForward;
 
     private RestMethod(final Builder builder){
         this.id = Objects.requireNonNull(builder.id, "id");
@@ -233,6 +232,7 @@ public class RestMethod {
                 .uri(this.uri);
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String id;
         private String name;

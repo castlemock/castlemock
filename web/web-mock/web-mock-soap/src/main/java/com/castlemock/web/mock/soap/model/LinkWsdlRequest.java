@@ -16,17 +16,22 @@
 
 package com.castlemock.web.mock.soap.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = LinkWsdlRequest.Builder.class)
 public class LinkWsdlRequest {
 
-    private String url;
-    private Boolean generateResponse;
-    private Boolean includeImports;
-
-    private LinkWsdlRequest() {
-
-    }
+    private final String url;
+    private final Boolean generateResponse;
+    private final Boolean includeImports;
 
     private LinkWsdlRequest(final Builder builder) {
         this.url = Objects.requireNonNull(builder.url, "url");
@@ -74,6 +79,7 @@ public class LinkWsdlRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String url;
         private Boolean generateResponse;

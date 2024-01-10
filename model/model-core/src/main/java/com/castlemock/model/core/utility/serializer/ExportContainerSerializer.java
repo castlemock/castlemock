@@ -17,15 +17,9 @@
 package com.castlemock.model.core.utility.serializer;
 
 import com.castlemock.model.core.ExportContainer;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import java.io.ByteArrayInputStream;
-import java.io.StringWriter;
 
 /**
  * The {@link ExportContainerSerializer} is a utility class that provides functionality to
@@ -44,13 +38,9 @@ public final class ExportContainerSerializer {
 
     public static <T extends ExportContainer> String serialize(final T exportContainer){
         try {
-            final JAXBContext context = JAXBContext.newInstance(exportContainer.getClass());
-            final Marshaller marshaller = context.createMarshaller();
-            final StringWriter writer = new StringWriter();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(exportContainer, writer);
-            return writer.toString();
-        } catch (JAXBException e) {
+            final XmlMapper xmlMapper = new XmlMapper();
+            return xmlMapper.writeValueAsString(exportContainer);
+        } catch (Throwable e) {
             LOGGER.error("Unable to serialize", e);
             throw new IllegalArgumentException("Unable to serialize");
         }
@@ -60,10 +50,8 @@ public final class ExportContainerSerializer {
     public static <T extends ExportContainer> T deserialize(final String raw,
                                                             final Class<? extends ExportContainer> clazz){
         try {
-            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream (raw.getBytes());
-            final JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
-            final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            return (T) jaxbUnmarshaller.unmarshal(byteArrayInputStream);
+            final XmlMapper xmlMapper = new XmlMapper();
+            return (T) xmlMapper.readValue(raw, clazz);
         } catch (Throwable e ) {
             LOGGER.error("Unable to deserialize", e);
             throw new IllegalStateException("Unable to deserialize", e);

@@ -17,18 +17,22 @@
 package com.castlemock.web.core.model.authentication;
 
 import com.castlemock.model.core.user.Role;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = AuthenticationResponse.Builder.class)
 public class AuthenticationResponse {
 
-    private String token;
-    private String username;
-    private Role role;
-
-    private AuthenticationResponse(){
-
-    }
+    private final String token;
+    private final String username;
+    private final Role role;
 
     private AuthenticationResponse(final Builder builder) {
         this.token = Objects.requireNonNull(builder.token);
@@ -72,6 +76,7 @@ public class AuthenticationResponse {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String token;
         private String username;

@@ -1,15 +1,17 @@
 package com.castlemock.web.mock.rest.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.Set;
 
+@XmlRootElement
+@JsonDeserialize(builder = DuplicateRestMockOperationsRequest.Builder.class)
 public class DuplicateRestMockOperationsRequest {
 
-    private Set<String> mockResponseIds;
-
-    private DuplicateRestMockOperationsRequest() {
-
-    }
+    private final Set<String> mockResponseIds;
 
     private DuplicateRestMockOperationsRequest(final Builder builder) {
         this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds, "mockResponseIds");
@@ -43,6 +45,7 @@ public class DuplicateRestMockOperationsRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private Set<String> mockResponseIds;

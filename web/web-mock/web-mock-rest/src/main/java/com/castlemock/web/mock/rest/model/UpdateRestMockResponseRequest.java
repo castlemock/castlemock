@@ -16,13 +16,15 @@
 
 package com.castlemock.web.mock.rest.model;
 
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.mock.rest.domain.RestHeaderQuery;
 import com.castlemock.model.mock.rest.domain.RestJsonPathExpression;
 import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 import com.castlemock.model.mock.rest.domain.RestParameterQuery;
 import com.castlemock.model.mock.rest.domain.RestXPathExpression;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -36,23 +38,21 @@ import java.util.Optional;
  * @since 1.52
  */
 @XmlRootElement
+@JsonDeserialize(builder = UpdateRestMockResponseRequest.Builder.class)
 public class UpdateRestMockResponseRequest {
 
-    private String name;
-    private String body;
-    private Integer httpStatusCode;
-    private RestMockResponseStatus status;
-    private Boolean usingExpressions;
-    private List<HttpHeader> httpHeaders;
-    private List<ContentEncoding> contentEncodings;
-    private List<RestParameterQuery> parameterQueries;
-    private List<RestXPathExpression> xpathExpressions;
-    private List<RestJsonPathExpression> jsonPathExpressions;
-    private List<RestHeaderQuery> headerQueries;
+    private final String name;
+    private final String body;
+    private final Integer httpStatusCode;
+    private final RestMockResponseStatus status;
+    private final Boolean usingExpressions;
+    private final List<HttpHeader> httpHeaders;
+    private final List<HttpContentEncoding> contentEncodings;
+    private final List<RestParameterQuery> parameterQueries;
+    private final List<RestXPathExpression> xpathExpressions;
+    private final List<RestJsonPathExpression> jsonPathExpressions;
+    private final List<RestHeaderQuery> headerQueries;
 
-    public UpdateRestMockResponseRequest(){
-
-    }
 
     private UpdateRestMockResponseRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name, "name");
@@ -101,7 +101,7 @@ public class UpdateRestMockResponseRequest {
 
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
-    public List<ContentEncoding> getContentEncodings() {
+    public List<HttpContentEncoding> getContentEncodings() {
         return Optional.ofNullable(contentEncodings).orElseGet(List::of);
     }
 
@@ -173,6 +173,7 @@ public class UpdateRestMockResponseRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private String name;
@@ -181,7 +182,7 @@ public class UpdateRestMockResponseRequest {
         private RestMockResponseStatus status;
         private Boolean usingExpressions;
         private List<HttpHeader> httpHeaders;
-        private List<ContentEncoding> contentEncodings;
+        private List<HttpContentEncoding> contentEncodings;
         private List<RestParameterQuery> parameterQueries;
         private List<RestXPathExpression> xpathExpressions;
         private List<RestJsonPathExpression> jsonPathExpressions;
@@ -220,7 +221,7 @@ public class UpdateRestMockResponseRequest {
             return this;
         }
 
-        public Builder contentEncodings(final List<ContentEncoding> contentEncodings) {
+        public Builder contentEncodings(final List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }

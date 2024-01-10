@@ -1,6 +1,6 @@
 package com.castlemock.model.mock.rest.domain;
 
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public final class RestMockResponseTestBuilder {
     private RestMockResponseStatus status;
     private Boolean usingExpressions;
     private List<HttpHeader> httpHeaders;
-    private List<ContentEncoding> contentEncodings;
+    private List<HttpContentEncoding> contentEncodings;
     private List<RestParameterQuery> parameterQueries;
     private List<RestXPathExpression> xpathExpressions;
     private List<RestJsonPathExpression> jsonPathExpressions;
@@ -78,7 +78,7 @@ public final class RestMockResponseTestBuilder {
         return this;
     }
 
-    public RestMockResponseTestBuilder contentEncodings(final List<ContentEncoding> contentEncodings) {
+    public RestMockResponseTestBuilder contentEncodings(final List<HttpContentEncoding> contentEncodings) {
         this.contentEncodings = contentEncodings;
         return this;
     }

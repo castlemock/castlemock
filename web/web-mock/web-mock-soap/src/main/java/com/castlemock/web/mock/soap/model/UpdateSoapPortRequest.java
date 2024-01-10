@@ -16,19 +16,25 @@
 
 package com.castlemock.web.mock.soap.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 /**
  * @author Karl Dahlgren
  * @since 1.55
  */
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = UpdateSoapPortRequest.Builder.class)
 public class UpdateSoapPortRequest {
 
-    private String uri;
-
-    public UpdateSoapPortRequest(){
-
-    }
+    private final String uri;
 
     private UpdateSoapPortRequest(final Builder builder){
         this.uri = Objects.requireNonNull(builder.uri, "uri");
@@ -42,6 +48,7 @@ public class UpdateSoapPortRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private String uri;

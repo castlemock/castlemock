@@ -17,7 +17,7 @@
 package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestHeaderQuery;
@@ -56,7 +56,7 @@ public final class UpdateRestMockResponseInput implements Input {
     private final String body;
     private final Boolean usingExpressions;
     private final List<HttpHeader> httpHeaders;
-    private final List<ContentEncoding> contentEncodings;
+    private final List<HttpContentEncoding> contentEncodings;
     private final List<RestParameterQuery> parameterQueries;
     private final List<RestXPathExpression> xpathExpressions;
     private final List<RestJsonPathExpression> jsonPathExpressions;
@@ -127,7 +127,7 @@ public final class UpdateRestMockResponseInput implements Input {
                 .orElseGet(List::of);
     }
 
-    public List<ContentEncoding> getContentEncodings() {
+    public List<HttpContentEncoding> getContentEncodings() {
         return Optional.ofNullable(contentEncodings)
                 .map(List::copyOf)
                 .orElseGet(List::of);
@@ -174,7 +174,7 @@ public final class UpdateRestMockResponseInput implements Input {
         private RestMockResponseStatus status;
         private Boolean usingExpressions;
         private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<>();
-        private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
+        private List<HttpContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
         private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<>();
         private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<>();
         private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<>();
@@ -235,7 +235,7 @@ public final class UpdateRestMockResponseInput implements Input {
             return this;
         }
 
-        public Builder contentEncodings(final List<ContentEncoding> contentEncodings) {
+        public Builder contentEncodings(final List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }

@@ -20,7 +20,7 @@ package com.castlemock.repository.soap.file.project;
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.SearchValidator;
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.repository.Profiles;
@@ -110,7 +110,7 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
             }
             soapMockResponse.setHttpHeaders(httpHeaders);
 
-            List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
+            List<HttpContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
             if (soapMockResponse.getContentEncodings() != null) {
                 contentEncodings.addAll(soapMockResponse.getContentEncodings());
             }

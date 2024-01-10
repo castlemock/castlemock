@@ -19,7 +19,12 @@ package com.castlemock.web.mock.soap.model;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,19 +32,18 @@ import java.util.Objects;
  * @author Karl Dahlgren
  * @since 1.52
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = CreateSoapMockResponseRequest.Builder.class)
 public class CreateSoapMockResponseRequest {
 
-    private String name;
-    private String body;
-    private SoapMockResponseStatus status;
-    private Integer httpStatusCode;
-    private Boolean usingExpressions;
-    private List<HttpHeader> httpHeaders;
-    private List<SoapXPathExpression> xpathExpressions;
-
-    public CreateSoapMockResponseRequest(){
-
-    }
+    private final String name;
+    private final String body;
+    private final SoapMockResponseStatus status;
+    private final Integer httpStatusCode;
+    private final Boolean usingExpressions;
+    private final List<HttpHeader> httpHeaders;
+    private final List<SoapXPathExpression> xpathExpressions;
 
     private CreateSoapMockResponseRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name, "name");
@@ -83,6 +87,7 @@ public class CreateSoapMockResponseRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private String name;

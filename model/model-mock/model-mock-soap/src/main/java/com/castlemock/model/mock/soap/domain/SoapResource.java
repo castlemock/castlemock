@@ -16,6 +16,9 @@
 
 package com.castlemock.model.mock.soap.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -29,26 +32,24 @@ import java.util.Optional;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = SoapResource.Builder.class)
 public class SoapResource {
 
     @XmlElement
-    private String id;
+    private final String id;
 
     @XmlElement
-    private String name;
+    private final String name;
 
     @XmlElement
-    private String projectId;
+    private final String projectId;
 
     @XmlElement
-    private String content;
+    private final String content;
 
     @XmlElement
-    private SoapResourceType type;
+    private final SoapResourceType type;
 
-    private SoapResource(){
-
-    }
 
     private SoapResource(final Builder builder){
         this.id = Objects.requireNonNull(builder.id, "id");
@@ -92,6 +93,7 @@ public class SoapResource {
                 .type(this.type);
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String id;
         private String name;

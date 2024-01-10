@@ -22,6 +22,8 @@ import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.model.mock.rest.domain.RestResource;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -37,30 +39,27 @@ import java.util.Objects;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = RestExportContainer.Builder.class)
 public class RestExportContainer extends ExportContainer {
 
     @XmlElement
-    private RestProject project;
+    private final RestProject project;
 
     @XmlElementWrapper(name = "applications")
     @XmlElement(name = "application")
-    private List<RestApplication> applications;
+    private final List<RestApplication> applications;
 
     @XmlElementWrapper(name = "resources")
     @XmlElement(name = "resource")
-    private List<RestResource> resources;
+    private final List<RestResource> resources;
 
     @XmlElementWrapper(name = "methods")
     @XmlElement(name = "method")
-    private List<RestMethod> methods;
+    private final List<RestMethod> methods;
 
     @XmlElementWrapper(name = "mockResponses")
     @XmlElement(name = "mockResponse")
-    private List<RestMockResponse> mockResponses;
-
-    private RestExportContainer(){
-
-    }
+    private final List<RestMockResponse> mockResponses;
 
     private RestExportContainer(final Builder builder){
         this.project = Objects.requireNonNull(builder.project, "project");
@@ -121,6 +120,7 @@ public class RestExportContainer extends ExportContainer {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private RestProject project;
         private List<RestApplication> applications;

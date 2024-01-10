@@ -1,18 +1,22 @@
 package com.castlemock.web.mock.soap.model;
 
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.Set;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = UpdateSoapMockResponseStatusesRequest.Builder.class)
 public class UpdateSoapMockResponseStatusesRequest {
 
-    private Set<String> mockResponseIds;
-    private SoapMockResponseStatus status;
-
-    private UpdateSoapMockResponseStatusesRequest() {
-
-    }
+    private final Set<String> mockResponseIds;
+    private final SoapMockResponseStatus status;
 
     private UpdateSoapMockResponseStatusesRequest(final Builder builder) {
         this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds, "mockResponseIds");
@@ -53,6 +57,7 @@ public class UpdateSoapMockResponseStatusesRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private Set<String> mockResponseIds;

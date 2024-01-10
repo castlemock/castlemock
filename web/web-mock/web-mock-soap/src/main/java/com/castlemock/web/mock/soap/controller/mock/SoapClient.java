@@ -15,7 +15,7 @@
  */
 package com.castlemock.web.mock.soap.controller.mock;
 
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapRequest;
@@ -49,7 +49,7 @@ public class SoapClient {
                 request.getHttpHeaders());
 
             final Integer responseCode = connection.getResponseCode();
-            final List<ContentEncoding> encodings = HttpMessageSupport.extractContentEncoding(connection);
+            final List<HttpContentEncoding> encodings = HttpMessageSupport.extractContentEncoding(connection);
             final List<HttpHeader> responseHttpHeaders = HttpMessageSupport.extractHttpHeaders(connection);
             final String characterEncoding = CharsetUtility.parseHttpHeaders(responseHttpHeaders);
             final String responseBody = HttpMessageSupport.extractHttpBody(connection, encodings, characterEncoding);

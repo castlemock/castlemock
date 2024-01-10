@@ -16,6 +16,12 @@
 
 package com.castlemock.model.core;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 /**
@@ -23,6 +29,10 @@ import java.util.Objects;
  * @author Karl Dahlgren
  * @since 1.0
  */
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = SearchQuery.Builder.class)
 public final class SearchQuery {
 
     private final String query;
@@ -59,6 +69,7 @@ public final class SearchQuery {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String query;
 

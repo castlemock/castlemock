@@ -17,6 +17,8 @@
 package com.castlemock.model.mock.rest.domain;
 
 import com.castlemock.model.core.event.Event;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -31,29 +33,26 @@ import java.util.Optional;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = RestEvent.Builder.class)
 public class RestEvent extends Event {
 
     @XmlElement
-    private RestRequest request;
+    private final RestRequest request;
 
     @XmlElement
-    private RestResponse response;
+    private final RestResponse response;
 
     @XmlElement
-    private String projectId;
+    private final String projectId;
 
     @XmlElement
-    private String applicationId;
+    private final String applicationId;
 
     @XmlElement
-    private String resourceId;
+    private final String resourceId;
 
     @XmlElement
-    private String methodId;
-
-    private RestEvent() {
-
-    }
+    private final String methodId;
 
     private RestEvent(final Builder builder){
         super(builder);
@@ -136,6 +135,7 @@ public class RestEvent extends Event {
                 .projectId(this.projectId);
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder extends Event.Builder<Builder> {
         private RestRequest request;
         private RestResponse response;

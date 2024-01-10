@@ -1,7 +1,7 @@
 package com.castlemock.repository.rest.file.project.model;
 
 import com.castlemock.model.core.Saveable;
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
 import org.dozer.Mapping;
@@ -36,7 +36,7 @@ public class RestMockResponseFile implements Saveable<String> {
     @Mapping("httpHeaders")
     private List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<>();
     @Mapping("contentEncodings")
-    private List<ContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
+    private List<HttpContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
     @Mapping("parameterQueries")
     private List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<>();
     @Mapping("xpathExpressions")
@@ -149,11 +149,11 @@ public class RestMockResponseFile implements Saveable<String> {
 
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
-    public List<ContentEncoding> getContentEncodings() {
+    public List<HttpContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
 
-    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+    public void setContentEncodings(List<HttpContentEncoding> contentEncodings) {
         this.contentEncodings = contentEncodings;
     }
 
@@ -226,7 +226,7 @@ public class RestMockResponseFile implements Saveable<String> {
         private Integer httpStatusCode;
         private Boolean usingExpressions;
         private List<HttpHeaderFile> httpHeaders;
-        private List<ContentEncoding> contentEncodings;
+        private List<HttpContentEncoding> contentEncodings;
         private List<RestParameterQueryFile> parameterQueries;
         private List<RestXPathExpressionFile> xpathExpressions;
         private List<RestJsonPathExpressionFile> jsonPathExpressions;
@@ -276,7 +276,7 @@ public class RestMockResponseFile implements Saveable<String> {
             return this;
         }
 
-        public Builder contentEncodings(List<ContentEncoding> contentEncodings) {
+        public Builder contentEncodings(List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }

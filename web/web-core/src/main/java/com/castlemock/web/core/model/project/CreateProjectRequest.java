@@ -1,17 +1,23 @@
 package com.castlemock.web.core.model.project;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.Optional;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = CreateProjectRequest.Builder.class)
 public class CreateProjectRequest {
 
-    private String name;
-    private String description;
-    private String projectType;
+    private final String name;
+    private final String description;
+    private final String projectType;
 
-    private CreateProjectRequest(){
-
-    }
 
     private CreateProjectRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name);
@@ -59,6 +65,7 @@ public class CreateProjectRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String name;
         private String description;

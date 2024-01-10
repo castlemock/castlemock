@@ -16,13 +16,15 @@
 
 package com.castlemock.web.mock.rest.model;
 
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.mock.rest.domain.RestHeaderQuery;
 import com.castlemock.model.mock.rest.domain.RestJsonPathExpression;
 import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 import com.castlemock.model.mock.rest.domain.RestParameterQuery;
 import com.castlemock.model.mock.rest.domain.RestXPathExpression;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
@@ -35,6 +37,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 1.52
  */
 @XmlRootElement
+@JsonDeserialize(builder = CreateRestMockResponseRequest.Builder.class)
 public class CreateRestMockResponseRequest {
 
     private String name;
@@ -43,7 +46,7 @@ public class CreateRestMockResponseRequest {
     private RestMockResponseStatus status;
     private boolean usingExpressions;
     private List<HttpHeader> httpHeaders;
-    private List<ContentEncoding> contentEncodings;
+    private List<HttpContentEncoding> contentEncodings;
     private List<RestParameterQuery> parameterQueries;
     private List<RestXPathExpression> xpathExpressions;
     private List<RestJsonPathExpression> jsonPathExpressions;
@@ -90,7 +93,7 @@ public class CreateRestMockResponseRequest {
         return httpHeaders;
     }
 
-    public List<ContentEncoding> getContentEncodings() {
+    public List<HttpContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
 
@@ -139,6 +142,7 @@ public class CreateRestMockResponseRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private String name;
@@ -147,7 +151,7 @@ public class CreateRestMockResponseRequest {
         private RestMockResponseStatus status;
         private Boolean usingExpressions;
         private List<HttpHeader> httpHeaders;
-        private List<ContentEncoding> contentEncodings;
+        private List<HttpContentEncoding> contentEncodings;
         private List<RestParameterQuery> parameterQueries;
         private List<RestXPathExpression> xpathExpressions;
         private List<RestJsonPathExpression> jsonPathExpressions;
@@ -186,7 +190,7 @@ public class CreateRestMockResponseRequest {
             return this;
         }
 
-        public Builder contentEncodings(final List<ContentEncoding> contentEncodings) {
+        public Builder contentEncodings(final List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }

@@ -16,8 +16,10 @@
 
 package com.castlemock.model.mock.rest.domain;
 
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -34,6 +36,7 @@ import java.util.Optional;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = RestResponse.Builder.class)
 public class RestResponse {
 
     @XmlElement
@@ -54,7 +57,7 @@ public class RestResponse {
 
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
-    private List<ContentEncoding> contentEncodings;
+    private List<HttpContentEncoding> contentEncodings;
 
     public RestResponse(){
 
@@ -92,7 +95,7 @@ public class RestResponse {
         return List.copyOf(httpHeaders);
     }
 
-    public List<ContentEncoding> getContentEncodings() {
+    public List<HttpContentEncoding> getContentEncodings() {
         return List.copyOf(contentEncodings);
     }
 
@@ -129,13 +132,14 @@ public class RestResponse {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String body;
         private String mockResponseName;
         private Integer httpStatusCode;
         private String contentType;
         private List<HttpHeader> httpHeaders;
-        private List<ContentEncoding> contentEncodings;
+        private List<HttpContentEncoding> contentEncodings;
 
         private Builder() {
         }
@@ -165,7 +169,7 @@ public class RestResponse {
             return this;
         }
 
-        public Builder contentEncodings(final List<ContentEncoding> contentEncodings) {
+        public Builder contentEncodings(final List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }

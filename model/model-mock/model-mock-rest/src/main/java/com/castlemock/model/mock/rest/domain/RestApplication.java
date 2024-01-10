@@ -16,6 +16,9 @@
 
 package com.castlemock.model.mock.rest.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -35,27 +38,24 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = RestApplication.Builder.class)
 public class RestApplication {
 
     @XmlElement
-    private String id;
+    private final String id;
 
     @XmlElement
-    private String name;
+    private final String name;
 
     @XmlElement
-    private String projectId;
+    private final String projectId;
 
     @XmlElementWrapper(name = "resources")
     @XmlElement(name = "resource")
-    private List<RestResource> resources;
+    private final List<RestResource> resources;
 
     @XmlTransient
-    private Map<RestMethodStatus, Integer> statusCount;
-
-    private RestApplication(){
-
-    }
+    private final Map<RestMethodStatus, Integer> statusCount;
 
     private RestApplication(final Builder builder){
         this.id = Objects.requireNonNull(builder.id, "id");
@@ -128,6 +128,7 @@ public class RestApplication {
                 .statusCount(this.statusCount);
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String id;
         private String name;

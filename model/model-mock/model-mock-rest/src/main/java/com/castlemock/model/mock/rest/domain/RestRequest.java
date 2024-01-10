@@ -19,6 +19,8 @@ package com.castlemock.model.mock.rest.domain;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.http.HttpParameter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -35,31 +37,28 @@ import java.util.Optional;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = RestRequest.Builder.class)
 public class RestRequest {
 
     @XmlElement
-    private String body;
+    private final String body;
 
     @XmlElement
-    private String contentType;
+    private final String contentType;
 
     @XmlElement
-    private String uri;
+    private final String uri;
 
     @XmlElement
-    private HttpMethod httpMethod;
+    private final HttpMethod httpMethod;
 
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
-    private List<HttpHeader> httpHeaders;
+    private final List<HttpHeader> httpHeaders;
 
     @XmlElementWrapper(name = "httpParameters")
     @XmlElement(name = "httpParameter")
-    private List<HttpParameter> httpParameters;
-
-    private RestRequest(){
-
-    }
+    private final List<HttpParameter> httpParameters;
 
     private RestRequest(final Builder builder){
         this.uri = Objects.requireNonNull(builder.uri, "uri");
@@ -131,6 +130,7 @@ public class RestRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String body;
         private String contentType;

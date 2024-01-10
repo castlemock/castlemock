@@ -16,6 +16,9 @@
 
 package com.castlemock.model.mock.rest.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -24,14 +27,12 @@ import java.util.Objects;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = RestXPathExpression.Builder.class)
 public class RestXPathExpression {
 
     @XmlElement
-    private String expression;
+    private final String expression;
 
-    private RestXPathExpression(){
-
-    }
 
     private RestXPathExpression(final Builder builder){
         this.expression = Objects.requireNonNull(builder.expression, "expression");
@@ -70,6 +71,7 @@ public class RestXPathExpression {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String expression;
 

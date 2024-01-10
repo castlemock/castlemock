@@ -16,6 +16,9 @@
 
 package com.castlemock.model.core.user;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -31,38 +34,35 @@ import java.util.Optional;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = User.Builder.class)
 public class User {
 
     @XmlElement
-    private String id;
+    private final String id;
 
     @XmlElement
-    private String username;
+    private final String username;
 
     @XmlElement
-    private String password;
+    private final String password;
 
     @XmlElement
-    private String email;
+    private final String email;
 
     @XmlElement
-    private String fullName;
+    private final String fullName;
 
     @XmlElement
-    private Date updated;
+    private final Date updated;
 
     @XmlElement
-    private Date created;
+    private final Date created;
 
     @XmlElement
-    private Status status;
+    private final Status status;
 
     @XmlElement
-    private Role role;
-
-    private User(){
-
-    }
+    private final Role role;
 
     private User(final Builder builder){
         this.id = Objects.requireNonNull(builder.id, "id");
@@ -177,6 +177,7 @@ public class User {
                 .role(this.role);
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String id;
         private String username;

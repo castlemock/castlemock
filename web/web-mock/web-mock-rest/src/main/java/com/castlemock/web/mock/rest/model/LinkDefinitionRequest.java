@@ -17,18 +17,19 @@
 package com.castlemock.web.mock.rest.model;
 
 import com.castlemock.model.mock.rest.RestDefinitionType;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
+@XmlRootElement
+@JsonDeserialize(builder = LinkDefinitionRequest.Builder.class)
 public class LinkDefinitionRequest {
 
-    private String url;
-    private Boolean generateResponse;
-    private RestDefinitionType definitionType;
-
-    private LinkDefinitionRequest() {
-
-    }
+    private final String url;
+    private final Boolean generateResponse;
+    private final RestDefinitionType definitionType;
 
     private LinkDefinitionRequest(final Builder builder) {
         this.url = Objects.requireNonNull(builder.url, "url");
@@ -76,7 +77,7 @@ public class LinkDefinitionRequest {
         return new Builder();
     }
 
-
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String url;
         private Boolean generateResponse;

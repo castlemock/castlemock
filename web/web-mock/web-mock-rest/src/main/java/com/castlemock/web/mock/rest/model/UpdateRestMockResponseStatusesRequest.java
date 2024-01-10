@@ -1,18 +1,19 @@
 package com.castlemock.web.mock.rest.model;
 
 import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.Set;
 
+@XmlRootElement
+@JsonDeserialize(builder = UpdateRestMockResponseStatusesRequest.Builder.class)
 public class UpdateRestMockResponseStatusesRequest {
 
-    private Set<String> mockResponseIds;
-    private RestMockResponseStatus status;
-
-    private UpdateRestMockResponseStatusesRequest() {
-
-    }
+    private final Set<String> mockResponseIds;
+    private final RestMockResponseStatus status;
 
     private UpdateRestMockResponseStatusesRequest(final Builder builder) {
         this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds, "mockResponseIds");
@@ -53,6 +54,7 @@ public class UpdateRestMockResponseStatusesRequest {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private Set<String> mockResponseIds;

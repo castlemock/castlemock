@@ -16,6 +16,9 @@
 
 package com.castlemock.model.mock.soap.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -24,14 +27,11 @@ import java.util.Objects;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = SoapXPathExpression.Builder.class)
 public class SoapXPathExpression {
 
     @XmlElement
-    private String expression;
-
-    private SoapXPathExpression(){
-
-    }
+    private final String expression;
 
     private SoapXPathExpression(final Builder builder){
         this.expression = Objects.requireNonNull(builder.expression, "expression");
@@ -51,6 +51,7 @@ public class SoapXPathExpression {
         return new Builder();
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String expression;
 

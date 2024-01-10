@@ -16,6 +16,9 @@
 
 package com.castlemock.web.mock.rest.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
@@ -25,13 +28,10 @@ import java.util.Objects;
  * @since 1.52
  */
 @XmlRootElement
+@JsonDeserialize(builder = CreateRestApplicationRequest.Builder.class)
 public class CreateRestApplicationRequest {
 
-    private String name;
-
-    private CreateRestApplicationRequest(){
-
-    }
+    private final String name;
 
     private CreateRestApplicationRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name, "name");
@@ -66,6 +66,8 @@ public class CreateRestApplicationRequest {
         return new Builder();
     }
 
+
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 
         private String name;

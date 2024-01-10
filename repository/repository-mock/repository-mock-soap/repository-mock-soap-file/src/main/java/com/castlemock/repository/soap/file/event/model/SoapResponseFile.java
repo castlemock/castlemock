@@ -1,6 +1,6 @@
 package com.castlemock.repository.soap.file.event.model;
 
-import com.castlemock.model.core.http.ContentEncoding;
+import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
 import org.dozer.Mapping;
 
@@ -26,7 +26,7 @@ public class SoapResponseFile {
     @Mapping("httpHeaders")
     private List<HttpHeaderFile> httpHeaders;
     @Mapping("contentEncodings")
-    private List<ContentEncoding> contentEncodings;
+    private List<HttpContentEncoding> contentEncodings;
 
     private SoapResponseFile() {
 
@@ -89,11 +89,11 @@ public class SoapResponseFile {
 
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
-    public List<ContentEncoding> getContentEncodings() {
+    public List<HttpContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
 
-    public void setContentEncodings(List<ContentEncoding> contentEncodings) {
+    public void setContentEncodings(List<HttpContentEncoding> contentEncodings) {
         this.contentEncodings = contentEncodings;
     }
 
@@ -107,7 +107,7 @@ public class SoapResponseFile {
         private Integer httpStatusCode;
         private String contentType;
         private List<HttpHeaderFile> httpHeaders;
-        private List<ContentEncoding> contentEncodings;
+        private List<HttpContentEncoding> contentEncodings;
 
         private Builder() {
         }
@@ -137,7 +137,7 @@ public class SoapResponseFile {
             return this;
         }
 
-        public Builder contentEncodings(List<ContentEncoding> contentEncodings) {
+        public Builder contentEncodings(List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }

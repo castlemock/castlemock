@@ -17,6 +17,8 @@
 package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.http.HttpMethod;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -33,78 +35,76 @@ import java.util.Optional;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = SoapOperation.Builder.class)
 public class SoapOperation {
 
     @XmlElement
-    private String id;
+    private final String id;
 
     @XmlElement
-    private String name;
+    private final String name;
 
     @XmlElement
-    private String identifier;
+    private final String identifier;
 
     @XmlElement
-    private SoapOperationIdentifier operationIdentifier;
+    private final SoapOperationIdentifier operationIdentifier;
 
     @XmlElement
-    private SoapResponseStrategy responseStrategy;
+    private final SoapResponseStrategy responseStrategy;
 
     @XmlElement
-    private SoapOperationStatus status;
+    private final SoapOperationStatus status;
 
     @XmlElement
-    private HttpMethod httpMethod;
+    private final HttpMethod httpMethod;
 
     @XmlElement
-    private SoapVersion soapVersion;
+    private final SoapVersion soapVersion;
 
     @XmlElement
-    private String defaultBody;
+    private final String defaultBody;
 
     @XmlElement
-    private Integer currentResponseSequenceIndex;
+    private final Integer currentResponseSequenceIndex;
 
     @XmlElement
-    private String forwardedEndpoint;
+    private final String forwardedEndpoint;
 
     @XmlElement
-    private String originalEndpoint;
+    private final String originalEndpoint;
 
     @XmlElement
-    private Boolean simulateNetworkDelay;
+    private final Boolean simulateNetworkDelay;
 
     @XmlElement
-    private Long networkDelay;
+    private final Long networkDelay;
 
     @XmlElement
-    private String defaultMockResponseId;
+    private final String defaultMockResponseId;
 
     @XmlElement
-    private String portId;
+    private final String portId;
 
     @XmlElement
-    private Boolean mockOnFailure;
+    private final Boolean mockOnFailure;
 
     @XmlElement
-    private SoapOperationIdentifyStrategy identifyStrategy;
+    private final SoapOperationIdentifyStrategy identifyStrategy;
 
     @XmlElementWrapper(name = "mockResponses")
     @XmlElement(name = "mockResponse")
-    private List<SoapMockResponse> mockResponses;
+    private final List<SoapMockResponse> mockResponses;
 
     @XmlElement
-    private String invokeAddress;
+    private final String invokeAddress;
 
     @XmlElement
-    private String defaultResponseName;
+    private final String defaultResponseName;
 
     @XmlElement
-    private Boolean automaticForward;
+    private final Boolean automaticForward;
 
-    private SoapOperation(){
-
-    }
 
     private SoapOperation(final Builder builder){
         this.id = Objects.requireNonNull(builder.id, "id");
@@ -303,6 +303,7 @@ public class SoapOperation {
                 .networkDelay(networkDelay);
     }
 
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String id;
         private String name;

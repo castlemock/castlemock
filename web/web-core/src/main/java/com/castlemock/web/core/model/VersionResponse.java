@@ -1,14 +1,19 @@
 package com.castlemock.web.core.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@JsonDeserialize(builder = VersionResponse.Builder.class)
 public class VersionResponse {
 
-    private String version;
-
-    private VersionResponse(){
-
-    }
+    private final String version;
 
     private VersionResponse(final Builder builder){
         this.version = Objects.requireNonNull(builder.version);
@@ -41,7 +46,8 @@ public class VersionResponse {
     public static Builder builder() {
         return new Builder();
     }
-    
+
+    @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         
         private String version;
