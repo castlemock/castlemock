@@ -135,10 +135,10 @@ public class FileRepositorySupport {
             marshaller.marshal(type, writer);
         } catch (JAXBException e) {
             LOGGER.error("Unable to parse file: " + filename, e);
-            throw new IllegalStateException("Unable to parse the following file: " + filename);
+            throw new IllegalStateException("Unable to parse the following file: " + filename, e);
         } catch (IOException e) {
             LOGGER.error("Unable to read file: " + filename, e);
-            throw new IllegalStateException("Unable to read the following file: " + filename);
+            throw new IllegalStateException("Unable to read the following file: " + filename, e);
         } finally {
             if (writer != null) {
                 try {

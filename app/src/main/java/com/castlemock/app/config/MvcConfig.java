@@ -16,7 +16,6 @@
 
 package com.castlemock.app.config;
 
-import org.dozer.DozerBeanMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -62,15 +61,6 @@ public class MvcConfig implements WebMvcConfigurer {
     @Bean
     public LoggingInterceptor loggingInterceptor(){
         return new LoggingInterceptor();
-    }
-
-    /**
-     * Creates the Dozer mapper
-     * @return New Dozer bean mapper
-     */
-    @Bean
-    public DozerBeanMapper getMapper() {
-        return new DozerBeanMapper();
     }
 
     /**

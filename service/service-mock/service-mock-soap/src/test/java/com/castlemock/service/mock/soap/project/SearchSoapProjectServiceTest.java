@@ -29,7 +29,6 @@ import com.castlemock.repository.soap.project.SoapProjectRepository;
 import com.castlemock.repository.soap.project.SoapResourceRepository;
 import com.castlemock.service.mock.soap.project.input.SearchSoapProjectInput;
 import com.castlemock.service.mock.soap.project.output.SearchSoapProjectOutput;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,8 +49,6 @@ import java.util.List;
  */
 public class SearchSoapProjectServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
 
     @Mock
     private MessageSource messageSource;

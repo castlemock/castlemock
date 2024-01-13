@@ -23,7 +23,6 @@ import com.castlemock.model.mock.rest.domain.RestEventTestBuilder;
 import com.castlemock.repository.rest.event.RestEventRepository;
 import com.castlemock.service.mock.rest.event.input.CreateRestEventInput;
 import com.castlemock.service.mock.rest.event.output.CreateRestEventOutput;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,8 +39,6 @@ import org.springframework.test.util.ReflectionTestUtils;
  */
 public class CreateRestEventServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
 
     @Mock
     private RestEventRepository repository;

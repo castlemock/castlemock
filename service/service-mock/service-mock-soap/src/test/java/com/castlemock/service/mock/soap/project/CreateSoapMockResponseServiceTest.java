@@ -29,7 +29,6 @@ import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
 import com.castlemock.service.mock.soap.project.input.CreateSoapMockResponseInput;
 import com.castlemock.service.mock.soap.project.output.CreateSoapMockResponseOutput;
-import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -44,8 +43,6 @@ import org.mockito.Spy;
  */
 public class CreateSoapMockResponseServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
 
     @Mock
     private SoapMockResponseRepository repository;

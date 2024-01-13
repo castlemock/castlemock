@@ -31,7 +31,6 @@ import com.castlemock.repository.soap.project.SoapOperationRepository;
 import com.castlemock.repository.soap.project.SoapPortRepository;
 import com.castlemock.service.mock.soap.project.input.DeleteSoapPortsInput;
 import com.castlemock.service.mock.soap.project.output.DeleteSoapPortsOutput;
-import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -49,8 +48,6 @@ import java.util.List;
  */
 public class DeleteSoapPortsServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
 
     @Mock
     private SoapPortRepository portRepository;

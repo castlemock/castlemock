@@ -21,7 +21,6 @@ import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.model.mock.rest.domain.RestProjectTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.rest.file.project.model.RestProjectFile;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,8 +43,6 @@ public class RestProjectRepositoryTest {
 
     @Mock
     private FileRepositorySupport fileRepositorySupport;
-    @Spy
-    private DozerBeanMapper mapper;
     @InjectMocks
     private RestProjectFileRepository repository;
     private static final String DIRECTORY = "/directory";

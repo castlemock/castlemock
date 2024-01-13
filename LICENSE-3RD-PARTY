@@ -2,7 +2,6 @@
                         Apache License 2.0
         Applies to: 
         - Commons: https://commons.apache.org
-        - Dozer: http://dozer.sourceforge.net
         - Guava: https://github.com/google/guava
         - Jackson: http://wiki.fasterxml.com/JacksonHome
         - Log4j: https://logging.apache.org/log4j

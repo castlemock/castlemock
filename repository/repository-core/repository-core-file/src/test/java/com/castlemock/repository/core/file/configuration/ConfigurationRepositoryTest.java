@@ -20,7 +20,6 @@ import com.castlemock.model.core.configuration.ConfigurationGroup;
 import com.castlemock.model.core.configuration.ConfigurationGroupTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.core.file.configuration.model.ConfigurationGroupFile;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,8 +42,6 @@ public class ConfigurationRepositoryTest {
 
     @Mock
     private FileRepositorySupport fileRepositorySupport;
-    @Spy
-    private DozerBeanMapper mapper;
     @InjectMocks
     private ConfigurationFileRepository repository;
 

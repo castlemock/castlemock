@@ -33,7 +33,6 @@ public class SoapResourceFile implements Saveable<String> {
         this.type = Objects.requireNonNull(builder.type, "type");
     }
 
-    @XmlElement
     @Override
     public String getId() {
         return id;

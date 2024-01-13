@@ -21,7 +21,6 @@ import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.soap.file.project.model.SoapProjectFile;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +28,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -44,8 +42,6 @@ public class SoapProjectRepositoryTest {
 
     @Mock
     private FileRepositorySupport fileRepositorySupport;
-    @Spy
-    private DozerBeanMapper mapper;
     @InjectMocks
     private SoapProjectFileRepository repository;
     private static final String DIRECTORY = "/directory";

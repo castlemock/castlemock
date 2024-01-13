@@ -23,7 +23,6 @@ import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.repository.soap.project.SoapProjectRepository;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapProjectInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapProjectOutput;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +30,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
 /**
  * @author Karl Dahlgren
@@ -39,8 +37,6 @@ import org.mockito.Spy;
  */
 public class UpdateSoapProjectServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
 
     @Mock
     private SoapProjectRepository repository;

@@ -21,7 +21,6 @@ import com.castlemock.model.core.ServiceTask;
 import com.castlemock.repository.rest.event.RestEventRepository;
 import com.castlemock.service.mock.rest.event.input.ClearAllRestEventInput;
 import com.castlemock.service.mock.rest.event.output.ClearAllRestEventOutput;
-import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -36,8 +35,6 @@ import org.mockito.Spy;
  */
 public class ClearAllRestEventServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
 
     @Mock
     private RestEventRepository repository;

@@ -23,7 +23,6 @@ import com.castlemock.model.mock.rest.domain.RestEventTestBuilder;
 import com.castlemock.repository.rest.event.RestEventRepository;
 import com.castlemock.service.mock.rest.event.input.ReadRestEventWithMethodIdInput;
 import com.castlemock.service.mock.rest.event.output.ReadRestEventWithMethodIdOutput;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,8 +42,6 @@ import java.util.List;
 public class ReadRestEventsByMethodIdServiceTest {
 
 
-    @Spy
-    private DozerBeanMapper mapper;
 
     @Mock
     private RestEventRepository repository;

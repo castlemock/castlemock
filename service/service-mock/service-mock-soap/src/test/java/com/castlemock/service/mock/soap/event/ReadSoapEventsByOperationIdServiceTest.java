@@ -23,7 +23,6 @@ import com.castlemock.model.mock.soap.domain.SoapEventTestBuilder;
 import com.castlemock.repository.soap.event.SoapEventRepository;
 import com.castlemock.service.mock.soap.event.input.ReadSoapEventsByOperationIdInput;
 import com.castlemock.service.mock.soap.event.output.ReadSoapEventsByOperationIdOutput;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,8 +42,6 @@ import java.util.List;
 public class ReadSoapEventsByOperationIdServiceTest {
 
 
-    @Spy
-    private DozerBeanMapper mapper;
 
     @Mock
     private SoapEventRepository repository;

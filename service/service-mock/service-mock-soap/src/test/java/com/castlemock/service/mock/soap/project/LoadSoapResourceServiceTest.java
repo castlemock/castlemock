@@ -7,7 +7,6 @@ import com.castlemock.model.mock.soap.domain.SoapResourceTestBuilder;
 import com.castlemock.repository.soap.project.SoapResourceRepository;
 import com.castlemock.service.mock.soap.project.input.LoadSoapResourceInput;
 import com.castlemock.service.mock.soap.project.output.LoadSoapResourceOutput;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,8 +18,6 @@ import org.mockito.Spy;
 
 public class LoadSoapResourceServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
 
     @Mock
     private SoapResourceRepository resourceRepository;

@@ -21,7 +21,6 @@ import com.castlemock.model.mock.rest.domain.RestEvent;
 import com.castlemock.model.mock.rest.domain.RestEventTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.rest.file.event.model.RestEventFile;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,8 +43,6 @@ public class RestEventRepositoryTest {
 
     @Mock
     private FileRepositorySupport fileRepositorySupport;
-    @Spy
-    private DozerBeanMapper mapper;
     @InjectMocks
     private RestEventFileRepository repository;
     private static final String DIRECTORY = "/directory";

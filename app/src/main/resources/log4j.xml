@@ -46,10 +46,6 @@
 		<level value="warn" />
 	</logger>
 
-	<logger name="org.dozer">
-		<level value="warn" />
-	</logger>
-
 	<logger name="org.springframework.boot.web.servlet.support.ErrorPageFilter">
 		 <level value="OFF"/>
 	</logger>

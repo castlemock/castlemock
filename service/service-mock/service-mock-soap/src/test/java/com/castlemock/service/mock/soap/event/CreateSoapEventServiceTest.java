@@ -23,7 +23,6 @@ import com.castlemock.model.mock.soap.domain.SoapEventTestBuilder;
 import com.castlemock.repository.soap.event.SoapEventRepository;
 import com.castlemock.service.mock.soap.event.input.CreateSoapEventInput;
 import com.castlemock.service.mock.soap.event.output.CreateSoapEventOutput;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,8 +39,6 @@ import org.springframework.test.util.ReflectionTestUtils;
  */
 public class CreateSoapEventServiceTest {
 
-    @Spy
-    private DozerBeanMapper mapper;
 
     @Mock
     private SoapEventRepository repository;

@@ -23,7 +23,6 @@ import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.repository.Repository;
 import com.castlemock.service.core.user.input.ReadUserInput;
 import com.castlemock.service.core.user.output.ReadUserOutput;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,16 +30,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
 /**
  * @author Karl Dahlgren
  * @since 1.0
  */
 public class ReadUserServiceTest {
-
-    @Spy
-    private DozerBeanMapper mapper;
 
     @Mock
     private Repository<User, String> repository;

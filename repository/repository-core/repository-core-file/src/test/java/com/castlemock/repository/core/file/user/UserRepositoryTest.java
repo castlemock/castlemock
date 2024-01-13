@@ -21,7 +21,6 @@ import com.castlemock.model.core.user.User;
 import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.core.file.user.model.UserFile;
-import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,8 +43,6 @@ public class UserRepositoryTest {
 
     @Mock
     private FileRepositorySupport fileRepositorySupport;
-    @Spy
-    private DozerBeanMapper mapper;
     @InjectMocks
     private UserFileRepository repository;
 
