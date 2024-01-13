@@ -18,6 +18,7 @@ package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -42,9 +43,11 @@ public class SoapRequest {
     private final String body;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String envelope;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String contentType;
 
     @XmlElement
@@ -54,6 +57,7 @@ public class SoapRequest {
     private final HttpMethod httpMethod;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String operationName;
 
     @XmlElement

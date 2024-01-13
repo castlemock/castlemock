@@ -36,7 +36,6 @@ import java.util.Optional;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = User.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class User {
 
     @XmlElement
@@ -49,9 +48,11 @@ public class User {
     private final String password;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String email;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String fullName;
 
     @XmlElement

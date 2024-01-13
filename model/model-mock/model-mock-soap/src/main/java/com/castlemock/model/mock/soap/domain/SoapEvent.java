@@ -17,7 +17,6 @@
 package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.event.Event;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -33,7 +32,6 @@ import java.util.Optional;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonDeserialize(builder = SoapEvent.Builder.class)
 public class SoapEvent extends Event {
 
     @XmlElement

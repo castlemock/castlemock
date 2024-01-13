@@ -16,7 +16,6 @@
 
 package com.castlemock.model.core.configuration;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -36,7 +35,6 @@ import java.util.Objects;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = Configuration.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Configuration {
 
     @XmlElement

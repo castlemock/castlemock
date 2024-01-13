@@ -40,7 +40,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = SoapPort.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SoapPort {
 
     @XmlElement
@@ -56,6 +55,7 @@ public class SoapPort {
     private final String projectId;
 
     @XmlTransient
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String invokeAddress;
 
     @XmlElementWrapper(name = "operations")

@@ -17,7 +17,6 @@
 package com.castlemock.model.mock.rest.domain;
 
 import com.castlemock.model.core.project.Project;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -38,7 +37,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = RestProject.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RestProject extends Project {
 
     @XmlElementWrapper(name = "applications")

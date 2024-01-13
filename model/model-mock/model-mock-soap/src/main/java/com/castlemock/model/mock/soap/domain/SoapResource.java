@@ -34,7 +34,6 @@ import java.util.Optional;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = SoapResource.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SoapResource {
 
     @XmlElement
@@ -47,6 +46,7 @@ public class SoapResource {
     private final String projectId;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String content;
 
     @XmlElement

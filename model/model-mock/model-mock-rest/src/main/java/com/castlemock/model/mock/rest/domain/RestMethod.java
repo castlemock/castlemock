@@ -38,7 +38,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = RestMethod.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RestMethod {
 
     @XmlElement
@@ -51,12 +50,14 @@ public class RestMethod {
     private final String resourceId;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String defaultBody;
 
     @XmlElement
     private final HttpMethod httpMethod;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String forwardedEndpoint;
 
     @XmlElement
@@ -75,6 +76,7 @@ public class RestMethod {
     private final Long networkDelay;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String defaultMockResponseId;
 
     @XmlElementWrapper(name = "mockResponses")
@@ -85,6 +87,7 @@ public class RestMethod {
     private final String uri;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String defaultResponseName;
 
     @XmlElement

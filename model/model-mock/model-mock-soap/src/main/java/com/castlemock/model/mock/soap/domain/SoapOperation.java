@@ -37,7 +37,6 @@ import java.util.Optional;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = SoapOperation.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SoapOperation {
 
     @XmlElement
@@ -65,15 +64,18 @@ public class SoapOperation {
     private final SoapVersion soapVersion;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String defaultBody;
 
     @XmlElement
     private final Integer currentResponseSequenceIndex;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String forwardedEndpoint;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String originalEndpoint;
 
     @XmlElement
@@ -83,6 +85,7 @@ public class SoapOperation {
     private final Long networkDelay;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String defaultMockResponseId;
 
     @XmlElement
@@ -99,9 +102,11 @@ public class SoapOperation {
     private final List<SoapMockResponse> mockResponses;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String invokeAddress;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String defaultResponseName;
 
     @XmlElement

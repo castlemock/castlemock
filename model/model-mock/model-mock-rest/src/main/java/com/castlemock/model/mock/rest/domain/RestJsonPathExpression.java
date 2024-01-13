@@ -16,7 +16,6 @@
 
 package com.castlemock.model.mock.rest.domain;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -29,7 +28,6 @@ import java.util.Objects;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = RestJsonPathExpression.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RestJsonPathExpression {
 
     @XmlElement

@@ -40,7 +40,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = RestResource.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RestResource {
 
     @XmlElement
@@ -56,6 +55,7 @@ public class RestResource {
     private final String applicationId;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String invokeAddress;
 
     @XmlElementWrapper(name = "methods")

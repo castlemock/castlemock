@@ -20,11 +20,12 @@ import java.util.Optional;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = SearchResult.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SearchResult {
 
     private final String title;
     private final String link;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String description;
 
     private SearchResult(final Builder builder) {

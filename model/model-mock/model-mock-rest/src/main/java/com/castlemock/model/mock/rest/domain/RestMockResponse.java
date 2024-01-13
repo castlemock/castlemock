@@ -41,7 +41,6 @@ import java.util.stream.Collectors;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = RestMockResponse.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RestMockResponse {
 
     @XmlElement
@@ -51,6 +50,7 @@ public class RestMockResponse {
     private final String name;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String body;
 
     @XmlElement

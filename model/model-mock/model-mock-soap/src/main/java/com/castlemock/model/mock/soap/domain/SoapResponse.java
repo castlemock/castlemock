@@ -18,6 +18,7 @@ package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -49,6 +50,7 @@ public class SoapResponse {
     private final Integer httpStatusCode;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String contentType;
 
     @XmlElementWrapper(name = "httpHeaders")

@@ -18,7 +18,6 @@ package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -40,7 +39,6 @@ import java.util.stream.Collectors;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = SoapMockResponse.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SoapMockResponse {
 
     @XmlElement

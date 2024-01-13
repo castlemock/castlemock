@@ -38,19 +38,21 @@ import java.util.Optional;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = RestResponse.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RestResponse {
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String body;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String mockResponseName;
 
     @XmlElement
     private Integer httpStatusCode;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String contentType;
 
     @XmlElementWrapper(name = "httpHeaders")

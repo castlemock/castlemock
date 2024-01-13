@@ -22,7 +22,6 @@ import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapPort;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapResource;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -38,7 +37,6 @@ import java.util.Objects;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SoapExportContainer extends ExportContainer {
 
     @XmlElement

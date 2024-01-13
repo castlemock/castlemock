@@ -39,13 +39,14 @@ import java.util.Optional;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = RestRequest.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RestRequest {
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String body;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String contentType;
 
     @XmlElement

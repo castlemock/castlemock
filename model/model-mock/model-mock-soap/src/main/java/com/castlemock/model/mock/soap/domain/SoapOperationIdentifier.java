@@ -31,13 +31,13 @@ import java.util.Optional;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = SoapOperationIdentifier.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SoapOperationIdentifier {
 
     @XmlElement
     private final String name;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String namespace;
 
 

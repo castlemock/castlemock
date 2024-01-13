@@ -36,7 +36,6 @@ import java.util.Optional;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = Project.Builder.class)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Project {
 
     @XmlElement
@@ -52,6 +51,7 @@ public class Project {
     protected final Date created;
 
     @XmlElement
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     protected final String description;
 
     protected Project(final Builder<?> builder){
