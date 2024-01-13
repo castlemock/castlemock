@@ -66,12 +66,12 @@ public class UpdateRestMethodStatusesRequest {
         private Builder() {
         }
 
-        public Builder resourceIds(Set<String> methodIds) {
+        public Builder methodIds(final Set<String> methodIds) {
             this.methodIds = methodIds;
             return this;
         }
 
-        public Builder status(RestMethodStatus status) {
+        public Builder status(final RestMethodStatus status) {
             this.status = status;
             return this;
         }

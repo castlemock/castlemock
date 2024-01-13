@@ -65,7 +65,7 @@ public class UpdateRestMethodForwardedEndpointsRequest {
         private Builder() {
         }
 
-        public Builder resourceIds(final Set<String> methodIds) {
+        public Builder methodIds(final Set<String> methodIds) {
             this.methodIds = methodIds;
             return this;
         }
