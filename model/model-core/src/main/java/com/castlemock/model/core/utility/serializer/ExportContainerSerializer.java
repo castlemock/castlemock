@@ -17,7 +17,9 @@
 package com.castlemock.model.core.utility.serializer;
 
 import com.castlemock.model.core.ExportContainer;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,10 +41,12 @@ public final class ExportContainerSerializer {
     public static <T extends ExportContainer> String serialize(final T exportContainer){
         try {
             final XmlMapper xmlMapper = new XmlMapper();
+            xmlMapper.registerModule(new Jdk8Module());
+            xmlMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
             return xmlMapper.writeValueAsString(exportContainer);
         } catch (Throwable e) {
             LOGGER.error("Unable to serialize", e);
-            throw new IllegalArgumentException("Unable to serialize");
+            throw new IllegalArgumentException("Unable to serialize", e);
         }
     }
 
@@ -51,6 +55,7 @@ public final class ExportContainerSerializer {
                                                             final Class<? extends ExportContainer> clazz){
         try {
             final XmlMapper xmlMapper = new XmlMapper();
+            xmlMapper.registerModule(new Jdk8Module());
             return (T) xmlMapper.readValue(raw, clazz);
         } catch (Throwable e ) {
             LOGGER.error("Unable to deserialize", e);

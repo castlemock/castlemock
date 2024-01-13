@@ -122,6 +122,34 @@ public class SoapEvent extends Event {
                 .projectId(this.projectId);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final SoapEvent event = (SoapEvent) o;
+        return Objects.equals(request, event.request) && Objects.equals(response, event.response) && Objects.equals(projectId, event.projectId) && Objects.equals(portId, event.portId) && Objects.equals(operationId, event.operationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(request, response, projectId, portId, operationId);
+    }
+
+    @Override
+    public String toString() {
+        return "SoapEvent{" +
+                "request=" + request +
+                ", response=" + response +
+                ", projectId='" + projectId + '\'' +
+                ", portId='" + portId + '\'' +
+                ", operationId='" + operationId + '\'' +
+                ", id='" + id + '\'' +
+                ", resourceName='" + resourceName + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
+
     @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder extends Event.Builder<Builder> {
 

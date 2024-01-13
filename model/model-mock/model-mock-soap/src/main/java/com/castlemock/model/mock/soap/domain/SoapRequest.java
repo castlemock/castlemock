@@ -119,6 +119,35 @@ public class SoapRequest {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final SoapRequest that = (SoapRequest) o;
+        return Objects.equals(body, that.body) && Objects.equals(envelope, that.envelope) && Objects.equals(contentType, that.contentType) && Objects.equals(uri, that.uri) && httpMethod == that.httpMethod && Objects.equals(operationName, that.operationName) && soapVersion == that.soapVersion && Objects.equals(httpHeaders, that.httpHeaders) && Objects.equals(operationIdentifier, that.operationIdentifier);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(body, envelope, contentType, uri, httpMethod, operationName,
+                soapVersion, httpHeaders, operationIdentifier);
+    }
+
+    @Override
+    public String toString() {
+        return "SoapRequest{" +
+                "body='" + body + '\'' +
+                ", envelope='" + envelope + '\'' +
+                ", contentType='" + contentType + '\'' +
+                ", uri='" + uri + '\'' +
+                ", httpMethod=" + httpMethod +
+                ", operationName='" + operationName + '\'' +
+                ", soapVersion=" + soapVersion +
+                ", httpHeaders=" + httpHeaders +
+                ", operationIdentifier=" + operationIdentifier +
+                '}';
+    }
+
     @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 

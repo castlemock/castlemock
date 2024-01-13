@@ -1,5 +1,6 @@
 package com.castlemock.model.core;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -19,6 +20,7 @@ import java.util.Optional;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = SearchResult.Builder.class)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SearchResult {
 
     private final String title;

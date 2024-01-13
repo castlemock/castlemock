@@ -96,6 +96,33 @@ public class SoapResponse {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final SoapResponse that = (SoapResponse) o;
+        return Objects.equals(body, that.body) && Objects.equals(mockResponseName, that.mockResponseName) &&
+                Objects.equals(httpStatusCode, that.httpStatusCode) && Objects.equals(contentType, that.contentType) &&
+                Objects.equals(httpHeaders, that.httpHeaders) && Objects.equals(contentEncodings, that.contentEncodings);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(body, mockResponseName, httpStatusCode, contentType, httpHeaders, contentEncodings);
+    }
+
+    @Override
+    public String toString() {
+        return "SoapResponse{" +
+                "body='" + body + '\'' +
+                ", mockResponseName='" + mockResponseName + '\'' +
+                ", httpStatusCode=" + httpStatusCode +
+                ", contentType='" + contentType + '\'' +
+                ", httpHeaders=" + httpHeaders +
+                ", contentEncodings=" + contentEncodings +
+                '}';
+    }
+
     @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
 

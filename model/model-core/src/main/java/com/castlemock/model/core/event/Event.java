@@ -16,6 +16,7 @@
 
 package com.castlemock.model.core.event;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -35,6 +36,7 @@ import java.util.Objects;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = Event.Builder.class)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public abstract class Event {
 
     @XmlElement

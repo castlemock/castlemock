@@ -17,6 +17,7 @@
 package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.http.HttpMethod;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -36,6 +37,7 @@ import java.util.Optional;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = SoapOperation.Builder.class)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SoapOperation {
 
     @XmlElement
@@ -242,7 +244,10 @@ public class SoapOperation {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, identifier, operationIdentifier, responseStrategy, status, httpMethod, soapVersion, defaultBody, currentResponseSequenceIndex, forwardedEndpoint, originalEndpoint, simulateNetworkDelay, networkDelay, defaultMockResponseId, portId, mockOnFailure, identifyStrategy, mockResponses, invokeAddress, defaultResponseName, automaticForward);
+        return Objects.hash(id, name, identifier, operationIdentifier, responseStrategy, status, httpMethod,
+                soapVersion, defaultBody, currentResponseSequenceIndex, forwardedEndpoint, originalEndpoint,
+                simulateNetworkDelay, networkDelay, defaultMockResponseId, portId, mockOnFailure, identifyStrategy,
+                mockResponses, invokeAddress, defaultResponseName, automaticForward);
     }
 
     @Override

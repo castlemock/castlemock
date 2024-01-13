@@ -17,6 +17,7 @@
 package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.project.Project;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -40,6 +41,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @XmlRootElement(name = "soapProject")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = SoapProject.Builder.class)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class SoapProject extends Project {
 
     @XmlElementWrapper(name = "ports")

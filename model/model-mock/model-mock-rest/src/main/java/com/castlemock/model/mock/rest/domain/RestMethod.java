@@ -17,6 +17,7 @@
 package com.castlemock.model.mock.rest.domain;
 
 import com.castlemock.model.core.http.HttpMethod;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -37,6 +38,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = RestMethod.Builder.class)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RestMethod {
 
     @XmlElement

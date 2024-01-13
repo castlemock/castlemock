@@ -18,6 +18,7 @@ package com.castlemock.model.mock.rest.domain;
 
 import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -40,6 +41,7 @@ import java.util.stream.Collectors;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonDeserialize(builder = RestMockResponse.Builder.class)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RestMockResponse {
 
     @XmlElement
