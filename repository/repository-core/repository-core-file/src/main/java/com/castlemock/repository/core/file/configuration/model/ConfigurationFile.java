@@ -3,11 +3,14 @@ package com.castlemock.repository.core.file.configuration.model;
 import com.castlemock.model.core.configuration.ConfigurationType;
 import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "configuration")
+@XmlAccessorType(XmlAccessType.NONE)
 public class ConfigurationFile {
 
     @Mapping("key")
@@ -38,14 +41,6 @@ public class ConfigurationFile {
     }
 
     /**
-     * Sets the configuration key
-     * @param key The new configuration key
-     */
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    /**
      * Returns the value for the configuration
      * @return Configuration value
      */
@@ -55,28 +50,12 @@ public class ConfigurationFile {
     }
 
     /**
-     * Sets the configuration value
-     * @param value The new configuration value
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    /**
      * Returns the configuration type
      * @return The configuration type
      */
     @XmlElement
     public ConfigurationType getType() {
         return type;
-    }
-
-    /**
-     * Sets the configuration type
-     * @param type The new configuration type
-     */
-    public void setType(ConfigurationType type) {
-        this.type = type;
     }
 
 

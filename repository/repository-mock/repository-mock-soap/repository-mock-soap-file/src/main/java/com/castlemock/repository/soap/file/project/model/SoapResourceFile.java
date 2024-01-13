@@ -2,22 +2,24 @@ package com.castlemock.repository.soap.file.project.model;
 
 import com.castlemock.model.core.Saveable;
 import com.castlemock.model.mock.soap.domain.SoapResourceType;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "soapResource")
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapResourceFile implements Saveable<String> {
 
-    @Mapping("id")
+    @XmlElement
     private String id;
-    @Mapping("name")
+    @XmlElement
     private String name;
-    @Mapping("projectId")
+    @XmlElement
     private String projectId;
-    @Mapping("type")
+    @XmlElement
     private SoapResourceType type;
 
     private SoapResourceFile() {
@@ -37,36 +39,16 @@ public class SoapResourceFile implements Saveable<String> {
         return id;
     }
 
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @XmlElement
     public SoapResourceType getType() {
         return type;
     }
 
-    public void setType(SoapResourceType type) {
-        this.type = type;
-    }
-
-    @XmlElement
     public String getProjectId() {
         return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
     }
 
     public static Builder builder() {
@@ -83,22 +65,22 @@ public class SoapResourceFile implements Saveable<String> {
         }
 
 
-        public Builder id(String id) {
+        public Builder id(final String id) {
             this.id = id;
             return this;
         }
 
-        public Builder name(String name) {
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder projectId(String projectId) {
+        public Builder projectId(final String projectId) {
             this.projectId = projectId;
             return this;
         }
 
-        public Builder type(SoapResourceType type) {
+        public Builder type(final SoapResourceType type) {
             this.type = type;
             return this;
         }

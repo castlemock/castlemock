@@ -20,12 +20,10 @@ package com.castlemock.repository.soap.file.project;
 import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.SearchValidator;
-import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
-import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
 import com.castlemock.repository.soap.file.project.converter.SoapMockResponseConverter;
 import com.castlemock.repository.soap.file.project.converter.SoapMockResponseFileConverter;
 import com.castlemock.repository.soap.file.project.model.SoapMockResponseFile;
@@ -35,7 +33,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 @Repository
@@ -103,21 +100,6 @@ public class SoapMockResponseFileRepository extends FileRepository<SoapMockRespo
      */
     @Override
     protected void postInitiate() {
-        for(SoapMockResponseFile soapMockResponse : collection.values()) {
-            List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<>();
-            if (soapMockResponse.getHttpHeaders() != null) {
-                httpHeaders.addAll(soapMockResponse.getHttpHeaders());
-            }
-            soapMockResponse.setHttpHeaders(httpHeaders);
-
-            List<HttpContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
-            if (soapMockResponse.getContentEncodings() != null) {
-                contentEncodings.addAll(soapMockResponse.getContentEncodings());
-            }
-
-            soapMockResponse.setContentEncodings(contentEncodings);
-            save(soapMockResponse);
-        }
     }
 
 

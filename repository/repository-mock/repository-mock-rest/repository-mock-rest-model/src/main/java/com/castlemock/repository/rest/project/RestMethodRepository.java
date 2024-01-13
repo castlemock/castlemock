@@ -24,15 +24,6 @@ import java.util.List;
 public interface RestMethodRepository extends Repository<RestMethod, String> {
 
     /**
-     * Updates the current response sequence index.
-     * @param restMethodId The method id.
-     * @param index The new response sequence index.
-     * @since 1.17
-     */
-    void setCurrentResponseSequenceIndex(String restMethodId, Integer index);
-
-
-    /**
      * Delete all {@link RestMethod} that matches the provided
      * <code>resourceId</code>.
      * @param resourceId The id of the resource.

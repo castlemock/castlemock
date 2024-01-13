@@ -4,40 +4,42 @@ import com.castlemock.model.core.Saveable;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "restMethod")
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestMethodFile implements Saveable<String> {
 
-    @Mapping("id")
+    @XmlElement
     private String id;
-    @Mapping("name")
+    @XmlElement
     private String name;
-    @Mapping("resourceId")
+    @XmlElement
     private String resourceId;
-    @Mapping("defaultBody")
+    @XmlElement
     private String defaultBody;
-    @Mapping("httpMethod")
+    @XmlElement
     private HttpMethod httpMethod;
-    @Mapping("forwardedEndpoint")
+    @XmlElement
     private String forwardedEndpoint;
-    @Mapping("status")
+    @XmlElement
     private RestMethodStatus status;
-    @Mapping("responseStrategy")
+    @XmlElement
     private RestResponseStrategy responseStrategy;
-    @Mapping("currentResponseSequenceIndex")
+    @XmlElement
     private Integer currentResponseSequenceIndex;
-    @Mapping("simulateNetworkDelay")
+    @XmlElement
     private Boolean simulateNetworkDelay;
-    @Mapping("networkDelay")
+    @XmlElement
     private Long networkDelay;
-    @Mapping("defaultMockResponseId")
+    @XmlElement
     private String defaultMockResponseId;
-    @Mapping("automaticForward")
+    @XmlElement
     private Boolean automaticForward;
 
     private RestMethodFile() {
@@ -61,122 +63,56 @@ public class RestMethodFile implements Saveable<String> {
     }
 
     @Override
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @XmlElement
     public String getResourceId() {
         return resourceId;
     }
 
-    public void setResourceId(String resourceId) {
-        this.resourceId = resourceId;
-    }
-
-    @XmlElement
     public String getDefaultBody() {
         return defaultBody;
     }
 
-    public void setDefaultBody(String defaultBody) {
-        this.defaultBody = defaultBody;
-    }
-
-    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
 
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
-    }
-
-    @XmlElement
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
 
-    public void setForwardedEndpoint(String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
-    }
-
-    @XmlElement
     public RestMethodStatus getStatus() {
         return status;
     }
 
-    public void setStatus(RestMethodStatus status) {
-        this.status = status;
-    }
-
-    @XmlElement
     public RestResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
 
-    public void setResponseStrategy(RestResponseStrategy responseStrategy) {
-        this.responseStrategy = responseStrategy;
-    }
-
-    @XmlElement
     public Integer getCurrentResponseSequenceIndex() {
         return currentResponseSequenceIndex;
     }
 
-    public void setCurrentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
-        this.currentResponseSequenceIndex = currentResponseSequenceIndex;
-    }
-
-    @XmlElement
     public Boolean getSimulateNetworkDelay() {
         return simulateNetworkDelay;
     }
 
-    public void setSimulateNetworkDelay(Boolean simulateNetworkDelay) {
-        this.simulateNetworkDelay = simulateNetworkDelay;
-    }
-
-    @XmlElement
     public Long getNetworkDelay() {
         return networkDelay;
     }
 
-    public void setNetworkDelay(Long networkDelay) {
-        this.networkDelay = networkDelay;
-    }
-
-    @XmlElement
     public String getDefaultMockResponseId() {
         return defaultMockResponseId;
     }
 
-    public void setDefaultMockResponseId(String defaultMockResponseId) {
-        this.defaultMockResponseId = defaultMockResponseId;
-    }
-
-    @XmlElement
     public Boolean getAutomaticForward() {
         return automaticForward;
-    }
-
-    public void setAutomaticForward(Boolean automaticForward) {
-        this.automaticForward = automaticForward;
     }
 
     public static Builder builder() {
@@ -202,67 +138,67 @@ public class RestMethodFile implements Saveable<String> {
         }
 
 
-        public Builder id(String id) {
+        public Builder id(final String id) {
             this.id = id;
             return this;
         }
 
-        public Builder name(String name) {
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder resourceId(String resourceId) {
+        public Builder resourceId(final String resourceId) {
             this.resourceId = resourceId;
             return this;
         }
 
-        public Builder defaultBody(String defaultBody) {
+        public Builder defaultBody(final String defaultBody) {
             this.defaultBody = defaultBody;
             return this;
         }
 
-        public Builder httpMethod(HttpMethod httpMethod) {
+        public Builder httpMethod(final HttpMethod httpMethod) {
             this.httpMethod = httpMethod;
             return this;
         }
 
-        public Builder forwardedEndpoint(String forwardedEndpoint) {
+        public Builder forwardedEndpoint(final String forwardedEndpoint) {
             this.forwardedEndpoint = forwardedEndpoint;
             return this;
         }
 
-        public Builder status(RestMethodStatus status) {
+        public Builder status(final RestMethodStatus status) {
             this.status = status;
             return this;
         }
 
-        public Builder responseStrategy(RestResponseStrategy responseStrategy) {
+        public Builder responseStrategy(final RestResponseStrategy responseStrategy) {
             this.responseStrategy = responseStrategy;
             return this;
         }
 
-        public Builder currentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
+        public Builder currentResponseSequenceIndex(final Integer currentResponseSequenceIndex) {
             this.currentResponseSequenceIndex = currentResponseSequenceIndex;
             return this;
         }
 
-        public Builder simulateNetworkDelay(Boolean simulateNetworkDelay) {
+        public Builder simulateNetworkDelay(final Boolean simulateNetworkDelay) {
             this.simulateNetworkDelay = simulateNetworkDelay;
             return this;
         }
 
-        public Builder networkDelay(Long networkDelay) {
+        public Builder networkDelay(final Long networkDelay) {
             this.networkDelay = networkDelay;
             return this;
         }
 
-        public Builder defaultMockResponseId(String defaultMockResponseId) {
+        public Builder defaultMockResponseId(final String defaultMockResponseId) {
             this.defaultMockResponseId = defaultMockResponseId;
             return this;
         }
 
-        public Builder automaticForward(Boolean automaticForward) {
+        public Builder automaticForward(final Boolean automaticForward) {
             this.automaticForward = automaticForward;
             return this;
         }

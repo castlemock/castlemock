@@ -1,20 +1,22 @@
 package com.castlemock.repository.rest.file.project.model;
 
 import com.castlemock.model.core.Saveable;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "restApplication")
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestApplicationFile implements Saveable<String> {
 
-    @Mapping("id")
+    @XmlElement
     private String id;
-    @Mapping("name")
+    @XmlElement
     private String name;
-    @Mapping("projectId")
+    @XmlElement
     private String projectId;
 
     private RestApplicationFile() {
@@ -28,32 +30,16 @@ public class RestApplicationFile implements Saveable<String> {
     }
 
     @Override
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @XmlElement
     public String getProjectId() {
         return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
     }
 
     public static Builder builder() {

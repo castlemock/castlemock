@@ -1,24 +1,26 @@
 package com.castlemock.repository.soap.file.event.model;
 
 import com.castlemock.repository.core.file.event.model.EventFile;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "soapEvent")
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapEventFile extends EventFile {
 
-    @Mapping("request")
+    @XmlElement
     private SoapRequestFile request;
-    @Mapping("response")
+    @XmlElement
     private SoapResponseFile response;
-    @Mapping("projectId")
+    @XmlElement
     private String projectId;
-    @Mapping("portId")
+    @XmlElement
     private String portId;
-    @Mapping("operationId")
+    @XmlElement
     private String operationId;
 
     private SoapEventFile() {
@@ -35,49 +37,24 @@ public class SoapEventFile extends EventFile {
     }
 
 
-    @XmlElement
     public SoapRequestFile getRequest() {
         return request;
     }
 
-    public void setRequest(SoapRequestFile request) {
-        this.request = request;
-    }
-
-    @XmlElement
     public SoapResponseFile getResponse() {
         return response;
     }
 
-    public void setResponse(SoapResponseFile response) {
-        this.response = response;
-    }
-
-    @XmlElement
     public String getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    @XmlElement
     public String getPortId() {
         return portId;
     }
 
-    public void setPortId(String portId) {
-        this.portId = portId;
-    }
-
-    @XmlElement
     public String getOperationId() {
         return operationId;
-    }
-
-    public void setOperationId(String operationId) {
-        this.operationId = operationId;
     }
 
     public static Builder builder() {

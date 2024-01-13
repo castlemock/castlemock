@@ -1,29 +1,31 @@
 package com.castlemock.repository.core.file.project.model;
 
 import com.castlemock.model.core.Saveable;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.Objects;
 
 @XmlRootElement(name = "project")
+@XmlAccessorType(XmlAccessType.NONE)
 public abstract class ProjectFile implements Saveable<String> {
 
-    @Mapping("id")
+    @XmlElement
     private String id;
 
-    @Mapping("name")
+    @XmlElement
     private String name;
 
-    @Mapping("description")
+    @XmlElement
     private String description;
 
-    @Mapping("updated")
+    @XmlElement
     private Date updated;
 
-    @Mapping("created")
+    @XmlElement
     private Date created;
 
     protected ProjectFile() {
@@ -38,55 +40,30 @@ public abstract class ProjectFile implements Saveable<String> {
         this.description = builder.description;
     }
 
-    @XmlElement
     @Override
     public String getId() {
         return id;
     }
 
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @XmlElement
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @XmlElement
     public Date getUpdated() {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
-    @XmlElement
     public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
     @SuppressWarnings("unchecked")
     public static abstract class Builder<B extends Builder<B>> {
+
         private String id;
         private String name;
         private String description;
@@ -96,27 +73,27 @@ public abstract class ProjectFile implements Saveable<String> {
         protected Builder() {
         }
 
-        public B id(String id) {
+        public B id(final String id) {
             this.id = id;
             return (B) this;
         }
 
-        public B name(String name) {
+        public B name(final String name) {
             this.name = name;
             return (B) this;
         }
 
-        public B description(String description) {
+        public B description(final String description) {
             this.description = description;
             return (B) this;
         }
 
-        public B updated(Date updated) {
+        public B updated(final Date updated) {
             this.updated = updated;
             return (B) this;
         }
 
-        public B created(Date created) {
+        public B created(final Date created) {
             this.created = created;
             return (B) this;
         }

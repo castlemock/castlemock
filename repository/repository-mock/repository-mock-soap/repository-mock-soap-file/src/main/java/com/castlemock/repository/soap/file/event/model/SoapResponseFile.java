@@ -2,8 +2,9 @@ package com.castlemock.repository.soap.file.event.model;
 
 import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -12,20 +13,23 @@ import java.util.List;
 import java.util.Objects;
 
 @XmlRootElement(name = "soapResponse")
+@XmlAccessorType(XmlAccessType.NONE)
 @XmlSeeAlso(HttpHeaderFile.class)
 public class SoapResponseFile {
 
-    @Mapping("body")
+    @XmlElement
     private String body;
-    @Mapping("mockResponseName")
+    @XmlElement
     private String mockResponseName;
-    @Mapping("httpStatusCode")
+    @XmlElement
     private Integer httpStatusCode;
-    @Mapping("contentType")
+    @XmlElement
     private String contentType;
-    @Mapping("httpHeaders")
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     private List<HttpHeaderFile> httpHeaders;
-    @Mapping("contentEncodings")
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
     private List<HttpContentEncoding> contentEncodings;
 
     private SoapResponseFile() {
@@ -41,60 +45,28 @@ public class SoapResponseFile {
         this.mockResponseName = builder.mockResponseName;
     }
 
-    @XmlElement
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    @XmlElement
     public String getMockResponseName() {
         return mockResponseName;
     }
 
-    public void setMockResponseName(String mockResponseName) {
-        this.mockResponseName = mockResponseName;
-    }
-
-    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
-    }
-
-    @XmlElement
     public String getContentType() {
         return contentType;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeaderFile> getHttpHeaders() {
         return httpHeaders;
     }
 
-    public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
-        this.httpHeaders = httpHeaders;
-    }
-
-    @XmlElementWrapper(name = "contentEncodings")
-    @XmlElement(name = "contentEncoding")
     public List<HttpContentEncoding> getContentEncodings() {
         return contentEncodings;
-    }
-
-    public void setContentEncodings(List<HttpContentEncoding> contentEncodings) {
-        this.contentEncodings = contentEncodings;
     }
 
     public static Builder builder() {
@@ -112,32 +84,32 @@ public class SoapResponseFile {
         private Builder() {
         }
 
-        public Builder body(String body) {
+        public Builder body(final String body) {
             this.body = body;
             return this;
         }
 
-        public Builder mockResponseName(String mockResponseName) {
+        public Builder mockResponseName(final String mockResponseName) {
             this.mockResponseName = mockResponseName;
             return this;
         }
 
-        public Builder httpStatusCode(Integer httpStatusCode) {
+        public Builder httpStatusCode(final Integer httpStatusCode) {
             this.httpStatusCode = httpStatusCode;
             return this;
         }
 
-        public Builder contentType(String contentType) {
+        public Builder contentType(final String contentType) {
             this.contentType = contentType;
             return this;
         }
 
-        public Builder httpHeaders(List<HttpHeaderFile> httpHeaders) {
+        public Builder httpHeaders(final List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
             return this;
         }
 
-        public Builder contentEncodings(List<HttpContentEncoding> contentEncodings) {
+        public Builder contentEncodings(final List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }

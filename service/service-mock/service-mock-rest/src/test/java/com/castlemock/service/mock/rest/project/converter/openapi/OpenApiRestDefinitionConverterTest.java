@@ -107,7 +107,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(200), response.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response.getStatus());
-            Assert.assertTrue(response.getUsingExpressions());
+            Assert.assertTrue(response.getUsingExpressions().orElse(false));
             Assert.assertTrue(response.getContentEncodings().isEmpty());
 
 
@@ -123,7 +123,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.getUsingExpressions());
+            Assert.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
@@ -139,7 +139,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
-            Assert.assertTrue(notFoundResponse.getUsingExpressions());
+            Assert.assertTrue(notFoundResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
 
@@ -155,7 +155,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(405), validationExceptionResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, validationExceptionResponse.getStatus());
-            Assert.assertTrue(validationExceptionResponse.getUsingExpressions());
+            Assert.assertTrue(validationExceptionResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(validationExceptionResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, validationExceptionResponse.getHttpHeaders().size());
         } else {
@@ -194,7 +194,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(200), response.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response.getStatus());
-            Assert.assertTrue(response.getUsingExpressions());
+            Assert.assertTrue(response.getUsingExpressions().orElse(false));
             Assert.assertTrue(response.getContentEncodings().isEmpty());
 
             // 405
@@ -209,7 +209,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(405), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.getUsingExpressions());
+            Assert.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
@@ -259,7 +259,7 @@ public class OpenApiRestDefinitionConverterTest {
             Assert.assertEquals("successful operation", response.getName());
             Assert.assertEquals(Integer.valueOf(200), response.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response.getStatus());
-            Assert.assertTrue(response.getUsingExpressions());
+            Assert.assertTrue(response.getUsingExpressions().orElse(false));
             Assert.assertTrue(response.getContentEncodings().isEmpty());
 
             // 400
@@ -274,7 +274,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.getUsingExpressions());
+            Assert.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
@@ -290,7 +290,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
-            Assert.assertTrue(notFoundResponse.getUsingExpressions());
+            Assert.assertTrue(notFoundResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
@@ -331,7 +331,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.getUsingExpressions());
+            Assert.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
         } else {
@@ -393,7 +393,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(200), response.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response.getStatus());
-            Assert.assertTrue(response.getUsingExpressions());
+            Assert.assertTrue(response.getUsingExpressions().orElse(false));
             Assert.assertTrue(response.getContentEncodings().isEmpty());
 
 
@@ -409,7 +409,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.getUsingExpressions());
+            Assert.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
@@ -425,7 +425,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
-            Assert.assertTrue(notFoundResponse.getUsingExpressions());
+            Assert.assertTrue(notFoundResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
 
@@ -441,7 +441,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(405), validationExceptionResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, validationExceptionResponse.getStatus());
-            Assert.assertTrue(validationExceptionResponse.getUsingExpressions());
+            Assert.assertTrue(validationExceptionResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(validationExceptionResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, validationExceptionResponse.getHttpHeaders().size());
         } else {
@@ -481,7 +481,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(200), response.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response.getStatus());
-            Assert.assertTrue(response.getUsingExpressions());
+            Assert.assertTrue(response.getUsingExpressions().orElse(false));
             Assert.assertTrue(response.getContentEncodings().isEmpty());
 
             // 405
@@ -496,7 +496,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(405), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.getUsingExpressions());
+            Assert.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
@@ -547,7 +547,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(200), response.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, response.getStatus());
-            Assert.assertTrue(response.getUsingExpressions());
+            Assert.assertTrue(response.getUsingExpressions().orElse(false));
             Assert.assertTrue(response.getContentEncodings().isEmpty());
 
 
@@ -563,7 +563,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.getUsingExpressions());
+            Assert.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
 
             // 404
@@ -578,7 +578,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(200), notFoundResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, notFoundResponse.getStatus());
-            Assert.assertTrue(notFoundResponse.getUsingExpressions());
+            Assert.assertTrue(notFoundResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
@@ -618,7 +618,7 @@ public class OpenApiRestDefinitionConverterTest {
 
             Assert.assertEquals(Integer.valueOf(200), invalidMockResponse.getHttpStatusCode());
             Assert.assertEquals(RestMockResponseStatus.ENABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.getUsingExpressions());
+            Assert.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
             Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
             Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
         } else {

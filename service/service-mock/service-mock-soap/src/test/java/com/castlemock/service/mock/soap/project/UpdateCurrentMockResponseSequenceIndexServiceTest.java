@@ -17,6 +17,8 @@
 package com.castlemock.service.mock.soap.project;
 
 import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.mock.soap.domain.SoapOperation;
+import com.castlemock.model.mock.soap.domain.SoapOperationTestBuilder;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import com.castlemock.service.mock.soap.project.input.UpdateCurrentMockResponseSequenceIndexInput;
 import org.junit.Before;
@@ -50,6 +52,11 @@ public class UpdateCurrentMockResponseSequenceIndexServiceTest {
         final String operationId = "SOAP OPERATION";
         final int responseIndex = 1;
 
+        final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
+
+        Mockito.when(operationRepository.findOne(operationId)).thenReturn(soapOperation);
+        Mockito.when(operationRepository.save(Mockito.any())).thenReturn(soapOperation);
+
         final UpdateCurrentMockResponseSequenceIndexInput input = UpdateCurrentMockResponseSequenceIndexInput.builder()
                 .projectId(projectId)
                 .portId(portId)
@@ -59,6 +66,10 @@ public class UpdateCurrentMockResponseSequenceIndexServiceTest {
         final ServiceTask<UpdateCurrentMockResponseSequenceIndexInput> serviceTask = ServiceTask.of(input, "user");
         service.process(serviceTask);
 
-        Mockito.verify(operationRepository, Mockito.times(1)).setCurrentResponseSequenceIndex(operationId, responseIndex);
+        Mockito.verify(operationRepository, Mockito.times(1)).save(Mockito.eq(soapOperation.toBuilder()
+                .currentResponseSequenceIndex(responseIndex)
+                .build()));
+        Mockito.verify(operationRepository, Mockito.times(1)).findOne(Mockito.eq(operationId));
+        Mockito.verifyNoMoreInteractions(operationRepository);
     }
 }

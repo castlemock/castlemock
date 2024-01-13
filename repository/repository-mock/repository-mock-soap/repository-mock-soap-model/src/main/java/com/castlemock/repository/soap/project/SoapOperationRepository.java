@@ -54,15 +54,6 @@ public interface SoapOperationRepository extends Repository<SoapOperation, Strin
                                                         SoapOperationIdentifier operationIdentifier);
 
     /**
-     * Updates the current response sequence index.
-     * @param soapOperationId The operation id.
-     * @param index The new response sequence index.
-     * @since 1.17
-     */
-    void setCurrentResponseSequenceIndex(String soapOperationId, Integer index);
-
-
-    /**
      * Retrieve the {@link com.castlemock.model.mock.soap.domain.SoapPort} id
      * for the {@link SoapOperation} with the provided id.
      * @param operationId The id of the {@link SoapOperation}.

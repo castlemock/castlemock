@@ -1,12 +1,16 @@
 package com.castlemock.repository.soap.file.project.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "soapXPathExpression")
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapXPathExpressionFile {
 
+    @XmlElement
     private String expression;
 
     private SoapXPathExpressionFile() {
@@ -17,13 +21,8 @@ public class SoapXPathExpressionFile {
         this.expression = Objects.requireNonNull(builder.expression, "expression");
     }
 
-    @XmlElement
     public String getExpression() {
         return expression;
-    }
-
-    public void setExpression(String expression) {
-        this.expression = expression;
     }
 
     public static Builder builder() {

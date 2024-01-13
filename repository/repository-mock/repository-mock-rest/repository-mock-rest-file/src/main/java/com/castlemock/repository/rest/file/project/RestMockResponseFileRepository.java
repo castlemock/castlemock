@@ -25,16 +25,13 @@ import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.rest.file.project.converter.RestMockResponseConverter;
 import com.castlemock.repository.rest.file.project.converter.RestMockResponseFileConverter;
-import com.castlemock.repository.rest.file.project.model.RestHeaderQueryFile;
 import com.castlemock.repository.rest.file.project.model.RestMockResponseFile;
-import com.castlemock.repository.rest.file.project.model.RestParameterQueryFile;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 @Repository
@@ -102,18 +99,7 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
      */
     @Override
     protected void postInitiate() {
-        for(RestMockResponseFile restMockResponse : collection.values()) {
-            if(restMockResponse.getParameterQueries() == null){
-                final List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<>();
-                restMockResponse.setParameterQueries(parameterQueries);
-                save(restMockResponse);
-            }
-            if(restMockResponse.getHeaderQueries() == null){
-                final List<RestHeaderQueryFile> headerQueries = new CopyOnWriteArrayList<>();
-                restMockResponse.setHeaderQueries(headerQueries);
-                save(restMockResponse);
-            }
-        }
+
     }
 
     /**

@@ -3,8 +3,9 @@ package com.castlemock.repository.rest.file.event.model;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
 import com.castlemock.repository.core.file.http.model.HttpParameterFile;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -12,19 +13,22 @@ import java.util.List;
 import java.util.Objects;
 
 @XmlRootElement(name = "restRequest")
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestRequestFile {
 
-    @Mapping("body")
+    @XmlElement
     private String body;
-    @Mapping("contentType")
+    @XmlElement
     private String contentType;
-    @Mapping("uri")
+    @XmlElement
     private String uri;
-    @Mapping("httpMethod")
+    @XmlElement
     private HttpMethod httpMethod;
-    @Mapping("httpParameters")
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     private List<HttpParameterFile> httpParameters;
-    @Mapping("httpHeaders")
+    @XmlElementWrapper(name = "httpParameters")
+    @XmlElement(name = "httpParameter")
     private List<HttpHeaderFile> httpHeaders;
 
     private RestRequestFile() {
@@ -40,60 +44,28 @@ public class RestRequestFile {
         this.httpParameters = builder.httpParameters;
     }
 
-    @XmlElement
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    @XmlElement
     public String getContentType() {
         return contentType;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    @XmlElement
     public String getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
 
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
-    }
-
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeaderFile> getHttpHeaders() {
         return httpHeaders;
     }
 
-    public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
-        this.httpHeaders = httpHeaders;
-    }
-
-    @XmlElementWrapper(name = "httpParameters")
-    @XmlElement(name = "httpParameter")
     public List<HttpParameterFile> getHttpParameters() {
         return httpParameters;
-    }
-
-    public void setHttpParameters(List<HttpParameterFile> httpParameters) {
-        this.httpParameters = httpParameters;
     }
 
     public static Builder builder() {

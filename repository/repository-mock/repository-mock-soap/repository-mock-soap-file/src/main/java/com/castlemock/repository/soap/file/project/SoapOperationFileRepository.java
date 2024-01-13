@@ -103,28 +103,7 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
      */
     @Override
     public void postInitiate(){
-        for(SoapOperationFile soapOperation : this.collection.values()){
-            if(soapOperation.getOperationIdentifier() == null){
-                SoapOperationIdentifierFile operationIdentifier = SoapOperationIdentifierFile.builder()
-                        .name(soapOperation.getIdentifier())
-                        .build();
 
-                soapOperation.setOperationIdentifier(operationIdentifier);
-                soapOperation.setIdentifier(null);
-                save(soapOperation);
-            }
-
-            if(soapOperation.getIdentifyStrategy() == null){
-                soapOperation.setIdentifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE);
-                save(soapOperation);
-            }
-
-            if(soapOperation.getCurrentResponseSequenceIndex() == null){
-                soapOperation.setCurrentResponseSequenceIndex(0);
-                save(soapOperation);
-            }
-
-        }
     }
 
     /**
@@ -215,19 +194,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
             }
         }
         return Optional.empty();
-    }
-
-    /**
-     * Updates the current response sequence index.
-     *
-     * @param soapOperationId The operation id.
-     * @param index           The new response sequence index.
-     * @since 1.17
-     */
-    @Override
-    public void setCurrentResponseSequenceIndex(final String soapOperationId, final Integer index) {
-        SoapOperationFile soapOperation = collection.get(soapOperationId);
-        soapOperation.setCurrentResponseSequenceIndex(index);
     }
 
     /**

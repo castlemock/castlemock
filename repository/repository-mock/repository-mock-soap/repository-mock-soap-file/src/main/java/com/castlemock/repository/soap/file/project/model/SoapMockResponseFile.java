@@ -4,8 +4,9 @@ import com.castlemock.model.core.Saveable;
 import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,28 +16,32 @@ import java.util.Objects;
 import java.util.Optional;
 
 @XmlRootElement(name = "soapMockResponse")
+@XmlAccessorType(XmlAccessType.NONE)
 @XmlSeeAlso({HttpHeaderFile.class, SoapXPathExpressionFile.class})
 public class SoapMockResponseFile implements Saveable<String> {
 
-    @Mapping("id")
+    @XmlElement
     private String id;
-    @Mapping("name")
+    @XmlElement
     private String name;
-    @Mapping("body")
+    @XmlElement
     private String body;
-    @Mapping("operationId")
+    @XmlElement
     private String operationId;
-    @Mapping("status")
+    @XmlElement
     private SoapMockResponseStatus status;
-    @Mapping("httpStatusCode")
+    @XmlElement
     private Integer httpStatusCode;
-    @Mapping("usingExpressions")
+    @XmlElement
     private Boolean usingExpressions;
-    @Mapping("httpHeaders")
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     private List<HttpHeaderFile> httpHeaders;
-    @Mapping("contentEncodings")
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
     private List<HttpContentEncoding> contentEncodings;
-    @Mapping("xpathExpressions")
+    @XmlElementWrapper(name = "xpathExpressions")
+    @XmlElement(name = "xpathExpression")
     private List<SoapXPathExpressionFile> xpathExpressions;
 
     private SoapMockResponseFile() {
@@ -59,99 +64,45 @@ public class SoapMockResponseFile implements Saveable<String> {
                 .orElseGet(List::of);
     }
 
-    @XmlElement
     @Override
     public String getId() {
         return id;
     }
 
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @XmlElement
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    @XmlElement
     public String getOperationId() {
         return operationId;
     }
 
-    public void setOperationId(String operationId) {
-        this.operationId = operationId;
-    }
-
-    @XmlElement
     public SoapMockResponseStatus getStatus() {
         return status;
     }
 
-    public void setStatus(SoapMockResponseStatus status) {
-        this.status = status;
-    }
-
-    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
-    }
-
-    @XmlElement
     public Boolean getUsingExpressions() {
         return usingExpressions;
     }
 
-    public void setUsingExpressions(boolean usingExpressions) {
-        this.usingExpressions = usingExpressions;
-    }
-
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeaderFile> getHttpHeaders() {
         return httpHeaders;
     }
 
-    public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
-        this.httpHeaders = httpHeaders;
-    }
-
-    @XmlElementWrapper(name = "contentEncodings")
-    @XmlElement(name = "contentEncoding")
     public List<HttpContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
 
-    public void setContentEncodings(List<HttpContentEncoding> contentEncodings) {
-        this.contentEncodings = contentEncodings;
-    }
-
-    @XmlElementWrapper(name = "xpathExpressions")
-    @XmlElement(name = "xpathExpression")
     public List<SoapXPathExpressionFile> getXpathExpressions() {
         return xpathExpressions;
-    }
-
-    public void setXpathExpressions(List<SoapXPathExpressionFile> xpathExpressions) {
-        this.xpathExpressions = xpathExpressions;
     }
 
     @Override
@@ -188,52 +139,52 @@ public class SoapMockResponseFile implements Saveable<String> {
         private Builder() {
         }
 
-        public Builder id(String id) {
+        public Builder id(final String id) {
             this.id = id;
             return this;
         }
 
-        public Builder name(String name) {
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder body(String body) {
+        public Builder body(final String body) {
             this.body = body;
             return this;
         }
 
-        public Builder operationId(String operationId) {
+        public Builder operationId(final String operationId) {
             this.operationId = operationId;
             return this;
         }
 
-        public Builder status(SoapMockResponseStatus status) {
+        public Builder status(final SoapMockResponseStatus status) {
             this.status = status;
             return this;
         }
 
-        public Builder httpStatusCode(Integer httpStatusCode) {
+        public Builder httpStatusCode(final Integer httpStatusCode) {
             this.httpStatusCode = httpStatusCode;
             return this;
         }
 
-        public Builder usingExpressions(Boolean usingExpressions) {
+        public Builder usingExpressions(final Boolean usingExpressions) {
             this.usingExpressions = usingExpressions;
             return this;
         }
 
-        public Builder httpHeaders(List<HttpHeaderFile> httpHeaders) {
+        public Builder httpHeaders(final List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
             return this;
         }
 
-        public Builder contentEncodings(List<HttpContentEncoding> contentEncodings) {
+        public Builder contentEncodings(final List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }
 
-        public Builder xpathExpressions(List<SoapXPathExpressionFile> xpathExpressions) {
+        public Builder xpathExpressions(final List<SoapXPathExpressionFile> xpathExpressions) {
             this.xpathExpressions = xpathExpressions;
             return this;
         }

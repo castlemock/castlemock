@@ -74,7 +74,7 @@ public class CreateRestMockResponseServiceTest {
                 .httpStatusCode(mockResponse.getHttpStatusCode())
                 .jsonPathExpressions(mockResponse.getJsonPathExpressions())
                 .parameterQueries(mockResponse.getParameterQueries())
-                .usingExpressions(mockResponse.getUsingExpressions())
+                .usingExpressions(mockResponse.getUsingExpressions().orElse(null))
                 .xpathExpressions(mockResponse.getXpathExpressions())
                 .build();
         final ServiceTask<CreateRestMockResponseInput> serviceTask = ServiceTask.of(input, "user");

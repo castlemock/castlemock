@@ -1,17 +1,18 @@
 package com.castlemock.repository.soap.file.project.model;
 
-import org.dozer.Mapping;
-
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "soapOperationIdentifier")
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapOperationIdentifierFile {
 
-    @Mapping("name")
+    @XmlElement
     private String name;
-    @Mapping("namespace")
+    @XmlElement
     private String namespace;
 
     private SoapOperationIdentifierFile(){
@@ -23,28 +24,17 @@ public class SoapOperationIdentifierFile {
         this.namespace = builder.namespace;
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    @XmlElement
     public String getNamespace() {
         return namespace;
-    }
-
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
     }
 
     public static Builder builder() {
         return new Builder();
     }
-
 
     public static final class Builder {
         private String name;

@@ -1,22 +1,24 @@
 package com.castlemock.repository.soap.file.project.model;
 
 import com.castlemock.model.core.Saveable;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "soapPort")
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapPortFile implements Saveable<String> {
 
-    @Mapping("id")
+    @XmlElement
     private String id;
-    @Mapping("name")
+    @XmlElement
     private String name;
-    @Mapping("uri")
+    @XmlElement
     private String uri;
-    @Mapping("projectId")
+    @XmlElement
     private String projectId;
 
     private SoapPortFile() {
@@ -30,42 +32,21 @@ public class SoapPortFile implements Saveable<String> {
         this.projectId = Objects.requireNonNull(builder.projectId);
     }
 
-    @XmlElement
     @Override
     public String getId() {
         return id;
     }
 
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @XmlElement
     public String getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    @XmlElement
     public String getProjectId() {
         return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
     }
 
     public static Builder builder() {
@@ -81,22 +62,22 @@ public class SoapPortFile implements Saveable<String> {
         private Builder() {
         }
 
-        public Builder id(String id) {
+        public Builder id(final String id) {
             this.id = id;
             return this;
         }
 
-        public Builder name(String name) {
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder uri(String uri) {
+        public Builder uri(final String uri) {
             this.uri = uri;
             return this;
         }
 
-        public Builder projectId(String projectId) {
+        public Builder projectId(final String projectId) {
             this.projectId = projectId;
             return this;
         }

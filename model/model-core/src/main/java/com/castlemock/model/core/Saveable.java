@@ -34,9 +34,4 @@ public interface Saveable<I> {
      */
     I getId();
 
-    /**
-     * Set a new identifier for the model
-     * @param id The new identifier
-     */
-    void setId(final I id);
 }

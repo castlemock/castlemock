@@ -1,22 +1,24 @@
 package com.castlemock.repository.rest.file.project.model;
 
 import com.castlemock.model.core.Saveable;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "restResource")
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestResourceFile implements Saveable<String> {
 
-    @Mapping("id")
+    @XmlElement
     private String id;
-    @Mapping("name")
+    @XmlElement
     private String name;
-    @Mapping("uri")
+    @XmlElement
     private String uri;
-    @Mapping("applicationId")
+    @XmlElement
     private String applicationId;
 
     private RestResourceFile() {
@@ -31,41 +33,20 @@ public class RestResourceFile implements Saveable<String> {
     }
 
     @Override
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @XmlElement
     public String getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    @XmlElement
     public String getApplicationId() {
         return applicationId;
-    }
-
-    public void setApplicationId(String applicationId) {
-        this.applicationId = applicationId;
     }
 
     public static Builder builder() {
@@ -86,17 +67,17 @@ public class RestResourceFile implements Saveable<String> {
             return this;
         }
 
-        public Builder name(String name) {
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder uri(String uri) {
+        public Builder uri(final String uri) {
             this.uri = uri;
             return this;
         }
 
-        public Builder applicationId(String applicationId) {
+        public Builder applicationId(final String applicationId) {
             this.applicationId = applicationId;
             return this;
         }

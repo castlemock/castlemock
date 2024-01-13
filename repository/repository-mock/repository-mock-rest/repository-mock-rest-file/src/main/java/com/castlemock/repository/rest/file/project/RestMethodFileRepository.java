@@ -106,20 +106,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFile, Res
 
 
     /**
-     * Updates the current response sequence index.
-     *
-     * @param restMethodId      The method id.
-     * @param index             The new response sequence index.
-     * @since 1.17
-     */
-    @Override
-    public void setCurrentResponseSequenceIndex(final String restMethodId,
-                                                final Integer index) {
-        RestMethodFile restMethod = this.collection.get(restMethodId);
-        restMethod.setCurrentResponseSequenceIndex(index);
-    }
-
-    /**
      * Delete all {@link RestMethod} that matches the provided
      * <code>resourceId</code>.
      *

@@ -4,8 +4,9 @@ import com.castlemock.model.core.Saveable;
 import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,34 +16,41 @@ import java.util.Objects;
 import java.util.Optional;
 
 @XmlRootElement(name = "restMockResponse")
+@XmlAccessorType(XmlAccessType.NONE)
 @XmlSeeAlso(HttpHeaderFile.class)
 public class RestMockResponseFile implements Saveable<String> {
 
-    @Mapping("id")
+    @XmlElement
     private String id;
-    @Mapping("name")
+    @XmlElement
     private String name;
-    @Mapping("body")
+    @XmlElement
     private String body;
-    @Mapping("methodId")
+    @XmlElement
     private String methodId;
-    @Mapping("status")
+    @XmlElement
     private RestMockResponseStatus status;
-    @Mapping("httpStatusCode")
+    @XmlElement
     private Integer httpStatusCode;
-    @Mapping("usingExpressions")
+    @XmlElement
     private Boolean usingExpressions;
-    @Mapping("httpHeaders")
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     private List<HttpHeaderFile> httpHeaders;
-    @Mapping("contentEncodings")
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
     private List<HttpContentEncoding> contentEncodings;
-    @Mapping("parameterQueries")
+    @XmlElementWrapper(name = "parameterQueries")
+    @XmlElement(name = "parameterQuery")
     private List<RestParameterQueryFile> parameterQueries;
-    @Mapping("xpathExpressions")
+    @XmlElementWrapper(name = "xpathExpressions")
+    @XmlElement(name = "xpathExpression")
     private List<RestXPathExpressionFile> xpathExpressions;
-    @Mapping("jsonPathExpressions")
+    @XmlElementWrapper(name = "jsonPathExpressions")
+    @XmlElement(name = "jsonPathExpression")
     private List<RestJsonPathExpressionFile> jsonPathExpressions;
-    @Mapping("headerQueries")
+    @XmlElementWrapper(name = "headerQueries")
+    @XmlElement(name = "headerQuery")
     private List<RestHeaderQueryFile> headerQueries;
 
     private RestMockResponseFile() {
@@ -55,7 +63,7 @@ public class RestMockResponseFile implements Saveable<String> {
         this.name = Objects.requireNonNull(builder.name, "name");
         this.methodId = Objects.requireNonNull(builder.methodId, "methodId");
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
-        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions, "usingExpressions");
+        this.usingExpressions = builder.usingExpressions;
         this.body = builder.body;
         this.httpHeaders = Optional.ofNullable(builder.httpHeaders)
                 .orElseGet(List::of);
@@ -72,132 +80,60 @@ public class RestMockResponseFile implements Saveable<String> {
     }
 
     @Override
-    @XmlElement
     public String getId() {
         return id;
     }
 
-    @Override
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @XmlElement
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    @XmlElement
     public String getMethodId() {
         return methodId;
     }
 
-    public void setMethodId(String methodId) {
-        this.methodId = methodId;
-    }
-
-    @XmlElement
     public RestMockResponseStatus getStatus() {
         return status;
     }
 
-    public void setStatus(RestMockResponseStatus status) {
-        this.status = status;
-    }
-
-    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
-    }
-
-    @XmlElement
-    public boolean getUsingExpressions() {
+    public Boolean getUsingExpressions() {
         return usingExpressions;
     }
 
-    public void setUsingExpressions(boolean usingExpressions) {
-        this.usingExpressions = usingExpressions;
-    }
-
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeaderFile> getHttpHeaders() {
         return httpHeaders;
     }
 
-    public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
-        this.httpHeaders = httpHeaders;
-    }
-
-    @XmlElementWrapper(name = "contentEncodings")
-    @XmlElement(name = "contentEncoding")
     public List<HttpContentEncoding> getContentEncodings() {
         return contentEncodings;
     }
 
-    public void setContentEncodings(List<HttpContentEncoding> contentEncodings) {
-        this.contentEncodings = contentEncodings;
-    }
-
-    @XmlElementWrapper(name = "parameterQueries")
-    @XmlElement(name = "parameterQuery")
     public List<RestParameterQueryFile> getParameterQueries() {
         return parameterQueries;
     }
 
-    public void setParameterQueries(List<RestParameterQueryFile> parameterQueries) {
-        this.parameterQueries = parameterQueries;
-    }
-
-    @XmlElementWrapper(name = "xpathExpressions")
-    @XmlElement(name = "xpathExpression")
     public List<RestXPathExpressionFile> getXpathExpressions() {
         return xpathExpressions;
     }
 
-    public void setXpathExpressions(List<RestXPathExpressionFile> xpathExpressions) {
-        this.xpathExpressions = xpathExpressions;
-    }
-
-    @XmlElementWrapper(name = "jsonPathExpressions")
-    @XmlElement(name = "jsonPathExpression")
     public List<RestJsonPathExpressionFile> getJsonPathExpressions() {
         return jsonPathExpressions;
     }
 
-    public void setJsonPathExpressions(List<RestJsonPathExpressionFile> jsonPathExpressions) {
-        this.jsonPathExpressions = jsonPathExpressions;
-    }
-
-    @XmlElementWrapper(name = "headerQueries")
-    @XmlElement(name = "headerQuery")
     public List<RestHeaderQueryFile> getHeaderQueries() {
         return headerQueries;
     }
 
-    public void setHeaderQueries(List<RestHeaderQueryFile> headerQueries) {
-        this.headerQueries = headerQueries;
-    }
-
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o)
             return true;
         if (!(o instanceof RestMockResponseFile that))
@@ -235,67 +171,67 @@ public class RestMockResponseFile implements Saveable<String> {
         }
 
 
-        public Builder id(String id) {
+        public Builder id(final String id) {
             this.id = id;
             return this;
         }
 
-        public Builder name(String name) {
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder body(String body) {
+        public Builder body(final String body) {
             this.body = body;
             return this;
         }
 
-        public Builder methodId(String methodId) {
+        public Builder methodId(final String methodId) {
             this.methodId = methodId;
             return this;
         }
 
-        public Builder status(RestMockResponseStatus status) {
+        public Builder status(final RestMockResponseStatus status) {
             this.status = status;
             return this;
         }
 
-        public Builder httpStatusCode(Integer httpStatusCode) {
+        public Builder httpStatusCode(final Integer httpStatusCode) {
             this.httpStatusCode = httpStatusCode;
             return this;
         }
 
-        public Builder usingExpressions(boolean usingExpressions) {
+        public Builder usingExpressions(final Boolean usingExpressions) {
             this.usingExpressions = usingExpressions;
             return this;
         }
 
-        public Builder httpHeaders(List<HttpHeaderFile> httpHeaders) {
+        public Builder httpHeaders(final List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
             return this;
         }
 
-        public Builder contentEncodings(List<HttpContentEncoding> contentEncodings) {
+        public Builder contentEncodings(final List<HttpContentEncoding> contentEncodings) {
             this.contentEncodings = contentEncodings;
             return this;
         }
 
-        public Builder parameterQueries(List<RestParameterQueryFile> parameterQueries) {
+        public Builder parameterQueries(final List<RestParameterQueryFile> parameterQueries) {
             this.parameterQueries = parameterQueries;
             return this;
         }
 
-        public Builder xpathExpressions(List<RestXPathExpressionFile> xpathExpressions) {
+        public Builder xpathExpressions(final List<RestXPathExpressionFile> xpathExpressions) {
             this.xpathExpressions = xpathExpressions;
             return this;
         }
 
-        public Builder jsonPathExpressions(List<RestJsonPathExpressionFile> jsonPathExpressions) {
+        public Builder jsonPathExpressions(final List<RestJsonPathExpressionFile> jsonPathExpressions) {
             this.jsonPathExpressions = jsonPathExpressions;
             return this;
         }
 
-        public Builder headerQueries(List<RestHeaderQueryFile> headerQueries) {
+        public Builder headerQueries(final List<RestHeaderQueryFile> headerQueries) {
             this.headerQueries = headerQueries;
             return this;
         }

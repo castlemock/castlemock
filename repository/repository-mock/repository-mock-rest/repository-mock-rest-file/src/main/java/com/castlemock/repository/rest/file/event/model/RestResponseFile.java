@@ -2,8 +2,9 @@ package com.castlemock.repository.rest.file.event.model;
 
 import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -12,19 +13,22 @@ import java.util.Objects;
 import java.util.Optional;
 
 @XmlRootElement(name = "restResponse")
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestResponseFile {
 
-    @Mapping("body")
+    @XmlElement
     private String body;
-    @Mapping("mockResponseName")
+    @XmlElement
     private String mockResponseName;
-    @Mapping("httpStatusCode")
+    @XmlElement
     private Integer httpStatusCode;
-    @Mapping("contentType")
+    @XmlElement
     private String contentType;
-    @Mapping("httpHeaders")
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     private List<HttpHeaderFile> httpHeaders;
-    @Mapping("contentEncodings")
+    @XmlElementWrapper(name = "contentEncodings")
+    @XmlElement(name = "contentEncoding")
     private List<HttpContentEncoding> contentEncodings;
 
     private RestResponseFile() {
@@ -42,60 +46,28 @@ public class RestResponseFile {
                 .orElseGet(List::of);
     }
 
-    @XmlElement
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    @XmlElement
     public String getMockResponseName() {
         return mockResponseName;
     }
 
-    public void setMockResponseName(String mockResponseName) {
-        this.mockResponseName = mockResponseName;
-    }
-
-    @XmlElement
     public Integer getHttpStatusCode() {
         return httpStatusCode;
     }
 
-    public void setHttpStatusCode(Integer httpStatusCode) {
-        this.httpStatusCode = httpStatusCode;
-    }
-
-    @XmlElement
     public String getContentType() {
         return contentType;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeaderFile> getHttpHeaders() {
         return httpHeaders;
     }
 
-    public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
-        this.httpHeaders = httpHeaders;
-    }
-
-    @XmlElementWrapper(name = "contentEncodings")
-    @XmlElement(name = "contentEncoding")
     public List<HttpContentEncoding> getContentEncodings() {
         return contentEncodings;
-    }
-
-    public void setContentEncodings(List<HttpContentEncoding> contentEncodings) {
-        this.contentEncodings = contentEncodings;
     }
 
     public static Builder builder() {

@@ -1,17 +1,18 @@
 package com.castlemock.repository.core.file.http.model;
 
-import org.dozer.Mapping;
-
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "httpHeader")
+@XmlAccessorType(XmlAccessType.NONE)
 public class HttpHeaderFile {
 
-    @Mapping("name")
+    @XmlElement
     private String name;
-    @Mapping("value")
+    @XmlElement
     private String value;
 
     private HttpHeaderFile() {
@@ -23,22 +24,12 @@ public class HttpHeaderFile {
         this.value = Objects.requireNonNull(builder.value, "value");
     }
 
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @XmlElement
     public String getValue() {
         return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 
     public static Builder builder() {

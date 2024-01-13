@@ -3,8 +3,9 @@ package com.castlemock.repository.soap.file.event.model;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.soap.domain.SoapVersion;
 import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -12,25 +13,27 @@ import java.util.List;
 import java.util.Objects;
 
 @XmlRootElement(name = "soapRequest")
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapRequestFile {
 
-    @Mapping("body")
+    @XmlElement
     private String body;
-    @Mapping("envelope")
+    @XmlElement
     private String envelope;
-    @Mapping("contentType")
+    @XmlElement
     private String contentType;
-    @Mapping("uri")
+    @XmlElement
     private String uri;
-    @Mapping("httpMethod")
+    @XmlElement
     private HttpMethod httpMethod;
-    @Mapping("operationName")
+    @XmlElement
     private String operationName;
-    @Mapping("operationIdentifier")
+    @XmlElement
     private SoapOperationIdentifierFile operationIdentifier;
-    @Mapping("soapVersion")
+    @XmlElement
     private SoapVersion soapVersion;
-    @Mapping("httpHeaders")
+    @XmlElementWrapper(name = "httpHeaders")
+    @XmlElement(name = "httpHeader")
     private List<HttpHeaderFile> httpHeaders;
 
     private SoapRequestFile() {
@@ -49,86 +52,40 @@ public class SoapRequestFile {
         this.operationIdentifier = Objects.requireNonNull(builder.operationIdentifier, "operationIdentifier");
     }
 
-    @XmlElement
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    @XmlElement
     public String getEnvelope() {
         return envelope;
     }
 
-    public void setEnvelope(String envelope) {
-        this.envelope = envelope;
-    }
-
-    @XmlElement
     public String getContentType() {
         return contentType;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    @XmlElement
     public String getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
 
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
-    }
-
-    @XmlElement
     public String getOperationName() {
         return operationName;
     }
 
-    public void setOperationName(String operationName) {
-        this.operationName = operationName;
-    }
-
-    @XmlElement
     public SoapOperationIdentifierFile getOperationIdentifier() {
         return operationIdentifier;
     }
 
-    public void setOperationIdentifier(SoapOperationIdentifierFile operationIdentifier) {
-        this.operationIdentifier = operationIdentifier;
-    }
-
-    @XmlElement
     public SoapVersion getSoapVersion() {
         return soapVersion;
     }
 
-    public void setSoapVersion(SoapVersion soapVersion) {
-        this.soapVersion = soapVersion;
-    }
-
-    @XmlElementWrapper(name = "httpHeaders")
-    @XmlElement(name = "httpHeader")
     public List<HttpHeaderFile> getHttpHeaders() {
         return httpHeaders;
-    }
-
-    public void setHttpHeaders(List<HttpHeaderFile> httpHeaders) {
-        this.httpHeaders = httpHeaders;
     }
 
     public static Builder builder() {
@@ -149,47 +106,47 @@ public class SoapRequestFile {
         private Builder() {
         }
 
-        public Builder body(String body) {
+        public Builder body(final String body) {
             this.body = body;
             return this;
         }
 
-        public Builder envelope(String envelope) {
+        public Builder envelope(final String envelope) {
             this.envelope = envelope;
             return this;
         }
 
-        public Builder contentType(String contentType) {
+        public Builder contentType(final String contentType) {
             this.contentType = contentType;
             return this;
         }
 
-        public Builder uri(String uri) {
+        public Builder uri(final String uri) {
             this.uri = uri;
             return this;
         }
 
-        public Builder httpMethod(HttpMethod httpMethod) {
+        public Builder httpMethod(final HttpMethod httpMethod) {
             this.httpMethod = httpMethod;
             return this;
         }
 
-        public Builder operationName(String operationName) {
+        public Builder operationName(final String operationName) {
             this.operationName = operationName;
             return this;
         }
 
-        public Builder operationIdentifier(SoapOperationIdentifierFile operationIdentifier) {
+        public Builder operationIdentifier(final SoapOperationIdentifierFile operationIdentifier) {
             this.operationIdentifier = operationIdentifier;
             return this;
         }
 
-        public Builder soapVersion(SoapVersion soapVersion) {
+        public Builder soapVersion(final SoapVersion soapVersion) {
             this.soapVersion = soapVersion;
             return this;
         }
 
-        public Builder httpHeaders(List<HttpHeaderFile> httpHeaders) {
+        public Builder httpHeaders(final List<HttpHeaderFile> httpHeaders) {
             this.httpHeaders = httpHeaders;
             return this;
         }

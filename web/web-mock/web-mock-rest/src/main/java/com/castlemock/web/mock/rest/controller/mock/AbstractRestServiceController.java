@@ -476,7 +476,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
         }
 
         String body = mockResponse.getBody().orElse(null);
-        if (mockResponse.getUsingExpressions()) {
+        if (mockResponse.getUsingExpressions().orElse(false)) {
             final Map<String, ExpressionArgument<?>> externalInput = new ExternalInputBuilder()
                     .pathParameters(pathParameters)
                     .queryStringParameters(restRequest.getHttpParameters())

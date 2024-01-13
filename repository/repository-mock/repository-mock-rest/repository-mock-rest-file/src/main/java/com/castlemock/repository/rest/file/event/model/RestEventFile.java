@@ -1,25 +1,28 @@
 package com.castlemock.repository.rest.file.event.model;
 
 import com.castlemock.repository.core.file.event.model.EventFile;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "restEvent")
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestEventFile extends EventFile {
 
-    @Mapping("request")
+    @XmlElement
     private RestRequestFile request;
-    @Mapping("response")
+    @XmlElement
     private RestResponseFile response;
-    @Mapping("projectId")
+    @XmlElement
     private String projectId;
-    @Mapping("applicationId")
+    @XmlElement
     private String applicationId;
-    @Mapping("resourceId")
+    @XmlElement
     private String resourceId;
-    @Mapping("methodId")
+    @XmlElement
     private String methodId;
 
     private RestEventFile() {
@@ -40,48 +43,24 @@ public class RestEventFile extends EventFile {
         return request;
     }
 
-    public void setRequest(RestRequestFile request) {
-        this.request = request;
-    }
-
     public RestResponseFile getResponse() {
         return response;
-    }
-
-    public void setResponse(RestResponseFile response) {
-        this.response = response;
     }
 
     public String getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
     public String getApplicationId() {
         return applicationId;
-    }
-
-    public void setApplicationId(String applicationId) {
-        this.applicationId = applicationId;
     }
 
     public String getResourceId() {
         return resourceId;
     }
 
-    public void setResourceId(String resourceId) {
-        this.resourceId = resourceId;
-    }
-
     public String getMethodId() {
         return methodId;
-    }
-
-    public void setMethodId(String methodId) {
-        this.methodId = methodId;
     }
 
     public static Builder builder() {
@@ -89,6 +68,7 @@ public class RestEventFile extends EventFile {
     }
 
     public static class Builder extends EventFile.Builder<Builder> {
+
         private RestRequestFile request;
         private RestResponseFile response;
         private String projectId;

@@ -1,17 +1,26 @@
 package com.castlemock.repository.rest.file.project.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "restParameterQuery")
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestParameterQueryFile {
 
+    @XmlElement
     private String parameter;
+    @XmlElement
     private String query;
+    @XmlElement
     private boolean matchCase;
+    @XmlElement
     private boolean matchAny;
+    @XmlElement
     private boolean matchRegex;
+    @XmlElement
     private boolean urlEncoded;
 
     private RestParameterQueryFile() {
@@ -27,60 +36,29 @@ public class RestParameterQueryFile {
         this.urlEncoded = Objects.requireNonNull(builder.urlEncoded, "urlEncoded");
     }
 
-    @XmlElement
     public String getParameter() {
         return parameter;
     }
 
-    public void setParameter(String parameter) {
-        this.parameter = parameter;
-    }
-
-    @XmlElement
     public String getQuery() {
         return query;
     }
 
-    public void setQuery(String query) {
-        this.query = query;
-    }
-
-    @XmlElement
     public boolean getMatchCase() {
         return matchCase;
     }
 
-    public void setMatchCase(boolean matchCase) {
-        this.matchCase = matchCase;
-    }
-
-    @XmlElement
     public boolean getMatchAny() {
         return matchAny;
     }
 
-    public void setMatchAny(boolean matchAny) {
-        this.matchAny = matchAny;
-    }
-
-    @XmlElement
     public boolean getMatchRegex() {
         return matchRegex;
     }
 
-    public void setMatchRegex(boolean matchRegex) {
-        this.matchRegex = matchRegex;
-    }
-
-    @XmlElement
     public boolean getUrlEncoded() {
         return urlEncoded;
     }
-
-    public void setUrlEncoded(boolean urlEncoded) {
-        this.urlEncoded = urlEncoded;
-    }
-
 
     public static Builder builder() {
         return new Builder();

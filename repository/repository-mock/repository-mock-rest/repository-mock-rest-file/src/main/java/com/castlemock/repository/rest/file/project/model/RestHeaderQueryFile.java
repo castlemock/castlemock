@@ -1,16 +1,24 @@
 package com.castlemock.repository.rest.file.project.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "restHeaderQuery")
+@XmlAccessorType(XmlAccessType.NONE)
 public class RestHeaderQueryFile {
 
+    @XmlElement
     private String header;
+    @XmlElement
     private String query;
+    @XmlElement
     private boolean matchCase;
+    @XmlElement
     private boolean matchAny;
+    @XmlElement
     private boolean matchRegex;
 
     private RestHeaderQueryFile() {
@@ -25,49 +33,24 @@ public class RestHeaderQueryFile {
         this.matchRegex = Objects.requireNonNull(builder.matchRegex, "matchRegex");
     }
 
-    @XmlElement
     public String getHeader() {
         return header;
     }
 
-    public void setHeader(String header) {
-        this.header = header;
-    }
-
-    @XmlElement
     public String getQuery() {
         return query;
     }
 
-    public void setQuery(String query) {
-        this.query = query;
-    }
-
-    @XmlElement
     public boolean getMatchCase() {
         return matchCase;
     }
 
-    public void setMatchCase(boolean matchCase) {
-        this.matchCase = matchCase;
-    }
-
-    @XmlElement
     public boolean getMatchAny() {
         return matchAny;
     }
 
-    public void setMatchAny(boolean matchAny) {
-        this.matchAny = matchAny;
-    }
-
-    @XmlElement
     public boolean getMatchRegex() {
         return matchRegex;
-    }
-
-    public void setMatchRegex(boolean matchRegex) {
-        this.matchRegex = matchRegex;
     }
 
     public static Builder builder() {

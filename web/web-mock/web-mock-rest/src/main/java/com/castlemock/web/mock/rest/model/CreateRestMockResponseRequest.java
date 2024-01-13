@@ -43,7 +43,7 @@ public class CreateRestMockResponseRequest {
     private String body;
     private Integer httpStatusCode;
     private RestMockResponseStatus status;
-    private boolean usingExpressions;
+    private Boolean usingExpressions;
     private List<HttpHeader> httpHeaders;
     private List<HttpContentEncoding> contentEncodings;
     private List<RestParameterQuery> parameterQueries;
@@ -60,7 +60,7 @@ public class CreateRestMockResponseRequest {
         this.body = builder.body;
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
         this.status = Objects.requireNonNull(builder.status, "status");
-        this.usingExpressions = Objects.requireNonNull(builder.usingExpressions, "usingExpressions");
+        this.usingExpressions = builder.usingExpressions;
         this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(List::of);
         this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(List::of);
         this.parameterQueries = Optional.ofNullable(builder.parameterQueries).orElseGet(List::of);
@@ -84,8 +84,8 @@ public class CreateRestMockResponseRequest {
         return status;
     }
 
-    public boolean isUsingExpressions() {
-        return usingExpressions;
+    public Optional<Boolean> getUsingExpressions() {
+        return Optional.ofNullable(usingExpressions);
     }
 
     public List<HttpHeader> getHttpHeaders() {

@@ -1,8 +1,9 @@
 package com.castlemock.repository.core.file.configuration.model;
 
 import com.castlemock.model.core.Saveable;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,13 +16,15 @@ import java.util.Objects;
  * @since 1.0
  */
 @XmlRootElement(name = "configurationGroup")
+@XmlAccessorType(XmlAccessType.NONE)
 public class ConfigurationGroupFile implements Saveable<String> {
 
-    @Mapping("id")
+    @XmlElement
     private String id;
-    @Mapping("name")
+    @XmlElement
     private String name;
-    @Mapping("configurations")
+    @XmlElementWrapper(name = "configurations")
+    @XmlElement(name = "configuration")
     private List<ConfigurationFile> configurations;
 
     private ConfigurationGroupFile() {
@@ -39,54 +42,25 @@ public class ConfigurationGroupFile implements Saveable<String> {
      * Returns the configuration group id
      * @return The configuration group id
      */
-    @XmlElement
     @Override
     public String getId() {
         return id;
     }
 
     /**
-     * Sets a new id value for the configuration group
-     * @param id The new id for the configuration group
-     */
-    @Override
-    public void setId(final String id) {
-        this.id = id;
-    }
-
-    /**
      * Returns the name of the configuration group
      * @return The new of the configuration group
      */
-    @XmlElement
     public String getName() {
         return name;
-    }
-
-    /**
-     * Sets a new name of the configuration group
-     * @param name The new name for the configuration group
-     */
-    public void setName(final String name) {
-        this.name = name;
     }
 
     /**
      * Returns a list of configurations the belongs to the group
      * @return Configurations that belongs to the configuration group
      */
-    @XmlElementWrapper(name = "configurations")
-    @XmlElement(name = "configuration")
     public List<ConfigurationFile> getConfigurations() {
         return configurations;
-    }
-
-    /**
-     * Set a new list of configurations that belong to the configuration group
-     * @param configurations The new list of configurations
-     */
-    public void setConfigurations(final List<ConfigurationFile> configurations) {
-        this.configurations = configurations;
     }
 
     public static Builder builder() {

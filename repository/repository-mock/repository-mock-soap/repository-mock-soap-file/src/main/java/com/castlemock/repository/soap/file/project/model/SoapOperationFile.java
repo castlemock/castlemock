@@ -6,52 +6,54 @@ import com.castlemock.model.mock.soap.domain.SoapOperationIdentifyStrategy;
 import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
 import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
 import com.castlemock.model.mock.soap.domain.SoapVersion;
-import org.dozer.Mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 @XmlRootElement(name = "soapOperation")
+@XmlAccessorType(XmlAccessType.NONE)
 public class SoapOperationFile implements Saveable<String> {
 
-    @Mapping("id")
+    @XmlElement
     private String id;
-    @Mapping("name")
+    @XmlElement
     private String name;
-    @Mapping("portId")
+    @XmlElement
     private String portId;
-    @Mapping("responseStrategy")
+    @XmlElement
     private SoapResponseStrategy responseStrategy;
-    @Mapping("identifier")
+    @XmlElement
     private String identifier;
-    @Mapping("operationIdentifier")
+    @XmlElement
     private SoapOperationIdentifierFile operationIdentifier;
-    @Mapping("status")
+    @XmlElement
     private SoapOperationStatus status;
-    @Mapping("httpMethod")
+    @XmlElement
     private HttpMethod httpMethod;
-    @Mapping("soapVersion")
+    @XmlElement
     private SoapVersion soapVersion;
-    @Mapping("defaultBody")
+    @XmlElement
     private String defaultBody;
-    @Mapping("currentResponseSequenceIndex")
+    @XmlElement
     private Integer currentResponseSequenceIndex;
-    @Mapping("forwardedEndpoint")
+    @XmlElement
     private String forwardedEndpoint;
-    @Mapping("originalEndpoint")
+    @XmlElement
     private String originalEndpoint;
-    @Mapping("defaultMockResponseId")
+    @XmlElement
     private String defaultMockResponseId;
-    @Mapping("simulateNetworkDelay")
+    @XmlElement
     private Boolean simulateNetworkDelay;
-    @Mapping("networkDelay")
+    @XmlElement
     private Long networkDelay;
-    @Mapping("mockOnFailure")
+    @XmlElement
     private Boolean mockOnFailure;
-    @Mapping("identifyStrategy")
+    @XmlElement
     private SoapOperationIdentifyStrategy identifyStrategy;
-    @Mapping("automaticForward")
+    @XmlElement
     private Boolean automaticForward;
 
     private SoapOperationFile() {
@@ -81,177 +83,81 @@ public class SoapOperationFile implements Saveable<String> {
         this.defaultMockResponseId = builder.defaultMockResponseId;
     }
 
-    @XmlElement
     @Override
     public String getId() {
         return id;
     }
 
-    @Override
-    public void setId(final String id) {
-        this.id = id;
-    }
-
-    @XmlElement
     public String getName() {
         return name;
     }
 
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    @XmlElement
     public String getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(final String identifier) {
-        this.identifier = identifier;
-    }
-
-    @XmlElement
     public SoapOperationIdentifierFile getOperationIdentifier() {
         return operationIdentifier;
     }
 
-    public void setOperationIdentifier(final SoapOperationIdentifierFile operationIdentifier) {
-        this.operationIdentifier = operationIdentifier;
-    }
-
-    @XmlElement
     public String getPortId() {
         return portId;
     }
 
-    public void setPortId(final String portId) {
-        this.portId = portId;
-    }
-
-    @XmlElement
     public SoapResponseStrategy getResponseStrategy() {
         return responseStrategy;
     }
 
-    public void setResponseStrategy(final SoapResponseStrategy responseStrategy) {
-        this.responseStrategy = responseStrategy;
-    }
-
-    @XmlElement
     public SoapOperationStatus getStatus() {
         return status;
     }
 
-    public void setStatus(final SoapOperationStatus status) {
-        this.status = status;
-    }
-
-    @XmlElement
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
 
-    public void setHttpMethod(final HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
-    }
-
-    @XmlElement
     public SoapVersion getSoapVersion() {
         return soapVersion;
     }
 
-    public void setSoapVersion(final SoapVersion soapVersion) {
-        this.soapVersion = soapVersion;
-    }
-
-    @XmlElement
     public String getDefaultBody() {
         return defaultBody;
     }
 
-    public void setDefaultBody(final String defaultBody) {
-        this.defaultBody = defaultBody;
-    }
-
-    @XmlElement
     public Integer getCurrentResponseSequenceIndex() {
         return currentResponseSequenceIndex;
     }
 
-    public void setCurrentResponseSequenceIndex(final Integer currentResponseSequenceIndex) {
-        this.currentResponseSequenceIndex = currentResponseSequenceIndex;
-    }
-
-    @XmlElement
     public String getForwardedEndpoint() {
         return forwardedEndpoint;
     }
 
-    public void setForwardedEndpoint(final String forwardedEndpoint) {
-        this.forwardedEndpoint = forwardedEndpoint;
-    }
-
-    @XmlElement
     public String getOriginalEndpoint() {
         return originalEndpoint;
     }
 
-    public void setOriginalEndpoint(final String originalEndpoint) {
-        this.originalEndpoint = originalEndpoint;
-    }
-
-    @XmlElement
     public Boolean getSimulateNetworkDelay() {
         return simulateNetworkDelay;
     }
 
-    public void setSimulateNetworkDelay(final boolean simulateNetworkDelay) {
-        this.simulateNetworkDelay = simulateNetworkDelay;
-    }
-
-    @XmlElement
     public Long getNetworkDelay() {
         return networkDelay;
     }
 
-    public void setNetworkDelay(final long networkDelay) {
-        this.networkDelay = networkDelay;
-    }
-
-    @XmlElement
     public Boolean getMockOnFailure() {
         return mockOnFailure;
     }
 
-    public void setMockOnFailure(final boolean mockOnFailure) {
-        this.mockOnFailure = mockOnFailure;
-    }
-
-    @XmlElement
     public SoapOperationIdentifyStrategy getIdentifyStrategy() {
         return identifyStrategy;
     }
 
-    public void setIdentifyStrategy(final SoapOperationIdentifyStrategy identifyStrategy) {
-        this.identifyStrategy = identifyStrategy;
-    }
-
-    @XmlElement
     public String getDefaultMockResponseId() {
         return defaultMockResponseId;
     }
 
-    public void setDefaultMockResponseId(final String defaultMockResponseId) {
-        this.defaultMockResponseId = defaultMockResponseId;
-    }
-
-    @XmlElement
     public Boolean getAutomaticForward() {
         return automaticForward;
-    }
-
-    public void setAutomaticForward(boolean automaticForward) {
-        this.automaticForward = automaticForward;
     }
 
     public static Builder builder() {
@@ -283,97 +189,97 @@ public class SoapOperationFile implements Saveable<String> {
         private Builder() {
         }
 
-        public Builder id(String id) {
+        public Builder id(final String id) {
             this.id = id;
             return this;
         }
 
-        public Builder name(String name) {
+        public Builder name(final String name) {
             this.name = name;
             return this;
         }
 
-        public Builder portId(String portId) {
+        public Builder portId(final String portId) {
             this.portId = portId;
             return this;
         }
 
-        public Builder responseStrategy(SoapResponseStrategy responseStrategy) {
+        public Builder responseStrategy(final SoapResponseStrategy responseStrategy) {
             this.responseStrategy = responseStrategy;
             return this;
         }
 
-        public Builder identifier(String identifier) {
+        public Builder identifier(final String identifier) {
             this.identifier = identifier;
             return this;
         }
 
-        public Builder operationIdentifier(SoapOperationIdentifierFile operationIdentifier) {
+        public Builder operationIdentifier(final SoapOperationIdentifierFile operationIdentifier) {
             this.operationIdentifier = operationIdentifier;
             return this;
         }
 
-        public Builder status(SoapOperationStatus status) {
+        public Builder status(final SoapOperationStatus status) {
             this.status = status;
             return this;
         }
 
-        public Builder httpMethod(HttpMethod httpMethod) {
+        public Builder httpMethod(final HttpMethod httpMethod) {
             this.httpMethod = httpMethod;
             return this;
         }
 
-        public Builder soapVersion(SoapVersion soapVersion) {
+        public Builder soapVersion(final SoapVersion soapVersion) {
             this.soapVersion = soapVersion;
             return this;
         }
 
-        public Builder defaultBody(String defaultBody) {
+        public Builder defaultBody(final String defaultBody) {
             this.defaultBody = defaultBody;
             return this;
         }
 
-        public Builder currentResponseSequenceIndex(Integer currentResponseSequenceIndex) {
+        public Builder currentResponseSequenceIndex(final Integer currentResponseSequenceIndex) {
             this.currentResponseSequenceIndex = currentResponseSequenceIndex;
             return this;
         }
 
-        public Builder forwardedEndpoint(String forwardedEndpoint) {
+        public Builder forwardedEndpoint(final String forwardedEndpoint) {
             this.forwardedEndpoint = forwardedEndpoint;
             return this;
         }
 
-        public Builder originalEndpoint(String originalEndpoint) {
+        public Builder originalEndpoint(final String originalEndpoint) {
             this.originalEndpoint = originalEndpoint;
             return this;
         }
 
-        public Builder defaultMockResponseId(String defaultMockResponseId) {
+        public Builder defaultMockResponseId(final String defaultMockResponseId) {
             this.defaultMockResponseId = defaultMockResponseId;
             return this;
         }
 
-        public Builder simulateNetworkDelay(Boolean simulateNetworkDelay) {
+        public Builder simulateNetworkDelay(final Boolean simulateNetworkDelay) {
             this.simulateNetworkDelay = simulateNetworkDelay;
             return this;
         }
 
-        public Builder networkDelay(Long networkDelay) {
+        public Builder networkDelay(final Long networkDelay) {
             this.networkDelay = networkDelay;
             return this;
         }
 
-        public Builder mockOnFailure(Boolean mockOnFailure) {
+        public Builder mockOnFailure(final Boolean mockOnFailure) {
             this.mockOnFailure = mockOnFailure;
             return this;
         }
 
-        public Builder identifyStrategy(SoapOperationIdentifyStrategy identifyStrategy) {
+        public Builder identifyStrategy(final SoapOperationIdentifyStrategy identifyStrategy) {
             this.identifyStrategy = identifyStrategy;
             return this;
         }
 
-        public Builder automaticForward(Boolean automaticForward) {
+        public Builder automaticForward(final Boolean automaticForward) {
             this.automaticForward = automaticForward;
             return this;
         }
