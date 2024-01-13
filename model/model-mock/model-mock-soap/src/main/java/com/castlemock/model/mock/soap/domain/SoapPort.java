@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author Karl Dahlgren
@@ -71,10 +71,8 @@ public class SoapPort {
         this.uri = Objects.requireNonNull(builder.uri);
         this.projectId = Objects.requireNonNull(builder.projectId);
         this.invokeAddress = builder.invokeAddress;
-        this.operations = Optional.ofNullable(builder.operations)
-                .orElseGet(CopyOnWriteArrayList::new);
-        this.statusCount = Optional.ofNullable(builder.statusCount)
-                .orElseGet(HashMap::new);
+        this.operations = Optional.ofNullable(builder.operations).orElseGet(List::of);
+        this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(Map::of);
     }
 
 
@@ -84,12 +82,16 @@ public class SoapPort {
 
 
     public List<SoapOperation> getOperations() {
-        return operations;
+        return Optional.ofNullable(operations)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
 
     public Map<SoapOperationStatus, Integer> getStatusCount() {
-        return statusCount;
+        return Optional.ofNullable(statusCount)
+                .map(Map::copyOf)
+                .orElseGet(Map::of);
     }
 
 
@@ -120,8 +122,15 @@ public class SoapPort {
                 .invokeAddress(this.invokeAddress)
                 .name(this.name)
                 .uri(this.uri)
-                .operations(this.operations)
-                .statusCount(this.statusCount);
+                .operations(Optional.ofNullable(this.operations)
+                        .map(operations -> operations.stream()
+                                .map(SoapOperation::toBuilder)
+                                .map(SoapOperation.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
+                .statusCount(Optional.ofNullable(this.statusCount)
+                        .map(HashMap::new)
+                        .orElse(null));
     }
 
     @Override
@@ -157,8 +166,8 @@ public class SoapPort {
         private String uri;
         private String projectId;
         private String invokeAddress;
-        private List<SoapOperation> operations = new CopyOnWriteArrayList<>();
-        private Map<SoapOperationStatus, Integer> statusCount = new HashMap<>();
+        private List<SoapOperation> operations;
+        private Map<SoapOperationStatus, Integer> statusCount;
 
         private Builder() {
         }

@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 @XmlRootElement
@@ -24,7 +25,9 @@ public class UpdateSoapPortStatusesRequest {
     }
 
     public Set<String> getPortIds() {
-        return portIds;
+        return Optional.of(portIds)
+                .map(Set::copyOf)
+                .orElseGet(Set::of);
     }
 
     public SoapOperationStatus getStatus() {

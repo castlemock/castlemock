@@ -61,10 +61,8 @@ public final class CreateSoapMockResponseInput implements Input {
         this.name = Objects.requireNonNull(builder.name,"name");
         this.status = Objects.requireNonNull(builder.status, "status");
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
-        this.httpHeaders = Optional.ofNullable(builder.httpHeaders)
-                .orElseGet(List::of);
-        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions)
-                .orElseGet(List::of);
+        this.httpHeaders = builder.httpHeaders;
+        this.xpathExpressions = builder.xpathExpressions;
         this.body = builder.body;
         this.usingExpressions = builder.usingExpressions;
     }
@@ -102,11 +100,15 @@ public final class CreateSoapMockResponseInput implements Input {
     }
 
     public List<HttpHeader> getHttpHeaders() {
-        return List.copyOf(httpHeaders);
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<SoapXPathExpression> getXpathExpressions() {
-        return List.copyOf(xpathExpressions);
+        return Optional.ofNullable(xpathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public static Builder builder(){

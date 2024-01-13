@@ -25,8 +25,6 @@ import com.castlemock.service.mock.rest.project.input.CreateRestMockResponseInpu
 import com.castlemock.service.mock.rest.project.output.CreateRestMockResponseOutput;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -48,13 +46,13 @@ public class CreateRestMockResponseService extends AbstractRestProjectService im
         final RestMockResponse mockResponse = RestMockResponse.builder()
                 .id(RandomStringUtils.random(6, true, true))
                 .body(input.getBody().orElse(""))
-                .contentEncodings(input.getContentEncodings().orElseGet(CopyOnWriteArrayList::new))
-                .headerQueries(input.getHeaderQueries().orElseGet(CopyOnWriteArrayList::new))
-                .httpHeaders(input.getHttpHeaders().orElseGet(CopyOnWriteArrayList::new))
-                .jsonPathExpressions(input.getJsonPathExpressions().orElseGet(CopyOnWriteArrayList::new))
-                .parameterQueries(input.getParameterQueries().orElseGet(CopyOnWriteArrayList::new))
+                .contentEncodings(input.getContentEncodings())
+                .headerQueries(input.getHeaderQueries())
+                .httpHeaders(input.getHttpHeaders())
+                .jsonPathExpressions(input.getJsonPathExpressions())
+                .parameterQueries(input.getParameterQueries())
                 .status(input.getStatus().orElse(RestMockResponseStatus.ENABLED))
-                .xpathExpressions(input.getXpathExpressions().orElseGet(CopyOnWriteArrayList::new))
+                .xpathExpressions(input.getXpathExpressions())
                 .httpStatusCode(input.getHttpStatusCode().orElse(200))
                 .methodId(input.getMethodId())
                 .name(input.getName())

@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -62,12 +61,12 @@ public class CreateRestMockResponseRequest {
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
         this.status = Objects.requireNonNull(builder.status, "status");
         this.usingExpressions = Objects.requireNonNull(builder.usingExpressions, "usingExpressions");
-        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(CopyOnWriteArrayList::new);
-        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(CopyOnWriteArrayList::new);
-        this.parameterQueries = Optional.ofNullable(builder.parameterQueries).orElseGet(CopyOnWriteArrayList::new);
-        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(CopyOnWriteArrayList::new);
-        this.jsonPathExpressions = Optional.ofNullable(builder.jsonPathExpressions).orElseGet(CopyOnWriteArrayList::new);
-        this.headerQueries = Optional.ofNullable(builder.headerQueries).orElseGet(CopyOnWriteArrayList::new);    }
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(List::of);
+        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(List::of);
+        this.parameterQueries = Optional.ofNullable(builder.parameterQueries).orElseGet(List::of);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(List::of);
+        this.jsonPathExpressions = Optional.ofNullable(builder.jsonPathExpressions).orElseGet(List::of);
+        this.headerQueries = Optional.ofNullable(builder.headerQueries).orElseGet(List::of);   }
     
     public String getName() {
         return name;
@@ -90,27 +89,39 @@ public class CreateRestMockResponseRequest {
     }
 
     public List<HttpHeader> getHttpHeaders() {
-        return httpHeaders;
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<HttpContentEncoding> getContentEncodings() {
-        return contentEncodings;
+        return Optional.ofNullable(contentEncodings)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<RestParameterQuery> getParameterQueries() {
-        return parameterQueries;
+        return Optional.ofNullable(parameterQueries)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<RestXPathExpression> getXpathExpressions() {
-        return xpathExpressions;
+        return Optional.ofNullable(xpathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<RestJsonPathExpression> getJsonPathExpressions() {
-        return jsonPathExpressions;
+        return Optional.ofNullable(jsonPathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<RestHeaderQuery> getHeaderQueries() {
-        return headerQueries;
+        return Optional.ofNullable(headerQueries)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @Override

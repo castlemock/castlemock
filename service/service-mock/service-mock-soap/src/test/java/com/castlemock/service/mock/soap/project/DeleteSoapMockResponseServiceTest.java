@@ -36,6 +36,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
+import java.util.List;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -58,14 +60,16 @@ public class DeleteSoapMockResponseServiceTest {
 
     @Test
     public void testProcess(){
-        final SoapProject soapProject = SoapProjectTestBuilder.builder().build();
-        final SoapPort soapPort = SoapPortTestBuilder.builder().build();
-        final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
         final SoapMockResponse soapMockResponse = SoapMockResponseTestBuilder.builder().build();
-
-        soapProject.getPorts().add(soapPort);
-        soapPort.getOperations().add(soapOperation);
-        soapOperation.getMockResponses().add(soapMockResponse);
+        final SoapOperation soapOperation = SoapOperationTestBuilder.builder()
+                .mockResponses(List.of(soapMockResponse))
+                .build();
+        final SoapPort soapPort = SoapPortTestBuilder.builder()
+                .operations(List.of(soapOperation))
+                .build();
+        final SoapProject soapProject = SoapProjectTestBuilder.builder()
+                .ports(List.of(soapPort))
+                .build();
 
         Mockito.when(mockResponseRepository.delete(Mockito.any())).thenReturn(soapMockResponse);
 

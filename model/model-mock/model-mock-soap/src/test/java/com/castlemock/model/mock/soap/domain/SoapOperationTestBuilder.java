@@ -2,7 +2,7 @@ package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.http.HttpMethod;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.List;
 
 public final class SoapOperationTestBuilder {
 
@@ -23,7 +23,7 @@ public final class SoapOperationTestBuilder {
                 .identifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE)
                 .invokeAddress("Invoke address")
                 .mockOnFailure(Boolean.FALSE)
-                .mockResponses(new CopyOnWriteArrayList<>())
+                .mockResponses(List.of())
                 .name("Soap operation name")
                 .networkDelay(1000L)
                 .operationIdentifier( SoapOperationIdentifierTestBuilder.builder().build())

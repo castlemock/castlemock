@@ -38,8 +38,8 @@ public class ValidateExpressionRequest {
     private final String responseBody;
 
     private ValidateExpressionRequest(final Builder builder) {
-        this.responseBody = Objects.requireNonNull(builder.responseBody);
-        this.requestBody = Objects.requireNonNull(builder.requestBody);
+        this.responseBody = Objects.requireNonNull(builder.responseBody, "responseBody");
+        this.requestBody = Objects.requireNonNull(builder.requestBody, "requestBody");
     }
 
     public String getRequestBody() {

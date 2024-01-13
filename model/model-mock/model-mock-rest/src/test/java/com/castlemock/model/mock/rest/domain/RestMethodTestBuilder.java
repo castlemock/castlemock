@@ -3,7 +3,6 @@ package com.castlemock.model.mock.rest.domain;
 import com.castlemock.model.core.http.HttpMethod;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class RestMethodTestBuilder {
 
@@ -25,7 +24,7 @@ public final class RestMethodTestBuilder {
                 .simulateNetworkDelay(Boolean.FALSE)
                 .networkDelay(0L)
                 .defaultMockResponseId("")
-                .mockResponses(new CopyOnWriteArrayList<>())
+                .mockResponses(List.of())
                 .uri("/")
                 .defaultResponseName("")
                 .automaticForward(Boolean.FALSE)

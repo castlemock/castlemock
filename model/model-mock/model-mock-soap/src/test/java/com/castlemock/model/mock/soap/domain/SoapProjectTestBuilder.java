@@ -2,7 +2,7 @@ package com.castlemock.model.mock.soap.domain;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.List;
 
 public final class SoapProjectTestBuilder {
 
@@ -16,8 +16,8 @@ public final class SoapProjectTestBuilder {
                 .description("Project description")
                 .id("SOAP PROJECT")
                 .name("Project name")
-                .ports(new CopyOnWriteArrayList<>())
-                .resources(new CopyOnWriteArrayList<>())
+                .ports(List.of())
+                .resources(List.of())
                 .statusCount(new HashMap<>())
                 .updated(new Date());
     }

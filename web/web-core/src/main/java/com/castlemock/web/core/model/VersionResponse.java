@@ -16,7 +16,7 @@ public class VersionResponse {
     private final String version;
 
     private VersionResponse(final Builder builder){
-        this.version = Objects.requireNonNull(builder.version);
+        this.version = Objects.requireNonNull(builder.version, "version");
     }
 
     public String getVersion() {

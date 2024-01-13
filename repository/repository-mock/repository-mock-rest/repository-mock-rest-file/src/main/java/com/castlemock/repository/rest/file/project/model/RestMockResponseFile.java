@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @XmlRootElement(name = "restMockResponse")
 @XmlSeeAlso(HttpHeaderFile.class)
@@ -34,17 +33,17 @@ public class RestMockResponseFile implements Saveable<String> {
     @Mapping("usingExpressions")
     private Boolean usingExpressions;
     @Mapping("httpHeaders")
-    private List<HttpHeaderFile> httpHeaders = new CopyOnWriteArrayList<>();
+    private List<HttpHeaderFile> httpHeaders;
     @Mapping("contentEncodings")
-    private List<HttpContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
+    private List<HttpContentEncoding> contentEncodings;
     @Mapping("parameterQueries")
-    private List<RestParameterQueryFile> parameterQueries = new CopyOnWriteArrayList<>();
+    private List<RestParameterQueryFile> parameterQueries;
     @Mapping("xpathExpressions")
-    private List<RestXPathExpressionFile> xpathExpressions = new CopyOnWriteArrayList<>();
+    private List<RestXPathExpressionFile> xpathExpressions;
     @Mapping("jsonPathExpressions")
-    private List<RestJsonPathExpressionFile> jsonPathExpressions = new CopyOnWriteArrayList<>();
+    private List<RestJsonPathExpressionFile> jsonPathExpressions;
     @Mapping("headerQueries")
-    private List<RestHeaderQueryFile> headerQueries = new CopyOnWriteArrayList<>();
+    private List<RestHeaderQueryFile> headerQueries;
 
     private RestMockResponseFile() {
 

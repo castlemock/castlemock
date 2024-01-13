@@ -16,9 +16,6 @@
 
 package com.castlemock.service.mock.soap.project.converter;
 
-import com.castlemock.model.core.utility.IdUtility;
-import com.castlemock.model.mock.soap.domain.SoapMockResponse;
-import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapPort;
 import com.castlemock.service.mock.soap.project.converter.types.Binding;
 import com.castlemock.service.mock.soap.project.converter.types.Message;
@@ -33,7 +30,6 @@ import com.castlemock.service.mock.soap.project.converter.types.WsdlServiceParse
 import org.w3c.dom.Document;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,9 +40,6 @@ public final class DocumentConverter {
     private static final WsdlServiceParser SERVICE_PARSER = new WsdlServiceParser();
     private static final WsdlPortTypeParser PORT_TYPE_PARSER = new WsdlPortTypeParser();
     private static final WsdlNamespaceParser NAMESPACE_PARSER = new WsdlNamespaceParser();
-
-    private static final String AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME = "Auto-generated mocked response";
-    private static final Integer DEFAULT_HTTP_STATUS_CODE = 200;
 
     private DocumentConverter(){
 
@@ -73,32 +66,14 @@ public final class DocumentConverter {
                 .map(Service::getPorts)
                 .flatMap(Collection::stream)
                 .map(servicePort -> ServicePortConverter
-                        .toSoapPort(servicePort, projectId, bindings, portTypes, messages, namespaces))
+                        .toSoapPort(servicePort, projectId, bindings, portTypes, messages, namespaces, generateResponse))
                 .collect(Collectors.toSet());
 
-        if(generateResponse){
-            ports.stream()
-                .map(SoapPort::getOperations)
-                .flatMap(List::stream)
-                .forEach(operation -> operation.getMockResponses()
-                        .add(createSoapMockResponse(operation.getDefaultBody()
-                                .orElse(null), operation.getId())));
-        }
+
 
         return ports;
     }
 
-    private static SoapMockResponse createSoapMockResponse(final String defaultBody,
-                                                           final String operationId){
-        return SoapMockResponse.builder()
-                .id(IdUtility.generateId())
-                .operationId(operationId)
-                .body(defaultBody)
-                .status(SoapMockResponseStatus.ENABLED)
-                .name(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME)
-                .httpStatusCode(DEFAULT_HTTP_STATUS_CODE)
-                .usingExpressions(false)
-                .build();
-    }
+
 
 }

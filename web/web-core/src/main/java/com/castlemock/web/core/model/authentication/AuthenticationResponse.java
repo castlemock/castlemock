@@ -35,9 +35,9 @@ public class AuthenticationResponse {
     private final Role role;
 
     private AuthenticationResponse(final Builder builder) {
-        this.token = Objects.requireNonNull(builder.token);
-        this.username = Objects.requireNonNull(builder.username);
-        this.role = Objects.requireNonNull(builder.role);
+        this.token = Objects.requireNonNull(builder.token, "token");
+        this.username = Objects.requireNonNull(builder.username, "username");
+        this.role = Objects.requireNonNull(builder.role, "role");
     }
 
     public String getToken() {

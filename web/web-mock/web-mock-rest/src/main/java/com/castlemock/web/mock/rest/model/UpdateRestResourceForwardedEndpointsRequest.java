@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 @XmlRootElement
@@ -19,7 +20,9 @@ public class UpdateRestResourceForwardedEndpointsRequest {
     }
 
     public Set<String> getResourceIds() {
-        return Set.copyOf(resourceIds);
+        return Optional.of(resourceIds)
+                .map(Set::copyOf)
+                .orElseGet(Set::of);
     }
 
     public String getForwardedEndpoint() {

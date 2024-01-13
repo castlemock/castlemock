@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -64,10 +65,10 @@ public class SoapExportContainer extends ExportContainer {
 
     private SoapExportContainer(final Builder builder) {
         this.project = Objects.requireNonNull(builder.project, "project");
-        this.ports = Objects.requireNonNull(builder.ports, "ports");
-        this.resources = Objects.requireNonNull(builder.resources, "resources");
-        this.operations = Objects.requireNonNull(builder.operations, "operations");
-        this.mockResponses = Objects.requireNonNull(builder.mockResponses, "mockResponses");
+        this.ports = Optional.ofNullable(builder.ports).orElseGet(List::of);
+        this.resources = Optional.ofNullable(builder.resources).orElseGet(List::of);
+        this.operations = Optional.ofNullable(builder.operations).orElseGet(List::of);
+        this.mockResponses = Optional.ofNullable(builder.mockResponses).orElseGet(List::of);
     }
 
     public SoapProject getProject() {
@@ -76,22 +77,30 @@ public class SoapExportContainer extends ExportContainer {
 
 
     public List<SoapPort> getPorts() {
-        return ports;
+        return Optional.ofNullable(ports)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
 
     public List<SoapResource> getResources() {
-        return resources;
+        return Optional.ofNullable(resources)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
 
     public List<SoapOperation> getOperations() {
-        return operations;
+        return Optional.ofNullable(operations)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
 
     public List<SoapMockResponse> getMockResponses() {
-        return mockResponses;
+        return Optional.ofNullable(mockResponses)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @Override

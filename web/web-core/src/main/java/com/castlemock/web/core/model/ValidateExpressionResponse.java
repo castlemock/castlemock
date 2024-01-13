@@ -37,7 +37,7 @@ public class ValidateExpressionResponse {
     private final String output;
 
     private ValidateExpressionResponse(final Builder builder) {
-        this.output = Objects.requireNonNull(builder.output);
+        this.output = Objects.requireNonNull(builder.output, "output");
     }
 
     public String getOutput() {

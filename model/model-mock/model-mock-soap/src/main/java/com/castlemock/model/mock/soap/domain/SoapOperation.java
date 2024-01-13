@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Karl Dahlgren
@@ -136,8 +137,7 @@ public class SoapOperation {
         this.defaultResponseName = builder.defaultResponseName;
         this.mockOnFailure = builder.mockOnFailure;
         this.automaticForward = builder.automaticForward;
-        this.mockResponses = Optional.ofNullable(builder.mockResponses)
-                .orElseGet(List::of);
+        this.mockResponses = Optional.ofNullable(builder.mockResponses).orElseGet(List::of);
     }
 
     public String getId() {
@@ -170,7 +170,9 @@ public class SoapOperation {
 
 
     public List<SoapMockResponse> getMockResponses() {
-        return mockResponses;
+        return Optional.ofNullable(mockResponses)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public Optional<String> getInvokeAddress() {
@@ -306,7 +308,12 @@ public class SoapOperation {
                 .invokeAddress(invokeAddress)
                 .soapVersion(soapVersion)
                 .forwardedEndpoint(forwardedEndpoint)
-                .mockResponses(mockResponses)
+                .mockResponses(Optional.ofNullable(mockResponses)
+                        .map(responses -> responses.stream()
+                                .map(SoapMockResponse::toBuilder)
+                                .map(SoapMockResponse.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
                 .originalEndpoint(originalEndpoint)
                 .status(status)
                 .httpMethod(httpMethod)

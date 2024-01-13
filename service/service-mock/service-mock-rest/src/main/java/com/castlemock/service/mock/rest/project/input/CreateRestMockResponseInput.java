@@ -111,28 +111,40 @@ public final class CreateRestMockResponseInput implements Input {
         return Optional.ofNullable(usingExpressions);
     }
 
-    public Optional<List<HttpHeader>> getHttpHeaders() {
-        return Optional.ofNullable(httpHeaders);
+    public List<HttpHeader> getHttpHeaders() {
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
-    public Optional<List<HttpContentEncoding>> getContentEncodings() {
-        return Optional.ofNullable(contentEncodings);
+    public List<HttpContentEncoding> getContentEncodings() {
+        return Optional.ofNullable(contentEncodings)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
-    public Optional<List<RestParameterQuery>> getParameterQueries() {
-        return Optional.ofNullable(parameterQueries);
+    public List<RestParameterQuery> getParameterQueries() {
+        return Optional.ofNullable(parameterQueries)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
-    public Optional<List<RestXPathExpression>> getXpathExpressions() {
-        return Optional.ofNullable(xpathExpressions);
+    public List<RestXPathExpression> getXpathExpressions() {
+        return Optional.ofNullable(xpathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
-    public Optional<List<RestJsonPathExpression>> getJsonPathExpressions() {
-        return Optional.ofNullable(jsonPathExpressions);
+    public List<RestJsonPathExpression> getJsonPathExpressions() {
+        return Optional.ofNullable(jsonPathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
-    public Optional<List<RestHeaderQuery>> getHeaderQueries() {
-        return Optional.ofNullable(headerQueries);
+    public List<RestHeaderQuery> getHeaderQueries() {
+        return Optional.ofNullable(headerQueries)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public static Builder builder(){

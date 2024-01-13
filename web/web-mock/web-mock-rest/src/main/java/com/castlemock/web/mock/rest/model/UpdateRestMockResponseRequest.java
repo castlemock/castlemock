@@ -60,12 +60,12 @@ public class UpdateRestMockResponseRequest {
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
         this.status = Objects.requireNonNull(builder.status, "status");
         this.usingExpressions = builder.usingExpressions;
-        this.httpHeaders = builder.httpHeaders;
-        this.contentEncodings = builder.contentEncodings;
-        this.parameterQueries = builder.parameterQueries;
-        this.xpathExpressions = builder.xpathExpressions;
-        this.jsonPathExpressions = builder.jsonPathExpressions;
-        this.headerQueries = builder.headerQueries;
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(List::of);
+        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(List::of);
+        this.parameterQueries = Optional.ofNullable(builder.parameterQueries).orElseGet(List::of);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(List::of);
+        this.jsonPathExpressions = Optional.ofNullable(builder.jsonPathExpressions).orElseGet(List::of);
+        this.headerQueries =Optional.ofNullable(builder.headerQueries).orElseGet(List::of);
     }
 
     @XmlElement
@@ -96,37 +96,49 @@ public class UpdateRestMockResponseRequest {
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
-        return Optional.ofNullable(httpHeaders).orElseGet(List::of);
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "contentEncodings")
     @XmlElement(name = "contentEncoding")
     public List<HttpContentEncoding> getContentEncodings() {
-        return Optional.ofNullable(contentEncodings).orElseGet(List::of);
+        return Optional.ofNullable(contentEncodings)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "parameterQueries")
     @XmlElement(name = "parameterQuery")
     public List<RestParameterQuery> getParameterQueries() {
-        return Optional.ofNullable(parameterQueries).orElseGet(List::of);
+        return Optional.ofNullable(parameterQueries)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "xpathExpressions")
     @XmlElement(name = "xpathExpression")
     public List<RestXPathExpression> getXpathExpressions() {
-        return Optional.ofNullable(xpathExpressions).orElseGet(List::of);
+        return Optional.ofNullable(xpathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "jsonPathExpressions")
     @XmlElement(name = "jsonPathExpression")
     public List<RestJsonPathExpression> getJsonPathExpressions() {
-        return Optional.ofNullable(jsonPathExpressions).orElseGet(List::of);
+        return Optional.ofNullable(jsonPathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "headerQueries")
     @XmlElement(name = "headerQuery")
     public List<RestHeaderQuery> getHeaderQueries() {
-        return Optional.ofNullable(headerQueries).orElseGet(List::of);
+        return Optional.ofNullable(headerQueries)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @Override

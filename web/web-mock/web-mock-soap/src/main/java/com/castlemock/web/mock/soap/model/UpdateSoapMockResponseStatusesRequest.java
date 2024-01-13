@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 @XmlRootElement
@@ -24,7 +25,9 @@ public class UpdateSoapMockResponseStatusesRequest {
     }
 
     public Set<String> getMockResponseIds() {
-        return mockResponseIds;
+        return Optional.of(mockResponseIds)
+                .map(Set::copyOf)
+                .orElseGet(Set::of);
     }
 
     public SoapMockResponseStatus getStatus() {

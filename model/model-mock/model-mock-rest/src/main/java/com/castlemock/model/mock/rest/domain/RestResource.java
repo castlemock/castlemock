@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author Karl Dahlgren
@@ -72,10 +72,8 @@ public class RestResource {
         this.uri = Objects.requireNonNull(builder.uri, "uri");
         this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
         this.invokeAddress = builder.invokeAddress;
-        this.methods = Optional.ofNullable(builder.methods)
-                .orElseGet(List::of);
-        this.statusCount = Optional.ofNullable(builder.statusCount)
-                .orElseGet(Map::of);
+        this.methods = Optional.ofNullable(builder.methods).orElseGet(List::of);
+        this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(Map::of);
     }
 
 
@@ -96,7 +94,9 @@ public class RestResource {
     }
 
     public List<RestMethod> getMethods() {
-        return List.copyOf(methods);
+        return  Optional.ofNullable(methods)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public Optional<String> getInvokeAddress() {
@@ -105,7 +105,9 @@ public class RestResource {
 
 
     public Map<RestMethodStatus, Integer> getStatusCount() {
-        return Map.copyOf(this.statusCount);
+        return  Optional.ofNullable(statusCount)
+                .map(Map::copyOf)
+                .orElseGet(Map::of);
     }
 
     @Override
@@ -151,8 +153,15 @@ public class RestResource {
                 .name(name)
                 .uri(uri)
                 .invokeAddress(invokeAddress)
-                .statusCount(statusCount)
-                .methods(methods);
+                .statusCount(Optional.ofNullable(statusCount)
+                        .map(HashMap::new)
+                        .orElse(null))
+                .methods(Optional.ofNullable(methods)
+                        .map(methods -> methods.stream()
+                                .map(RestMethod::toBuilder)
+                                .map(RestMethod.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null));
     }
 
     @JsonPOJOBuilder(withPrefix = "")
@@ -162,8 +171,8 @@ public class RestResource {
         private String uri;
         private String applicationId;
         private String invokeAddress;
-        private List<RestMethod> methods = new CopyOnWriteArrayList<>();
-        private Map<RestMethodStatus, Integer> statusCount = new HashMap<>();
+        private List<RestMethod> methods;
+        private Map<RestMethodStatus, Integer> statusCount;
 
         private Builder() {
         }

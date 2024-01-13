@@ -2,7 +2,6 @@ package com.castlemock.web.core.model.project;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.google.common.base.Strings;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -22,7 +21,7 @@ public class CreateProjectRequest {
 
     private CreateProjectRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name);
-        this.description = Strings.emptyToNull(builder.description);
+        this.description = builder.description;
         this.projectType = Objects.requireNonNull(builder.projectType);
     }
 

@@ -55,8 +55,8 @@ public class UpdateSoapMockResponseRequest {
         this.status = Objects.requireNonNull(builder.status, "status");
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
         this.usingExpressions = builder.usingExpressions;
-        this.httpHeaders = builder.httpHeaders;
-        this.xpathExpressions = builder.xpathExpressions;
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(List::of);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(List::of);
     }
 
     @XmlElement
@@ -87,13 +87,17 @@ public class UpdateSoapMockResponseRequest {
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
     public List<HttpHeader> getHttpHeaders() {
-        return Optional.ofNullable(httpHeaders).orElseGet(List::of);
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @XmlElementWrapper(name = "xpathExpressions")
     @XmlElement(name = "xpathExpression")
     public List<SoapXPathExpression> getXpathExpressions() {
-        return Optional.ofNullable(xpathExpressions).orElseGet(List::of);
+        return Optional.ofNullable(xpathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
 

@@ -24,12 +24,12 @@ public class CreateUserRequest {
     private final Role role;
 
     private CreateUserRequest(final Builder builder){
-        this.username = Objects.requireNonNull(builder.username);
-        this.password = Objects.requireNonNull(builder.password);
+        this.username = Objects.requireNonNull(builder.username, "username");
+        this.password = Objects.requireNonNull(builder.password, "password");
         this.email = builder.email;
         this.fullName = builder.fullName;
-        this.status = Objects.requireNonNull(builder.status);
-        this.role = Objects.requireNonNull(builder.role);
+        this.status = Objects.requireNonNull(builder.status, "status");
+        this.role = Objects.requireNonNull(builder.role, "role");
     }
 
 

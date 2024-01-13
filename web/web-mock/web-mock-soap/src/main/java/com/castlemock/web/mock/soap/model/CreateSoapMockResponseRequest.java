@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -51,8 +52,8 @@ public class CreateSoapMockResponseRequest {
         this.body = builder.body;
         this.httpStatusCode = builder.httpStatusCode;
         this.usingExpressions = builder.usingExpressions;
-        this.httpHeaders = builder.httpHeaders;
-        this.xpathExpressions = builder.xpathExpressions;
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(List::of);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(List::of);
     }
 
     public String getName() {
@@ -76,11 +77,15 @@ public class CreateSoapMockResponseRequest {
     }
 
     public List<HttpHeader> getHttpHeaders() {
-        return httpHeaders;
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<SoapXPathExpression> getXpathExpressions() {
-        return xpathExpressions;
+        return Optional.ofNullable(xpathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public static Builder builder() {

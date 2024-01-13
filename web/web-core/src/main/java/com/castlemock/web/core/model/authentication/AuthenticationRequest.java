@@ -33,8 +33,8 @@ public class AuthenticationRequest {
     private final String password;
 
     private AuthenticationRequest(final Builder builder){
-        this.username = Objects.requireNonNull(builder.username);
-        this.password = Objects.requireNonNull(builder.password);
+        this.username = Objects.requireNonNull(builder.username, "username");
+        this.password = Objects.requireNonNull(builder.password, "password");
     }
 
     public String getUsername() {

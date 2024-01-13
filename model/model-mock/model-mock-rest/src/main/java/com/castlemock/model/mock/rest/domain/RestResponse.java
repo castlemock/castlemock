@@ -72,10 +72,8 @@ public class RestResponse {
         this.body = builder.body;
         this.contentType = builder.contentType;
         this.mockResponseName = builder.mockResponseName;
-        this.contentEncodings = Optional.ofNullable(builder.contentEncodings)
-                .orElseGet(List::of);
-        this.httpHeaders = Optional.ofNullable(builder.httpHeaders)
-                .orElseGet(List::of);
+        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(List::of);
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(List::of);
 
     }
 
@@ -96,11 +94,15 @@ public class RestResponse {
     }
 
     public List<HttpHeader> getHttpHeaders() {
-        return List.copyOf(httpHeaders);
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<HttpContentEncoding> getContentEncodings() {
-        return List.copyOf(contentEncodings);
+        return Optional.ofNullable(contentEncodings)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @Override

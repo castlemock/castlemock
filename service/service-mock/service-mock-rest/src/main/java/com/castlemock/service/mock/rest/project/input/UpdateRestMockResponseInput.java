@@ -29,7 +29,6 @@ import com.castlemock.model.mock.rest.domain.RestXPathExpression;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Karl Dahlgren
@@ -173,12 +172,12 @@ public final class UpdateRestMockResponseInput implements Input {
         private Integer httpStatusCode;
         private RestMockResponseStatus status;
         private Boolean usingExpressions;
-        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<>();
-        private List<HttpContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
-        private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<>();
-        private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<>();
-        private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<>();
-        private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<>();
+        private List<HttpHeader> httpHeaders;
+        private List<HttpContentEncoding> contentEncodings;
+        private List<RestParameterQuery> parameterQueries;
+        private List<RestXPathExpression> xpathExpressions;
+        private List<RestJsonPathExpression> jsonPathExpressions;
+        private List<RestHeaderQuery> headerQueries;
 
         public Builder restProjectId(final String restProjectId){
             this.restProjectId = restProjectId;

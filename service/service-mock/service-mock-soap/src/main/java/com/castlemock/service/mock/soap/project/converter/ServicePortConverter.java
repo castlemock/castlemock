@@ -18,6 +18,8 @@ package com.castlemock.service.mock.soap.project.converter;
 
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.utility.IdUtility;
+import com.castlemock.model.mock.soap.domain.SoapMockResponse;
+import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifyStrategy;
@@ -36,7 +38,6 @@ import com.castlemock.service.mock.soap.project.converter.types.PortTypeOperatio
 import com.castlemock.service.mock.soap.project.converter.types.ServicePort;
 import com.castlemock.service.mock.soap.project.converter.types.ServicePortAddress;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -45,6 +46,8 @@ import java.util.stream.Collectors;
 public final class ServicePortConverter {
 
     private static final Integer DEFAULT_RESPONSE_SEQUENCE_INDEX = 0;
+    private static final String AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME = "Auto-generated mocked response";
+    private static final Integer DEFAULT_HTTP_STATUS_CODE = 200;
 
     private ServicePortConverter(){
 
@@ -55,7 +58,8 @@ public final class ServicePortConverter {
                                       final Set<Binding> bindings,
                                       final Set<PortType> portTypes,
                                       final Set<Message> messages,
-                                      final Set<Namespace> namespaces){
+                                      final Set<Namespace> namespaces,
+                                      final boolean generateResponse){
         final Binding binding = bindings.stream()
                 .filter(tmp -> servicePort.getBinding().getLocalName().equals(tmp.getName()))
                 .findFirst()
@@ -67,8 +71,10 @@ public final class ServicePortConverter {
                 .orElseThrow(() -> new IllegalArgumentException("Unable to find the port type"));
 
         final String portId = IdUtility.generateId();
-        final List<SoapOperation> operations = binding.getOperations().stream()
-                .map(bindingOperation -> toSoapOperation(bindingOperation,portId, portType, messages, namespaces, servicePort.getAddress()))
+        final List<SoapOperation> operations = binding.getOperations()
+                .stream()
+                .map(bindingOperation -> toSoapOperation(bindingOperation,portId, portType,
+                        messages, namespaces, servicePort.getAddress(), generateResponse))
                 .collect(Collectors.toList());
 
         return SoapPort.builder()
@@ -86,7 +92,8 @@ public final class ServicePortConverter {
                                                  final PortType portType,
                                                  final Set<Message> messages,
                                                  final Set<Namespace> namespaces,
-                                                 final ServicePortAddress address){
+                                                 final ServicePortAddress address,
+                                                 final boolean generateResponse){
         final PortTypeOperation portTypeOperation = portType.getOperations().stream()
                 .filter(p -> bindingOperation.getName().equals(p.getName()))
                 .findFirst()
@@ -116,8 +123,14 @@ public final class ServicePortConverter {
                 BindingOperationConverter.toSoapOperationIdentifierOutput(bindingOperation,
                         outputMessage.orElse(null), namespaces);
 
+        final String defaultBody = SoapOperationIdentifierConverter.toDefaultBody(operationResponseIdentifier);
+
+        final String operationId = IdUtility.generateId();
+        final List<SoapMockResponse> mockResponses = generateResponse ?
+                List.of(createSoapMockResponse(defaultBody, operationId)) : List.of();
+
         return SoapOperation.builder()
-                .id(IdUtility.generateId())
+                .id(operationId)
                 .portId(portId)
                 .identifier(bindingOperation.getName())
                 .operationIdentifier(operationRequestIdentifier)
@@ -128,13 +141,26 @@ public final class ServicePortConverter {
                 .forwardedEndpoint(address.getLocation())
                 .originalEndpoint(address.getLocation())
                 .soapVersion(address.getVersion())
-                .mockResponses(new ArrayList<>())
-                .defaultBody(SoapOperationIdentifierConverter.toDefaultBody(operationResponseIdentifier))
+                .mockResponses(mockResponses)
+                .defaultBody(defaultBody)
                 .currentResponseSequenceIndex(DEFAULT_RESPONSE_SEQUENCE_INDEX)
                 .identifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE)
                 .simulateNetworkDelay(false)
                 .mockOnFailure(false)
                 .automaticForward(false)
+                .build();
+    }
+
+    private static SoapMockResponse createSoapMockResponse(final String defaultBody,
+                                                           final String operationId){
+        return SoapMockResponse.builder()
+                .id(IdUtility.generateId())
+                .operationId(operationId)
+                .body(defaultBody)
+                .status(SoapMockResponseStatus.ENABLED)
+                .name(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME)
+                .httpStatusCode(DEFAULT_HTTP_STATUS_CODE)
+                .usingExpressions(false)
                 .build();
     }
 

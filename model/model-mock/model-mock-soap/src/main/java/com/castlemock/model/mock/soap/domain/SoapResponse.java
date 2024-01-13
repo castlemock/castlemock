@@ -64,8 +64,8 @@ public class SoapResponse {
     private SoapResponse(final Builder builder){
         this.body = Objects.requireNonNull(builder.body, "body");
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
-        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders, "httpHeaders");
-        this.contentEncodings = Objects.requireNonNull(builder.contentEncodings, "contentEncodings");
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(List::of);
+        this.contentEncodings = builder.contentEncodings;
         this.contentType = builder.contentType;
         this.mockResponseName = builder.mockResponseName;
     }
@@ -87,11 +87,15 @@ public class SoapResponse {
     }
 
     public List<HttpHeader> getHttpHeaders() {
-        return httpHeaders;
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<HttpContentEncoding> getContentEncodings() {
-        return contentEncodings;
+        return Optional.ofNullable(contentEncodings)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public static Builder builder() {

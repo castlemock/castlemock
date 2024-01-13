@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The configuration group DTO is a DTO (Data transfer object) class for the configuration group class. The
@@ -54,7 +55,7 @@ public class ConfigurationGroup {
     private ConfigurationGroup(final Builder builder){
         this.id = Objects.requireNonNull(builder.id, "id");
         this.name = Objects.requireNonNull(builder.name, "name");
-        this.configurations = Objects.requireNonNull(builder.configurations, "configurations");
+        this.configurations = Optional.ofNullable(builder.configurations).orElseGet(List::of);
     }
 
     /**
@@ -79,7 +80,9 @@ public class ConfigurationGroup {
      * @return Configurations that belongs to the configuration group
      */
     public List<Configuration> getConfigurations() {
-        return configurations;
+        return Optional.ofNullable(configurations)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
 

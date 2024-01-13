@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -78,7 +79,7 @@ public class SoapRequest {
         this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
         this.operationName = builder.operationName;
         this.soapVersion = Objects.requireNonNull(builder.soapVersion, "soapVersion");
-        this.httpHeaders = Objects.requireNonNull(builder.httpHeaders, "httpHeaders");
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(List::of);
         this.operationIdentifier = Objects.requireNonNull(builder.operationIdentifier, "operationIdentifier");
     }
 
@@ -116,7 +117,9 @@ public class SoapRequest {
     }
 
     public List<HttpHeader> getHttpHeaders() {
-        return httpHeaders;
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public static Builder builder() {

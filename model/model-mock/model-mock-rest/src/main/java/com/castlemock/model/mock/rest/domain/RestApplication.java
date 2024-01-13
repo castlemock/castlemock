@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author Karl Dahlgren
@@ -61,10 +61,8 @@ public class RestApplication {
         this.id = Objects.requireNonNull(builder.id, "id");
         this.name = Objects.requireNonNull(builder.name, "name");
         this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
-        this.resources = Optional.ofNullable(builder.resources)
-                .orElseGet(List::of);
-        this.statusCount = Optional.ofNullable(builder.statusCount)
-                .orElseGet(Map::of);
+        this.resources = Optional.ofNullable(builder.resources).orElseGet(List::of);
+        this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(Map::of);
     }
 
     public String getId() {
@@ -80,11 +78,15 @@ public class RestApplication {
     }
 
     public List<RestResource> getResources() {
-        return List.copyOf(resources);
+        return Optional.ofNullable(resources)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public Map<RestMethodStatus, Integer> getStatusCount() {
-        return Map.copyOf(statusCount);
+        return Optional.ofNullable(statusCount)
+                .map(Map::copyOf)
+                .orElseGet(Map::of);
     }
 
     @Override
@@ -124,8 +126,15 @@ public class RestApplication {
                 .id(this.id)
                 .name(this.name)
                 .projectId(this.projectId)
-                .resources(this.resources)
-                .statusCount(this.statusCount);
+                .resources(Optional.ofNullable(this.resources)
+                        .map(resources -> resources.stream()
+                                .map(RestResource::toBuilder)
+                                .map(RestResource.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
+                .statusCount(Optional.ofNullable(this.statusCount)
+                        .map(HashMap::new)
+                        .orElse(null));
     }
 
     @JsonPOJOBuilder(withPrefix = "")
@@ -133,8 +142,8 @@ public class RestApplication {
         private String id;
         private String name;
         private String projectId;
-        private List<RestResource> resources = new CopyOnWriteArrayList<>();
-        private Map<RestMethodStatus, Integer> statusCount = new HashMap<>();
+        private List<RestResource> resources;
+        private Map<RestMethodStatus, Integer> statusCount;
 
         private Builder() {
         }

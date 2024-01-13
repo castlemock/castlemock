@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 @XmlRootElement
@@ -20,7 +21,9 @@ public class UpdateRestMethodForwardedEndpointsRequest {
     }
 
     public Set<String> getMethodIds() {
-        return methodIds;
+        return Optional.of(methodIds)
+                .map(Set::copyOf)
+                .orElseGet(Set::of);
     }
 
     public String getForwardedEndpoint() {

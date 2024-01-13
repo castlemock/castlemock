@@ -18,7 +18,7 @@ public class UpdateProjectRequest {
     private final String description;
 
     private UpdateProjectRequest(final Builder builder){
-        this.name = Objects.requireNonNull(builder.name);
+        this.name = Objects.requireNonNull(builder.name, "name");
         this.description = builder.description;
     }
 

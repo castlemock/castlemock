@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * The DTO class for the Project class
@@ -55,9 +55,9 @@ public class SoapProject extends Project {
 
     private SoapProject(final Builder builder){
         super(builder);
-        this.ports = Optional.ofNullable(builder.ports).orElseGet(CopyOnWriteArrayList::new);
-        this.resources = Optional.ofNullable(builder.resources).orElseGet(CopyOnWriteArrayList::new);
-        this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(HashMap::new);
+        this.ports = Optional.ofNullable(builder.ports).orElseGet(List::of);
+        this.resources = Optional.ofNullable(builder.resources).orElseGet(List::of);
+        this.statusCount = Optional.ofNullable(builder.statusCount).orElseGet(Map::of);
     }
 
     /**
@@ -65,7 +65,9 @@ public class SoapProject extends Project {
      * @return The SOAP ports for the SOAP project
      */
     public List<SoapPort> getPorts() {
-        return ports;
+        return Optional.ofNullable(ports)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     /**
@@ -73,7 +75,9 @@ public class SoapProject extends Project {
      * @return The SOAP resources for the SOAP resources
      */
     public List<SoapResource> getResources() {
-        return resources;
+        return Optional.ofNullable(resources)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     /**
@@ -82,7 +86,9 @@ public class SoapProject extends Project {
      */
 
     public Map<SoapOperationStatus, Integer> getStatusCount() {
-        return statusCount;
+        return Optional.ofNullable(statusCount)
+                .map(Map::copyOf)
+                .orElseGet(Map::of);
     }
 
     public static Builder builder() {
@@ -96,17 +102,29 @@ public class SoapProject extends Project {
                 .created(created)
                 .updated(updated)
                 .description(description)
-                .ports(ports)
-                .resources(resources)
-                .statusCount(statusCount);
+                .ports(Optional.ofNullable(ports)
+                        .map(ports -> ports.stream()
+                                .map(SoapPort::toBuilder)
+                                .map(SoapPort.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
+                .resources(Optional.ofNullable(resources)
+                        .map(ports -> ports.stream()
+                                .map(SoapResource::toBuilder)
+                                .map(SoapResource.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
+                .statusCount(Optional.ofNullable(statusCount)
+                        .map(HashMap::new)
+                        .orElse(null));
     }
 
     @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder extends Project.Builder<Builder> {
 
-        private List<SoapPort> ports = new CopyOnWriteArrayList<>();
-        private List<SoapResource> resources = new CopyOnWriteArrayList<>();
-        private Map<SoapOperationStatus, Integer> statusCount = new HashMap<>();
+        private List<SoapPort> ports;
+        private List<SoapResource> resources;
+        private Map<SoapOperationStatus, Integer> statusCount;
 
         private Builder() {
         }

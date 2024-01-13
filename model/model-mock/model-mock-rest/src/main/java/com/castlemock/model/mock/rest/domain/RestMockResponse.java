@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
@@ -98,18 +97,12 @@ public class RestMockResponse {
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
         this.usingExpressions = Objects.requireNonNull(builder.usingExpressions, "usingExpressions");
         this.body = builder.body;
-        this.httpHeaders = Optional.ofNullable(builder.httpHeaders)
-                .orElseGet(List::of);
-        this.contentEncodings = Optional.ofNullable(builder.contentEncodings)
-                .orElseGet(List::of);
-        this.parameterQueries = Optional.ofNullable(builder.parameterQueries)
-                .orElseGet(List::of);
-        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions)
-                .orElseGet(List::of);
-        this.jsonPathExpressions = Optional.ofNullable(builder.jsonPathExpressions)
-                .orElseGet(List::of);
-        this.headerQueries = Optional.ofNullable(builder.headerQueries)
-                .orElseGet(List::of);
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(List::of);
+        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(List::of);
+        this.parameterQueries = Optional.ofNullable(builder.parameterQueries).orElseGet(List::of);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(List::of);
+        this.jsonPathExpressions = Optional.ofNullable(builder.jsonPathExpressions).orElseGet(List::of);
+        this.headerQueries = Optional.ofNullable(builder.headerQueries).orElseGet(List::of);
     }
 
     public String getId() {
@@ -141,27 +134,39 @@ public class RestMockResponse {
     }
 
     public List<HttpHeader> getHttpHeaders() {
-        return List.copyOf(httpHeaders);
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<HttpContentEncoding> getContentEncodings() {
-        return List.copyOf(contentEncodings);
+        return Optional.ofNullable(contentEncodings)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<RestParameterQuery> getParameterQueries() {
-        return List.copyOf(parameterQueries);
+        return Optional.ofNullable(parameterQueries)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<RestXPathExpression> getXpathExpressions() {
-        return List.copyOf(xpathExpressions);
+        return Optional.ofNullable(xpathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<RestJsonPathExpression> getJsonPathExpressions() {
-        return List.copyOf(jsonPathExpressions);
+        return Optional.ofNullable(jsonPathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public List<RestHeaderQuery> getHeaderQueries() {
-        return List.copyOf(headerQueries);
+        return Optional.ofNullable(headerQueries)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @Override
@@ -219,31 +224,42 @@ public class RestMockResponse {
                 .status(status)
                 .httpStatusCode(httpStatusCode)
                 .usingExpressions(usingExpressions)
-                .httpHeaders(httpHeaders.stream()
+                .httpHeaders(Optional.ofNullable(httpHeaders)
+                        .map(headers -> headers.stream()
                         .map(HttpHeader::toBuilder)
                         .map(HttpHeader.Builder::build)
                         .collect(Collectors.toList()))
-                .contentEncodings(new ArrayList<>(contentEncodings))
-                .parameterQueries(parameterQueries
-                        .stream()
-                        .map(RestParameterQuery::toBuilder)
-                        .map(RestParameterQuery.Builder::build)
-                        .collect(Collectors.toList()))
-                .xpathExpressions(xpathExpressions
-                        .stream()
-                        .map(RestXPathExpression::toBuilder)
-                        .map(RestXPathExpression.Builder::build)
-                        .collect(Collectors.toList()))
-                .jsonPathExpressions(jsonPathExpressions
-                        .stream()
-                        .map(RestJsonPathExpression::toBuilder)
-                        .map(RestJsonPathExpression.Builder::build)
-                        .collect(Collectors.toList()))
-                .headerQueries(headerQueries
-                        .stream()
-                        .map(RestHeaderQuery::toBuilder)
-                        .map(RestHeaderQuery.Builder::build)
-                        .collect(Collectors.toList()));
+                        .orElse(null))
+                .contentEncodings(Optional.ofNullable(contentEncodings)
+                        .map(ArrayList::new)
+                        .orElse(null))
+                .parameterQueries(Optional.ofNullable(parameterQueries)
+                        .map(queries -> queries.stream()
+                                .map(RestParameterQuery::toBuilder)
+                                .map(RestParameterQuery.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
+                .xpathExpressions(Optional.ofNullable(xpathExpressions)
+                        .map(expressions -> expressions
+                                .stream()
+                                .map(RestXPathExpression::toBuilder)
+                                .map(RestXPathExpression.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
+                .jsonPathExpressions(Optional.ofNullable(jsonPathExpressions)
+                        .map(expressions -> expressions
+                                .stream()
+                                .map(RestJsonPathExpression::toBuilder)
+                                .map(RestJsonPathExpression.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
+                .headerQueries(Optional.ofNullable(headerQueries)
+                        .map(queries -> queries
+                                .stream()
+                                .map(RestHeaderQuery::toBuilder)
+                                .map(RestHeaderQuery.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null));
     }
 
 
@@ -260,12 +276,12 @@ public class RestMockResponse {
         private Integer httpStatusCode;
         private RestMockResponseStatus status;
         private Boolean usingExpressions;
-        private List<HttpHeader> httpHeaders = new CopyOnWriteArrayList<>();
-        private List<HttpContentEncoding> contentEncodings = new CopyOnWriteArrayList<>();
-        private List<RestParameterQuery> parameterQueries = new CopyOnWriteArrayList<>();
-        private List<RestXPathExpression> xpathExpressions = new CopyOnWriteArrayList<>();
-        private List<RestJsonPathExpression> jsonPathExpressions = new CopyOnWriteArrayList<>();
-        private List<RestHeaderQuery> headerQueries = new CopyOnWriteArrayList<>();
+        private List<HttpHeader> httpHeaders;
+        private List<HttpContentEncoding> contentEncodings;
+        private List<RestParameterQuery> parameterQueries;
+        private List<RestXPathExpression> xpathExpressions;
+        private List<RestJsonPathExpression> jsonPathExpressions;
+        private List<RestHeaderQuery> headerQueries;
 
         private Builder() {
         }

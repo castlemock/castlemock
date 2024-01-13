@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 @XmlRootElement
@@ -17,14 +18,15 @@ public class UpdateSoapPortForwardedEndpointsRequest {
     private final Set<String> portIds;
     private final String forwardedEndpoint;
 
-
     private UpdateSoapPortForwardedEndpointsRequest(final Builder builder) {
         this.portIds = Objects.requireNonNull(builder.portIds, "portIds");
         this.forwardedEndpoint = Objects.requireNonNull(builder.forwardedEndpoint, "forwardedEndpoint");
     }
 
     public Set<String> getPortIds() {
-        return portIds;
+        return Optional.of(portIds)
+                .map(Set::copyOf)
+                .orElseGet(Set::of);
     }
 
     public String getForwardedEndpoint() {

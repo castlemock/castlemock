@@ -82,12 +82,9 @@ public class SoapMockResponse {
         this.status = Objects.requireNonNull(builder.status, "status");
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
         this.usingExpressions = builder.usingExpressions;
-        this.httpHeaders = Optional.ofNullable(builder.httpHeaders)
-                .orElseGet(List::of);
-        this.contentEncodings = Optional.ofNullable(builder.contentEncodings)
-                .orElseGet(List::of);
-        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions)
-                .orElseGet(List::of);
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(List::of);
+        this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(List::of);
+        this.xpathExpressions = Optional.ofNullable(builder.xpathExpressions).orElseGet(List::of);
     }
 
     public String getId() {
@@ -121,17 +118,23 @@ public class SoapMockResponse {
 
 
     public List<HttpHeader> getHttpHeaders() {
-        return httpHeaders;
+        return Optional.ofNullable(httpHeaders)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
 
     public List<HttpContentEncoding> getContentEncodings() {
-        return contentEncodings;
+        return Optional.ofNullable(contentEncodings)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
 
     public List<SoapXPathExpression> getXpathExpressions() {
-        return xpathExpressions;
+        return Optional.ofNullable(xpathExpressions)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public Builder toBuilder() {
@@ -143,16 +146,23 @@ public class SoapMockResponse {
                 .status(status)
                 .httpStatusCode(httpStatusCode)
                 .usingExpressions(usingExpressions)
-                .httpHeaders(httpHeaders.stream()
-                        .map(HttpHeader::toBuilder)
-                        .map(HttpHeader.Builder::build)
-                        .collect(Collectors.toList()))
-                .contentEncodings(new ArrayList<>(contentEncodings))
-                .xpathExpressions(xpathExpressions
-                        .stream()
-                        .map(SoapXPathExpression::toBuilder)
-                        .map(SoapXPathExpression.Builder::build)
-                        .collect(Collectors.toList()));
+                .httpHeaders(Optional.ofNullable(httpHeaders)
+                        .map(headers -> headers
+                                .stream()
+                                .map(HttpHeader::toBuilder)
+                                .map(HttpHeader.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
+                .contentEncodings(Optional.ofNullable(contentEncodings)
+                        .map(ArrayList::new)
+                        .orElse(null))
+                .xpathExpressions(Optional.ofNullable(xpathExpressions)
+                        .map(expressions -> expressions
+                                .stream()
+                                .map(SoapXPathExpression::toBuilder)
+                                .map(SoapXPathExpression.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null));
     }
 
     public static Builder builder() {

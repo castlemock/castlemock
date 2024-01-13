@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author Karl Dahlgren
@@ -46,12 +46,13 @@ public class RestProject extends Project {
 
     private RestProject(final Builder builder){
         super(builder);
-        this.applications = Optional.ofNullable(builder.applications)
-                .orElseGet(List::of);
+        this.applications = Optional.ofNullable(builder.applications).orElseGet(List::of);
     }
 
     public List<RestApplication> getApplications() {
-        return List.copyOf(applications);
+        return Optional.ofNullable(applications)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     @Override
@@ -85,12 +86,17 @@ public class RestProject extends Project {
                 .created(created)
                 .updated(updated)
                 .description(description)
-                .applications(applications);
+                .applications(Optional.ofNullable(applications)
+                        .map(applications -> applications.stream()
+                                .map(RestApplication::toBuilder)
+                                .map(RestApplication.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null));
     }
 
     @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder extends Project.Builder<Builder> {
-        private List<RestApplication> applications = new CopyOnWriteArrayList<>();
+        private List<RestApplication> applications;
 
         private Builder() {
         }

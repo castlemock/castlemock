@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author Karl Dahlgren
@@ -109,8 +109,7 @@ public class RestMethod {
         this.uri = builder.uri;
         this.defaultResponseName = builder.defaultResponseName;
         this.automaticForward = builder.automaticForward;
-        this.mockResponses = Optional.ofNullable(builder.mockResponses)
-                .orElseGet(List::of);
+        this.mockResponses = Optional.ofNullable(builder.mockResponses).orElseGet(List::of);
     }
 
 
@@ -135,7 +134,9 @@ public class RestMethod {
     }
 
     public List<RestMockResponse> getMockResponses() {
-        return List.copyOf(mockResponses);
+        return Optional.ofNullable(mockResponses)
+                .map(List::copyOf)
+                .orElseGet(List::of);
     }
 
     public Optional<String> getForwardedEndpoint() {
@@ -229,7 +230,12 @@ public class RestMethod {
                 .responseStrategy(this.responseStrategy)
                 .status(this.status)
                 .httpMethod(this.httpMethod)
-                .mockResponses(this.mockResponses)
+                .mockResponses(Optional.ofNullable(this.mockResponses)
+                        .map(respones -> respones.stream()
+                                .map(RestMockResponse::toBuilder)
+                                .map(RestMockResponse.Builder::build)
+                                .collect(Collectors.toList()))
+                        .orElse(null))
                 .forwardedEndpoint(this.forwardedEndpoint)
                 .currentResponseSequenceIndex(this.currentResponseSequenceIndex)
                 .defaultMockResponseId(this.defaultMockResponseId)
@@ -251,7 +257,7 @@ public class RestMethod {
         private Boolean simulateNetworkDelay;
         private Long networkDelay;
         private String defaultMockResponseId;
-        private List<RestMockResponse> mockResponses = new CopyOnWriteArrayList<>();
+        private List<RestMockResponse> mockResponses;
         private String uri;
         private String defaultResponseName;
         private Boolean automaticForward;
