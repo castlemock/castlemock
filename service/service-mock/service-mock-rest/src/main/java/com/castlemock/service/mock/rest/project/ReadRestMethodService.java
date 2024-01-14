@@ -62,7 +62,7 @@ public class ReadRestMethodService extends AbstractRestProjectService implements
         return method.toBuilder()
                 .uri(resource.getUri())
                 .mockResponses(mockResponses)
-                .defaultMockResponseId(getDefaultMockResponseName(method, mockResponses).orElse(null))
+                .defaultResponseName(getDefaultMockResponseName(method, mockResponses).orElse(null))
                 .build();
     }
 

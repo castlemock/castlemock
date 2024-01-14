@@ -57,8 +57,10 @@ public class UpdateRestMethodService extends AbstractRestProjectService implemen
                                 .orElse(null))
                         .automaticForward(input.getAutomaticForward()
                                 .orElse(null))
+                        .defaultMockResponseId(input.getDefaultMockResponseId()
+                                .orElse(null))
                         .build())
-                .map(methid -> this.methodRepository.update(input.getRestMethodId(), methid));
+                .map(method -> this.methodRepository.update(input.getRestMethodId(), method));
 
         return createServiceResult(UpdateRestMethodOutput.builder()
                 .restMethod(updated.orElse(null))
