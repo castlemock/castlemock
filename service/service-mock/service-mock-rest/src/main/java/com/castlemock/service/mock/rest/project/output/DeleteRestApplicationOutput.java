@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.project.output;
 
 import com.castlemock.model.core.Output;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestApplication;
 
 import java.util.Optional;
@@ -28,7 +27,6 @@ import java.util.Optional;
  */
 public final class DeleteRestApplicationOutput implements Output {
 
-    @NotNull
     private final RestApplication application;
 
     private DeleteRestApplicationOutput(final Builder builder){

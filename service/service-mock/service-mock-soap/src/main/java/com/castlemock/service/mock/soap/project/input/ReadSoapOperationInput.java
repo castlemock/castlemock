@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.soap.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Objects;
 
@@ -27,11 +26,8 @@ import java.util.Objects;
  */
 public final class ReadSoapOperationInput implements Input {
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final String portId;
-    @NotNull
     private final String operationId;
 
     private ReadSoapOperationInput(final Builder builder) {

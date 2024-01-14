@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.project.output;
 
 import com.castlemock.model.core.Output;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestProject;
 
 import java.util.List;
@@ -28,7 +27,6 @@ import java.util.List;
  */
 public final class ReadAllRestProjectsOutput implements Output {
 
-    @NotNull
     private final List<RestProject> restProjects;
 
     private ReadAllRestProjectsOutput(List<RestProject> restProjects) {

@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.soap.project.output;
 
 import com.castlemock.model.core.Output;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Optional;
 
@@ -27,7 +26,6 @@ import java.util.Optional;
  */
 public final class LoadSoapResourceOutput implements Output{
 
-    @NotNull
     private final String resource;
 
     private LoadSoapResourceOutput(final Builder builder) {

@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.RestDefinitionType;
 
 import java.io.File;
@@ -31,9 +30,7 @@ import java.util.Optional;
  */
 public final class ImportRestDefinitionInput implements Input {
 
-    @NotNull
     private final String restProjectId;
-    @NotNull
     private final RestDefinitionType definitionType;
 
     private final Boolean generateResponse;

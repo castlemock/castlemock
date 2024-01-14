@@ -18,7 +18,6 @@ package com.castlemock.service.mock.soap.project.output;
 
 import com.castlemock.model.core.Output;
 import com.castlemock.model.core.SearchResult;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +28,6 @@ import java.util.Objects;
  */
 public final class SearchSoapProjectOutput implements Output {
 
-    @NotNull
     private final List<SearchResult> searchResults;
 
     private SearchSoapProjectOutput(final Builder builder) {

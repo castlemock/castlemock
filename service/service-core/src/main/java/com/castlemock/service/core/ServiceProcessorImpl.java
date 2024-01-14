@@ -24,7 +24,6 @@ import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.core.user.User;
-import com.castlemock.model.core.validation.validator.NotNullValidator;
 import com.castlemock.model.core.validation.validator.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,9 +55,6 @@ public class ServiceProcessorImpl implements ServiceProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceProcessorImpl.class);
     private static final List<Validator> VALIDATORS = new ArrayList<>();
 
-    static {
-        VALIDATORS.add(new NotNullValidator());
-    }
 
     /**
      * The process method is responsible for processing the incoming input message and

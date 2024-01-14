@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.soap.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Objects;
 import java.util.Set;
@@ -28,13 +27,9 @@ import java.util.Set;
  */
 public final class DuplicateSoapMockResponsesInput implements Input {
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final String portId;
-    @NotNull
     private final String operationId;
-    @NotNull
     private final Set<String> mockResponseIds;
 
     public DuplicateSoapMockResponsesInput(final Builder builder) {

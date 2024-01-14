@@ -18,7 +18,6 @@ package com.castlemock.service.mock.rest.project.output;
 
 import com.castlemock.model.core.Output;
 import com.castlemock.model.core.SearchResult;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +28,6 @@ import java.util.Optional;
  */
 public final class SearchRestProjectOutput implements Output {
 
-    @NotNull
     private final List<SearchResult> searchResults;
 
     private SearchRestProjectOutput(final List<SearchResult> searchResults) {

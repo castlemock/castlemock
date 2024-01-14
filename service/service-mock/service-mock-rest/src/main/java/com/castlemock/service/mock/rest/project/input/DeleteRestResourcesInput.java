@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestResource;
 
 import java.util.List;
@@ -29,11 +28,8 @@ import java.util.Objects;
  */
 public final class DeleteRestResourcesInput implements Input{
 
-    @NotNull
     private final String restProjectId;
-    @NotNull
     private final String restApplicationId;
-    @NotNull
     private final List<RestResource> restResources;
 
     public DeleteRestResourcesInput(final Builder builder) {

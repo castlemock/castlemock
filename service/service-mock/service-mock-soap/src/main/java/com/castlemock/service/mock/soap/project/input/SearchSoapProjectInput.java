@@ -18,7 +18,6 @@ package com.castlemock.service.mock.soap.project.input;
 
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Objects;
 
@@ -28,7 +27,6 @@ import java.util.Objects;
  */
 public final class SearchSoapProjectInput implements Input {
 
-    @NotNull
     private final SearchQuery searchQuery;
 
     private SearchSoapProjectInput(final Builder builder) {

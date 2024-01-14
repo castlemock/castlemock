@@ -17,17 +17,13 @@
 package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Objects;
 
 public class ReadRestResourceQueryParametersInput implements Input {
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final String applicationId;
-    @NotNull
     private final String resourceId;
 
     private ReadRestResourceQueryParametersInput(final Builder builder) {

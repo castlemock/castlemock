@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.project.output;
 
 import com.castlemock.model.core.Output;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 
 import java.util.Map;
@@ -31,22 +30,16 @@ import java.util.Set;
  */
 public final class IdentifyRestMethodOutput implements Output{
 
-    @NotNull
     private final String restProjectId;
 
-    @NotNull
     private final String restApplicationId;
 
-    @NotNull
     private final String restResourceId;
 
-    @NotNull
     private final String restMethodId;
 
-    @NotNull
     private final RestMethod restMethod;
 
-    @NotNull
     private final Map<String, Set<String>> pathParameters;
 
     private IdentifyRestMethodOutput(final String restProjectId, final String restApplicationId,

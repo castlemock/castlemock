@@ -19,7 +19,6 @@ package com.castlemock.service.mock.rest.project.input;
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestHeaderQuery;
 import com.castlemock.model.mock.rest.domain.RestJsonPathExpression;
 import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
@@ -36,21 +35,13 @@ import java.util.Optional;
  */
 public final class UpdateRestMockResponseInput implements Input {
 
-    @NotNull
     private final String restProjectId;
-    @NotNull
     private final String restApplicationId;
-    @NotNull
     private final String restResourceId;
-    @NotNull
     private final String restMethodId;
-    @NotNull
     private final String restMockResponseId;
-    @NotNull
     private final String name;
-    @NotNull
     private final Integer httpStatusCode;
-    @NotNull
     private final RestMockResponseStatus status;
     private final String body;
     private final Boolean usingExpressions;

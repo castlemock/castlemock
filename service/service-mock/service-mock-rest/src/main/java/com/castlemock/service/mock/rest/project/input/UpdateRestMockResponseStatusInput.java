@@ -1,7 +1,6 @@
 package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 
 import java.util.Objects;
@@ -9,17 +8,11 @@ import java.util.Objects;
 public class UpdateRestMockResponseStatusInput implements Input {
 
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final String applicationId;
-    @NotNull
     private final String resourceId;
-    @NotNull
     private final String methodId;
-    @NotNull
     private final String mockResponseId;
-    @NotNull
     private final RestMockResponseStatus status;
 
     public UpdateRestMockResponseStatusInput(final Builder builder) {

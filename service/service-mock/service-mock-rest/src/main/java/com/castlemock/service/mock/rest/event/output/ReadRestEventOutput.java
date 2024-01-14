@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.event.output;
 
 import com.castlemock.model.core.Output;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestEvent;
 
 import java.util.Optional;
@@ -28,7 +27,6 @@ import java.util.Optional;
  */
 public final class ReadRestEventOutput implements Output {
 
-    @NotNull
     private final RestEvent restEvent;
 
     private ReadRestEventOutput(final RestEvent restEvent) {

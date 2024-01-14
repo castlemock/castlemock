@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.soap.project.output;
 
 import com.castlemock.model.core.Output;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 
 import java.util.Objects;
@@ -28,7 +27,6 @@ import java.util.Objects;
  */
 public final class ImportSoapProjectOutput implements Output{
 
-    @NotNull
     private final SoapProject project;
 
     private ImportSoapProjectOutput(final Builder builder) {

@@ -18,7 +18,6 @@ package com.castlemock.service.mock.soap.project.input;
 
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.http.HttpHeader;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
 
@@ -32,25 +31,15 @@ import java.util.Optional;
  */
 public final class UpdateSoapMockResponseInput implements Input {
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final String portId;
-    @NotNull
     private final String operationId;
-    @NotNull
     private final String mockResponseId;
-    @NotNull
     private final String name;
-    @NotNull
     private final String body;
-    @NotNull
     private final SoapMockResponseStatus status;
-    @NotNull
     private final Integer httpStatusCode;
-    @NotNull
     private final List<HttpHeader> httpHeaders;
-    @NotNull
     private final List<SoapXPathExpression> xpathExpressions;
     private final Boolean usingExpressions;
 

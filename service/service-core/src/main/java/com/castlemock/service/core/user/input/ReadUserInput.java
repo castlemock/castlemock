@@ -17,7 +17,6 @@
 package com.castlemock.service.core.user.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.user.output.ReadUserOutput;
 
 import java.util.Objects;
@@ -30,7 +29,6 @@ import java.util.Objects;
  */
 public final class ReadUserInput implements Input {
 
-    @NotNull
     private final String userId;
 
     public ReadUserInput(final Builder builder) {

@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -28,9 +27,7 @@ import java.util.Optional;
  */
 public final class UpdateRestProjectInput implements Input {
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final String name;
     private final String description;
 

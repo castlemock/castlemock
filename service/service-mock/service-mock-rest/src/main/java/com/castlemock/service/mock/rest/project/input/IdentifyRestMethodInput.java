@@ -19,7 +19,6 @@ package com.castlemock.service.mock.rest.project.input;
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.http.HttpParameter;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,15 +34,10 @@ import java.util.Set;
  */
 public final class IdentifyRestMethodInput implements Input {
 
-    @NotNull
     private final String restProjectId;
-    @NotNull
     private final String restApplicationId;
-    @NotNull
     private final String restResourceUri;
-    @NotNull
     private final HttpMethod httpMethod;
-    @NotNull
     private final Map<String, Set<String>> httpParameters;
 
     private IdentifyRestMethodInput(final Builder builder) {

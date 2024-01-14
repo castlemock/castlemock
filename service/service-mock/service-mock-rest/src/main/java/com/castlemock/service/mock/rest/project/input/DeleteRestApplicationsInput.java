@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestApplication;
 
 import java.util.List;
@@ -29,9 +28,7 @@ import java.util.Objects;
  */
 public final class DeleteRestApplicationsInput implements Input{
 
-    @NotNull
     private final String restProjectId;
-    @NotNull
     private final List<RestApplication> restApplications;
 
     private DeleteRestApplicationsInput(final Builder builder) {

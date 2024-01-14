@@ -18,7 +18,6 @@ package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.http.HttpMethod;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
 
@@ -31,22 +30,14 @@ import java.util.Optional;
  */
 public final class UpdateRestMethodInput implements Input {
 
-    @NotNull
     private final String restProjectId;
-    @NotNull
     private final String restApplicationId;
-    @NotNull
     private final String restResourceId;
-    @NotNull
     private final String restMethodId;
-    @NotNull
     private final String name;
-    @NotNull
     private final HttpMethod httpMethod;
     private final String forwardedEndpoint;
-    @NotNull
     private final RestMethodStatus status;
-    @NotNull
     private final RestResponseStrategy responseStrategy;
     private final Boolean simulateNetworkDelay;
     private final Long networkDelay;

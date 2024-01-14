@@ -18,7 +18,6 @@ package com.castlemock.service.mock.soap.project.input;
 
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.http.HttpMethod;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
 import com.castlemock.model.mock.soap.domain.SoapVersion;
 
@@ -30,15 +29,10 @@ import java.util.Objects;
  */
 public final class IdentifySoapOperationInput implements Input {
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final SoapOperationIdentifier operationIdentifier;
-    @NotNull
     private final String uri;
-    @NotNull
     private final HttpMethod httpMethod;
-    @NotNull
     private final SoapVersion type;
 
     private IdentifySoapOperationInput(final Builder builder) {

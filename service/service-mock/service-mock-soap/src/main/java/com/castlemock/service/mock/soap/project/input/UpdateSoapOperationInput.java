@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.soap.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifyStrategy;
 import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
 import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
@@ -31,22 +30,16 @@ import java.util.Optional;
  */
 public final class UpdateSoapOperationInput implements Input {
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final String portId;
-    @NotNull
     private final String operationId;
-    @NotNull
     private final SoapResponseStrategy responseStrategy;
-    @NotNull
     private final SoapOperationStatus status;
     private final String forwardedEndpoint;
     private final Boolean simulateNetworkDelay;
     private final Long networkDelay;
     private final String defaultMockResponseId;
     private final Boolean mockOnFailure;
-    @NotNull
     private final SoapOperationIdentifyStrategy identifyStrategy;
 
     private final Boolean automaticForward;

@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.soap.project.output;
 
 import com.castlemock.model.core.Output;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 
 import java.util.Objects;
@@ -28,16 +27,12 @@ import java.util.Objects;
  */
 public final class IdentifySoapOperationOutput implements Output{
 
-    @NotNull
     private final String projectId;
 
-    @NotNull
     private final String portId;
 
-    @NotNull
     private final String operationId;
 
-    @NotNull
     private final SoapOperation operation;
 
     private IdentifySoapOperationOutput(final Builder builder) {

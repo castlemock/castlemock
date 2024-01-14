@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.event.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestEvent;
 
 /**
@@ -26,7 +25,6 @@ import com.castlemock.model.mock.rest.domain.RestEvent;
  */
 public final class CreateRestEventInput implements Input {
 
-    @NotNull
     private final RestEvent restEvent;
 
     private CreateRestEventInput(RestEvent restEvent) {

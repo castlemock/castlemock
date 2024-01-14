@@ -18,7 +18,6 @@ package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.http.HttpMethod;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Objects;
 
@@ -28,15 +27,10 @@ import java.util.Objects;
  */
 public final class CreateRestMethodInput implements Input {
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final String applicationId;
-    @NotNull
     private final String resourceId;
-    @NotNull
     private final String name;
-    @NotNull
     private final HttpMethod httpMethod;
 
     private CreateRestMethodInput(final Builder builder) {

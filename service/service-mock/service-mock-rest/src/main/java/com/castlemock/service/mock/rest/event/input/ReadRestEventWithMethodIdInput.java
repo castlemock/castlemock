@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.event.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 
 /**
  * @author Karl Dahlgren
@@ -25,7 +24,6 @@ import com.castlemock.model.core.validation.NotNull;
  */
 public final class ReadRestEventWithMethodIdInput implements Input {
 
-    @NotNull
     private final String restMethodId;
 
     private ReadRestEventWithMethodIdInput(String restMethodId) {

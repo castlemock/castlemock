@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Objects;
 
@@ -27,7 +26,6 @@ import java.util.Objects;
  */
 public final class ReadRestProjectInput implements Input {
 
-    @NotNull
     private final String restProjectId;
 
     private ReadRestProjectInput(final Builder builder) {

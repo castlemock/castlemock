@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.soap.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Objects;
 
@@ -27,9 +26,7 @@ import java.util.Objects;
  */
 public final class DeleteSoapPortInput implements Input{
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final String portId;
 
     private DeleteSoapPortInput(final Builder builder) {

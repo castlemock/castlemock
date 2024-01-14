@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.soap.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.io.File;
 import java.util.List;
@@ -30,7 +29,6 @@ import java.util.Optional;
  */
 public final class CreateSoapPortsInput implements Input {
 
-    @NotNull
     private final String projectId;
 
     private final Boolean generateResponse;

@@ -18,7 +18,6 @@ package com.castlemock.service.core.user.output;
 
 import com.castlemock.model.core.Output;
 import com.castlemock.model.core.user.User;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.user.input.ReadAllUsersInput;
 
 import java.util.List;
@@ -31,7 +30,6 @@ import java.util.Optional;
  */
 public final class ReadAllUsersOutput implements Output {
 
-    @NotNull
     private final List<User> users;
 
     public ReadAllUsersOutput(final Builder builder) {

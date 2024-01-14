@@ -19,7 +19,6 @@ package com.castlemock.service.core.user.input;
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.user.Role;
 import com.castlemock.model.core.user.Status;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.user.output.UpdateUserOutput;
 
 import java.util.Objects;
@@ -33,17 +32,12 @@ import java.util.Optional;
  */
 public final class UpdateUserInput implements Input {
 
-    @NotNull
     private final String id;
-    @NotNull
     private final String username;
-    @NotNull
     private final String password;
     private final String email;
     private final String fullName;
-    @NotNull
     private final Status status;
-    @NotNull
     private final Role role;
 
     public UpdateUserInput(final Builder builder) {

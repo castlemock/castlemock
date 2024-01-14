@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.soap.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 
 import java.util.Objects;
@@ -28,15 +27,10 @@ import java.util.Objects;
  */
 public final class UpdateSoapMockResponseStatusInput implements Input {
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final String portId;
-    @NotNull
     private final String operationId;
-    @NotNull
     private final String mockResponseId;
-    @NotNull
     private final SoapMockResponseStatus mockResponseStatus;
 
     public UpdateSoapMockResponseStatusInput(final Builder builder) {

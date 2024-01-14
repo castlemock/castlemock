@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestMethodStatus;
 
 import java.util.Objects;
@@ -28,13 +27,9 @@ import java.util.Objects;
  */
 public final class UpdateRestResourcesStatusInput implements Input {
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final String applicationId;
-    @NotNull
     private final String resourceId;
-    @NotNull
     private final RestMethodStatus methodStatus;
 
     private UpdateRestResourcesStatusInput(final Builder builder) {

@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.project.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Objects;
 import java.util.Set;
@@ -28,11 +27,8 @@ import java.util.Set;
  */
 public final class UpdateRestApplicationsForwardedEndpointInput implements Input {
 
-    @NotNull
     private final String projectId;
-    @NotNull
     private final Set<String> applicationIds;
-    @NotNull
     private final String forwardedEndpoint;
 
     private UpdateRestApplicationsForwardedEndpointInput(final Builder builder) {

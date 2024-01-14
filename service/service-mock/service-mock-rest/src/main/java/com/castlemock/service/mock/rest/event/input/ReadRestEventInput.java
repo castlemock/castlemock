@@ -17,7 +17,6 @@
 package com.castlemock.service.mock.rest.event.input;
 
 import com.castlemock.model.core.Input;
-import com.castlemock.model.core.validation.NotNull;
 
 import java.util.Objects;
 
@@ -27,7 +26,6 @@ import java.util.Objects;
  */
 public final class ReadRestEventInput implements Input {
 
-    @NotNull
     private final String restEventId;
 
     private ReadRestEventInput(final Builder builder) {
