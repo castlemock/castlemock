@@ -32,7 +32,7 @@ public final class ImportSoapResourceOutput implements Output{
     private final SoapResource resource;
 
     private ImportSoapResourceOutput(final Builder builder) {
-        this.resource = Objects.requireNonNull(builder.resource);
+        this.resource = Objects.requireNonNull(builder.resource, "resource");
     }
 
     public SoapResource getResource() {

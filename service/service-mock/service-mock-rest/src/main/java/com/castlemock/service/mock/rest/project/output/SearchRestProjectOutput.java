@@ -21,6 +21,7 @@ import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.validation.NotNull;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -31,8 +32,8 @@ public final class SearchRestProjectOutput implements Output {
     @NotNull
     private final List<SearchResult> searchResults;
 
-    private SearchRestProjectOutput(List<SearchResult> searchResults) {
-        this.searchResults = searchResults;
+    private SearchRestProjectOutput(final List<SearchResult> searchResults) {
+        this.searchResults = Optional.ofNullable(searchResults).orElseGet(List::of);
     }
 
     public List<SearchResult> getSearchResults() {

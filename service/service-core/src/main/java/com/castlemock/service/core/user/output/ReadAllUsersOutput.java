@@ -22,7 +22,7 @@ import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.user.input.ReadAllUsersInput;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -35,7 +35,7 @@ public final class ReadAllUsersOutput implements Output {
     private final List<User> users;
 
     public ReadAllUsersOutput(final Builder builder) {
-        this.users = Objects.requireNonNull(builder.users);
+        this.users = Optional.ofNullable(builder.users).orElseGet(List::of);
     }
 
     public List<User> getUsers() {

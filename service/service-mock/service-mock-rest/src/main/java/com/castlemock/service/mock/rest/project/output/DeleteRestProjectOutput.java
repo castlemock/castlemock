@@ -19,6 +19,8 @@ package com.castlemock.service.mock.rest.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestProject;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -27,12 +29,12 @@ public final class DeleteRestProjectOutput implements Output {
 
     private final RestProject project;
 
-    private DeleteRestProjectOutput(RestProject project) {
+    private DeleteRestProjectOutput(final RestProject project) {
         this.project = project;
     }
 
-    public RestProject getProject() {
-        return project;
+    public Optional<RestProject> getProject() {
+        return Optional.ofNullable(project);
     }
 
 

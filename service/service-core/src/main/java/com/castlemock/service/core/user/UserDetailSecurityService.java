@@ -65,8 +65,8 @@ public class UserDetailSecurityService implements UserDetailsService {
                 .username(username)
                 .build();
         final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(readUserByUsernameInput);
-        final User user = readUserByUsernameOutput.getUser();
-        Preconditions.checkNotNull(user, "Unable to find user");
+        final User user = readUserByUsernameOutput.getUser()
+                .orElseThrow(() -> new IllegalArgumentException("Unable to find the following user: " + username));
         final List<GrantedAuthority> authorities = buildUserAuthority(user.getRole());
         return buildUserForAuthentication(user, authorities);
 

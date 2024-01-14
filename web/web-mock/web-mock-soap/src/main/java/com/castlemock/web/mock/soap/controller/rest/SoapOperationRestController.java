@@ -65,7 +65,9 @@ public class SoapOperationRestController extends AbstractRestController {
                 .portId(portId)
                 .operationId(operationId)
                 .build());
-        return ResponseEntity.ok(output.getOperation());
+        return output.getOperation()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Update Operation")
@@ -100,7 +102,9 @@ public class SoapOperationRestController extends AbstractRestController {
                 .automaticForward(request.getAutomaticForward()
                         .orElse(null))
                 .build());
-        return ResponseEntity.ok(output.getOperation());
+        return output.getOperation()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Update mock response statuses")

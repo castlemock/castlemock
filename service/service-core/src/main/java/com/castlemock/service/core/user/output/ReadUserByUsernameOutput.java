@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.core.user.User;
 import com.castlemock.service.core.user.input.ReadUserByUsernameInput;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -33,8 +35,8 @@ public final class ReadUserByUsernameOutput implements Output {
         this.user = builder.user;
     }
 
-    public User getUser() {
-        return user;
+    public Optional<User> getUser() {
+        return Optional.ofNullable(user);
     }
 
     public static Builder builder() {

@@ -34,7 +34,7 @@ public final class ReadUserInput implements Input {
     private final String userId;
 
     public ReadUserInput(final Builder builder) {
-        this.userId = Objects.requireNonNull(builder.userId);
+        this.userId = Objects.requireNonNull(builder.userId, "userId");
     }
 
 

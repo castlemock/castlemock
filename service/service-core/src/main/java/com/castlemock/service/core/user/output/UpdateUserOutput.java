@@ -18,10 +18,9 @@ package com.castlemock.service.core.user.output;
 
 import com.castlemock.model.core.Output;
 import com.castlemock.model.core.user.User;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.user.input.UpdateUserInput;
 
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -30,15 +29,14 @@ import java.util.Objects;
  */
 public final class UpdateUserOutput implements Output {
 
-    @NotNull
     private final User updatedUser;
 
     public UpdateUserOutput(final Builder builder) {
-        this.updatedUser = Objects.requireNonNull(builder.updatedUser);
+        this.updatedUser = builder.updatedUser;
     }
 
-    public User getUpdatedUser() {
-        return updatedUser;
+    public Optional<User> getUpdatedUser() {
+        return Optional.ofNullable(updatedUser);
     }
 
     public static Builder builder() {

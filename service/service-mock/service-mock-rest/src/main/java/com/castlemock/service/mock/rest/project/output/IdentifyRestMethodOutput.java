@@ -21,6 +21,8 @@ import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -50,12 +52,12 @@ public final class IdentifyRestMethodOutput implements Output{
     private IdentifyRestMethodOutput(final String restProjectId, final String restApplicationId,
                                     final String restResourceId, final String restMethodId,
                                     final RestMethod restMethod, final Map<String, Set<String>> pathParameters) {
-        this.restProjectId = restProjectId;
-        this.restApplicationId = restApplicationId;
-        this.restResourceId = restResourceId;
-        this.restMethodId = restMethodId;
-        this.restMethod = restMethod;
-        this.pathParameters = pathParameters;
+        this.restProjectId = Objects.requireNonNull(restProjectId, "restProjectId");
+        this.restApplicationId = Objects.requireNonNull(restApplicationId, "restApplicationId");
+        this.restResourceId = Objects.requireNonNull(restResourceId, "restResourceId");
+        this.restMethodId = Objects.requireNonNull(restMethodId, "restMethodId");
+        this.restMethod = Objects.requireNonNull(restMethod, "restMethod");
+        this.pathParameters = Optional.ofNullable(pathParameters).orElseGet(Map::of);
     }
 
     public RestMethod getRestMethod() {

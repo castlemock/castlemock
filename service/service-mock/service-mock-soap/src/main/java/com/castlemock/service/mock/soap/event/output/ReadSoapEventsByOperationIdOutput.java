@@ -20,6 +20,7 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.soap.domain.SoapEvent;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -30,7 +31,7 @@ public final class ReadSoapEventsByOperationIdOutput implements Output {
     private final List<SoapEvent> soapEvents;
 
     private ReadSoapEventsByOperationIdOutput(final List<SoapEvent> soapEvents) {
-        this.soapEvents = soapEvents;
+        this.soapEvents = Optional.ofNullable(soapEvents).orElseGet(List::of);
     }
 
     public List<SoapEvent> getSoapEvents() {

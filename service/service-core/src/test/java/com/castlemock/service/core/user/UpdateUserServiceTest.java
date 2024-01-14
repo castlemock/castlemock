@@ -83,7 +83,8 @@ public class UpdateUserServiceTest {
         final ServiceResult<UpdateUserOutput> serviceResult = service.process(serviceTask);
         final UpdateUserOutput output = serviceResult.getOutput();
 
-        final User returnedUser = output.getUpdatedUser();
+        final User returnedUser = output.getUpdatedUser()
+                .orElse(null);
         Assert.assertNotNull(returnedUser);
         Assert.assertEquals(updatedUser.getId(), returnedUser.getId());
         Assert.assertEquals(updatedUser.getPassword(), returnedUser.getPassword());

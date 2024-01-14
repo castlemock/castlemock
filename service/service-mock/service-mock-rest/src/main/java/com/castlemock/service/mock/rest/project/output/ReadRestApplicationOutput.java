@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestApplication;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,12 +31,12 @@ public final class ReadRestApplicationOutput implements Output{
     @NotNull
     private final RestApplication restApplication;
 
-    private ReadRestApplicationOutput(RestApplication restApplication) {
+    private ReadRestApplicationOutput(final RestApplication restApplication) {
         this.restApplication = restApplication;
     }
 
-    public RestApplication getRestApplication() {
-        return restApplication;
+    public Optional<RestApplication> getRestApplication() {
+        return Optional.ofNullable(restApplication);
     }
 
     public static Builder builder(){

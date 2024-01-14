@@ -60,15 +60,13 @@ public class ProfileCoreRestController extends AbstractRestController {
         final ReadUserByUsernameOutput output = serviceProcessor.process(ReadUserByUsernameInput.builder()
                 .username(authentication.getName())
                 .build());
-        final User user = output.getUser();
 
-        if(user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
-        return ResponseEntity.ok(user.toBuilder()
-                .password(EMPTY)
-                .build());
+        return output.getUser()
+                .map(user -> user.toBuilder()
+                        .password(EMPTY)
+                        .build())
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 
@@ -83,28 +81,19 @@ public class ProfileCoreRestController extends AbstractRestController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        final ReadUserByUsernameOutput readUserByUsernameOutput = serviceProcessor.process(ReadUserByUsernameInput.builder()
-                .username(authentication.getName())
-                .build());
-        final User user = readUserByUsernameOutput.getUser();
-
-        if(user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
-        final UpdateCurrentUserOutput updateCurrentUserOutput = serviceProcessor.process(UpdateCurrentUserInput.builder()
+        final UpdateCurrentUserOutput output = serviceProcessor.process(UpdateCurrentUserInput.builder()
                 .username(request.getUsername())
                 .fullName(request.getFullName().orElse(null))
                 .email(request.getEmail().orElse(null))
                 .password(request.getPassword().orElse(null))
                 .build());
 
-        final User updatedUser = updateCurrentUserOutput.getUpdatedUser()
-                        .toBuilder()
+        return output.getUpdatedUser()
+                .map(user -> user.toBuilder()
                         .password(EMPTY)
-                        .build();
-
-        return ResponseEntity.ok(updatedUser);
+                        .build())
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }

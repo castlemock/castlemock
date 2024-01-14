@@ -78,7 +78,9 @@ public class RestMethodRestController extends AbstractRestController {
                 .restResourceId(resourceId)
                 .restMethodId(methodId)
                 .build());
-        return ResponseEntity.ok(output.getRestMethod());
+        return output.getRestMethod()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Delete Method")
@@ -102,8 +104,9 @@ public class RestMethodRestController extends AbstractRestController {
                 .restResourceId(resourceId)
                 .restMethodId(methodId)
                 .build());
-        return ResponseEntity.ok(output.getMethod());
-    }
+        return output.getMethod()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());    }
 
     @Operation(summary =  "Update Method")
     @ApiResponses(value = {
@@ -141,8 +144,9 @@ public class RestMethodRestController extends AbstractRestController {
                 .automaticForward(request.getAutomaticForward()
                         .orElse(null))
                 .build());
-        return ResponseEntity.ok(output.getRestMethod());
-    }
+        return output.getRestMethod()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());    }
 
 
     @Operation(summary =  "Create Method")

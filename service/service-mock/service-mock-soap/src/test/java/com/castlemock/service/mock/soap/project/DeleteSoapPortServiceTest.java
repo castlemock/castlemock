@@ -37,9 +37,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -89,7 +87,12 @@ public class DeleteSoapPortServiceTest {
 
         assertNotNull(serviceResult);
         assertNotNull(serviceResult.getOutput());
-        assertEquals(soapPort, serviceResult.getOutput().getPort());
+
+        final SoapPort returnedSoapPort = serviceResult.getOutput().getPort()
+                .orElse(null);
+
+        assertNotNull(returnedSoapPort);
+        assertEquals(soapPort, returnedSoapPort);
 
         Mockito.verify(portRepository, Mockito.times(1)).delete(soapPort.getId());
         Mockito.verify(operationRepository, Mockito.times(1)).delete(soapOperation.getId());

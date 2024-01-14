@@ -82,7 +82,9 @@ public class RestResourceRestController extends AbstractRestController {
                 .restApplicationId(applicationId)
                 .restResourceId(resourceId)
                 .build());
-        return ResponseEntity.ok(output.getRestResource());
+        return output.getRestResource()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Get Resource Parameters")
@@ -126,7 +128,9 @@ public class RestResourceRestController extends AbstractRestController {
                 .restApplicationId(applicationId)
                 .restResourceId(resourceId)
                 .build());
-        return ResponseEntity.ok(output.getResource());
+        return output.getResource()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Update Resource")
@@ -150,7 +154,9 @@ public class RestResourceRestController extends AbstractRestController {
                 .name(request.getName())
                 .uri(request.getUri())
                 .build());
-        return ResponseEntity.ok(output.getUpdatedRestResource());
+        return output.getUpdatedRestResource()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Create Resource")

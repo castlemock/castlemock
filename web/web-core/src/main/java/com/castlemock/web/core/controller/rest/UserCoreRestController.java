@@ -91,11 +91,12 @@ public class UserCoreRestController extends AbstractRestController {
                 .username(request.getUsername())
                 .password(request.getPassword().orElse(null))
                 .build());
-        final User updatedUser = output.getUpdatedUser()
-                .toBuilder()
-                .password(EMPTY)
-                .build();
-        return ResponseEntity.ok(updatedUser);
+        return output.getUpdatedUser()
+                .map(user -> user.toBuilder()
+                        .password(EMPTY)
+                        .build())
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Get all users",
@@ -123,11 +124,12 @@ public class UserCoreRestController extends AbstractRestController {
         final ReadUserOutput output = serviceProcessor.process(ReadUserInput.builder()
                 .userId(userId)
                 .build());
-        final User user = output.getUser()
-                .toBuilder()
-                .password(EMPTY)
-                .build();
-        return ResponseEntity.ok(user);
+        return output.getUser()
+                .map(user -> user.toBuilder()
+                        .password(EMPTY)
+                        .build())
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Delete user", description = "Delete user. Required authorization: Admin.")

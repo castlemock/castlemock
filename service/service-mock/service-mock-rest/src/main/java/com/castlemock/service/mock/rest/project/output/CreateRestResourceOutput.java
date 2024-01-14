@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestResource;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,8 +31,8 @@ public final class CreateRestResourceOutput implements Output {
     @NotNull
     private final RestResource createdRestResource;
 
-    private CreateRestResourceOutput(RestResource createdRestResource) {
-        this.createdRestResource = createdRestResource;
+    private CreateRestResourceOutput(final RestResource createdRestResource) {
+        this.createdRestResource = Objects.requireNonNull(createdRestResource, "createdRestResource");
     }
 
     public RestResource getCreatedRestResource() {

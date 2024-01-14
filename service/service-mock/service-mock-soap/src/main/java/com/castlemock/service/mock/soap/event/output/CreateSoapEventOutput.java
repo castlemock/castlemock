@@ -19,6 +19,8 @@ package com.castlemock.service.mock.soap.event.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.soap.domain.SoapEvent;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -28,7 +30,7 @@ public final class CreateSoapEventOutput implements Output {
     private final SoapEvent createdSoapEvent;
 
     private CreateSoapEventOutput(final SoapEvent createdSoapEvent) {
-        this.createdSoapEvent = createdSoapEvent;
+        this.createdSoapEvent = Objects.requireNonNull(createdSoapEvent, "createdSoapEvent");
     }
 
     public SoapEvent getCreatedSoapEvent() {

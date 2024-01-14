@@ -21,6 +21,7 @@ import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestEvent;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -31,8 +32,8 @@ public final class ReadRestEventWithMethodIdOutput implements Output {
     @NotNull
     private final List<RestEvent> restEvents;
 
-    private ReadRestEventWithMethodIdOutput(List<RestEvent> restEvents) {
-        this.restEvents = restEvents;
+    private ReadRestEventWithMethodIdOutput(final List<RestEvent> restEvents) {
+        this.restEvents = Optional.ofNullable(restEvents).orElseGet(List::of);
     }
 
     public List<RestEvent> getRestEvents() {

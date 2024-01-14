@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestProject;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,12 +31,12 @@ public final class UpdateRestProjectOutput implements Output {
     @NotNull
     private final RestProject updatedRestProject;
 
-    private UpdateRestProjectOutput(RestProject updatedRestProject) {
+    private UpdateRestProjectOutput(final RestProject updatedRestProject) {
         this.updatedRestProject = updatedRestProject;
     }
 
-    public RestProject getUpdatedRestProject() {
-        return updatedRestProject;
+    public Optional<RestProject> getUpdatedRestProject() {
+        return Optional.ofNullable(updatedRestProject);
     }
 
 

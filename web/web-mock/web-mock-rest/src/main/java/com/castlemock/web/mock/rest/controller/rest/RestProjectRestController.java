@@ -97,8 +97,9 @@ public class RestProjectRestController extends AbstractRestController {
                 .restProjectId(projectId)
                 .build());
 
-        return ResponseEntity.ok(output.getRestProject());
-    }
+        return output.getRestProject()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());    }
 
     /**
      * The method creates a new project
@@ -124,7 +125,7 @@ public class RestProjectRestController extends AbstractRestController {
             description = "Update REST project. Required authorization: Modifier or Admin.")
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public @ResponseBody ResponseEntity<Project> updateProject(@Parameter(name = "projectId", description = "The id of the project")
+    public @ResponseBody ResponseEntity<RestProject> updateProject(@Parameter(name = "projectId", description = "The id of the project")
                                                                @PathVariable("projectId") final String projectId,
                                                                @RequestBody final UpdateProjectRequest request) {
         final UpdateRestProjectOutput output = super.serviceProcessor.process(UpdateRestProjectInput.builder()
@@ -132,8 +133,9 @@ public class RestProjectRestController extends AbstractRestController {
                 .name(request.getName())
                 .description(request.getDescription().orElse(null))
                 .build());
-        return ResponseEntity.ok(output.getUpdatedRestProject());
-    }
+        return output.getUpdatedRestProject()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());     }
 
     @Operation(summary =  "Update Application statuses")
     @ApiResponses(value = {
@@ -229,14 +231,15 @@ public class RestProjectRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/project/{projectId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    ResponseEntity<Project> deleteProject(
+    ResponseEntity<RestProject> deleteProject(
             @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable("projectId") final String projectId) {
         final DeleteRestProjectOutput output = this.serviceProcessor.process(DeleteRestProjectInput.builder()
                 .restProjectId(projectId)
                 .build());
-        return ResponseEntity.ok(output.getProject());
-    }
+        return output.getProject()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());     }
 
     /**
      * The REST operations imports a project.
@@ -293,7 +296,8 @@ public class RestProjectRestController extends AbstractRestController {
         final ExportRestProjectOutput output = this.serviceProcessor.process(ExportRestProjectInput.builder()
                 .restProjectId(projectId)
                 .build());
-        return ResponseEntity.ok(output.getExportedProject());
-    }
+        return output.getExportedProject()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());     }
 
 }

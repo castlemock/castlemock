@@ -58,7 +58,9 @@ public class RestEventRestController extends AbstractRestController {
                 .restEventId(eventId)
                 .build());
 
-        return ResponseEntity.ok(output.getRestEvent());
+        return output.getRestEvent()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }

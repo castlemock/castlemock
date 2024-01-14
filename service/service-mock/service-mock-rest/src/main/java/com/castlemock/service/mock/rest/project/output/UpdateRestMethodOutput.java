@@ -17,8 +17,9 @@
 package com.castlemock.service.mock.rest.project.output;
 
 import com.castlemock.model.core.Output;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestMethod;
+
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -26,15 +27,14 @@ import com.castlemock.model.mock.rest.domain.RestMethod;
  */
 public final class UpdateRestMethodOutput implements Output {
 
-    @NotNull
     private final RestMethod restMethod;
 
-    private UpdateRestMethodOutput(RestMethod restMethod) {
+    private UpdateRestMethodOutput(final RestMethod restMethod) {
         this.restMethod = restMethod;
     }
 
-    public RestMethod getRestMethod() {
-        return restMethod;
+    public Optional<RestMethod> getRestMethod() {
+        return Optional.ofNullable(restMethod);
     }
 
 

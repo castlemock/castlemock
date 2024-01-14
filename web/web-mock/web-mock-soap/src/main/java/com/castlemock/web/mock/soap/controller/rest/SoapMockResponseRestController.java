@@ -74,7 +74,9 @@ public class SoapMockResponseRestController extends AbstractRestController {
                 .operationId(operationId)
                 .mockResponseId(responseId)
                 .build());
-        return ResponseEntity.ok(output.getMockResponse());
+        return output.getMockResponse()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Create mocked response")
@@ -131,8 +133,9 @@ public class SoapMockResponseRestController extends AbstractRestController {
                 .usingExpressions(request.getUsingExpressions().orElse(null))
                 .xpathExpressions(request.getXpathExpressions())
                 .build());
-        return ResponseEntity.ok(output.getMockResponse());
-    }
+        return output.getMockResponse()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());    }
 
     @Operation(summary =  "Delete mocked response")
     @RequestMapping(method = RequestMethod.DELETE,
@@ -153,8 +156,9 @@ public class SoapMockResponseRestController extends AbstractRestController {
                 .operationId(operationId)
                 .mockResponseId(responseId)
                 .build());
-        return ResponseEntity.ok(output.getMockResponse());
-    }
+        return output.getMockResponse()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());    }
 
     @Operation(summary =  "Duplicate mocked response")
     @RequestMapping(method = RequestMethod.POST,

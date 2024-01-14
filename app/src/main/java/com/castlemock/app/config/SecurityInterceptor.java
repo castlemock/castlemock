@@ -125,7 +125,8 @@ public class SecurityInterceptor implements HandlerInterceptor, Filter {
                 .userId(userId)
                 .build();
         final ReadUserOutput readUserOutput = serviceProcessor.process(readUserInput);
-        final User loggedInUser = readUserOutput.getUser();
+        final User loggedInUser = readUserOutput.getUser()
+                .orElse(null);
         if(loggedInUser == null){
             LOGGER.info("The following logged in user is not valid anymore: " + userId);
             request.logout();

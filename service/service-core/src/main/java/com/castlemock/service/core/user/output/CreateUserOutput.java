@@ -34,7 +34,7 @@ public final class CreateUserOutput implements Output {
     private final User savedUser;
 
     public CreateUserOutput(final Builder builder) {
-        this.savedUser = Objects.requireNonNull(builder.savedUser);
+        this.savedUser = Objects.requireNonNull(builder.savedUser, "savedUser");
     }
 
     public User getSavedUser() {

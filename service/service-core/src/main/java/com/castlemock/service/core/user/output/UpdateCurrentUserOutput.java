@@ -22,6 +22,7 @@ import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.user.input.UpdateCurrentUserInput;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -34,11 +35,11 @@ public final class UpdateCurrentUserOutput implements Output {
     private final User updatedUser;
 
     private UpdateCurrentUserOutput(final Builder builder) {
-        this.updatedUser = Objects.requireNonNull(builder.updatedUser, "updatedUser");
+        this.updatedUser = builder.updatedUser;
     }
 
-    public User getUpdatedUser() {
-        return updatedUser;
+    public Optional<User> getUpdatedUser() {
+        return Optional.ofNullable(updatedUser);
     }
 
     @Override

@@ -21,6 +21,7 @@ import com.castlemock.service.mock.soap.project.input.LoadSoapResourceInput;
 import com.castlemock.service.mock.soap.project.output.LoadSoapResourceOutput;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,14 +39,16 @@ public class ResourceController extends AbstractRestController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET, value = "/{projectId}/resource/{resourceId}")
-    public String getResource(@PathVariable final String projectId,
+    public ResponseEntity<String> getResource(@PathVariable final String projectId,
                               @PathVariable final String resourceId) {
         final LoadSoapResourceOutput output =
                 this.serviceProcessor.process(LoadSoapResourceInput.builder()
                         .projectId(projectId)
                         .resourceId(resourceId)
                         .build());
-        return output.getResource();
+        return output.getResource()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }

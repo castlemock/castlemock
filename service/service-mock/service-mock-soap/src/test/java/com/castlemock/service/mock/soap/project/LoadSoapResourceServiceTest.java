@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
 public class LoadSoapResourceServiceTest {
 
@@ -45,7 +44,12 @@ public class LoadSoapResourceServiceTest {
         final ServiceResult<LoadSoapResourceOutput> serviceResult = service.process(serviceTask);
 
         Assert.assertNotNull(serviceResult.getOutput());
-        Assert.assertEquals(resourceContent, serviceResult.getOutput().getResource());
+
+        final String content = serviceResult.getOutput().getResource()
+                .orElse(null);
+
+        Assert.assertNotNull(content);
+        Assert.assertEquals(resourceContent, content);
 
         Mockito.verify(resourceRepository, Mockito.times(1)).loadSoapResource(soapResource.getId());
     }

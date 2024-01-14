@@ -73,7 +73,12 @@ public class AuthenticationRestController extends AbstractRestController {
             final ReadUserByUsernameOutput output = serviceProcessor.process(ReadUserByUsernameInput.builder()
                     .username(request.getUsername())
                     .build());
-            final User user = output.getUser();
+
+            if (output.getUser().isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            final User user = output.getUser().get();
             final Map<String, String> claims = new HashMap<>();
             claims.put("userId", user.getId());
             final String token = jwtEncoderDecoder.createToken(claims);

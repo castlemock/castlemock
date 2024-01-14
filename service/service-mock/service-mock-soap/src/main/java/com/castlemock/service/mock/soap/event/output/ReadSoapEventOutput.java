@@ -19,6 +19,8 @@ package com.castlemock.service.mock.soap.event.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.soap.domain.SoapEvent;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -27,12 +29,12 @@ public final class ReadSoapEventOutput implements Output {
 
     private final SoapEvent soapEvent;
 
-    private ReadSoapEventOutput(SoapEvent soapEvent) {
+    private ReadSoapEventOutput(final SoapEvent soapEvent) {
         this.soapEvent = soapEvent;
     }
 
-    public SoapEvent getSoapEvent() {
-        return soapEvent;
+    public Optional<SoapEvent> getSoapEvent() {
+        return Optional.ofNullable(soapEvent);
     }
 
     public static Builder builder(){

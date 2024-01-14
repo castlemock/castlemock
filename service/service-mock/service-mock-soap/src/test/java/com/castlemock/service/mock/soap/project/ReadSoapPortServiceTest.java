@@ -20,6 +20,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
+import static org.junit.Assert.assertNotNull;
+
 public class ReadSoapPortServiceTest {
 
     @Mock
@@ -56,9 +58,14 @@ public class ReadSoapPortServiceTest {
         Mockito.verify(operationRepository, Mockito.times(1)).findWithPortId(port.getId());
 
         Assert.assertNotNull(result.getOutput());
+
+        final SoapPort returnedSoapPort = result.getOutput().getPort()
+                .orElse(null);
+
+        assertNotNull(returnedSoapPort);
         Assert.assertEquals(port.toBuilder()
                 .operations(List.of(operation))
-                .build(), result.getOutput().getPort());
+                .build(), returnedSoapPort);
     }
 
 }

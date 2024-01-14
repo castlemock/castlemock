@@ -32,7 +32,7 @@ public final class ImportSoapProjectOutput implements Output{
     private final SoapProject project;
 
     private ImportSoapProjectOutput(final Builder builder) {
-        this.project = Objects.requireNonNull(builder.project);
+        this.project = Objects.requireNonNull(builder.project, "project");
     }
 
     public SoapProject getProject() {

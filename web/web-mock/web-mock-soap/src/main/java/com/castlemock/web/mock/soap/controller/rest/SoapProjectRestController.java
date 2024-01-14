@@ -91,7 +91,9 @@ public class SoapProjectRestController extends AbstractRestController {
         final ReadSoapProjectOutput output = super.serviceProcessor.process(ReadSoapProjectInput.builder()
                 .projectId(projectId)
                 .build());
-        return ResponseEntity.ok(output.getProject());
+        return output.getProject()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     /**
@@ -118,7 +120,7 @@ public class SoapProjectRestController extends AbstractRestController {
             description = "Update SOAP project. Required authorization: Modifier or Admin.")
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public @ResponseBody ResponseEntity<Project> updateProject(@Parameter(name = "projectId", description = "The id of the project")
+    public @ResponseBody ResponseEntity<SoapProject> updateProject(@Parameter(name = "projectId", description = "The id of the project")
                                                                 @PathVariable("projectId") final String projectId,
                                                                 @RequestBody final UpdateProjectRequest request) {
         final UpdateSoapProjectOutput output = super.serviceProcessor.process(UpdateSoapProjectInput.builder()
@@ -126,8 +128,9 @@ public class SoapProjectRestController extends AbstractRestController {
                 .name(request.getName())
                 .description(request.getDescription().orElse(null))
                 .build());
-        return ResponseEntity.ok(output.getProject());
-    }
+        return output.getProject()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());    }
 
     @Operation(summary =  "Update Port statuses")
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/status")
@@ -214,14 +217,15 @@ public class SoapProjectRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/project/{projectId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    ResponseEntity<Project> deleteProject(
+    ResponseEntity<SoapProject> deleteProject(
             @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable("projectId") final String projectId) {
         final DeleteSoapProjectOutput output = this.serviceProcessor.process(DeleteSoapProjectInput.builder()
                 .projectId(projectId)
                 .build());
-        return ResponseEntity.ok(output.getProject());
-    }
+        return output.getProject()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());    }
 
     /**
      * The SOAP operations imports a project.
@@ -278,7 +282,9 @@ public class SoapProjectRestController extends AbstractRestController {
         final ExportSoapProjectOutput output = this.serviceProcessor.process(ExportSoapProjectInput.builder()
                 .projectId(projectId)
                 .build());
-        return ResponseEntity.ok(output.getProject());
+        return output.getProject()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 

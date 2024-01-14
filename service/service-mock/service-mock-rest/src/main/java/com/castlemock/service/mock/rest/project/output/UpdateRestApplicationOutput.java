@@ -17,8 +17,9 @@
 package com.castlemock.service.mock.rest.project.output;
 
 import com.castlemock.model.core.Output;
-import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestApplication;
+
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -26,15 +27,14 @@ import com.castlemock.model.mock.rest.domain.RestApplication;
  */
 public final class UpdateRestApplicationOutput implements Output {
 
-    @NotNull
     private final RestApplication updatedRestApplication;
 
-    private UpdateRestApplicationOutput(RestApplication updatedRestApplication) {
+    private UpdateRestApplicationOutput(final RestApplication updatedRestApplication) {
         this.updatedRestApplication = updatedRestApplication;
     }
 
-    public RestApplication getUpdatedRestApplication() {
-        return updatedRestApplication;
+    public Optional<RestApplication> getUpdatedRestApplication() {
+        return Optional.ofNullable(updatedRestApplication);
     }
 
 

@@ -21,7 +21,7 @@ import com.castlemock.model.core.user.User;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.service.core.user.input.ReadUserInput;
 
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -34,11 +34,11 @@ public final class ReadUserOutput implements Output {
     private final User user;
 
     public ReadUserOutput(final Builder builder) {
-        this.user = Objects.requireNonNull(builder.user);
+        this.user = builder.user;
     }
 
-    public User getUser() {
-        return user;
+    public Optional<User> getUser() {
+        return Optional.ofNullable(user);
     }
 
     public static Builder builder() {

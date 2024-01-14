@@ -80,15 +80,23 @@ public class SoapResourceRestController extends AbstractRestController {
                 .projectId(projectId)
                 .resourceId(resourceId)
                 .build());
-        final SoapResource soapResource = output.getResource();
+
+        if(output.getResource().isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        final SoapResource soapResource = output.getResource().get();
         final LoadSoapResourceOutput loadOutput =
                 this.serviceProcessor.process(LoadSoapResourceInput.builder()
                         .projectId(projectId)
                         .resourceId(soapResource.getId())
                         .build());
-        return ResponseEntity.ok(soapResource.toBuilder()
-                .content(loadOutput.getResource())
-                .build());
+        return loadOutput.getResource()
+                .map(content -> soapResource.toBuilder()
+                        .content(content)
+                        .build())
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Get SOAP resource content")
@@ -104,7 +112,9 @@ public class SoapResourceRestController extends AbstractRestController {
                         .projectId(projectId)
                         .resourceId(resourceId)
                         .build());
-        return ResponseEntity.ok(output.getResource());
+        return output.getResource()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Import resource", description = "The service will upload a SOAP resource. " +

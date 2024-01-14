@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,8 +31,8 @@ public final class CreateRestMethodOutput implements Output {
     @NotNull
     private final RestMethod createdRestMethod;
 
-    private CreateRestMethodOutput(RestMethod createdRestMethod) {
-        this.createdRestMethod = createdRestMethod;
+    private CreateRestMethodOutput(final RestMethod createdRestMethod) {
+        this.createdRestMethod = Objects.requireNonNull(createdRestMethod, "createdRestMethod");
     }
 
     public RestMethod getCreatedRestMethod() {

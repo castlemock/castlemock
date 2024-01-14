@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 
+import java.util.Optional;
+
 
 /**
  * @author Karl Dahlgren
@@ -34,8 +36,8 @@ public final class ReadRestMethodOutput implements Output{
         this.restMethod = restMethod;
     }
 
-    public RestMethod getRestMethod() {
-        return restMethod;
+    public Optional<RestMethod> getRestMethod() {
+        return Optional.ofNullable(restMethod);
     }
 
 

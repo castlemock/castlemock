@@ -58,7 +58,13 @@ public class ReadRestResourceServiceTest {
         Mockito.verify(methodRepository, Mockito.times(1)).findWithResourceId(resource.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(resource, result.getOutput().getRestResource());
+
+        final RestResource restResource = result.getOutput()
+                .getRestResource()
+                .orElse(null);
+
+        Assert.assertNotNull(restResource);
+        Assert.assertEquals(resource, restResource);
     }
 
 }

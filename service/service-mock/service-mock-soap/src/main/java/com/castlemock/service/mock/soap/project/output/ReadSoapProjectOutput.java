@@ -19,7 +19,7 @@ package com.castlemock.service.mock.soap.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -30,11 +30,11 @@ public final class ReadSoapProjectOutput implements Output{
     private final SoapProject project;
 
     private ReadSoapProjectOutput(final Builder builder) {
-        this.project = Objects.requireNonNull(builder.project);
+        this.project = builder.project;
     }
 
-    public SoapProject getProject() {
-        return project;
+    public Optional<SoapProject> getProject() {
+        return Optional.ofNullable(project);
     }
 
     public static Builder builder(){

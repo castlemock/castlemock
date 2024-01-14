@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,8 +31,8 @@ public final class CreateRestMockResponseOutput implements Output {
     @NotNull
     private final RestMockResponse restMockResponse;
 
-    private CreateRestMockResponseOutput(RestMockResponse restMockResponse) {
-        this.restMockResponse = restMockResponse;
+    private CreateRestMockResponseOutput(final RestMockResponse restMockResponse) {
+        this.restMockResponse = Objects.requireNonNull(restMockResponse, "restMockResponse");
     }
 
     public RestMockResponse getRestMockResponse() {

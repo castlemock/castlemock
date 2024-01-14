@@ -20,7 +20,7 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -31,7 +31,7 @@ public final class ReadAllSoapProjectsOutput implements Output {
     private final List<SoapProject> projects;
 
     private ReadAllSoapProjectsOutput(final Builder builder) {
-        this.projects = Objects.requireNonNull(builder.projects);
+        this.projects = Optional.ofNullable(builder.projects).orElseGet(List::of);
     }
 
     public List<SoapProject> getProjects() {

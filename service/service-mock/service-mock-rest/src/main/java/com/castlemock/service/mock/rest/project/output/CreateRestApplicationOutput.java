@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestApplication;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -30,7 +32,7 @@ public final class CreateRestApplicationOutput implements Output {
     private final RestApplication savedRestApplication;
 
     private CreateRestApplicationOutput(final RestApplication savedRestApplication) {
-        this.savedRestApplication = savedRestApplication;
+        this.savedRestApplication = Objects.requireNonNull(savedRestApplication, "savedRestApplication");
     }
 
     public RestApplication getSavedRestApplication() {

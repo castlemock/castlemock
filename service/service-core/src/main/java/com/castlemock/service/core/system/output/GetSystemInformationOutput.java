@@ -32,7 +32,7 @@ public final class GetSystemInformationOutput implements Output {
     private final SystemInformation systemInformation;
 
     private GetSystemInformationOutput(final Builder builder) {
-        this.systemInformation = Objects.requireNonNull(builder.systemInformation);
+        this.systemInformation = Objects.requireNonNull(builder.systemInformation, "systemInformation");
     }
 
     public SystemInformation getSystemInformation() {

@@ -30,7 +30,7 @@ public final class CreateSoapProjectOutput implements Output {
     private final SoapProject project;
 
     private CreateSoapProjectOutput(final Builder builder) {
-        this.project = Objects.requireNonNull(builder.project);
+        this.project = Objects.requireNonNull(builder.project, "project");
     }
 
     public SoapProject getProject() {

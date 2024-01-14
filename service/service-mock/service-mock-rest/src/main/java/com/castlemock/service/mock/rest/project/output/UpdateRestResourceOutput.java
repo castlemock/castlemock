@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestResource;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,12 +31,12 @@ public final class UpdateRestResourceOutput implements Output {
     @NotNull
     private final RestResource updatedRestResource;
 
-    private UpdateRestResourceOutput(RestResource updatedRestResource) {
+    private UpdateRestResourceOutput(final RestResource updatedRestResource) {
         this.updatedRestResource = updatedRestResource;
     }
 
-    public RestResource getUpdatedRestResource() {
-        return updatedRestResource;
+    public Optional<RestResource> getUpdatedRestResource() {
+        return Optional.ofNullable(updatedRestResource);
     }
 
 

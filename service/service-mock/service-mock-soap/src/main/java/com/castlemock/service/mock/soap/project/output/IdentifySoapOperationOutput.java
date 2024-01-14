@@ -41,10 +41,10 @@ public final class IdentifySoapOperationOutput implements Output{
     private final SoapOperation operation;
 
     private IdentifySoapOperationOutput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
-        this.operation = Objects.requireNonNull(builder.operation);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
+        this.operation = Objects.requireNonNull(builder.operation, "operation");
 
     }
 

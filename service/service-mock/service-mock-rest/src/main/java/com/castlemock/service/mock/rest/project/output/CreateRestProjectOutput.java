@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestProject;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,8 +31,8 @@ public final class CreateRestProjectOutput implements Output {
     @NotNull
     private final RestProject savedRestProject;
 
-    private CreateRestProjectOutput(RestProject savedRestProject) {
-        this.savedRestProject = savedRestProject;
+    private CreateRestProjectOutput(final RestProject savedRestProject) {
+        this.savedRestProject = Objects.requireNonNull(savedRestProject, "savedRestProject");
     }
 
     public RestProject getSavedRestProject() {

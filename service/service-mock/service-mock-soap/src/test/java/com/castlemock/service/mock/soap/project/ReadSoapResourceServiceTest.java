@@ -45,7 +45,12 @@ public class ReadSoapResourceServiceTest {
         Mockito.verify(resourceRepository, Mockito.times(1)).findOne(resource.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(resource, result.getOutput().getResource());
+
+        final SoapResource returnedSoapResource = result.getOutput().getResource()
+                .orElse(null);
+
+        Assert.assertNotNull(returnedSoapResource);
+        Assert.assertEquals(resource, returnedSoapResource);
     }
 
 }

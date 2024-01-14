@@ -99,7 +99,8 @@ public class UpdateCurrentUserServiceTest {
         final UpdateCurrentUserOutput output = serviceResult.getOutput();
 
         final String encodedPassword = PASSWORD_ENCODER.encode(user.getPassword());
-        final User returnedUser = output.getUpdatedUser();
+        final User returnedUser = output.getUpdatedUser()
+                .orElse(null);
         Assert.assertNotNull(returnedUser);
         Assert.assertEquals(updatedUser.getId(), returnedUser.getId());
         Assert.assertEquals(updatedUser.getPassword(), returnedUser.getPassword());

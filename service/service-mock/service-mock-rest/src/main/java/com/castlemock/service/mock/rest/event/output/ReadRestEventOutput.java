@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestEvent;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,12 +31,12 @@ public final class ReadRestEventOutput implements Output {
     @NotNull
     private final RestEvent restEvent;
 
-    private ReadRestEventOutput(RestEvent restEvent) {
+    private ReadRestEventOutput(final RestEvent restEvent) {
         this.restEvent = restEvent;
     }
 
-    public RestEvent getRestEvent() {
-        return restEvent;
+    public Optional<RestEvent> getRestEvent() {
+        return Optional.ofNullable(restEvent);
     }
 
     public static Builder builder(){

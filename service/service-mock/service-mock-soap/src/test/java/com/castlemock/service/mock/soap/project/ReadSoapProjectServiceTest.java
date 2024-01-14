@@ -24,7 +24,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -74,7 +73,12 @@ public class ReadSoapProjectServiceTest {
         Mockito.verify(operationRepository, Mockito.times(1)).findWithPortId(port.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(project, result.getOutput().getProject());
+
+        final SoapProject soapProject = result.getOutput().getProject()
+                .orElse(null);
+
+        Assert.assertNotNull(soapProject);
+        Assert.assertEquals(project, soapProject);
     }
 
 }

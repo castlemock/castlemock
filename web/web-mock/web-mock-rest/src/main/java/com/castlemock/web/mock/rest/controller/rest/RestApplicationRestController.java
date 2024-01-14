@@ -72,7 +72,9 @@ public class RestApplicationRestController extends AbstractRestController {
                 .restProjectId(projectId)
                 .restApplicationId(applicationId)
                 .build());
-        return ResponseEntity.ok(output.getRestApplication());
+        return output.getRestApplication()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Delete Application")
@@ -89,7 +91,9 @@ public class RestApplicationRestController extends AbstractRestController {
                 .restProjectId(projectId)
                 .restApplicationId(applicationId)
                 .build());
-        return ResponseEntity.ok(output.getApplication());
+        return output.getApplication()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Update Application")
@@ -108,7 +112,9 @@ public class RestApplicationRestController extends AbstractRestController {
                 .restApplicationId(applicationId)
                 .name(request.getName())
                 .build());
-        return ResponseEntity.ok(output.getUpdatedRestApplication());
+        return output.getUpdatedRestApplication()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Create Application")

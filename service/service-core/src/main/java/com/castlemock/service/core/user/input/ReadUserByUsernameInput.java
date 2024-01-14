@@ -34,7 +34,7 @@ public final class ReadUserByUsernameInput implements Input {
     private final String username;
 
     private ReadUserByUsernameInput(final Builder builder) {
-        this.username = Objects.requireNonNull(builder.username);
+        this.username = Objects.requireNonNull(builder.username, "username");
     }
 
     public String getUsername() {

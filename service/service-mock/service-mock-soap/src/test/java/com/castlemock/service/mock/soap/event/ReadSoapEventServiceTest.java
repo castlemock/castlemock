@@ -59,8 +59,10 @@ public class ReadSoapEventServiceTest {
         final ServiceTask<ReadSoapEventInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadSoapEventOutput> serviceResult = service.process(serviceTask);
         final ReadSoapEventOutput output = serviceResult.getOutput();
-        final SoapEvent returnedSoapEvent = output.getSoapEvent();
+        final SoapEvent returnedSoapEvent = output.getSoapEvent()
+                        .orElse(null);
 
+        Assert.assertNotNull(returnedSoapEvent);
         Assert.assertEquals(soapEvent.getId(), returnedSoapEvent.getId());
         Assert.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
         Assert.assertEquals(soapEvent.getPortId(), returnedSoapEvent.getPortId());

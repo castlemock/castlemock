@@ -59,9 +59,14 @@ public class ReadSoapOperationServiceTest {
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithOperationId(operation.getId());
 
         Assert.assertNotNull(result.getOutput());
+
+        final SoapOperation returnedSoapOperation = result.getOutput().getOperation()
+                .orElse(null);
+
+        Assert.assertNotNull(returnedSoapOperation);
         Assert.assertEquals(operation.toBuilder()
                 .mockResponses(List.of(mockResponse))
-                .build(), result.getOutput().getOperation());
+                .build(), returnedSoapOperation);
         Assert.assertNull(operation.getDefaultResponseName().orElse(null));
     }
 
@@ -89,10 +94,15 @@ public class ReadSoapOperationServiceTest {
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithOperationId(operation.getId());
 
         Assert.assertNotNull(result.getOutput());
+
+        final SoapOperation returnedSoapOperation = result.getOutput().getOperation()
+                .orElse(null);
+
+        Assert.assertNotNull(returnedSoapOperation);
         Assert.assertEquals(operation.toBuilder()
                 .defaultResponseName(mockResponse.getName())
                 .mockResponses(List.of(mockResponse))
-                .build(), result.getOutput().getOperation());
+                .build(), returnedSoapOperation);
     }
 
 }

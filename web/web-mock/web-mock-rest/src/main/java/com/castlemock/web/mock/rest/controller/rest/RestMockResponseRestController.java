@@ -81,8 +81,9 @@ public class RestMockResponseRestController extends AbstractRestController {
                 .restMethodId(methodId)
                 .restMockResponse(responseId)
                 .build());
-        return ResponseEntity.ok(output.getRestMockResponse());
-    }
+        return output.getRestMockResponse()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());    }
 
     @Operation(summary =  "Delete mocked response")
     @ApiResponses(value = {
@@ -108,8 +109,9 @@ public class RestMockResponseRestController extends AbstractRestController {
                 .restMethodId(methodId)
                 .restMockResponseId(responseId)
                 .build());
-        return ResponseEntity.ok(output.getMockResponse());
-    }
+        return output.getMockResponse()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());    }
 
     @Operation(summary =  "Update mocked response")
     @ApiResponses(value = {
@@ -148,8 +150,9 @@ public class RestMockResponseRestController extends AbstractRestController {
                         .orElse(null))
                 .xpathExpressions(request.getXpathExpressions())
                 .build());
-        return ResponseEntity.ok(output.getUpdatedRestMockResponse());
-    }
+        return output.getUpdatedRestMockResponse()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());    }
 
     @Operation(summary =  "Create mocked response")
     @ApiResponses(value = {

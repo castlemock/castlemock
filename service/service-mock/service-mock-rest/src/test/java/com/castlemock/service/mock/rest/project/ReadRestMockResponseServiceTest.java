@@ -51,7 +51,12 @@ public class ReadRestMockResponseServiceTest {
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findOne(mockResponse.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(mockResponse, result.getOutput().getRestMockResponse());
+
+        final RestMockResponse restMockResponse = result.getOutput().getRestMockResponse()
+                .orElse(null);
+
+        Assert.assertNotNull(restMockResponse);
+        Assert.assertEquals(mockResponse, restMockResponse);
     }
 
 }

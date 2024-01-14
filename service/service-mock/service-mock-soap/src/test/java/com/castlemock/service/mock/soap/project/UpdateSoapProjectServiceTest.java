@@ -65,12 +65,16 @@ public class UpdateSoapProjectServiceTest {
 
         final ServiceResult<UpdateSoapProjectOutput> result = service.process(serviceTask);
         final UpdateSoapProjectOutput output = result.getOutput();
-        final SoapProject returnedSoapProject = output.getProject();
-        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapProject.class));
+        final SoapProject returnedSoapProject = output.getProject()
+                        .orElse(null);
+
+        Assert.assertNotNull(returnedSoapProject);
         Assert.assertEquals(soapProject.getId(), returnedSoapProject.getId());
         Assert.assertEquals(soapProject.getName(), returnedSoapProject.getName());
         Assert.assertEquals(soapProject.getDescription(), returnedSoapProject.getDescription());
         Assert.assertEquals(soapProject.getCreated(), returnedSoapProject.getCreated());
         Assert.assertEquals(soapProject.getUpdated(), returnedSoapProject.getUpdated());
+
+        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapProject.class));
     }
 }

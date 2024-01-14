@@ -33,7 +33,7 @@ public final class SearchSoapProjectOutput implements Output {
     private final List<SearchResult> searchResults;
 
     private SearchSoapProjectOutput(final Builder builder) {
-        this.searchResults = Objects.requireNonNull(builder.searchResults);
+        this.searchResults = Objects.requireNonNull(builder.searchResults, "searchResults");
     }
 
     public List<SearchResult> getSearchResults() {

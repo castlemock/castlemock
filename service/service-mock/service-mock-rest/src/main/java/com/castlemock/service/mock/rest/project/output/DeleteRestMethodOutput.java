@@ -19,7 +19,7 @@ package com.castlemock.service.mock.rest.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -30,11 +30,11 @@ public final class DeleteRestMethodOutput implements Output {
     private final RestMethod method;
 
     private DeleteRestMethodOutput(final Builder builder){
-        this.method = Objects.requireNonNull(builder.method);
+        this.method = builder.method;
     }
 
-    public RestMethod getMethod() {
-        return method;
+    public Optional<RestMethod> getMethod() {
+        return Optional.ofNullable(method);
     }
 
     public static Builder builder(){

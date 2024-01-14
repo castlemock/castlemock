@@ -49,7 +49,12 @@ public class ReadSoapMockResponseServiceTest {
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findOne(mockResponse.getId());
 
         Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(mockResponse, result.getOutput().getMockResponse());
+
+        final SoapMockResponse returnedSoapMockResponse = result.getOutput().getMockResponse()
+                .orElse(null);
+
+        Assert.assertNotNull(returnedSoapMockResponse);
+        Assert.assertEquals(mockResponse, returnedSoapMockResponse);
     }
 
 }

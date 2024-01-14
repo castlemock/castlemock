@@ -76,10 +76,10 @@ public class UpdateSoapMockResponseServiceTest {
 
         final ServiceResult<UpdateSoapMockResponseOutput> result = service.process(serviceTask);
         final UpdateSoapMockResponseOutput output = result.getOutput();
-        final SoapMockResponse returnedSoapMockResponse = output.getMockResponse();
+        final SoapMockResponse returnedSoapMockResponse = output.getMockResponse()
+                        .orElse(null);
 
-        Mockito.verify(mockResponseRepository, Mockito.times(1)).findOne(mockResponse.getId());
-        Mockito.verify(mockResponseRepository, Mockito.times(1)).update(mockResponse.getId(), mockResponse);
+        Assert.assertNotNull(returnedSoapMockResponse);
         Assert.assertEquals(mockResponse.getId(), returnedSoapMockResponse.getId());
         Assert.assertEquals(mockResponse.getName(), returnedSoapMockResponse.getName());
         Assert.assertEquals(mockResponse.getStatus(), returnedSoapMockResponse.getStatus());
@@ -88,5 +88,8 @@ public class UpdateSoapMockResponseServiceTest {
         Assert.assertEquals(mockResponse.getStatus(), returnedSoapMockResponse.getStatus());
         Assert.assertEquals(mockResponse.getUsingExpressions(), returnedSoapMockResponse.getUsingExpressions());
         Assert.assertEquals(mockResponse.getXpathExpressions(), returnedSoapMockResponse.getXpathExpressions());
+
+        Mockito.verify(mockResponseRepository, Mockito.times(1)).findOne(mockResponse.getId());
+        Mockito.verify(mockResponseRepository, Mockito.times(1)).update(mockResponse.getId(), mockResponse);
     }
 }

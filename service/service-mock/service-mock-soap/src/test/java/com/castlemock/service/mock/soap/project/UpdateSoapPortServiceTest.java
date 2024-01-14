@@ -65,16 +65,18 @@ public class UpdateSoapPortServiceTest {
 
         final ServiceResult<UpdateSoapPortOutput> result = service.process(serviceTask);
         final UpdateSoapPortOutput output = result.getOutput();
-        final SoapPort returnedSoapPort = output.getPort();
+        final SoapPort returnedSoapPort = output.getPort()
+                        .orElse(null);
 
-        Mockito.verify(soapPortRepository, Mockito.times(1)).findOne(port.getId());
-        Mockito.verify(soapPortRepository, Mockito.times(1)).update(port.getId(), port.toBuilder()
-                .uri(newUri)
-                .build());
+        Assert.assertNotNull(returnedSoapPort);
         Assert.assertEquals(port.getId(), returnedSoapPort.getId());
         Assert.assertEquals(port.getName(), returnedSoapPort.getName());
         Assert.assertEquals(port.getUri(), returnedSoapPort.getUri());
         Assert.assertEquals(port.getProjectId(), returnedSoapPort.getProjectId());
 
+        Mockito.verify(soapPortRepository, Mockito.times(1)).findOne(port.getId());
+        Mockito.verify(soapPortRepository, Mockito.times(1)).update(port.getId(), port.toBuilder()
+                .uri(newUri)
+                .build());
     }
 }

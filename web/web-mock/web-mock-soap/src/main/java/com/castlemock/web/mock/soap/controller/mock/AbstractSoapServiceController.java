@@ -30,7 +30,6 @@ import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
 import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
-import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapRequest;
 import com.castlemock.model.mock.soap.domain.SoapResourceType;
 import com.castlemock.model.mock.soap.domain.SoapResponse;
@@ -149,14 +148,15 @@ public abstract class AbstractSoapServiceController extends AbstractController {
             while (parameterNames.hasMoreElements()) {
                 String parameterName = parameterNames.nextElement();
                 if (parameterName.equalsIgnoreCase("wsdl")) {
-                    String wsdl = getWsdl(projectId);
 
-                    wsdl = AddressLocationConfigurer.configureAddressLocation(wsdl, httpServletRequest.getRequestURL().toString());
-
-                    final HttpHeaders responseHeaders = new HttpHeaders();
-                    responseHeaders.put(CONTENT_TYPE, List.of("text/xml; " + DEFAULT_CHAR_SET));
-
-                    return new ResponseEntity<>(wsdl, responseHeaders, HttpStatus.OK);
+                    return getWsdl(projectId)
+                            .map(wsdl -> AddressLocationConfigurer.configureAddressLocation(wsdl, httpServletRequest.getRequestURL().toString()))
+                            .map(wsdl -> {
+                                final HttpHeaders responseHeaders = new HttpHeaders();
+                                responseHeaders.put(CONTENT_TYPE, List.of("text/xml; " + DEFAULT_CHAR_SET));
+                                return new ResponseEntity<>(wsdl, responseHeaders, HttpStatus.OK);
+                            })
+                            .orElseGet(() -> ResponseEntity.notFound().build());
                 }
             }
 
@@ -167,24 +167,23 @@ public abstract class AbstractSoapServiceController extends AbstractController {
         }
     }
 
-    private String getWsdl(final String projectId) {
+    private Optional<String> getWsdl(final String projectId) {
         final ReadSoapProjectOutput projectOutput = this.serviceProcessor.process(ReadSoapProjectInput.builder()
                 .projectId(projectId)
                 .build());
-        final SoapProject soapProject = projectOutput.getProject();
-
-        return soapProject.getResources().stream()
-                .filter(soapResource -> SoapResourceType.WSDL.equals(soapResource.getType()))
-                .findFirst()
-                .map(soapResource -> {
+        return projectOutput.getProject()
+                .flatMap(soapProject -> soapProject.getResources()
+                        .stream()
+                        .filter(soapResource -> SoapResourceType.WSDL.equals(soapResource.getType()))
+                        .findFirst()
+                        .flatMap(soapResource -> {
                     final LoadSoapResourceOutput loadOutput =
                             this.serviceProcessor.process(LoadSoapResourceInput.builder()
                                     .projectId(projectId)
                                     .resourceId(soapResource.getId())
                                     .build());
                     return loadOutput.getResource();
-                })
-                .orElseThrow(() -> new IllegalArgumentException("Unable to find a WSDL file for the following project: " + projectId));
+                        }));
     }
 
     /**

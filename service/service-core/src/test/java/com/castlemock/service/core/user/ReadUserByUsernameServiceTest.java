@@ -71,7 +71,7 @@ public class ReadUserByUsernameServiceTest {
         final ServiceResult<ReadUserByUsernameOutput> serviceResult = service.process(serviceTask);
         final ReadUserByUsernameOutput output = serviceResult.getOutput();
 
-        final User returnedUser = output.getUser();
+        final User returnedUser = output.getUser().orElse(null);
         Assert.assertNotNull(returnedUser);
         Assert.assertEquals(user.getId(), returnedUser.getId());
         Assert.assertEquals(user.getEmail(), returnedUser.getEmail());

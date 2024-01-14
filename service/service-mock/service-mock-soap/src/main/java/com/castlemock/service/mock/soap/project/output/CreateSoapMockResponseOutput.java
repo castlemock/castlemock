@@ -30,7 +30,7 @@ public final class CreateSoapMockResponseOutput implements Output {
     private final SoapMockResponse mockResponse;
 
     private CreateSoapMockResponseOutput(final Builder builder){
-        this.mockResponse = Objects.requireNonNull(builder.mockResponse);
+        this.mockResponse = Objects.requireNonNull(builder.mockResponse, "mockResponse");
     }
 
     public static Builder builder(){

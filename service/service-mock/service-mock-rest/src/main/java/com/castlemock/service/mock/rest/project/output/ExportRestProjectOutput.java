@@ -18,6 +18,8 @@ package com.castlemock.service.mock.rest.project.output;
 
 import com.castlemock.model.core.Output;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -26,12 +28,12 @@ public final class ExportRestProjectOutput implements Output{
 
     private final String exportedProject;
 
-    private ExportRestProjectOutput(String exportedProject) {
+    private ExportRestProjectOutput(final String exportedProject) {
         this.exportedProject = exportedProject;
     }
 
-    public String getExportedProject() {
-        return exportedProject;
+    public Optional<String> getExportedProject() {
+        return Optional.ofNullable(exportedProject);
     }
 
 

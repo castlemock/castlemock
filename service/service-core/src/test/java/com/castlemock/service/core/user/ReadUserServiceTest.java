@@ -57,7 +57,8 @@ public class ReadUserServiceTest {
         final ServiceResult<ReadUserOutput> serviceResult = service.process(serviceTask);
         final ReadUserOutput output = serviceResult.getOutput();
 
-        final User returnedUser = output.getUser();
+        final User returnedUser = output.getUser()
+                .orElse(null);
         Assert.assertNotNull(returnedUser);
         Assert.assertEquals(user.getId(), returnedUser.getId());
         Assert.assertEquals(user.getEmail(), returnedUser.getEmail());

@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.core.validation.NotNull;
 import com.castlemock.model.mock.rest.domain.RestEvent;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -29,8 +31,8 @@ public final class CreateRestEventOutput implements Output {
     @NotNull
     private final RestEvent createdRestEvent;
 
-    private CreateRestEventOutput(RestEvent createdRestEvent) {
-        this.createdRestEvent = createdRestEvent;
+    private CreateRestEventOutput(final RestEvent createdRestEvent) {
+        this.createdRestEvent = Objects.requireNonNull(createdRestEvent, "createdRestEvent");
     }
 
     public RestEvent getCreatedRestEvent() {

@@ -77,8 +77,10 @@ public class UpdateSoapOperationServiceTest {
 
         final ServiceResult<UpdateSoapOperationOutput> result = service.process(serviceTask);
         final UpdateSoapOperationOutput output = result.getOutput();
-        final SoapOperation returnedSoapOperation = output.getOperation();
+        final SoapOperation returnedSoapOperation = output.getOperation()
+                .orElse(null);
 
+        Assert.assertNotNull(returnedSoapOperation);
         Mockito.verify(operationRepository, Mockito.times(1)).findOne(operation.getId());
         Mockito.verify(operationRepository, Mockito.times(1)).update(operation.getId(), operation);
         Assert.assertEquals(operation.getId(), returnedSoapOperation.getId());
