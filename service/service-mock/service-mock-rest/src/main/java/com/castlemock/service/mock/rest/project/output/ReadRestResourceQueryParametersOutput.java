@@ -17,20 +17,22 @@
 package com.castlemock.service.mock.rest.project.output;
 
 import com.castlemock.model.core.Output;
-import com.castlemock.model.mock.rest.domain.RestParameterQuery;
 
+import java.util.Optional;
 import java.util.Set;
 
 public final class ReadRestResourceQueryParametersOutput implements Output {
 
-    private final Set<RestParameterQuery> queries;
+    private final Set<String> queries;
 
     private ReadRestResourceQueryParametersOutput(final Builder builder){
-        this.queries = Set.copyOf(builder.queries);
+        this.queries = Optional.ofNullable(builder.queries).orElseGet(Set::of);
     }
 
-    public Set<RestParameterQuery> getQueries() {
-        return queries;
+    public Set<String> getQueries() {
+        return Optional.of(queries)
+                .map(Set::copyOf)
+                .orElseGet(Set::of);
     }
 
     public static Builder builder(){
@@ -39,9 +41,9 @@ public final class ReadRestResourceQueryParametersOutput implements Output {
 
     public static final class Builder {
 
-        private Set<RestParameterQuery> queries;
+        private Set<String> queries;
 
-        public Builder queries(final Set<RestParameterQuery> queries){
+        public Builder queries(final Set<String> queries){
             this.queries = queries;
             return this;
         }

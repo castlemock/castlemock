@@ -17,7 +17,6 @@
 package com.castlemock.web.mock.soap.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
-import com.castlemock.model.core.project.Project;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.service.core.manager.FileManager;
 import com.castlemock.service.mock.soap.project.input.CreateSoapPortsInput;
@@ -66,7 +65,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
-@RequestMapping("api/rest/soap")
+@RequestMapping("api/rest")
 @Tag(name="SOAP - Project", description="REST Operations for Castle Mock SOAP Project")
 public class SoapProjectRestController extends AbstractRestController {
 
@@ -82,7 +81,7 @@ public class SoapProjectRestController extends AbstractRestController {
     }
 
     @Operation(summary =  "Get Project")
-    @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/soap/project/{projectId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<SoapProject> getProject(
@@ -101,7 +100,7 @@ public class SoapProjectRestController extends AbstractRestController {
      * @return The retrieved project.
      */
     @Operation(summary =  "Create SOAP project", description = "Create SOAP project. Required authorization: Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.POST, value = "/project")
+    @RequestMapping(method = RequestMethod.POST, value = "/soap/project")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody ResponseEntity<SoapProject> createSoapProject(@RequestBody final CreateProjectRequest request) {
         final CreateSoapProjectOutput output = super.serviceProcessor.process(CreateSoapProjectInput.builder()
@@ -118,7 +117,7 @@ public class SoapProjectRestController extends AbstractRestController {
      */
     @Operation(summary =  "Update SOAP project",
             description = "Update SOAP project. Required authorization: Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/soap/project/{projectId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody ResponseEntity<SoapProject> updateProject(@Parameter(name = "projectId", description = "The id of the project")
                                                                 @PathVariable("projectId") final String projectId,
@@ -133,7 +132,7 @@ public class SoapProjectRestController extends AbstractRestController {
                 .orElseGet(() -> ResponseEntity.notFound().build());    }
 
     @Operation(summary =  "Update Port statuses")
-    @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/status")
+    @RequestMapping(method = RequestMethod.PUT, value = "/soap/project/{projectId}/port/status")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updatePortStatuses(
@@ -150,7 +149,7 @@ public class SoapProjectRestController extends AbstractRestController {
     }
 
     @Operation(summary =  "Update Port forwarded endpoints")
-    @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/endpoint/forwarded")
+    @RequestMapping(method = RequestMethod.PUT, value = "/soap/project/{projectId}/port/endpoint/forwarded")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updatePortForwardedEndpoints(
@@ -166,7 +165,7 @@ public class SoapProjectRestController extends AbstractRestController {
     }
 
     @Operation(summary =  "Upload WSDL")
-    @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/wsdl/file")
+    @RequestMapping(method = RequestMethod.POST, value = "/soap/project/{projectId}/wsdl/file")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> uploadWSDL(
@@ -190,7 +189,7 @@ public class SoapProjectRestController extends AbstractRestController {
     }
 
     @Operation(summary =  "Link WSDL")
-    @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/wsdl/link")
+    @RequestMapping(method = RequestMethod.POST, value = "/soap/project/{projectId}/wsdl/link")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> linkWSDL(
@@ -214,7 +213,7 @@ public class SoapProjectRestController extends AbstractRestController {
      */
     @Operation(summary =  "Delete project",
             description = "Delete project. Required authorization: Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.DELETE, value = "/project/{projectId}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/soap/project/{projectId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<SoapProject> deleteProject(
@@ -234,12 +233,49 @@ public class SoapProjectRestController extends AbstractRestController {
      */
     @Operation(summary =  "Import project",
             description = "Import project. Required authorization: Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.POST, value = "/project/import")
+    @RequestMapping(method = RequestMethod.POST, value = "/soap/project/import")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    ResponseEntity<Project> importProject(
+    ResponseEntity<SoapProject> importProject(
             @Parameter(name = "file", description = "The project file which will be imported.")
             @RequestParam("file") final MultipartFile multipartFile) {
+        return this.importProjectInternally(multipartFile);
+    }
+
+    @Operation(summary =  "Import project (Deprecated)",
+            description = "Deprecated import project endpoint. Required authorization: Modifier or Admin.")
+    @RequestMapping(method = RequestMethod.POST, value = "/core/project/soap/import")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    @Deprecated
+    public @ResponseBody
+    ResponseEntity<SoapProject> deprecatedImportProject(
+            @Parameter(name = "file", description = "The project file which will be imported.")
+            @RequestParam("file") final MultipartFile multipartFile) {
+        return this.importProjectInternally(multipartFile);
+    }
+
+    /**
+     * The SOAP operations exports a project.
+     * @param projectId The id of the project that will be exported.
+     * @return A HTTP response.
+     */
+    @Operation(summary =  "Export project",
+            description = "Export project. Required authorization: Reader, Modifier or Admin.")
+    @RequestMapping(method = RequestMethod.GET, value = "/soap/project/{projectId}/export")
+    @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ResponseEntity<String> exportProject(
+            @Parameter(name = "projectId", description = "The id of the project")
+            @PathVariable("projectId") final String projectId) {
+        final ExportSoapProjectOutput output = this.serviceProcessor.process(ExportSoapProjectInput.builder()
+                .projectId(projectId)
+                .build());
+        return output.getProject()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    private ResponseEntity<SoapProject> importProjectInternally(final MultipartFile multipartFile) {
         File file = null;
         try {
             file = fileManager.uploadFile(multipartFile);
@@ -256,7 +292,7 @@ public class SoapProjectRestController extends AbstractRestController {
                     .projectRaw(stringBuilder.toString())
                     .build());
 
-            final Project project = output.getProject();
+            final SoapProject project = output.getProject();
             return ResponseEntity.ok(project);
         } catch (Exception e) {
             LOGGER.error("Unable to import project", e);
@@ -265,27 +301,5 @@ public class SoapProjectRestController extends AbstractRestController {
             fileManager.deleteUploadedFile(file);
         }
     }
-
-    /**
-     * The SOAP operations exports a project.
-     * @param projectId The id of the project that will be exported.
-     * @return A HTTP response.
-     */
-    @Operation(summary =  "Export project",
-            description = "Export project. Required authorization: Reader, Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}/export")
-    @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public @ResponseBody
-    ResponseEntity<String> exportProject(
-            @Parameter(name = "projectId", description = "The id of the project")
-            @PathVariable("projectId") final String projectId) {
-        final ExportSoapProjectOutput output = this.serviceProcessor.process(ExportSoapProjectInput.builder()
-                .projectId(projectId)
-                .build());
-        return output.getProject()
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
 
 }

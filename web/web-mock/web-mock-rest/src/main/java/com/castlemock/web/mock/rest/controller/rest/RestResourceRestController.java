@@ -17,7 +17,6 @@
 package com.castlemock.web.mock.rest.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
-import com.castlemock.model.mock.rest.domain.RestParameterQuery;
 import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.service.mock.rest.project.input.CreateRestResourceInput;
 import com.castlemock.service.mock.rest.project.input.DeleteRestResourceInput;
@@ -94,7 +93,7 @@ public class RestResourceRestController extends AbstractRestController {
             value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/parameter")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    ResponseEntity<Set<RestParameterQuery>> getResourceParameters(
+    ResponseEntity<Set<String>> getResourceParameters(
             @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @Parameter(name = "applicationId", description = "The id of the application")

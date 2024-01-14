@@ -17,7 +17,6 @@
 package com.castlemock.web.mock.rest.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
-import com.castlemock.model.core.project.Project;
 import com.castlemock.model.mock.rest.RestDefinitionType;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.service.core.manager.FileManager;
@@ -69,8 +68,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
-@RequestMapping("api/rest/rest")
-@Tag(name="REST - Application", description="REST Operations for Castle Mock REST Application")
+@RequestMapping("api/rest")
+@Tag(name="REST - Project", description="REST Operations for Castle Mock REST Project")
 public class RestProjectRestController extends AbstractRestController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(RestProjectRestController.class);
@@ -87,7 +86,7 @@ public class RestProjectRestController extends AbstractRestController {
     @Operation(summary =  "Get REST Project")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved REST Project")})
-    @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/rest/project/{projectId}")
     @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<RestProject> getRestProject(
@@ -106,7 +105,7 @@ public class RestProjectRestController extends AbstractRestController {
      * @return The retrieved project.
      */
     @Operation(summary =  "Create REST project", description = "Create REST project. Required authorization: Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.POST, value = "/project")
+    @RequestMapping(method = RequestMethod.POST, value = "/rest/project")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody ResponseEntity<RestProject> createRestProject(@RequestBody final CreateProjectRequest request) {
         final CreateRestProjectOutput output = super.serviceProcessor.process(CreateRestProjectInput.builder()
@@ -123,7 +122,7 @@ public class RestProjectRestController extends AbstractRestController {
      */
     @Operation(summary =  "Update REST project",
             description = "Update REST project. Required authorization: Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/rest/project/{projectId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody ResponseEntity<RestProject> updateProject(@Parameter(name = "projectId", description = "The id of the project")
                                                                @PathVariable("projectId") final String projectId,
@@ -140,7 +139,7 @@ public class RestProjectRestController extends AbstractRestController {
     @Operation(summary =  "Update Application statuses")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated REST application statuses")})
-    @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/application/status")
+    @RequestMapping(method = RequestMethod.PUT, value = "/rest/project/{projectId}/application/status")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updateApplicationStatuses(
@@ -159,7 +158,7 @@ public class RestProjectRestController extends AbstractRestController {
     @Operation(summary =  "Update Application forwarded endpoints")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully updated REST application forwarded endpoints")})
-    @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/application/endpoint/forwarded")
+    @RequestMapping(method = RequestMethod.PUT, value = "/rest/project/{projectId}/application/endpoint/forwarded")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> updateApplicationForwardedEndpoints(
@@ -177,7 +176,7 @@ public class RestProjectRestController extends AbstractRestController {
     @Operation(summary =  "Upload definition")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully uploaded definition")})
-    @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/definition/file")
+    @RequestMapping(method = RequestMethod.POST, value = "/rest/project/{projectId}/definition/file")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> uploadDefinition(
@@ -204,7 +203,7 @@ public class RestProjectRestController extends AbstractRestController {
     @Operation(summary =  "Link definition")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully linked definition")})
-    @RequestMapping(method = RequestMethod.POST, value = "/project/{projectId}/definition/link")
+    @RequestMapping(method = RequestMethod.POST, value = "/rest/project/{projectId}/definition/link")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<Void> linkDefinition(
@@ -228,7 +227,7 @@ public class RestProjectRestController extends AbstractRestController {
      */
     @Operation(summary =  "Delete project",
             description = "Delete project. Required authorization: Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.DELETE, value = "/project/{projectId}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/rest/project/{projectId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
     ResponseEntity<RestProject> deleteProject(
@@ -248,12 +247,55 @@ public class RestProjectRestController extends AbstractRestController {
      */
     @Operation(summary =  "Import project",
             description = "Import project. Required authorization: Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.POST, value = "/project/import")
+    @RequestMapping(method = RequestMethod.POST, value = "/rest/project/import")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    ResponseEntity<Project> importProject(
+    ResponseEntity<RestProject> importProject(
             @Parameter(name = "file", description = "The project file which will be imported.")
             @RequestParam("file") final MultipartFile multipartFile) {
+        return this.importProjectInternally(multipartFile);
+    }
+
+    /**
+     * The REST operations imports a project.
+     * @param multipartFile The project file which will be imported.
+     * @return A HTTP response.
+     */
+    @Operation(summary =  "Import project (Deprecated)",
+            description = "Deprecated import project endpoint. Required authorization: Modifier or Admin.")
+    @RequestMapping(method = RequestMethod.POST, value = "/core/project/rest/import")
+    @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    @Deprecated
+    public @ResponseBody
+    ResponseEntity<RestProject> deprecatedImportProject(
+            @Parameter(name = "file", description = "The project file which will be imported.")
+            @RequestParam("file") final MultipartFile multipartFile) {
+        return this.importProjectInternally(multipartFile);
+    }
+
+    /**
+     * The REST operations exports a project.
+     * @param projectId The id of the project that will be exported.
+     * @return A HTTP response.
+     */
+    @Operation(summary =  "Export project",
+            description = "Export project. Required authorization: Reader, Modifier or Admin.")
+    @RequestMapping(method = RequestMethod.GET, value = "/rest/project/{projectId}/export")
+    @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
+    public @ResponseBody
+    ResponseEntity<String> exportProject(
+            @Parameter(name = "projectId", description = "The id of the project")
+            @PathVariable("projectId") final String projectId) {
+        final ExportRestProjectOutput output = this.serviceProcessor.process(ExportRestProjectInput.builder()
+                .restProjectId(projectId)
+                .build());
+        return output.getExportedProject()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
+    private ResponseEntity<RestProject> importProjectInternally(final MultipartFile multipartFile) {
         File file = null;
         try {
             file = fileManager.uploadFile(multipartFile);
@@ -270,7 +312,7 @@ public class RestProjectRestController extends AbstractRestController {
                     .projectRaw(stringBuilder.toString())
                     .build());
 
-            final Project project = output.getProject();
+            final RestProject project = output.getProject();
             return ResponseEntity.ok(project);
         } catch (Exception e) {
             LOGGER.error("Unable to import project", e);
@@ -279,25 +321,5 @@ public class RestProjectRestController extends AbstractRestController {
             fileManager.deleteUploadedFile(file);
         }
     }
-
-    /**
-     * The REST operations exports a project.
-     * @param projectId The id of the project that will be exported.
-     * @return A HTTP response.
-     */
-    @Operation(summary =  "Export project",
-            description = "Export project. Required authorization: Reader, Modifier or Admin.")
-    @RequestMapping(method = RequestMethod.GET, value = "/project/{projectId}/export")
-    @PreAuthorize("hasAuthority('READER') or hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public @ResponseBody
-    ResponseEntity<String> exportProject(
-            @Parameter(name = "projectId", description = "The id of the project")
-            @PathVariable("projectId") final String projectId) {
-        final ExportRestProjectOutput output = this.serviceProcessor.process(ExportRestProjectInput.builder()
-                .restProjectId(projectId)
-                .build());
-        return output.getExportedProject()
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());     }
 
 }

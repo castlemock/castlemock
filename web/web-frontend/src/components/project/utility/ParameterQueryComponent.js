@@ -184,7 +184,7 @@ class ParameterQueryComponent extends PureComponent {
                             <select id="inputStatus" className="form-control" onChange={event => this.setNewParameterParameter(event.target.value)} >
                                 <option value={""}> -- select a parameter -- </option>
                                 {this.state.resourceParameters.map(resourceParameter =>
-                                    <option key={resourceParameter.query} value={resourceParameter.query}>{resourceParameter.query}</option>
+                                    <option key={resourceParameter} value={resourceParameter}>{resourceParameter}</option>
                                 )};
                             </select>
                         </div>
