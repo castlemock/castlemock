@@ -19,9 +19,12 @@ package com.castlemock.service.mock.soap.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.service.mock.soap.project.input.DuplicateSoapMockResponsesInput;
 import com.castlemock.service.mock.soap.project.output.DuplicateSoapMockResponsesOutput;
+
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -44,8 +47,9 @@ public class DuplicateSoapMockResponsesService extends AbstractSoapProjectServic
                 .getMockResponseIds()
                 .stream()
                 .map(this.mockResponseRepository::findOne)
+                .flatMap(Optional::stream)
                 .map(SoapMockResponse::toBuilder)
-                .map(builder -> builder.id(null))
+                .map(builder -> builder.id(IdUtility.generateId()))
                 .map(SoapMockResponse.Builder::build)
                 .forEach(this.mockResponseRepository::save);
 

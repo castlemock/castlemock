@@ -23,6 +23,8 @@ import com.castlemock.model.mock.rest.domain.RestApplication;
 import com.castlemock.service.mock.rest.project.input.DeleteRestApplicationInput;
 import com.castlemock.service.mock.rest.project.output.DeleteRestApplicationOutput;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -41,9 +43,9 @@ public class DeleteRestApplicationService extends AbstractRestProjectService imp
     @Override
     public ServiceResult<DeleteRestApplicationOutput> process(final ServiceTask<DeleteRestApplicationInput> serviceTask) {
         final DeleteRestApplicationInput input = serviceTask.getInput();
-        final RestApplication deletedApplication = this.deleteApplication(input.getRestApplicationId());
+        final Optional<RestApplication> deletedApplication = this.deleteApplication(input.getRestApplicationId());
         return createServiceResult(DeleteRestApplicationOutput.builder()
-                .application(deletedApplication)
+                .application(deletedApplication.orElse(null))
                 .build());
     }
 }

@@ -24,6 +24,7 @@ import com.castlemock.service.core.user.input.UpdateUserInput;
 import com.castlemock.service.core.user.output.UpdateUserOutput;
 
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -43,8 +44,16 @@ public class UpdateUserService extends AbstractUserService implements Service<Up
     @Override
     public ServiceResult<UpdateUserOutput> process(final ServiceTask<UpdateUserInput> serviceTask) {
         final UpdateUserInput input = serviceTask.getInput();
-        final User.Builder builder = find(input.getId())
-                .toBuilder()
+        final Optional<User> updatedUser = find(input.getId())
+                .flatMap(user -> getAndUpdateUser(input, user));
+
+        return createServiceResult(UpdateUserOutput.builder()
+                .updatedUser(updatedUser.orElse(null))
+                .build());
+    }
+
+    private Optional<User> getAndUpdateUser(final UpdateUserInput input, final User user) {
+        final User.Builder builder = user.toBuilder()
                 .username(input.getUsername())
                 .fullName(input.getFullName().orElse(null))
                 .email(input.getEmail().orElse(null))
@@ -53,13 +62,8 @@ public class UpdateUserService extends AbstractUserService implements Service<Up
                 .updated(new Date());
 
         input.getPassword()
-                 .ifPresent(password -> builder.password(input.getPassword().orElse(null)));
+                .ifPresent(password -> builder.password(input.getPassword().orElse(null)));
 
-        final User user = builder.build();
-
-        update(user.getId(), user);
-        return createServiceResult(UpdateUserOutput.builder()
-                .updatedUser(user)
-                .build());
+        return update(user.getId(), builder.build());
     }
 }

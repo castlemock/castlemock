@@ -16,15 +16,11 @@
 
 package com.castlemock.service.mock.soap.project.adapter;
 
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.service.project.ProjectServiceAdapter;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.service.mock.soap.project.input.ReadAllSoapProjectsInput;
-import com.castlemock.service.mock.soap.project.input.SearchSoapProjectInput;
 import com.castlemock.service.mock.soap.project.output.ReadAllSoapProjectsOutput;
-import com.castlemock.service.mock.soap.project.output.SearchSoapProjectOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,17 +54,4 @@ public class SoapProjectServiceAdapter implements ProjectServiceAdapter<SoapProj
         return "soap";
     }
 
-    /**
-     * Searches for resources that matches the provided query. The matching resources will
-     * be returned as a collection of {@link SearchResult}
-     * @param searchQuery The search query that will be used to identify the resources
-     * @return A list of search results
-     */
-    @Override
-    public List<SearchResult> search(final SearchQuery searchQuery) {
-        final SearchSoapProjectOutput output = serviceProcessor.process(SearchSoapProjectInput.builder()
-                .searchQuery(searchQuery)
-                .build());
-        return output.getSearchResults();
-    }
 }

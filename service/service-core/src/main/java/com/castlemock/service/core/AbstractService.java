@@ -49,7 +49,7 @@ public abstract class AbstractService<D, I extends Serializable, R extends Repos
      * @param id The id that an instance has to match in order to be retrieved
      * @return Returns an instance that matches the provided id
      */
-    protected D find(I id) {
+    protected Optional<D> find(final I id) {
         Preconditions.checkNotNull(id, "The provided id cannot be null");
         return repository.findOne(id);
     }
@@ -75,7 +75,7 @@ public abstract class AbstractService<D, I extends Serializable, R extends Repos
      * @param dto The instance that will be saved
      * @return Return the same instance that has been saved in the database
      */
-    protected D save(D dto) {
+    protected D save(final D dto) {
         Preconditions.checkNotNull(dto, "Unable to save due to invalid " + dto.getClass().getName() + " instance. Instance cannot be null");
         return repository.save(dto);
     }
@@ -85,7 +85,7 @@ public abstract class AbstractService<D, I extends Serializable, R extends Repos
      * Delete an instance that match the provided id
      * @param id The instance that matches the provided id will be deleted in the database
      */
-    protected D delete(final I id) {
+    protected Optional<D> delete(final I id) {
         Preconditions.checkNotNull(id, "The provided id cannot be null");
         return repository.delete(id);
     }

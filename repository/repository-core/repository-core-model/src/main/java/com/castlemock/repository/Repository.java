@@ -17,11 +17,10 @@
 package com.castlemock.repository;
 
 import com.castlemock.model.core.Saveable;
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The abstract repository provides functionality to interact with the file system in order to manage a specific type.
@@ -48,7 +47,7 @@ public interface Repository<D, I extends Serializable> {
      * @return Returns an instance that matches the provided id
      * @see I
      */
-    D findOne(I id);
+    Optional<D> findOne(I id);
 
     /**
      * Retrieves a list of all the instances of the specific type
@@ -70,7 +69,7 @@ public interface Repository<D, I extends Serializable> {
      * Delete an instance that match the provided id
      * @param id The instance that matches the provided id will be deleted in the database
      */
-    D delete(I id);
+    Optional<D> delete(I id);
 
     /**
      * Updates an instance that matches the provided id.
@@ -86,13 +85,6 @@ public interface Repository<D, I extends Serializable> {
      * @return The count of entities
      */
     Integer count();
-
-    /**
-     * The method provides the functionality to search in the repository with a {@link SearchQuery}
-     * @param query The search query
-     * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
-     */
-    List<D> search(SearchQuery query);
 
     /**
      * Checks if the provided <code>id</code> already exists.

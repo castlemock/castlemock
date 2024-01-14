@@ -101,12 +101,11 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      * @return Returns an instance that matches the provided id
      */
     @Override
-    public D findOne(final I id) {
+    public Optional<D> findOne(final I id) {
         Preconditions.checkNotNull(id, "The provided id cannot be null");
         LOGGER.debug("Retrieving " + entityClass.getSimpleName() + " with id " + id);
         return Optional.ofNullable(collection.get(id))
-                .map(this.typeConverter)
-                .orElse(null);
+                .map(this.typeConverter);
     }
 
     /**
@@ -209,7 +208,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      * @param id The instance that matches the provided id will be deleted in the database
      */
     @Override
-    public D delete(final I id) {
+    public Optional<D> delete(final I id) {
         Preconditions.checkNotNull(id, "The provided id cannot be null");
         final String filename = getFilename(id);
         LOGGER.debug("Start the deletion of " + entityClass.getSimpleName() + " with id " + id);
@@ -217,9 +216,10 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
         try {
             writeLock.acquire();
             this.fileRepositorySupport.delete(filename);
-            final T type = collection.remove(id);
             LOGGER.debug("Deletion of " + entityClass.getSimpleName() + " with id " + id + " was successfully completed");
-            return this.typeConverter.apply(type);
+
+            return Optional.ofNullable(collection.remove(id))
+                    .map(this.typeConverter);
         } catch (InterruptedException e) {
             throw new IllegalStateException("Unable to acquire the write lock", e);
         } finally {

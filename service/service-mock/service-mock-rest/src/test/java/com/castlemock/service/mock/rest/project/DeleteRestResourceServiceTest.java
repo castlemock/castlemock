@@ -36,8 +36,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -72,7 +72,7 @@ public class DeleteRestResourceServiceTest {
         final RestMethod method = RestMethodTestBuilder.builder().build();
         final RestMockResponse mockResponse = RestMockResponseTestBuilder.builder().build();
 
-        Mockito.when(resourceRepository.delete(Mockito.any())).thenReturn(resource);
+        Mockito.when(resourceRepository.delete(Mockito.any())).thenReturn(Optional.of(resource));
         Mockito.when(methodRepository.findWithResourceId(resourceId)).thenReturn(List.of(method));
         Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(List.of(mockResponse));
 

@@ -16,22 +16,15 @@
 
 package com.castlemock.service.core.project;
 
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
-import com.castlemock.model.core.SearchResultTestBuilder;
 import com.castlemock.model.core.service.project.ProjectServiceAdapter;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.ApplicationContext;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -64,42 +57,4 @@ public class ProjectServiceFacadeImplTest {
         serviceFacade.initiate();
     }
 
-    @Test
-    public void testSearch(){
-        final List<SearchResult> result = new ArrayList<>();
-        final SearchResult firstSearchResult = SearchResultTestBuilder.builder()
-                        .title("First title")
-                        .description("First description")
-                        .link("First link")
-                        .build();
-
-        final SearchResult secondSearchResult = SearchResultTestBuilder.builder()
-                .title("Second title")
-                .description("Second description")
-                .link("Second link")
-                .build();
-
-        result.add(firstSearchResult);
-        result.add(secondSearchResult);
-        Mockito.when(projectServiceAdapter.search(Mockito.any(SearchQuery.class))).thenReturn(result);
-
-        final SearchQuery searchQuery = SearchQuery.builder()
-                .query("Search query")
-                .build();
-        
-        final List<SearchResult> returnedResult = serviceFacade.search(searchQuery);
-
-        Assert.assertEquals(result.size(), returnedResult.size());
-
-        for(int index = 0; index < result.size(); index++){
-            SearchResult searchResult = result.get(index);
-            SearchResult returnedSearchResult = returnedResult.get(index);
-
-            Assert.assertEquals(searchResult.getTitle(), returnedSearchResult.getTitle());
-            Assert.assertEquals(searchResult.getDescription(), returnedSearchResult.getDescription());
-            Assert.assertEquals(searchResult.getLink(), returnedSearchResult.getLink());
-        }
-
-    }
-    
 }

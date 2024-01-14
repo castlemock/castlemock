@@ -95,6 +95,13 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
     public Optional<User> update(final String userId, final User updatedUser){
         Preconditions.checkNotNull(updatedUser);
         Preconditions.checkArgument(!updatedUser.getUsername().isEmpty(), "Invalid username. Username cannot be empty");
+        final User user = find(userId)
+                .orElse(null);
+
+        if(user == null) {
+            return Optional.empty();
+        }
+
         final User existingUser = findByUsername(updatedUser.getUsername())
                 .orElse(null);
         Preconditions.checkArgument(existingUser == null || existingUser.getId().equals(userId), "Invalid username. Username is already being used");
@@ -107,16 +114,8 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
             throw new IllegalArgumentException("Invalid user update. The last admin cannot be inactivated or locked");
         }
 
-        final User user = find(userId);
         final String oldUsername = user.getUsername();
         final Date updatedTimestamp = new Date();
-
-        LOGGER.debug("Updating user with id " + userId + "\n" +
-                "Username: " + user.getUsername() + " -> " + updatedUser.getUsername() + "\n" +
-                "Email: " + user.getEmail() + " -> " + updatedUser.getEmail() + "\n" +
-                "Status: " + user.getStatus() + " -> " + updatedUser.getStatus() + "\n" +
-                "Role: " + user.getRole() + " -> " + updatedUser.getRole() + "\n" +
-                "Updated: " + user.getUpdated() + " -> " + updatedTimestamp);
 
         final User.Builder userBuilder = user.toBuilder()
                 .id(userId)
@@ -142,10 +141,10 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
      * @param userId The user with the user id that will be deleted
      */
     @Override
-    public User delete(final String userId){
+    public Optional<User> delete(final String userId){
         LOGGER.debug("Deleting user with id " + userId);
         Preconditions.checkNotNull(userId, "User id cannot be null");
-        final User userDto = find(userId);
+        final User userDto = find(userId).orElse(null);
 
         if(userDto == null){
             throw new IllegalArgumentException("Unable to find the user with the user id " + userId);

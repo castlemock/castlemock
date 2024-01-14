@@ -22,6 +22,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
+import java.util.Optional;
 
 public class ReadRestMethodServiceTest {
 
@@ -61,8 +62,8 @@ public class ReadRestMethodServiceTest {
                         .build();
         final ServiceTask<ReadRestMethodInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(resource);
-        Mockito.when(methodRepository.findOne(method.getId())).thenReturn(method);
+        Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(Optional.of(resource));
+        Mockito.when(methodRepository.findOne(method.getId())).thenReturn(Optional.of(method));
         Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(Collections.singletonList(mockResponse));
 
         final ServiceResult<ReadRestMethodOutput> result = service.process(serviceTask);
@@ -90,8 +91,8 @@ public class ReadRestMethodServiceTest {
                         .build();
         final ServiceTask<ReadRestMethodInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(resource);
-        Mockito.when(methodRepository.findOne(method.getId())).thenReturn(method);
+        Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(Optional.of(resource));
+        Mockito.when(methodRepository.findOne(method.getId())).thenReturn(Optional.of(method));
         Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(Collections.emptyList());
 
         final ServiceResult<ReadRestMethodOutput> result = service.process(serviceTask);

@@ -15,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 public class ReadSoapResourceServiceTest {
 
     @Mock
@@ -39,7 +41,7 @@ public class ReadSoapResourceServiceTest {
                 .build();
         final ServiceTask<ReadSoapResourceInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(resource);
+        Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(Optional.of(resource));
         final ServiceResult<ReadSoapResourceOutput> result = service.process(serviceTask);
 
         Mockito.verify(resourceRepository, Mockito.times(1)).findOne(resource.getId());

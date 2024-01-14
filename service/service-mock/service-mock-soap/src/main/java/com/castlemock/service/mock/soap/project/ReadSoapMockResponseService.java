@@ -3,7 +3,6 @@ package com.castlemock.service.mock.soap.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
-import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.service.mock.soap.project.input.ReadSoapMockResponseInput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapMockResponseOutput;
 
@@ -25,9 +24,9 @@ public class ReadSoapMockResponseService extends AbstractSoapProjectService impl
     @Override
     public ServiceResult<ReadSoapMockResponseOutput> process(ServiceTask<ReadSoapMockResponseInput> serviceTask) {
         final ReadSoapMockResponseInput input = serviceTask.getInput();
-        final SoapMockResponse soapMockResponse = this.mockResponseRepository.findOne(input.getSoapMockResponseId());
         return createServiceResult(ReadSoapMockResponseOutput.builder()
-                .mockResponse(soapMockResponse)
+                .mockResponse(this.mockResponseRepository.findOne(input.getSoapMockResponseId())
+                        .orElse(null))
                 .build());
     }
 }

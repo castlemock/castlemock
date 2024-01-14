@@ -26,6 +26,7 @@ import com.castlemock.service.mock.rest.project.input.ReadRestMethodInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestMethodOutput;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -45,25 +46,32 @@ public class ReadRestMethodService extends AbstractRestProjectService implements
     @Override
     public ServiceResult<ReadRestMethodOutput> process(final ServiceTask<ReadRestMethodInput> serviceTask) {
         final ReadRestMethodInput input = serviceTask.getInput();
-        final RestResource restResource = this.resourceRepository.findOne(input.getRestResourceId());
-        final RestMethod restMethod = this.methodRepository.findOne(input.getRestMethodId());
-        final List<RestMockResponse> mockResponses = this.mockResponseRepository.findWithMethodId(input.getRestMethodId());
-
-        final RestMethod.Builder builder = restMethod.toBuilder()
-                .uri(restResource.getUri())
-                .mockResponses(mockResponses);
-        if(restMethod.getDefaultMockResponseId().isPresent()){
-            // Iterate through all the mocked responses to identify
-            // which has been set to be the default XPath mock response.
-            mockResponses
-                    .stream()
-                    .filter(mockResponse -> mockResponse.getId().equals(restMethod.getDefaultMockResponseId().get()))
-                    .findFirst()
-                    .ifPresent(mockResponse -> builder.defaultResponseName(mockResponse.getName()));
-        }
-
         return createServiceResult(ReadRestMethodOutput.builder()
-                .restMethod(builder.build())
+                .restMethod(getMethod(input.getRestMethodId(), input.getRestResourceId()).orElse(null))
                 .build());
+    }
+
+    private Optional<RestMethod> getMethod(final String methodId, final String resourceId) {
+        return this.resourceRepository.findOne(resourceId)
+                .flatMap(resource -> this.methodRepository.findOne(methodId)
+                        .map(method -> prepareRestMethod(method, resource)));
+    }
+
+    private RestMethod prepareRestMethod(final RestMethod method, final RestResource resource) {
+        final List<RestMockResponse> mockResponses = this.mockResponseRepository.findWithMethodId(method.getId());
+        return method.toBuilder()
+                .uri(resource.getUri())
+                .mockResponses(mockResponses)
+                .defaultMockResponseId(getDefaultMockResponseName(method, mockResponses).orElse(null))
+                .build();
+    }
+
+    private Optional<String> getDefaultMockResponseName(final RestMethod method, final List<RestMockResponse> mockResponses) {
+        return method.getDefaultMockResponseId()
+                .flatMap(mockResponseId -> mockResponses
+                        .stream()
+                        .filter(mockResponse -> mockResponse.getId().equals(mockResponseId))
+                        .findFirst()
+                        .map(RestMockResponse::getName));
     }
 }

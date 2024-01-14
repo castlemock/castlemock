@@ -22,8 +22,6 @@ import com.castlemock.model.core.ServiceTask;
 import com.castlemock.service.mock.soap.project.input.UpdateCurrentMockResponseSequenceIndexInput;
 import com.castlemock.service.mock.soap.project.output.UpdateCurrentMockResponseSequenceIndexOutput;
 
-import java.util.Optional;
-
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -42,11 +40,12 @@ public class UpdateCurrentMockResponseSequenceIndexService extends AbstractSoapP
     @Override
     public ServiceResult<UpdateCurrentMockResponseSequenceIndexOutput> process(final ServiceTask<UpdateCurrentMockResponseSequenceIndexInput> serviceTask) {
         final UpdateCurrentMockResponseSequenceIndexInput input = serviceTask.getInput();
-        Optional.ofNullable(this.operationRepository.findOne(input.getOperationId()))
+        this.operationRepository.findOne(input.getOperationId())
                 .map(operation -> operation.toBuilder()
                         .currentResponseSequenceIndex(input.getCurrentResponseSequenceIndex())
                         .build())
                 .ifPresent(operation -> this.operationRepository.save(operation));
-        return createServiceResult(UpdateCurrentMockResponseSequenceIndexOutput.builder().build());
+        return createServiceResult(UpdateCurrentMockResponseSequenceIndexOutput.builder()
+                .build());
     }
 }

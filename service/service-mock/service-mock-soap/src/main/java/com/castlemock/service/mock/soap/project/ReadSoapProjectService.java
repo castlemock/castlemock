@@ -31,7 +31,7 @@ import com.google.common.base.Preconditions;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -51,9 +51,16 @@ public class ReadSoapProjectService extends AbstractSoapProjectService implement
     @Override
     public ServiceResult<ReadSoapProjectOutput> process(final ServiceTask<ReadSoapProjectInput> serviceTask) {
         final ReadSoapProjectInput input = serviceTask.getInput();
-        final SoapProject soapProject = find(input.getProjectId());
-        final List<SoapResource> resources = this.resourceRepository.findWithProjectId(input.getProjectId());
-        final List<SoapPort> ports = this.portRepository.findWithProjectId(input.getProjectId())
+        final Optional<SoapProject> project = find(input.getProjectId())
+                .map(this::prepareSoapProject);
+        return createServiceResult(ReadSoapProjectOutput.builder()
+                .project(project.orElse(null))
+                .build());
+    }
+
+    private SoapProject prepareSoapProject(final SoapProject project) {
+        final List<SoapResource> resources = this.resourceRepository.findWithProjectId(project.getId());
+        final List<SoapPort> ports = this.portRepository.findWithProjectId(project.getId())
                 .stream()
                 .map(port -> {
                     final List<SoapOperation> operations = this.operationRepository.findWithPortId(port.getId());
@@ -61,14 +68,12 @@ public class ReadSoapProjectService extends AbstractSoapProjectService implement
                     return port.toBuilder()
                             .statusCount(soapOperationStatusCount)
                             .build();})
-                .collect(Collectors.toList());
+                .toList();
 
-        return createServiceResult(ReadSoapProjectOutput.builder()
-                .project(soapProject.toBuilder()
-                        .resources(resources)
-                        .ports(ports)
-                        .build())
-                .build());
+        return project.toBuilder()
+                .resources(resources)
+                .ports(ports)
+                .build();
     }
 
 

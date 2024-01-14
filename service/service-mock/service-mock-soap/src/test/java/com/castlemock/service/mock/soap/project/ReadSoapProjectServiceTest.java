@@ -26,6 +26,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class ReadSoapProjectServiceTest {
 
@@ -61,7 +62,7 @@ public class ReadSoapProjectServiceTest {
                 .build();
         final ServiceTask<ReadSoapProjectInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(repository.findOne(project.getId())).thenReturn(project);
+        Mockito.when(repository.findOne(project.getId())).thenReturn(Optional.of(project));
         Mockito.when(portRepository.findWithProjectId(project.getId())).thenReturn(List.of(port));
         Mockito.when(resourceRepository.findWithProjectId(project.getId())).thenReturn(Collections.singletonList(resource));
         Mockito.when(operationRepository.findWithPortId(port.getId())).thenReturn(List.of(operation));

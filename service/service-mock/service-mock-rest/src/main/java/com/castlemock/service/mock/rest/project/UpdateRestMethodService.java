@@ -23,6 +23,8 @@ import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.service.mock.rest.project.input.UpdateRestMethodInput;
 import com.castlemock.service.mock.rest.project.output.UpdateRestMethodOutput;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -41,24 +43,25 @@ public class UpdateRestMethodService extends AbstractRestProjectService implemen
     @Override
     public ServiceResult<UpdateRestMethodOutput> process(final ServiceTask<UpdateRestMethodInput> serviceTask) {
         final UpdateRestMethodInput input = serviceTask.getInput();
-        final RestMethod existing = this.methodRepository.findOne(input.getRestMethodId()).toBuilder()
-                .name(input.getName())
-                .httpMethod(input.getHttpMethod())
-                .responseStrategy(input.getResponseStrategy())
-                .status(input.getStatus())
-                .forwardedEndpoint(input.getForwardedEndpoint()
-                        .orElse(null))
-                .networkDelay(input.getNetworkDelay()
-                        .orElse(null))
-                .simulateNetworkDelay(input.getSimulateNetworkDelay()
-                        .orElse(null))
-                .automaticForward(input.getAutomaticForward()
-                        .orElse(null))
-                .build();
+        final Optional<RestMethod> updated = this.methodRepository.findOne(input.getRestMethodId())
+                .map(method -> method.toBuilder()
+                        .name(input.getName())
+                        .httpMethod(input.getHttpMethod())
+                        .responseStrategy(input.getResponseStrategy())
+                        .status(input.getStatus())
+                        .forwardedEndpoint(input.getForwardedEndpoint()
+                                .orElse(null))
+                        .networkDelay(input.getNetworkDelay()
+                                .orElse(null))
+                        .simulateNetworkDelay(input.getSimulateNetworkDelay()
+                                .orElse(null))
+                        .automaticForward(input.getAutomaticForward()
+                                .orElse(null))
+                        .build())
+                .map(methid -> this.methodRepository.update(input.getRestMethodId(), methid));
 
-        final RestMethod updated = this.methodRepository.update(input.getRestMethodId(), existing);
         return createServiceResult(UpdateRestMethodOutput.builder()
-                .restMethod(updated)
+                .restMethod(updated.orElse(null))
                 .build());
     }
 }

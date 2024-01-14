@@ -17,9 +17,6 @@
 
 package com.castlemock.repository.soap.file.project;
 
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
-import com.castlemock.model.core.SearchValidator;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapResource;
 import com.castlemock.model.mock.soap.domain.SoapResourceType;
@@ -106,21 +103,6 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFile,
 
     }
 
-    /**
-     * The method provides the functionality to search in the repository with a {@link SearchQuery}
-     *
-     * @param query The search query
-     * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
-     */
-    @Override
-    public List<SoapResource> search(final SearchQuery query) {
-        return this.collection.values()
-                .stream()
-                .filter(resource -> SearchValidator.validate(resource.getName(), query.getQuery()))
-                .map(SoapResourceFileConverter::toSoapResource)
-                .toList();
-    }
-
     @Override
     public void deleteWithProjectId(final String projectId) {
         this.collection.values()
@@ -201,7 +183,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFile,
      * @param id The instance that matches the provided id will be deleted in the database
      */
     @Override
-    public SoapResource delete(final String id) {
+    public Optional<SoapResource> delete(final String id) {
         Preconditions.checkNotNull(id, "Resource id cannot be null");
 
         SoapResourceFile soapResource = this.collection.remove(id);
@@ -229,8 +211,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFile,
 
         }
         return Optional.ofNullable(soapResource)
-                .map(SoapResourceFileConverter::toSoapResource)
-                .orElse(null);
+                .map(SoapResourceFileConverter::toSoapResource);
     }
 
 

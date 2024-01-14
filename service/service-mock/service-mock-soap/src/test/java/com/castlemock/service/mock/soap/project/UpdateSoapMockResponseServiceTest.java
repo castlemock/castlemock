@@ -31,6 +31,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  */
@@ -71,7 +73,7 @@ public class UpdateSoapMockResponseServiceTest {
         final ServiceTask<UpdateSoapMockResponseInput> serviceTask = ServiceTask.of(input, "user");
 
 
-        Mockito.when(mockResponseRepository.findOne(mockResponse.getId())).thenReturn(mockResponse);
+        Mockito.when(mockResponseRepository.findOne(mockResponse.getId())).thenReturn(Optional.of(mockResponse));
         Mockito.when(mockResponseRepository.update(Mockito.anyString(), Mockito.any(SoapMockResponse.class))).thenReturn(mockResponse);
 
         final ServiceResult<UpdateSoapMockResponseOutput> result = service.process(serviceTask);

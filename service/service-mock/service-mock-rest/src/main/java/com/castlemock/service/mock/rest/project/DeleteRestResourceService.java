@@ -19,7 +19,6 @@ package com.castlemock.service.mock.rest.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
-import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.service.mock.rest.project.input.DeleteRestResourceInput;
 import com.castlemock.service.mock.rest.project.output.DeleteRestResourceOutput;
 
@@ -41,9 +40,8 @@ public class DeleteRestResourceService extends AbstractRestProjectService implem
     @Override
     public ServiceResult<DeleteRestResourceOutput> process(final ServiceTask<DeleteRestResourceInput> serviceTask) {
         final DeleteRestResourceInput input = serviceTask.getInput();
-        final RestResource resource = this.deleteResource(input.getRestResourceId());
         return createServiceResult(DeleteRestResourceOutput.builder()
-                .resource(resource)
+                .resource(this.deleteResource(input.getRestResourceId()).orElse(null))
                 .build());
     }
 }

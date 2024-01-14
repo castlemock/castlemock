@@ -22,7 +22,7 @@ import com.castlemock.model.core.ServiceTask;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapOperationsForwardedEndpointInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapOperationsForwardedEndpointOutput;
 
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -45,7 +45,7 @@ public class UpdateSoapOperationsForwardedEndpointService extends AbstractSoapPr
         input.getOperationIds()
                 .stream()
                 .map(operationId -> this.operationRepository.findOne(operationId))
-                .filter(Objects::nonNull)
+                .flatMap(Optional::stream)
                 .map(soapOperation -> soapOperation.toBuilder()
                         .forwardedEndpoint(input.getForwardedEndpoint())
                         .build())

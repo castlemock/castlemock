@@ -19,7 +19,6 @@ package com.castlemock.service.mock.soap.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
-import com.castlemock.model.mock.soap.domain.SoapPort;
 import com.castlemock.service.mock.soap.project.input.DeleteSoapPortInput;
 import com.castlemock.service.mock.soap.project.output.DeleteSoapPortOutput;
 
@@ -41,9 +40,9 @@ public class DeleteSoapPortService extends AbstractSoapProjectService implements
     @Override
     public ServiceResult<DeleteSoapPortOutput> process(final ServiceTask<DeleteSoapPortInput> serviceTask) {
         final DeleteSoapPortInput input = serviceTask.getInput();
-        final SoapPort port = this.deletePort(input.getPortId());
         return createServiceResult(DeleteSoapPortOutput.builder()
-                .port(port)
+                .port(this.deletePort(input.getPortId())
+                        .orElse(null))
                 .build());
     }
 }

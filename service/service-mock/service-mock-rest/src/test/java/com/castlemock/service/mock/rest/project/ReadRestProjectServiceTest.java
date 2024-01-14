@@ -26,6 +26,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class ReadRestProjectServiceTest {
 
@@ -61,7 +62,7 @@ public class ReadRestProjectServiceTest {
                 .build();
         final ServiceTask<ReadRestProjectInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(repository.findOne(project.getId())).thenReturn(project);
+        Mockito.when(repository.findOne(project.getId())).thenReturn(Optional.of(project));
         Mockito.when(applicationRepository.findWithProjectId(project.getId())).thenReturn(List.of(application));
         Mockito.when(resourceRepository.findIdsWithApplicationId(application.getId())).thenReturn(Collections.singletonList(resource.getId()));
         Mockito.when(methodRepository.findWithResourceId(resource.getId())).thenReturn(List.of(method));

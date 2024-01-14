@@ -25,6 +25,7 @@ import com.castlemock.service.mock.soap.project.input.ReadSoapOperationInput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapOperationOutput;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -44,18 +45,23 @@ public class ReadSoapOperationService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<ReadSoapOperationOutput> process(final ServiceTask<ReadSoapOperationInput> serviceTask) {
         final ReadSoapOperationInput input = serviceTask.getInput();
-        final SoapOperation soapOperation = this.operationRepository.findOne(input.getOperationId());
-        final List<SoapMockResponse> mockResponses = this.mockResponseRepository.findWithOperationId(input.getOperationId());
+        final Optional<SoapOperation> soapOperation = this.operationRepository.findOne(input.getOperationId())
+                .map(this::prepareSoapOperation);
         return createServiceResult(ReadSoapOperationOutput.builder()
-                .operation(soapOperation.toBuilder()
-                        .mockResponses(mockResponses)
-                        .defaultResponseName(soapOperation.getDefaultMockResponseId()
-                                .flatMap(defaultMockResponseId -> mockResponses.stream()
-                                        .filter(mockResponse -> mockResponse.getId().equals(defaultMockResponseId))
-                                        .findFirst())
-                                .map(SoapMockResponse::getName)
-                                .orElse(null))
-                        .build())
+                .operation(soapOperation.orElse(null))
                 .build());
+    }
+
+    private SoapOperation prepareSoapOperation(final SoapOperation soapOperation) {
+        final List<SoapMockResponse> mockResponses = this.mockResponseRepository.findWithOperationId(soapOperation.getId());
+        return soapOperation.toBuilder()
+                .mockResponses(mockResponses)
+                .defaultResponseName(soapOperation.getDefaultMockResponseId()
+                        .flatMap(defaultMockResponseId -> mockResponses.stream()
+                                .filter(mockResponse -> mockResponse.getId().equals(defaultMockResponseId))
+                                .findFirst())
+                        .map(SoapMockResponse::getName)
+                        .orElse(null))
+                .build();
     }
 }

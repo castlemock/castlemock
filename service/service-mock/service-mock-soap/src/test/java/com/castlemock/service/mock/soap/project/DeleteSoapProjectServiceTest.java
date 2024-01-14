@@ -41,11 +41,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -85,7 +84,7 @@ public class DeleteSoapProjectServiceTest {
         final SoapResource soapResource = SoapResourceTestBuilder.builder().build();
         final SoapMockResponse soapMockResponse = SoapMockResponseTestBuilder.builder().build();
 
-        Mockito.when(repository.delete(soapProject.getId())).thenReturn(soapProject);
+        Mockito.when(repository.delete(soapProject.getId())).thenReturn(Optional.of(soapProject));
         Mockito.when(portRepository.findWithProjectId(soapProject.getId())).thenReturn(List.of(soapPort));
         Mockito.when(resourceRepository.findWithProjectId(soapProject.getId())).thenReturn(Collections.singletonList(soapResource));
         Mockito.when(operationRepository.findWithPortId(soapPort.getId())).thenReturn(List.of(soapOperation));

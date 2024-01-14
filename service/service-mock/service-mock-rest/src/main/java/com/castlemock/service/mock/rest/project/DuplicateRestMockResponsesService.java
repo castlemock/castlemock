@@ -23,6 +23,8 @@ import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.service.mock.rest.project.input.DuplicateRestMockResponsesInput;
 import com.castlemock.service.mock.rest.project.output.DuplicateRestMockResponsesOutput;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.52
@@ -44,6 +46,7 @@ public class DuplicateRestMockResponsesService extends AbstractRestProjectServic
                 .getMockResponseIds()
                 .stream()
                 .map(this.mockResponseRepository::findOne)
+                .flatMap(Optional::stream)
                 .map(RestMockResponse::toBuilder)
                 .map(builder -> builder.id(null))
                 .map(RestMockResponse.Builder::build)

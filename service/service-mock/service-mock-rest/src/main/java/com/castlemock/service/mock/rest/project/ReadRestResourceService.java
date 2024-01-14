@@ -19,12 +19,11 @@ package com.castlemock.service.mock.rest.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
-import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.service.mock.rest.project.input.ReadRestResourceInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestResourceOutput;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -44,12 +43,12 @@ public class ReadRestResourceService extends AbstractRestProjectService implemen
     @Override
     public ServiceResult<ReadRestResourceOutput> process(final ServiceTask<ReadRestResourceInput> serviceTask) {
         final ReadRestResourceInput input = serviceTask.getInput();
-        final RestResource restResource = this.resourceRepository.findOne(input.getRestResourceId());
-        final List<RestMethod> methods = this.methodRepository.findWithResourceId(input.getRestResourceId());
+        final Optional<RestResource> restResource = this.resourceRepository.findOne(input.getRestResourceId())
+                .map(resource -> resource.toBuilder()
+                        .methods(this.methodRepository.findWithResourceId(resource.getId()))
+                        .build());
         return createServiceResult(ReadRestResourceOutput.builder()
-                .restResource(restResource.toBuilder()
-                        .methods(methods)
-                        .build())
+                .restResource(restResource.orElse(null))
                 .build());
     }
 }

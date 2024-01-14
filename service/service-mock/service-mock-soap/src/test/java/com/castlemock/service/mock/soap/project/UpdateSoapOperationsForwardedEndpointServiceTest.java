@@ -30,6 +30,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -65,7 +66,7 @@ public class UpdateSoapOperationsForwardedEndpointServiceTest {
 
         final ServiceTask<UpdateSoapOperationsForwardedEndpointInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(operation);
+        Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(Optional.of(operation));
         Mockito.when(operationRepository.update(Mockito.anyString(), Mockito.any(SoapOperation.class))).thenReturn(operation);
         final ServiceResult<UpdateSoapOperationsForwardedEndpointOutput> result = service.process(serviceTask);
 

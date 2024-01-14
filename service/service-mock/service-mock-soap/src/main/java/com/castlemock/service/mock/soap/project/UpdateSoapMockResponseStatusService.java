@@ -19,7 +19,6 @@ package com.castlemock.service.mock.soap.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
-import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapMockResponseStatusInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapMockResponseStatusOutput;
 
@@ -41,11 +40,12 @@ public class UpdateSoapMockResponseStatusService extends AbstractSoapProjectServ
     @Override
     public ServiceResult<UpdateSoapMockResponseStatusOutput> process(final ServiceTask<UpdateSoapMockResponseStatusInput> serviceTask) {
         final UpdateSoapMockResponseStatusInput input = serviceTask.getInput();
-        final SoapMockResponse mockResponse = this.mockResponseRepository.findOne(input.getMockResponseId())
-                .toBuilder()
-                .status(input.getMockResponseStatus())
-                .build();
-        this.mockResponseRepository.update(input.getMockResponseId(), mockResponse);
-        return createServiceResult(UpdateSoapMockResponseStatusOutput.builder().build());
+        this.mockResponseRepository.findOne(input.getMockResponseId())
+                .map(mockResponse -> mockResponse.toBuilder()
+                        .status(input.getMockResponseStatus())
+                        .build())
+                .ifPresent(mockResponse -> this.mockResponseRepository.update(input.getMockResponseId(), mockResponse));
+        return createServiceResult(UpdateSoapMockResponseStatusOutput.builder()
+                .build());
     }
 }

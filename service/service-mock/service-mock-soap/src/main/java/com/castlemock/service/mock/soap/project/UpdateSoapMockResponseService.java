@@ -23,6 +23,8 @@ import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapMockResponseInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapMockResponseOutput;
 
+import java.util.Optional;
+
 /**
  * The service provides functionality to update a specific SOAP mock response.
  * @author Karl Dahlgren
@@ -44,20 +46,20 @@ public class UpdateSoapMockResponseService extends AbstractSoapProjectService im
     @Override
     public ServiceResult<UpdateSoapMockResponseOutput> process(final ServiceTask<UpdateSoapMockResponseInput> serviceTask) {
         final UpdateSoapMockResponseInput input = serviceTask.getInput();
-        final SoapMockResponse mockResponse = this.mockResponseRepository.findOne(input.getMockResponseId()).toBuilder()
-                .name(input.getName())
-                .body(input.getBody())
-                .httpStatusCode(input.getHttpStatusCode())
-                .status(input.getStatus())
-                .httpHeaders(input.getHttpHeaders())
-                .usingExpressions(input.getUsingExpressions()
-                        .orElse(false))
-                .xpathExpressions(input.getXpathExpressions())
-                .build();
-        
-        final SoapMockResponse updatedSoapMockResponse = mockResponseRepository.update(input.getMockResponseId(), mockResponse);
+        final Optional<SoapMockResponse> soapMockResponse = this.mockResponseRepository.findOne(input.getMockResponseId())
+                .map(mockResponse -> mockResponse.toBuilder()
+                        .name(input.getName())
+                        .body(input.getBody())
+                        .httpStatusCode(input.getHttpStatusCode())
+                        .status(input.getStatus())
+                        .httpHeaders(input.getHttpHeaders())
+                        .usingExpressions(input.getUsingExpressions()
+                                .orElse(false))
+                        .xpathExpressions(input.getXpathExpressions())
+                        .build())
+                .map(mockResponse -> mockResponseRepository.update(input.getMockResponseId(), mockResponse));
         return createServiceResult(UpdateSoapMockResponseOutput.builder()
-                .mockResponse(updatedSoapMockResponse)
+                .mockResponse(soapMockResponse.orElse(null))
                 .build());
     }
 }

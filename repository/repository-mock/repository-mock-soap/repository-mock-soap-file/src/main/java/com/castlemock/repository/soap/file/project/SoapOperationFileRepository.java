@@ -17,9 +17,6 @@
 
 package com.castlemock.repository.soap.file.project;
 
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
-import com.castlemock.model.core.SearchValidator;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
@@ -104,21 +101,6 @@ public class SoapOperationFileRepository extends FileRepository<SoapOperationFil
     @Override
     public void postInitiate(){
 
-    }
-
-    /**
-     * The method provides the functionality to search in the repository with a {@link SearchQuery}
-     *
-     * @param query The search query
-     * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
-     */
-    @Override
-    public List<SoapOperation> search(final SearchQuery query) {
-        return this.collection.values()
-                .stream()
-                .filter(operation -> SearchValidator.validate(operation.getName(), query.getQuery()))
-                .map(SoapOperationFileConverter::toSoapOperation)
-                .toList();
     }
 
     @Override

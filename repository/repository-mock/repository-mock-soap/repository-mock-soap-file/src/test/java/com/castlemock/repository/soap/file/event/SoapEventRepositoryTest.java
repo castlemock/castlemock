@@ -27,7 +27,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -67,7 +66,8 @@ public class SoapEventRepositoryTest {
     @Test
     public void testFindOne(){
         final SoapEvent soapEvent = save();
-        final SoapEvent returnedSoapEvent = repository.findOne(soapEvent.getId());
+        final SoapEvent returnedSoapEvent = repository.findOne(soapEvent.getId()).orElse(null);
+        Assert.assertNotNull(returnedSoapEvent);
         Assert.assertEquals(returnedSoapEvent.getProjectId(), soapEvent.getProjectId());
         Assert.assertEquals(returnedSoapEvent.getId(), soapEvent.getId());
         Assert.assertEquals(returnedSoapEvent.getResourceName(), soapEvent.getResourceName());

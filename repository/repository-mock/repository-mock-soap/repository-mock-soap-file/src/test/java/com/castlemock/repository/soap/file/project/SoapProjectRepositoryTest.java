@@ -67,7 +67,8 @@ public class SoapProjectRepositoryTest {
     @Test
     public void testFindOne(){
         final SoapProject soapProject = save();
-        final SoapProject returnedSoapEvent = repository.findOne(soapProject.getId());
+        final SoapProject returnedSoapEvent = repository.findOne(soapProject.getId()).orElse(null);
+        Assert.assertNotNull(returnedSoapEvent);
         Assert.assertEquals(returnedSoapEvent.getId(), soapProject.getId());
         Assert.assertEquals(returnedSoapEvent.getName(), soapProject.getName());
         Assert.assertEquals(returnedSoapEvent.getDescription(), soapProject.getDescription());

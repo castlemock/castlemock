@@ -28,7 +28,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -68,7 +67,8 @@ public class RestEventRepositoryTest {
     @Test
     public void testFindOne(){
         final RestEvent restEvent = save();
-        final RestEvent returnedRestEvent = repository.findOne(restEvent.getId());
+        final RestEvent returnedRestEvent = repository.findOne(restEvent.getId()).orElse(null);
+        Assert.assertNotNull(returnedRestEvent);
         Assert.assertEquals(returnedRestEvent.getResourceId(), restEvent.getResourceId());
         Assert.assertEquals(returnedRestEvent.getApplicationId(), restEvent.getApplicationId());
         Assert.assertEquals(returnedRestEvent.getMethodId(), restEvent.getMethodId());

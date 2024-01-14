@@ -49,7 +49,7 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
     @Autowired
     protected SoapResourceRepository resourceRepository;
 
-    protected SoapProject deleteProject(final String projectId){
+    protected Optional<SoapProject> deleteProject(final String projectId){
         final List<SoapPort> ports = this.portRepository.findWithProjectId(projectId);
         final List<SoapResource> resources = this.resourceRepository.findWithProjectId(projectId);
         ports.forEach(port -> this.deletePort(port.getId()));
@@ -58,25 +58,25 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
         return this.repository.delete(projectId);
     }
 
-    protected SoapPort deletePort(final String portId){
+    protected Optional<SoapPort> deletePort(final String portId){
         final List<SoapOperation> operations = this.operationRepository.findWithPortId(portId);
         operations.forEach(operation -> this.deleteOperation(operation.getId()));
 
         return this.portRepository.delete(portId);
     }
 
-    protected SoapOperation deleteOperation(final String operationId){
+    protected Optional<SoapOperation> deleteOperation(final String operationId){
         final List<SoapMockResponse> responses = this.mockResponseRepository.findWithOperationId(operationId);
         responses.forEach(response -> this.deleteMockResponse(response.getId()));
 
         return this.operationRepository.delete(operationId);
     }
 
-    protected SoapMockResponse deleteMockResponse(final String mockReponseId){
+    protected Optional<SoapMockResponse> deleteMockResponse(final String mockReponseId){
         return this.mockResponseRepository.delete(mockReponseId);
     }
 
-    protected SoapResource deleteResource(final String resourceId){
+    protected Optional<SoapResource> deleteResource(final String resourceId){
         return this.resourceRepository.delete(resourceId);
     }
 
@@ -112,11 +112,11 @@ public abstract class AbstractSoapProjectService extends AbstractService<SoapPro
         final SoapProject projectWithName = repository.findSoapProjectWithName(updatedProject.getName())
                 .orElse(null);
         Preconditions.checkArgument(projectWithName == null || projectWithName.getId().equals(soapProjectId), "Project name is already taken");
-        final SoapProject project = find(soapProjectId);
-        return Optional.of(super.save(project.toBuilder()
-                .name(updatedProject.getName())
-                .description(updatedProject.getDescription().orElse(null))
-                .build()));
+        return find(soapProjectId)
+                .map(project -> super.save(project.toBuilder()
+                        .name(updatedProject.getName())
+                        .description(updatedProject.getDescription().orElse(null))
+                        .build()));
     }
 
 }

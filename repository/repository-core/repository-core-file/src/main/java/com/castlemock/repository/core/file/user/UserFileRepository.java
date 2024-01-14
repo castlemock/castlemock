@@ -16,7 +16,6 @@
 
 package com.castlemock.repository.core.file.user;
 
-import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.user.Role;
 import com.castlemock.model.core.user.Status;
 import com.castlemock.model.core.user.User;
@@ -35,7 +34,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -132,13 +130,5 @@ public class UserFileRepository extends FileRepository<UserFile, User, String> i
         Preconditions.checkArgument(!user.getPassword().isEmpty(), "User password cannot be empty");
         Preconditions.checkArgument(!user.getUsername().isEmpty(), "User username cannot be empty");
     }
-
-    @Override
-    public List<User> search(SearchQuery query) {
-        throw new UnsupportedOperationException("Search method is not supported in the User repository");
-    }
-
-
-
 
 }

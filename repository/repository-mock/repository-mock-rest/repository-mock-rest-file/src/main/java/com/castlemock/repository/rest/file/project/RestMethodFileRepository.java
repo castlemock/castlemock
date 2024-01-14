@@ -16,9 +16,6 @@
 
 package com.castlemock.repository.rest.file.project;
 
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
-import com.castlemock.model.core.SearchValidator;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.repository.Profiles;
@@ -88,22 +85,6 @@ public class RestMethodFileRepository extends FileRepository<RestMethodFile, Res
     protected void checkType(final RestMethodFile type) {
 
     }
-
-    /**
-     * The method provides the functionality to search in the repository with a {@link SearchQuery}
-     *
-     * @param query The search query
-     * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
-     */
-    @Override
-    public List<RestMethod> search(final SearchQuery query) {
-        return collection.values()
-                .stream()
-                .filter(method -> SearchValidator.validate(method.getName(), query.getQuery()))
-                .map(RestMethodFileConverter::toRestMethod)
-                .toList();
-    }
-
 
     /**
      * Delete all {@link RestMethod} that matches the provided

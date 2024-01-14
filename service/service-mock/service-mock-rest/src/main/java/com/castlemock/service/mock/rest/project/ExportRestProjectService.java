@@ -31,6 +31,7 @@ import com.castlemock.service.mock.rest.project.output.ExportRestProjectOutput;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -50,8 +51,16 @@ public class ExportRestProjectService extends AbstractRestProjectService impleme
     @Override
     public ServiceResult<ExportRestProjectOutput> process(final ServiceTask<ExportRestProjectInput> serviceTask) {
         final ExportRestProjectInput input = serviceTask.getInput();
-        final RestProject project = repository.findOne(input.getRestProjectId());
-        final List<RestApplication> applications = this.applicationRepository.findWithProjectId(input.getRestProjectId());
+        final Optional<String> serialized = repository.findOne(input.getRestProjectId())
+                .map(this::serializeProject);
+
+        return createServiceResult(ExportRestProjectOutput.builder()
+                .exportedProject(serialized.orElse(null))
+                .build());
+    }
+
+    private String serializeProject(final RestProject project) {
+        final List<RestApplication> applications = this.applicationRepository.findWithProjectId(project.getId());
         final List<RestResource> resources = new ArrayList<>();
         final List<RestMethod> methods = new ArrayList<>();
         final List<RestMockResponse> mockResponses = new ArrayList<>();
@@ -80,9 +89,6 @@ public class ExportRestProjectService extends AbstractRestProjectService impleme
                 .mockResponses(mockResponses)
                 .build();
 
-        final String serialized = ExportContainerSerializer.serialize(exportContainer);
-        return createServiceResult(ExportRestProjectOutput.builder()
-                .exportedProject(serialized)
-                .build());
+        return ExportContainerSerializer.serialize(exportContainer);
     }
 }

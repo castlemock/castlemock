@@ -31,6 +31,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  */
@@ -60,7 +62,7 @@ public class UpdateSoapPortServiceTest {
                 .build();
         final ServiceTask<UpdateSoapPortInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(soapPortRepository.findOne(port.getId())).thenReturn(port);
+        Mockito.when(soapPortRepository.findOne(port.getId())).thenReturn(Optional.of(port));
         Mockito.when(soapPortRepository.update(Mockito.anyString(), Mockito.any(SoapPort.class))).thenReturn(port);
 
         final ServiceResult<UpdateSoapPortOutput> result = service.process(serviceTask);

@@ -16,15 +16,11 @@
 
 package com.castlemock.service.mock.rest.project.adapter;
 
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.service.project.ProjectServiceAdapter;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.service.mock.rest.project.input.ReadAllRestProjectsInput;
-import com.castlemock.service.mock.rest.project.input.SearchRestProjectInput;
 import com.castlemock.service.mock.rest.project.output.ReadAllRestProjectsOutput;
-import com.castlemock.service.mock.rest.project.output.SearchRestProjectOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,17 +55,4 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
         return "rest";
     }
 
-    /**
-     * Searches for resources that matches the provided query. The matching resources will
-     * be returned as a collection of {@link SearchResult}
-     * @param searchQuery The search query that will be used to identify the resources
-     * @return A list of search results
-     */
-    @Override
-    public List<SearchResult> search(SearchQuery searchQuery) {
-        final SearchRestProjectOutput output = serviceProcessor.process(SearchRestProjectInput.builder()
-                .searchQuery(searchQuery)
-                .build());
-        return output.getSearchResults();
-    }
 }

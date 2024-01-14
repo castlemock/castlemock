@@ -19,6 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ReadRestResourceServiceTest {
 
@@ -50,7 +51,7 @@ public class ReadRestResourceServiceTest {
                 .build();
         final ServiceTask<ReadRestResourceInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(resource);
+        Mockito.when(resourceRepository.findOne(resource.getId())).thenReturn(Optional.of(resource));
         Mockito.when(methodRepository.findWithResourceId(resource.getId())).thenReturn(List.of(method));
         final ServiceResult<ReadRestResourceOutput> result = service.process(serviceTask);
 

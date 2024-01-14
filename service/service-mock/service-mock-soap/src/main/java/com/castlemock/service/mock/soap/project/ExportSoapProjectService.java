@@ -31,6 +31,7 @@ import com.castlemock.service.mock.soap.project.output.ExportSoapProjectOutput;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -51,9 +52,17 @@ public class ExportSoapProjectService extends AbstractSoapProjectService impleme
     @Override
     public ServiceResult<ExportSoapProjectOutput> process(final ServiceTask<ExportSoapProjectInput> serviceTask) {
         final ExportSoapProjectInput input = serviceTask.getInput();
-        final SoapProject project = repository.findOne(input.getProjectId());
-        final List<SoapPort> ports = this.portRepository.findWithProjectId(input.getProjectId());
-        final List<SoapResource> resources = this.resourceRepository.findWithProjectId(input.getProjectId())
+        final Optional<String> serialized = repository.findOne(input.getProjectId())
+                .map(this::exportProject);
+
+        return createServiceResult(ExportSoapProjectOutput.builder()
+                .project(serialized.orElse(null))
+                .build());
+    }
+
+    private String exportProject(final SoapProject soapProject) {
+        final List<SoapPort> ports = this.portRepository.findWithProjectId(soapProject.getId());
+        final List<SoapResource> resources = this.resourceRepository.findWithProjectId(soapProject.getId())
                 .stream()
                 .map(resource -> resource.toBuilder()
                         .content(this.resourceRepository.loadSoapResource(resource.getId()))
@@ -73,17 +82,14 @@ public class ExportSoapProjectService extends AbstractSoapProjectService impleme
         }
 
         final SoapExportContainer exportContainer = SoapExportContainer.builder()
-                .project(project)
+                .project(soapProject)
                 .ports(ports)
                 .resources(resources)
                 .operations(operations)
                 .mockResponses(mockResponses)
                 .build();
 
-        final String serialized = ExportContainerSerializer.serialize(exportContainer);
-        return createServiceResult(ExportSoapProjectOutput.builder()
-                .project(serialized)
-                .build());
+        return ExportContainerSerializer.serialize(exportContainer);
     }
 
 }

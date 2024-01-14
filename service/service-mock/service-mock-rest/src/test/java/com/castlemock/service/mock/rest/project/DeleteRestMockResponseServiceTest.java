@@ -30,6 +30,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -56,7 +58,7 @@ public class DeleteRestMockResponseServiceTest {
         final String mockResponseId = "MockResponseId";
         final RestMockResponse restMockResponse = RestMockResponseTestBuilder.builder().build();
 
-        Mockito.when(mockResponseRepository.delete(Mockito.any())).thenReturn(restMockResponse);
+        Mockito.when(mockResponseRepository.delete(Mockito.any())).thenReturn(Optional.of(restMockResponse));
 
         final DeleteRestMockResponseInput input =
                 DeleteRestMockResponseInput.builder()

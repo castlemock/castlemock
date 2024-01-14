@@ -23,6 +23,8 @@ import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapOperationInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapOperationOutput;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -41,28 +43,27 @@ public class UpdateSoapOperationService extends AbstractSoapProjectService imple
     @Override
     public ServiceResult<UpdateSoapOperationOutput> process(final ServiceTask<UpdateSoapOperationInput> serviceTask) {
         final UpdateSoapOperationInput input = serviceTask.getInput();
-        final SoapOperation soapOperation = this.operationRepository.findOne(input.getOperationId())
-                        .toBuilder()
-                .status(input.getStatus())
-                .responseStrategy(input.getResponseStrategy())
-                .identifyStrategy(input.getIdentifyStrategy())
-                .simulateNetworkDelay(input.getSimulateNetworkDelay()
-                        .orElse(false))
-                .mockOnFailure(input.getMockOnFailure()
-                        .orElse(false))
-                .automaticForward(input.getAutomaticForward()
-                        .orElse(false))
-                .forwardedEndpoint(input.getForwardedEndpoint()
-                        .orElse(null))
-                .networkDelay(input.getNetworkDelay()
-                        .orElse(null))
-                .defaultMockResponseId(input.getDefaultMockResponseId()
-                        .orElse(null))
-                .build();
-
-        final SoapOperation updatedSoapOperation = this.operationRepository.update(input.getOperationId(), soapOperation);
+        final Optional<SoapOperation> updatedSoapOperation = this.operationRepository.findOne(input.getOperationId())
+                .map(soapOperation -> soapOperation.toBuilder()
+                        .status(input.getStatus())
+                        .responseStrategy(input.getResponseStrategy())
+                        .identifyStrategy(input.getIdentifyStrategy())
+                        .simulateNetworkDelay(input.getSimulateNetworkDelay()
+                                .orElse(false))
+                        .mockOnFailure(input.getMockOnFailure()
+                                .orElse(false))
+                        .automaticForward(input.getAutomaticForward()
+                                .orElse(false))
+                        .forwardedEndpoint(input.getForwardedEndpoint()
+                                .orElse(null))
+                        .networkDelay(input.getNetworkDelay()
+                                .orElse(null))
+                        .defaultMockResponseId(input.getDefaultMockResponseId()
+                                .orElse(null))
+                        .build())
+                .map(soapOperation -> this.operationRepository.update(input.getOperationId(), soapOperation));
         return createServiceResult(UpdateSoapOperationOutput.builder()
-                .operation(updatedSoapOperation)
+                .operation(updatedSoapOperation.orElse(null))
                 .build());
     }
 }

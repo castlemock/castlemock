@@ -16,9 +16,6 @@
 
 package com.castlemock.repository.rest.file.project;
 
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
-import com.castlemock.model.core.SearchValidator;
 import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.project.AbstractProjectFileRepository;
@@ -31,7 +28,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -114,20 +110,6 @@ public class RestProjectFileRepository extends AbstractProjectFileRepository<Res
     @Override
     protected RestProject save(final RestProjectFile project) {
         return super.save(project);
-    }
-
-    /**
-     * The method provides the functionality to search in the repository with a {@link SearchQuery}
-     * @param query The search query
-     * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
-     */
-    @Override
-    public List<RestProject> search(final SearchQuery query) {
-        return collection.values()
-                .stream()
-                .filter(project -> SearchValidator.validate(project.getName(), query.getQuery()))
-                .map(RestProjectFileConverter::toRestProject)
-                .toList();
     }
 
     /**

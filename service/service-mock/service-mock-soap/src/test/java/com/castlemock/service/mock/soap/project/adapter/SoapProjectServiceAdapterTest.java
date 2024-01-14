@@ -16,15 +16,11 @@
 
 package com.castlemock.service.mock.soap.project.adapter;
 
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.service.mock.soap.project.input.ReadAllSoapProjectsInput;
-import com.castlemock.service.mock.soap.project.input.SearchSoapProjectInput;
 import com.castlemock.service.mock.soap.project.output.ReadAllSoapProjectsOutput;
-import com.castlemock.service.mock.soap.project.output.SearchSoapProjectOutput;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +29,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,28 +65,4 @@ public class SoapProjectServiceAdapterTest {
         Mockito.verify(serviceProcessor, Mockito.times(1)).process(Mockito.any(ReadAllSoapProjectsInput.class));
     }
 
-    @Test
-    public void testSearch(){
-        final List<SearchResult> searchResults = new ArrayList<>();
-        final SearchResult searchResult = SearchResult.builder()
-                .link("link")
-                .title("Title")
-                .description("Description")
-                .build();
-        searchResults.add(searchResult);
-        final SearchSoapProjectOutput output = SearchSoapProjectOutput.builder()
-                .searchResults(searchResults)
-                .build();
-
-        Mockito.when(serviceProcessor.process(Mockito.any(SearchSoapProjectInput.class))).thenReturn(output);
-
-        final List<SearchResult> returnedSearchResults = adapter.search(SearchQuery.builder()
-                .query("")
-                .build());
-        Assert.assertEquals(returnedSearchResults.size(), searchResults.size());
-        final SearchResult returnedSearchResult = returnedSearchResults.getFirst();
-        Assert.assertEquals(returnedSearchResult.getLink(), searchResult.getLink());
-        Assert.assertEquals(returnedSearchResult.getTitle(), searchResult.getTitle());
-        Assert.assertEquals(returnedSearchResult.getDescription(), searchResult.getDescription());
-    }
 }

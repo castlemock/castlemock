@@ -23,6 +23,8 @@ import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.service.mock.rest.project.input.UpdateRestResourceInput;
 import com.castlemock.service.mock.rest.project.output.UpdateRestResourceOutput;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -41,13 +43,14 @@ public class UpdateRestResourceService extends AbstractRestProjectService implem
     @Override
     public ServiceResult<UpdateRestResourceOutput> process(final ServiceTask<UpdateRestResourceInput> serviceTask) {
         final UpdateRestResourceInput input = serviceTask.getInput();
-        final RestResource existing = this.resourceRepository.findOne(input.getRestResourceId());
-        final RestResource updated = this.resourceRepository.update(input.getRestResourceId(), existing.toBuilder()
-                .name(input.getName())
-                .uri(input.getUri())
-                .build());
+        final Optional<RestResource> updatedResource = this.resourceRepository.findOne(input.getRestResourceId())
+                .map(resource -> resource.toBuilder()
+                        .name(input.getName())
+                        .uri(input.getUri())
+                        .build())
+                .map(resource -> this.resourceRepository.update(input.getRestResourceId(), resource));
         return createServiceResult(UpdateRestResourceOutput.builder()
-                .updatedRestResource(updated)
+                .updatedRestResource(updatedResource.orElse(null))
                 .build());
     }
 }

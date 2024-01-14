@@ -25,6 +25,7 @@ import com.castlemock.service.mock.rest.project.input.ReadRestApplicationInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestApplicationOutput;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -45,17 +46,24 @@ public class ReadRestApplicationService extends AbstractRestProjectService imple
     @Override
     public ServiceResult<ReadRestApplicationOutput> process(final ServiceTask<ReadRestApplicationInput> serviceTask) {
         final ReadRestApplicationInput input = serviceTask.getInput();
-        final RestApplication application = this.applicationRepository.findOne(input.getRestApplicationId());
+        final Optional<RestApplication> application = this.applicationRepository.findOne(input.getRestApplicationId())
+                .map(this::prepareApplication);
+
+        return createServiceResult(ReadRestApplicationOutput.builder()
+                .restApplication(application.orElse(null))
+                .build());
+    }
+
+    private RestApplication prepareApplication (final RestApplication application) {
         final List<RestResource> resources = this.resourceRepository.findWithApplicationId(application.getId())
                 .stream()
                 .map(resource -> resource.toBuilder()
                         .statusCount(getRestMethodStatusCount(resource))
                         .build())
                 .collect(Collectors.toList());
-        return createServiceResult(ReadRestApplicationOutput.builder()
-                .restApplication(application.toBuilder()
-                        .resources(resources)
-                        .build())
-                .build());
+        return application.toBuilder()
+                .resources(resources)
+                .build();
     }
+
 }

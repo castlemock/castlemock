@@ -31,6 +31,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -51,7 +53,7 @@ public class ReadUserServiceTest {
     @Test
     public void testProcess(){
         final User user = UserTestBuilder.builder().build();
-        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
+        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(Optional.of(user));
         final ReadUserInput input = ReadUserInput.builder().userId(user.getId()).build();
         final ServiceTask<ReadUserInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadUserOutput> serviceResult = service.process(serviceTask);

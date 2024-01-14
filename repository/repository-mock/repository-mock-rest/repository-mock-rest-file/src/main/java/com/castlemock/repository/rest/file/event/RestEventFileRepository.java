@@ -16,8 +16,6 @@
 
 package com.castlemock.repository.rest.file.event;
 
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.mock.rest.domain.RestEvent;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
@@ -125,16 +123,6 @@ public class RestEventFileRepository extends AbstractEventFileRepository<RestEve
                 .filter(event -> event.getMethodId().equals(restMethodId))
                 .map(RestEventFileConverter::toRestEvent)
                 .toList();
-    }
-
-    /**
-     * The method provides the functionality to search in the repository with a {@link SearchQuery}
-     * @param query The search query
-     * @return A <code>list</code> of {@link SearchResult} that matches the provided {@link SearchQuery}
-     */
-    @Override
-    public List<RestEvent> search(final SearchQuery query) {
-        throw new UnsupportedOperationException();
     }
 
     /**

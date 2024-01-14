@@ -19,7 +19,6 @@ package com.castlemock.service.core.user;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
-import com.castlemock.model.core.user.User;
 import com.castlemock.service.core.user.input.ReadUserInput;
 import com.castlemock.service.core.user.output.ReadUserOutput;
 
@@ -41,7 +40,8 @@ public class ReadUserService extends AbstractUserService implements Service<Read
     @Override
     public ServiceResult<ReadUserOutput> process(final ServiceTask<ReadUserInput> serviceTask) {
         final ReadUserInput input = serviceTask.getInput();
-        final User user = find(input.getUserId());
-        return createServiceResult(ReadUserOutput.builder().user(user).build());
+        return createServiceResult(ReadUserOutput.builder()
+                .user(find(input.getUserId()).orElse(null))
+                .build());
     }
 }

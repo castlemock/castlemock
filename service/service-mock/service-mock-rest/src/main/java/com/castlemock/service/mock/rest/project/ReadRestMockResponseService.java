@@ -23,6 +23,8 @@ import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.service.mock.rest.project.input.ReadRestMockResponseInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestMockResponseOutput;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -41,9 +43,9 @@ public class ReadRestMockResponseService extends AbstractRestProjectService impl
     @Override
     public ServiceResult<ReadRestMockResponseOutput> process(final ServiceTask<ReadRestMockResponseInput> serviceTask) {
         final ReadRestMockResponseInput input = serviceTask.getInput();
-        final RestMockResponse restMockResponse = this.mockResponseRepository.findOne(input.getRestMockResponse());
+        final Optional<RestMockResponse> restMockResponse = this.mockResponseRepository.findOne(input.getRestMockResponse());
         return createServiceResult(ReadRestMockResponseOutput.builder()
-                .restMockResponse(restMockResponse)
+                .restMockResponse(restMockResponse.orElse(null))
                 .build());
     }
 }

@@ -31,8 +31,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -64,7 +64,7 @@ public class DeleteRestMethodServiceTest {
         final RestMockResponse mockResponse = RestMockResponseTestBuilder.builder().build();
 
         Mockito.when(mockResponseRepository.findWithMethodId(methodId)).thenReturn(List.of(mockResponse));
-        Mockito.when(methodRepository.delete(Mockito.any())).thenReturn(method);
+        Mockito.when(methodRepository.delete(Mockito.any())).thenReturn(Optional.of(method));
 
         final DeleteRestMethodInput input = DeleteRestMethodInput.builder()
                 .restProjectId(projectId)

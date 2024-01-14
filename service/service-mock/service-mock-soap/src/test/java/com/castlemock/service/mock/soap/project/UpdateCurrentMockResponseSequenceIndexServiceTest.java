@@ -28,6 +28,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.1
@@ -54,7 +56,7 @@ public class UpdateCurrentMockResponseSequenceIndexServiceTest {
 
         final SoapOperation soapOperation = SoapOperationTestBuilder.builder().build();
 
-        Mockito.when(operationRepository.findOne(operationId)).thenReturn(soapOperation);
+        Mockito.when(operationRepository.findOne(operationId)).thenReturn(Optional.of(soapOperation));
         Mockito.when(operationRepository.save(Mockito.any())).thenReturn(soapOperation);
 
         final UpdateCurrentMockResponseSequenceIndexInput input = UpdateCurrentMockResponseSequenceIndexInput.builder()

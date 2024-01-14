@@ -28,7 +28,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -69,7 +68,9 @@ public class UserRepositoryTest {
     @Test
     public void testFindOne(){
         final User user = save();
-        final User returnedUser = repository.findOne(user.getId());
+        final User returnedUser = repository.findOne(user.getId())
+                        .orElse(null);
+        Assert.assertNotNull(returnedUser);
         Assert.assertEquals(user.getId(), returnedUser.getId());
         Assert.assertEquals(user.getEmail(), returnedUser.getEmail());
         Assert.assertEquals(user.getPassword(), returnedUser.getPassword());
@@ -88,7 +89,7 @@ public class UserRepositoryTest {
 
     @Test
     public void testSave(){
-        final User user = save();
+        save();
         Mockito.verify(fileRepositorySupport, Mockito.times(1)).save(Mockito.any(UserFile.class), Mockito.anyString());
     }
 
@@ -101,7 +102,7 @@ public class UserRepositoryTest {
 
     @Test
     public void testCount(){
-        final User user = save();
+        save();
         final Integer count = repository.count();
         Assert.assertEquals(Integer.valueOf(1), count);
     }

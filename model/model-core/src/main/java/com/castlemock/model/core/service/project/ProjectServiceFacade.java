@@ -16,8 +16,6 @@
 
 package com.castlemock.model.core.service.project;
 
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.ServiceFacade;
 import com.castlemock.model.core.project.OverviewProject;
 import com.castlemock.model.core.project.Project;
@@ -35,14 +33,6 @@ import java.util.List;
  * @see Project
  */
 public interface ProjectServiceFacade extends ServiceFacade<Project, String> {
-
-    /**
-     * Searches for resources that matches the provided query. The matching resources will
-     * be returned as a collection of {@link SearchResult}
-     * @param searchQuery The search query that will be used to identify the resources
-     * @return A list of search results
-     */
-    List<SearchResult> search(SearchQuery searchQuery);
 
     List<OverviewProject> findAll();
 }

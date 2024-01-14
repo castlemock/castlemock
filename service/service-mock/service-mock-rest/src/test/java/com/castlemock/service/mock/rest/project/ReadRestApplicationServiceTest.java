@@ -23,6 +23,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ReadRestApplicationServiceTest {
 
@@ -59,7 +60,7 @@ public class ReadRestApplicationServiceTest {
                 .build();
         final ServiceTask<ReadRestApplicationInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(applicationRepository.findOne(application.getId())).thenReturn(application);
+        Mockito.when(applicationRepository.findOne(application.getId())).thenReturn(Optional.of(application));
         Mockito.when(resourceRepository.findWithApplicationId(application.getId())).thenReturn(List.of(resource));
         Mockito.when(methodRepository.findWithResourceId(resource.getId())).thenReturn(List.of(method));
         final ServiceResult<ReadRestApplicationOutput> result = service.process(serviceTask);

@@ -27,7 +27,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.File;
@@ -68,7 +67,10 @@ public class ConfigurationRepositoryTest {
     @Test
     public void testFindOne(){
         final ConfigurationGroup configurationGroup = save();
-        final ConfigurationGroup returnedConfigurationGroup = repository.findOne(configurationGroup.getId());
+        final ConfigurationGroup returnedConfigurationGroup = repository.findOne(configurationGroup.getId())
+                        .orElse(null);
+
+        Assert.assertNotNull(returnedConfigurationGroup);
         Assert.assertEquals(configurationGroup.getId(), returnedConfigurationGroup.getId());
         Assert.assertEquals(configurationGroup.getName(), returnedConfigurationGroup.getName());
     }

@@ -33,9 +33,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -68,7 +68,7 @@ public class DeleteSoapMockResponseServiceTest {
                 .ports(List.of(soapPort))
                 .build();
 
-        Mockito.when(mockResponseRepository.delete(Mockito.any())).thenReturn(soapMockResponse);
+        Mockito.when(mockResponseRepository.delete(Mockito.any())).thenReturn(Optional.of(soapMockResponse));
 
         final DeleteSoapMockResponseInput input = DeleteSoapMockResponseInput.builder()
                 .projectId(soapProject.getId())

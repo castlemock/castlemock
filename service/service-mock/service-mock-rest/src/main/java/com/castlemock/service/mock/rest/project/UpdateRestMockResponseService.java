@@ -23,6 +23,8 @@ import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.service.mock.rest.project.input.UpdateRestMockResponseInput;
 import com.castlemock.service.mock.rest.project.output.UpdateRestMockResponseOutput;
 
+import java.util.Optional;
+
 /**
  * The service provides the functionality to update an already existing REST mock response.
  * @author Karl Dahlgren
@@ -42,23 +44,24 @@ public class UpdateRestMockResponseService extends AbstractRestProjectService im
     @Override
     public ServiceResult<UpdateRestMockResponseOutput> process(final ServiceTask<UpdateRestMockResponseInput> serviceTask) {
         final UpdateRestMockResponseInput input = serviceTask.getInput();
-        final RestMockResponse existing = this.mockResponseRepository.findOne(input.getRestMockResponseId()).toBuilder()
-                .name(input.getName())
-                .body(input.getBody().orElse(null))
-                .httpStatusCode(input.getHttpStatusCode())
-                .httpHeaders(input.getHttpHeaders())
-                .status(input.getStatus())
-                .usingExpressions(input.getUsingExpressions()
-                        .orElse(false))
-                .parameterQueries(input.getParameterQueries())
-                .xpathExpressions(input.getXpathExpressions())
-                .jsonPathExpressions(input.getJsonPathExpressions())
-                .headerQueries(input.getHeaderQueries())
-                .build();
+        final Optional<RestMockResponse> updated = this.mockResponseRepository.findOne(input.getRestMockResponseId())
+                .map(mockResponse -> mockResponse.toBuilder()
+                        .name(input.getName())
+                        .body(input.getBody().orElse(null))
+                        .httpStatusCode(input.getHttpStatusCode())
+                        .httpHeaders(input.getHttpHeaders())
+                        .status(input.getStatus())
+                        .usingExpressions(input.getUsingExpressions()
+                                .orElse(false))
+                        .parameterQueries(input.getParameterQueries())
+                        .xpathExpressions(input.getXpathExpressions())
+                        .jsonPathExpressions(input.getJsonPathExpressions())
+                        .headerQueries(input.getHeaderQueries())
+                        .build())
+                .map(mockResponse -> this.mockResponseRepository.update(mockResponse.getId(), mockResponse));
 
-        final RestMockResponse updated = this.mockResponseRepository.update(input.getRestMockResponseId(), existing);
         return createServiceResult(UpdateRestMockResponseOutput.builder()
-                .updatedRestMockResponse(updated)
+                .updatedRestMockResponse(updated.orElse(null))
                 .build());
     }
 }

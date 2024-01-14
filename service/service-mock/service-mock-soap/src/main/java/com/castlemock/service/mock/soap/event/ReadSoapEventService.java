@@ -19,7 +19,6 @@ package com.castlemock.service.mock.soap.event;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
-import com.castlemock.model.mock.soap.domain.SoapEvent;
 import com.castlemock.service.mock.soap.event.input.ReadSoapEventInput;
 import com.castlemock.service.mock.soap.event.output.ReadSoapEventOutput;
 
@@ -34,9 +33,8 @@ public class ReadSoapEventService  extends AbstractSoapEventService implements S
     @Override
     public ServiceResult<ReadSoapEventOutput> process(ServiceTask<ReadSoapEventInput> serviceTask) {
         final ReadSoapEventInput input = serviceTask.getInput();
-        final SoapEvent soapEvent = find(input.getSoapEventId());
         return createServiceResult(ReadSoapEventOutput.builder()
-                .soapEvent(soapEvent)
+                .soapEvent(find(input.getSoapEventId()).orElse(null))
                 .build());
     }
 }

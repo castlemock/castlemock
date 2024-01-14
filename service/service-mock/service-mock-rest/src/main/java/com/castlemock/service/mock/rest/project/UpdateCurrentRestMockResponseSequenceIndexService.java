@@ -22,8 +22,6 @@ import com.castlemock.model.core.ServiceTask;
 import com.castlemock.service.mock.rest.project.input.UpdateCurrentRestMockResponseSequenceIndexInput;
 import com.castlemock.service.mock.rest.project.output.UpdateCurrentRestMockResponseSequenceIndexOutput;
 
-import java.util.Optional;
-
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -42,7 +40,7 @@ public class UpdateCurrentRestMockResponseSequenceIndexService extends AbstractR
     @Override
     public ServiceResult<UpdateCurrentRestMockResponseSequenceIndexOutput> process(final ServiceTask<UpdateCurrentRestMockResponseSequenceIndexInput> serviceTask) {
         final UpdateCurrentRestMockResponseSequenceIndexInput input = serviceTask.getInput();
-        Optional.ofNullable(this.methodRepository.findOne(input.getRestMethodId()))
+        this.methodRepository.findOne(input.getRestMethodId())
                 .map(method -> method.toBuilder()
                         .currentResponseSequenceIndex(input.getCurrentRestMockResponseSequenceIndex())
                         .build())

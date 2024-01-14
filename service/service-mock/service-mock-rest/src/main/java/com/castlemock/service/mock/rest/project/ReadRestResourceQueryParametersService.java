@@ -19,7 +19,6 @@ package com.castlemock.service.mock.rest.project;
 import com.castlemock.model.core.Service;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
-import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.service.core.utility.UrlUtility;
 import com.castlemock.service.mock.rest.project.input.ReadRestResourceQueryParametersInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestResourceQueryParametersOutput;
@@ -46,8 +45,9 @@ public class ReadRestResourceQueryParametersService extends AbstractRestProjectS
     public ServiceResult<ReadRestResourceQueryParametersOutput> process(
             final ServiceTask<ReadRestResourceQueryParametersInput> serviceTask) {
         final ReadRestResourceQueryParametersInput input = serviceTask.getInput();
-        final RestResource resource = super.resourceRepository.findOne(input.getResourceId());
-        final Set<String> pathParameters = UrlUtility.getPathParameters(resource.getUri());
+        final Set<String> pathParameters = super.resourceRepository.findOne(input.getResourceId())
+                .map(resource -> UrlUtility.getPathParameters(resource.getUri()))
+                .orElseGet(Set::of);
         return createServiceResult(ReadRestResourceQueryParametersOutput.builder()
                 .queries(pathParameters)
                 .build());

@@ -38,6 +38,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -83,7 +84,7 @@ public class UpdateCurrentUserServiceTest {
                 .email("email@email.com")
                 .build();
 
-        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
+        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(Optional.of(user));
         Mockito.when(repository.findAll()).thenReturn(users);
         Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(updatedUser);
         final UpdateCurrentUserInput input = UpdateCurrentUserInput.builder()

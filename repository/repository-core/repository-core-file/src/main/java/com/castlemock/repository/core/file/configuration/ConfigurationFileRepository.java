@@ -16,7 +16,6 @@
 
 package com.castlemock.repository.core.file.configuration;
 
-import com.castlemock.model.core.SearchQuery;
 import com.castlemock.model.core.configuration.ConfigurationGroup;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.configuration.ConfigurationRepository;
@@ -29,8 +28,6 @@ import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * The class is an implementation of the file repository and provides the functionality to interact with the file system.
@@ -104,11 +101,6 @@ public class ConfigurationFileRepository extends FileRepository<ConfigurationGro
             Preconditions.checkArgument(!configuration.getKey().isEmpty(), "Configuration key cannot be empty");
             Preconditions.checkArgument(!configuration.getValue().isEmpty(), "Configuration value cannot be empty");
         }
-    }
-
-    @Override
-    public List<ConfigurationGroup> search(SearchQuery query) {
-        throw new UnsupportedOperationException("Search method is not supported in the Configuration repository");
     }
 
 }

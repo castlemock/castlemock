@@ -32,6 +32,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -59,7 +60,7 @@ public class DeleteUserServiceTest {
                 .role(Role.MODIFIER)
                 .build();
 
-        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
+        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(Optional.of(user));
 
         final DeleteUserInput input = DeleteUserInput.builder()
                 .userId("")
@@ -79,7 +80,7 @@ public class DeleteUserServiceTest {
         final List<User> users = new ArrayList<>();
         users.add(user);
 
-        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
+        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(Optional.of(user));
         Mockito.when(repository.findAll()).thenReturn(users);
 
         final DeleteUserInput input = DeleteUserInput.builder()

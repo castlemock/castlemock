@@ -34,6 +34,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -66,8 +68,8 @@ public class UpdateUserServiceTest {
                 .email("email@email.com")
                 .build();
 
-        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(user);
-        Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(user);
+        Mockito.when(repository.findOne(Mockito.anyString())).thenReturn(Optional.of(user));
+        Mockito.when(repository.save(Mockito.any(User.class))).thenReturn(updatedUser);
         final UpdateUserInput input = UpdateUserInput.builder()
                 .id(user.getId())
                 .fullName(updatedUser.getFullName()

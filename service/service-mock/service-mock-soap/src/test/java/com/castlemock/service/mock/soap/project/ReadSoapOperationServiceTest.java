@@ -20,6 +20,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class ReadSoapOperationServiceTest {
 
@@ -51,7 +52,7 @@ public class ReadSoapOperationServiceTest {
                 .build();
         final ServiceTask<ReadSoapOperationInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(operation);
+        Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(Optional.of(operation));
         Mockito.when(mockResponseRepository.findWithOperationId(operation.getId())).thenReturn(Collections.singletonList(mockResponse));
         final ServiceResult<ReadSoapOperationOutput> result = service.process(serviceTask);
 
@@ -86,7 +87,7 @@ public class ReadSoapOperationServiceTest {
                 .build();
         final ServiceTask<ReadSoapOperationInput> serviceTask = ServiceTask.of(input, "user");
 
-        Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(operation);
+        Mockito.when(operationRepository.findOne(operation.getId())).thenReturn(Optional.of(operation));
         Mockito.when(mockResponseRepository.findWithOperationId(operation.getId())).thenReturn(List.of(mockResponse));
         final ServiceResult<ReadSoapOperationOutput> result = service.process(serviceTask);
 

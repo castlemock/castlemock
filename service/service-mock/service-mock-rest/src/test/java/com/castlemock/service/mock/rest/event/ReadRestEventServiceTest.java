@@ -31,6 +31,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.4
@@ -51,7 +53,7 @@ public class ReadRestEventServiceTest {
     @Test
     public void testProcess(){
         final RestEvent restEvent = RestEventTestBuilder.builder().build();
-        Mockito.when(repository.findOne(restEvent.getId())).thenReturn(restEvent);
+        Mockito.when(repository.findOne(restEvent.getId())).thenReturn(Optional.of(restEvent));
 
         final ReadRestEventInput input = ReadRestEventInput.builder()
                 .restEventId(restEvent.getId())

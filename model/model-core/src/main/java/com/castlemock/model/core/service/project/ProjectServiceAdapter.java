@@ -16,12 +16,8 @@
 
 package com.castlemock.model.core.service.project;
 
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.ServiceAdapter;
 import com.castlemock.model.core.project.Project;
-
-import java.util.List;
 
 /**
  * The project service is responsible for providing the basic functionality for all the
@@ -32,13 +28,5 @@ import java.util.List;
  * @see Project
  */
 public interface ProjectServiceAdapter<D extends Project> extends ServiceAdapter<Project, D, String> {
-
-    /**
-     * Searches for resources that matches the provided query. The matching resources will
-     * be returned as a collection of {@link SearchResult}
-     * @param searchQuery The search query that will be used to identify the resources
-     * @return A list of search results
-     */
-    List<SearchResult> search(SearchQuery searchQuery);
 
 }

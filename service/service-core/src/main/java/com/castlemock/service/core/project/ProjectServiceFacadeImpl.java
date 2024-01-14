@@ -16,8 +16,6 @@
 
 package com.castlemock.service.core.project;
 
-import com.castlemock.model.core.SearchQuery;
-import com.castlemock.model.core.SearchResult;
 import com.castlemock.model.core.project.OverviewProject;
 import com.castlemock.model.core.project.Project;
 import com.castlemock.model.core.service.project.ProjectServiceAdapter;
@@ -50,20 +48,6 @@ public class ProjectServiceFacadeImpl extends ServiceFacadeImpl<Project, String,
     @Override
     public void initiate(){
         initiate(ProjectServiceAdapter.class);
-    }
-
-    /**
-     * Searches for resources that matches the provided query. The matching resources will
-     * be returned as a collection of {@link SearchResult}
-     * @param searchQuery The search query that will be used to identify the resources
-     * @return A list of search results
-     */
-    @Override
-    public List<SearchResult> search(final SearchQuery searchQuery) {
-        return services.stream()
-                .map(adapter -> adapter.search(searchQuery))
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
     }
 
     @Override

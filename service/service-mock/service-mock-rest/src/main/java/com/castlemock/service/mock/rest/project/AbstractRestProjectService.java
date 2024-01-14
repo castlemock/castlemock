@@ -55,7 +55,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
     protected RestMockResponseRepository mockResponseRepository;
 
 
-    protected RestProject deleteProject(final String projectId){
+    protected Optional<RestProject> deleteProject(final String projectId){
         final List<RestApplication> applications = this.applicationRepository.findWithProjectId(projectId);
 
         applications.stream()
@@ -65,7 +65,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         return this.repository.delete(projectId);
     }
 
-    protected RestApplication deleteApplication(final String applicationId){
+    protected Optional<RestApplication> deleteApplication(final String applicationId){
         final List<RestResource> resources = this.resourceRepository.findWithApplicationId(applicationId);
 
         resources.stream()
@@ -75,7 +75,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         return this.applicationRepository.delete(applicationId);
     }
 
-    protected RestResource deleteResource(final String resourceId){
+    protected Optional<RestResource> deleteResource(final String resourceId){
         final List<RestMethod> methods = this.methodRepository.findWithResourceId(resourceId);
 
         methods.stream()
@@ -84,7 +84,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         return this.resourceRepository.delete(resourceId);
     }
 
-    protected RestMethod deleteMethod(final String methodId){
+    protected Optional<RestMethod> deleteMethod(final String methodId){
         final List<RestMockResponse> responses = this.mockResponseRepository.findWithMethodId(methodId);
 
         responses.stream()
@@ -94,7 +94,7 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         return this.methodRepository.delete(methodId);
     }
 
-    protected RestMockResponse deleteMockResponse(final String mockReponseId){
+    protected Optional<RestMockResponse> deleteMockResponse(final String mockReponseId){
         return this.mockResponseRepository.delete(mockReponseId);
     }
 
@@ -113,11 +113,11 @@ public abstract class AbstractRestProjectService extends AbstractService<RestPro
         final RestProject projectWithName = repository.findRestProjectWithName(updatedProject.getName())
                         .orElse(null);
         Preconditions.checkArgument(projectWithName == null || projectWithName.getId().equals(restProjectId), "Project name is already taken");
-        final RestProject project = find(restProjectId);
-        return Optional.ofNullable(super.save(project.toBuilder()
-                .name(updatedProject.getName())
-                .description(updatedProject.getDescription().orElse(null))
-                .build()));
+        return find(restProjectId)
+                .map(project -> super.save(project.toBuilder()
+                        .name(updatedProject.getName())
+                        .description(updatedProject.getDescription().orElse(null))
+                        .build()));
     }
 
 

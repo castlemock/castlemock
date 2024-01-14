@@ -31,6 +31,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 /**
  * @author Karl Dahlgren
  * @since 1.4
@@ -51,7 +53,7 @@ public class ReadSoapEventServiceTest {
     @Test
     public void testProcess(){
         final SoapEvent soapEvent = SoapEventTestBuilder.builder().build();
-        Mockito.when(repository.findOne(soapEvent.getId())).thenReturn(soapEvent);
+        Mockito.when(repository.findOne(soapEvent.getId())).thenReturn(Optional.of(soapEvent));
 
         final ReadSoapEventInput input = ReadSoapEventInput.builder()
                 .soapEventId(soapEvent.getId())

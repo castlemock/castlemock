@@ -39,6 +39,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -76,7 +77,7 @@ public class DeleteSoapPortServiceTest {
 
         Mockito.when(operationRepository.findWithPortId(soapPort.getId())).thenReturn(List.of(soapOperation));
         Mockito.when(mockResponseRepository.findWithOperationId(soapOperation.getId())).thenReturn(List.of(soapMockResponse));
-        Mockito.when(portRepository.delete(soapPort.getId())).thenReturn(soapPort);
+        Mockito.when(portRepository.delete(soapPort.getId())).thenReturn(Optional.of(soapPort));
 
         final DeleteSoapPortInput input = DeleteSoapPortInput.builder()
                 .projectId(soapProject.getId())
