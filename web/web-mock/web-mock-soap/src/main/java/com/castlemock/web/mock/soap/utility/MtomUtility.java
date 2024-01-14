@@ -84,7 +84,7 @@ public final class MtomUtility {
             return output.toString();
         } catch (Exception e){
             LOGGER.error("Unable to extract the request body in the MTOM request", e);
-            throw new IllegalArgumentException("Unable to extract the request body in the MTOM request");
+            throw new IllegalArgumentException("Unable to extract the request body in the MTOM request", e);
         } finally {
             if(stream != null){
                 try {

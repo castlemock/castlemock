@@ -65,7 +65,7 @@ public class FileRepositorySupport {
             return new String(raw);
         } catch (IOException e) {
             LOGGER.error("Unable to find the following file: " + filename, e);
-            throw new IllegalStateException("Unable to find the following file: " + filename);
+            throw new IllegalStateException("Unable to find the following file: " + filename, e);
         }
     }
 
@@ -81,7 +81,7 @@ public class FileRepositorySupport {
             writer.write(data);
         } catch (Exception e) {
             LOGGER.error("Unable to save the following file: " + filename, e);
-            throw new IllegalStateException("Unable to save the following file: " + filename);
+            throw new IllegalStateException("Unable to save the following file: " + filename, e);
         } finally {
             try {
                 if(writer != null) {

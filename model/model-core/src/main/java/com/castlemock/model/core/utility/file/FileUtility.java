@@ -59,7 +59,7 @@ public final class FileUtility {
 
         } catch (Exception e) {
             LOGGER.error("Unable to read the file", e);
-            throw new IllegalArgumentException("Unable to parse the file");
+            throw new IllegalArgumentException("Unable to parse the file", e);
         } finally {
             if(inputStream != null){
                 try {

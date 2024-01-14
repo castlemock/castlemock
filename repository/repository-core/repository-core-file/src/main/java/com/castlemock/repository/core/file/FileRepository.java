@@ -221,7 +221,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
             LOGGER.debug("Deletion of " + entityClass.getSimpleName() + " with id " + id + " was successfully completed");
             return this.typeConverter.apply(type);
         } catch (InterruptedException e) {
-            throw new IllegalStateException("Unable to accuire the write lock", e);
+            throw new IllegalStateException("Unable to acquire the write lock", e);
         } finally {
             writeLock.release();
         }

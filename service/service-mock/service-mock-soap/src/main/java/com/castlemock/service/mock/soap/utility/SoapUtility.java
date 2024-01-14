@@ -88,7 +88,7 @@ public class SoapUtility {
                     .build();
         }catch(Exception exception){
             LOGGER.error("Unable to extract SOAP request name", exception);
-            throw new IllegalStateException(exception.getMessage());
+            throw new IllegalStateException(exception.getMessage(), exception);
         }
     }
 
