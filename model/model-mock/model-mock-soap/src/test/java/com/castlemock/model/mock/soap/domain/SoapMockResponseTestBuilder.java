@@ -27,7 +27,7 @@ public final class SoapMockResponseTestBuilder {
     }
 
 
-    public SoapMockResponse build() {
+    public static SoapMockResponse build() {
         return builder().build();
     }
 

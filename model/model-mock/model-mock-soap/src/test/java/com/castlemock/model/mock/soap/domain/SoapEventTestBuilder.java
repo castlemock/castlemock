@@ -21,7 +21,7 @@ public final class SoapEventTestBuilder {
                 .startDate(new Date());
     }
 
-    public SoapEvent build() {
+    public static SoapEvent build() {
         return builder().build();
     }
 

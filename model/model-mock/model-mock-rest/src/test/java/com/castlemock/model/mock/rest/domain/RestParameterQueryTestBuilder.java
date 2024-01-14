@@ -2,65 +2,22 @@ package com.castlemock.model.mock.rest.domain;
 
 public final class RestParameterQueryTestBuilder {
 
-    private String parameter;
-    private String query;
-    private Boolean matchCase;
-    private Boolean matchAny;
-    private Boolean matchRegex;
-    private Boolean urlEncoded;
 
     private RestParameterQueryTestBuilder() {
-        this.parameter = "user";
-        this.query = "karl";
-        this.matchCase = Boolean.FALSE;
-        this.matchAny = Boolean.FALSE;
-        this.matchRegex = Boolean.FALSE;
-        this.urlEncoded = Boolean.FALSE;
     }
 
-    public RestParameterQueryTestBuilder parameter(final String parameter) {
-        this.parameter = parameter;
-        return this;
-    }
-
-    public RestParameterQueryTestBuilder query(final String query) {
-        this.query = query;
-        return this;
-    }
-
-    public RestParameterQueryTestBuilder matchCase(final Boolean matchCase) {
-        this.matchCase = matchCase;
-        return this;
-    }
-
-    public RestParameterQueryTestBuilder matchAny(final Boolean matchAny) {
-        this.matchAny = matchAny;
-        return this;
-    }
-
-    public RestParameterQueryTestBuilder matchRegex(final Boolean matchRegex) {
-        this.matchRegex = matchRegex;
-        return this;
-    }
-
-    public RestParameterQueryTestBuilder urlEncoded(final Boolean urlEncoded) {
-        this.urlEncoded = urlEncoded;
-        return this;
-    }
-
-    public static RestParameterQueryTestBuilder builder(){
-        return new RestParameterQueryTestBuilder();
-    }
-
-    public RestParameterQuery build() {
+    public static RestParameterQuery.Builder builder(){
         return RestParameterQuery.builder()
-                .parameter(parameter)
-                .query(query)
-                .matchCase(matchCase)
-                .matchAny(matchAny)
-                .matchRegex(matchRegex)
-                .urlEncoded(urlEncoded)
-                .build();
+                .parameter("user")
+                .query("karl")
+                .matchCase(false)
+                .matchAny(false)
+                .matchRegex(false)
+                .urlEncoded(false);
+    }
+
+    public static RestParameterQuery build() {
+        return builder().build();
     }
 
 }

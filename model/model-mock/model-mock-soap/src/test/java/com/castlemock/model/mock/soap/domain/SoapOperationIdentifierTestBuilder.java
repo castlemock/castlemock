@@ -12,7 +12,7 @@ public final class SoapOperationIdentifierTestBuilder {
                 .namespace(null);
     }
 
-    public SoapOperationIdentifier build() {
+    public static SoapOperationIdentifier build() {
         return builder().build();
     }
 

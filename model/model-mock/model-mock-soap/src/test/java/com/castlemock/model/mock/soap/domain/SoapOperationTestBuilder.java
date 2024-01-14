@@ -36,7 +36,7 @@ public final class SoapOperationTestBuilder {
                 .automaticForward(Boolean.FALSE);
     }
 
-    public SoapOperation build() {
+    public static SoapOperation build() {
         return builder().build();
 
     }

@@ -33,7 +33,7 @@ public final class SoapRequestTestBuilder {
     }
 
 
-    public SoapRequest build() {
+    public static SoapRequest build() {
         return builder().build();
     }
 }
