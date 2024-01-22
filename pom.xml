@@ -35,7 +35,7 @@
         <jaxb.impl.version>2.3.9</jaxb.impl.version>
         <datafaker.version>1.9.0</datafaker.version>
         <maven.jar.version>3.1.1</maven.jar.version>
-        <json.path.version>2.8.0</json.path.version>
+        <json.path.version>2.9.0</json.path.version>
         <joda.time.version>2.12.5</joda.time.version>
         <activation.version>1.1.1</activation.version>
         <jaxb.core.version>2.3.0.1</jaxb.core.version>
