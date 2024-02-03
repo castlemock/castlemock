@@ -9,9 +9,9 @@ import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
 import com.castlemock.service.core.manager.FileManager;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -29,7 +29,7 @@ public class WADLRestDefinitionConverterTest {
     @Mock
     private FileManager fileManager;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -250,42 +250,42 @@ public class WADLRestDefinitionConverterTest {
                                    final String methodName,
                                    final HttpMethod httpMethod,
                                    final boolean generatedResponse){
-        Assert.assertEquals(applicationName, restApplication.getName());
-        //Assert.assertNull(restApplication.getStatusCount());
+        Assertions.assertEquals(applicationName, restApplication.getName());
+        //Assertions.assertNull(restApplication.getStatusCount());
 
-        Assert.assertEquals(1, restApplication.getResources().size());
+        Assertions.assertEquals(1, restApplication.getResources().size());
         RestResource restResource = restApplication.getResources().getFirst();
 
-        Assert.assertEquals(resourceName, restResource.getName());
-        Assert.assertEquals(resourceUri, restResource.getUri());
-        Assert.assertNull(restResource.getInvokeAddress().orElse(null));
-        //Assert.assertNull(restResource.getStatusCount());
+        Assertions.assertEquals(resourceName, restResource.getName());
+        Assertions.assertEquals(resourceUri, restResource.getUri());
+        Assertions.assertNull(restResource.getInvokeAddress().orElse(null));
+        //Assertions.assertNull(restResource.getStatusCount());
 
-        Assert.assertEquals(1, restResource.getMethods().size());
+        Assertions.assertEquals(1, restResource.getMethods().size());
         RestMethod restMethod = restResource.getMethods().getFirst();
-        Assert.assertEquals(methodName, restMethod.getName());
-        Assert.assertEquals(httpMethod, restMethod.getHttpMethod());
-        Assert.assertEquals(RestMethodStatus.MOCKED, restMethod.getStatus());
-        Assert.assertEquals(RestResponseStrategy.RANDOM, restMethod.getResponseStrategy());
-        Assert.assertFalse(restMethod.getSimulateNetworkDelay().orElse(false));
-        Assert.assertNull(restMethod.getForwardedEndpoint().orElse(null));
-        Assert.assertNull(restMethod.getDefaultBody().orElse(null));
-        Assert.assertNull(restMethod.getNetworkDelay().orElse(null));
+        Assertions.assertEquals(methodName, restMethod.getName());
+        Assertions.assertEquals(httpMethod, restMethod.getHttpMethod());
+        Assertions.assertEquals(RestMethodStatus.MOCKED, restMethod.getStatus());
+        Assertions.assertEquals(RestResponseStrategy.RANDOM, restMethod.getResponseStrategy());
+        Assertions.assertFalse(restMethod.getSimulateNetworkDelay().orElse(false));
+        Assertions.assertNull(restMethod.getForwardedEndpoint().orElse(null));
+        Assertions.assertNull(restMethod.getDefaultBody().orElse(null));
+        Assertions.assertNull(restMethod.getNetworkDelay().orElse(null));
 
         if(generatedResponse){
-            Assert.assertEquals(1, restMethod.getMockResponses().size());
+            Assertions.assertEquals(1, restMethod.getMockResponses().size());
             RestMockResponse restMockResponse = restMethod.getMockResponses().getFirst();
-            Assert.assertEquals(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME, restMockResponse.getName());
-            Assert.assertEquals(Integer.valueOf(DEFAULT_RESPONSE_CODE), restMockResponse.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.ENABLED, restMockResponse.getStatus());
-            Assert.assertTrue(restMockResponse.getContentEncodings().isEmpty());
-            Assert.assertTrue(restMockResponse.getHttpHeaders().isEmpty());
-            Assert.assertTrue(restMockResponse.getUsingExpressions().orElse(false));
+            Assertions.assertEquals(AUTO_GENERATED_MOCK_RESPONSE_DEFAULT_NAME, restMockResponse.getName());
+            Assertions.assertEquals(Integer.valueOf(DEFAULT_RESPONSE_CODE), restMockResponse.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.ENABLED, restMockResponse.getStatus());
+            Assertions.assertTrue(restMockResponse.getContentEncodings().isEmpty());
+            Assertions.assertTrue(restMockResponse.getHttpHeaders().isEmpty());
+            Assertions.assertTrue(restMockResponse.getUsingExpressions().orElse(false));
 
-            Assert.assertNull(restMockResponse.getBody().orElse(null));
+            Assertions.assertNull(restMockResponse.getBody().orElse(null));
 
         }else {
-            Assert.assertEquals(0, restMethod.getMockResponses().size());
+            Assertions.assertEquals(0, restMethod.getMockResponses().size());
         }
     }
 
@@ -297,7 +297,7 @@ public class WADLRestDefinitionConverterTest {
         try {
             file = new File(Objects.requireNonNull(url).toURI());
         } catch (URISyntaxException e) {
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -312,7 +312,7 @@ public class WADLRestDefinitionConverterTest {
         try {
             file = new File(Objects.requireNonNull(url).toURI());
         } catch (URISyntaxException e) {
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -320,7 +320,7 @@ public class WADLRestDefinitionConverterTest {
             Mockito.when(fileManager.uploadFiles(Mockito.anyString())).thenReturn(Collections.singletonList(file));
             Mockito.when(fileManager.deleteFile(Mockito.any(File.class))).thenReturn(true);
         } catch (IOException | URISyntaxException e) {
-            Assert.fail(e.getMessage());
+            Assertions.fail(e.getMessage());
             throw new RuntimeException(e);
         }
 

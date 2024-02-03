@@ -23,9 +23,9 @@ import com.castlemock.model.mock.rest.domain.RestEventTestBuilder;
 import com.castlemock.repository.rest.event.RestEventRepository;
 import com.castlemock.service.mock.rest.event.input.CreateRestEventInput;
 import com.castlemock.service.mock.rest.event.output.CreateRestEventOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -46,7 +46,7 @@ public class CreateRestEventServiceTest {
     @InjectMocks
     private CreateRestEventService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(service, "restMaxEventCount", 5);
@@ -63,10 +63,10 @@ public class CreateRestEventServiceTest {
         final CreateRestEventOutput createRestApplicationOutput = serviceResult.getOutput();
         final RestEvent returnedRestEvent = createRestApplicationOutput.getCreatedRestEvent();
 
-        Assert.assertEquals(restEvent.getApplicationId(), returnedRestEvent.getApplicationId());
-        Assert.assertEquals(restEvent.getMethodId(), returnedRestEvent.getMethodId());
-        Assert.assertEquals(restEvent.getProjectId(), returnedRestEvent.getProjectId());
-        Assert.assertEquals(restEvent.getResourceId(), returnedRestEvent.getResourceId());
+        Assertions.assertEquals(restEvent.getApplicationId(), returnedRestEvent.getApplicationId());
+        Assertions.assertEquals(restEvent.getMethodId(), returnedRestEvent.getMethodId());
+        Assertions.assertEquals(restEvent.getProjectId(), returnedRestEvent.getProjectId());
+        Assertions.assertEquals(restEvent.getResourceId(), returnedRestEvent.getResourceId());
     }
 
 
@@ -85,7 +85,7 @@ public class CreateRestEventServiceTest {
         Mockito.verify(repository, Mockito.times(1)).deleteOldestEvent();
         Mockito.verify(repository, Mockito.times(1)).save(restEvent);
 
-        Assert.assertEquals(restEvent.getProjectId(), returnedSoapEvent.getProjectId());
+        Assertions.assertEquals(restEvent.getProjectId(), returnedSoapEvent.getProjectId());
     }
 
 }

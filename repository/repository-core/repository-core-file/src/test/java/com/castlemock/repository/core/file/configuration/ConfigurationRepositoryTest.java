@@ -20,9 +20,9 @@ import com.castlemock.model.core.configuration.ConfigurationGroup;
 import com.castlemock.model.core.configuration.ConfigurationGroupTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.core.file.configuration.model.ConfigurationGroupFile;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -47,7 +47,7 @@ public class ConfigurationRepositoryTest {
     private static final String DIRECTORY = "/directory";
     private static final String EXTENSION = ".extension";
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(repository, "configurationFileDirectory", DIRECTORY);
@@ -70,18 +70,18 @@ public class ConfigurationRepositoryTest {
         final ConfigurationGroup returnedConfigurationGroup = repository.findOne(configurationGroup.getId())
                         .orElse(null);
 
-        Assert.assertNotNull(returnedConfigurationGroup);
-        Assert.assertEquals(configurationGroup.getId(), returnedConfigurationGroup.getId());
-        Assert.assertEquals(configurationGroup.getName(), returnedConfigurationGroup.getName());
+        Assertions.assertNotNull(returnedConfigurationGroup);
+        Assertions.assertEquals(configurationGroup.getId(), returnedConfigurationGroup.getId());
+        Assertions.assertEquals(configurationGroup.getName(), returnedConfigurationGroup.getName());
     }
 
     @Test
     public void testFindAll(){
         final ConfigurationGroup configurationGroup = save();
         final List<ConfigurationGroup> configurationGroups = repository.findAll();
-        Assert.assertEquals(configurationGroups.size(), 1);
-        Assert.assertEquals(configurationGroups.getFirst().getId(), configurationGroup.getId());
-        Assert.assertEquals(configurationGroups.getFirst().getName(), configurationGroup.getName());
+        Assertions.assertEquals(configurationGroups.size(), 1);
+        Assertions.assertEquals(configurationGroups.getFirst().getId(), configurationGroup.getId());
+        Assertions.assertEquals(configurationGroups.getFirst().getName(), configurationGroup.getName());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class ConfigurationRepositoryTest {
     public void testCount(){
         save();
         final Integer count = repository.count();
-        Assert.assertEquals(Integer.valueOf(1), count);
+        Assertions.assertEquals(Integer.valueOf(1), count);
     }
 
     private ConfigurationGroup save(){

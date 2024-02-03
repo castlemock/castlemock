@@ -7,9 +7,9 @@ import com.castlemock.model.mock.rest.domain.RestProjectTestBuilder;
 import com.castlemock.repository.rest.project.RestProjectRepository;
 import com.castlemock.service.mock.rest.project.input.ReadAllRestProjectsInput;
 import com.castlemock.service.mock.rest.project.output.ReadAllRestProjectsOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -26,7 +26,7 @@ public class ReadAllRestProjectsServiceTest {
     @InjectMocks
     private ReadAllRestProjectsService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -44,8 +44,8 @@ public class ReadAllRestProjectsServiceTest {
 
         Mockito.verify(repository, Mockito.times(1)).findAll();
 
-        Assert.assertNotNull(result.getOutput());
-        Assert.assertEquals(projects, result.getOutput().getRestProjects());
+        Assertions.assertNotNull(result.getOutput());
+        Assertions.assertEquals(projects, result.getOutput().getRestProjects());
     }
 
 }

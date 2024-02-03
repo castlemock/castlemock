@@ -16,8 +16,8 @@
 
 package com.castlemock.model.core.utility.compare;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,11 +30,11 @@ public class AlphanumComparatorTest {
         final List<String> collection = Arrays.asList("a100", "a1", "a10", "a11", "a101");
         collection.sort(comparator);
 
-        Assert.assertEquals("a1", collection.getFirst());
-        Assert.assertEquals("a10", collection.get(1));
-        Assert.assertEquals("a11", collection.get(2));
-        Assert.assertEquals("a100", collection.get(3));
-        Assert.assertEquals("a101", collection.get(4));
+        Assertions.assertEquals("a1", collection.getFirst());
+        Assertions.assertEquals("a10", collection.get(1));
+        Assertions.assertEquals("a11", collection.get(2));
+        Assertions.assertEquals("a100", collection.get(3));
+        Assertions.assertEquals("a101", collection.get(4));
     }
 
 }

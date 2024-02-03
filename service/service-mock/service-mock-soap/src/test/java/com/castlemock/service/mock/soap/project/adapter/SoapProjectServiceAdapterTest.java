@@ -21,9 +21,9 @@ import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.service.mock.soap.project.input.ReadAllSoapProjectsInput;
 import com.castlemock.service.mock.soap.project.output.ReadAllSoapProjectsOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -43,7 +43,7 @@ public class SoapProjectServiceAdapterTest {
     @InjectMocks
     private SoapProjectServiceAdapter adapter;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -61,7 +61,7 @@ public class SoapProjectServiceAdapterTest {
 
         final List<SoapProject> returnedProjects = adapter.readAll();
 
-        Assert.assertEquals(projects, returnedProjects);
+        Assertions.assertEquals(projects, returnedProjects);
         Mockito.verify(serviceProcessor, Mockito.times(1)).process(Mockito.any(ReadAllSoapProjectsInput.class));
     }
 

@@ -23,9 +23,9 @@ import com.castlemock.model.mock.rest.domain.RestEventTestBuilder;
 import com.castlemock.repository.rest.event.RestEventRepository;
 import com.castlemock.service.mock.rest.event.input.ReadRestEventInput;
 import com.castlemock.service.mock.rest.event.output.ReadRestEventOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class ReadRestEventServiceTest {
     @InjectMocks
     private ReadRestEventService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -64,11 +64,11 @@ public class ReadRestEventServiceTest {
         final RestEvent returnedRestEvent = output.getRestEvent()
                 .orElse(null);
 
-        Assert.assertNotNull(returnedRestEvent);
-        Assert.assertEquals(restEvent.getId(), returnedRestEvent.getId());
-        Assert.assertEquals(restEvent.getResourceId(), returnedRestEvent.getResourceId());
-        Assert.assertEquals(restEvent.getMethodId(), returnedRestEvent.getMethodId());
-        Assert.assertEquals(restEvent.getProjectId(), returnedRestEvent.getProjectId());
-        Assert.assertEquals(restEvent.getApplicationId(), returnedRestEvent.getApplicationId());
+        Assertions.assertNotNull(returnedRestEvent);
+        Assertions.assertEquals(restEvent.getId(), returnedRestEvent.getId());
+        Assertions.assertEquals(restEvent.getResourceId(), returnedRestEvent.getResourceId());
+        Assertions.assertEquals(restEvent.getMethodId(), returnedRestEvent.getMethodId());
+        Assertions.assertEquals(restEvent.getProjectId(), returnedRestEvent.getProjectId());
+        Assertions.assertEquals(restEvent.getApplicationId(), returnedRestEvent.getApplicationId());
     }
 }

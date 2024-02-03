@@ -23,8 +23,8 @@ import com.castlemock.model.mock.soap.domain.SoapMockResponseTestBuilder;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
 import com.castlemock.service.mock.soap.project.input.DeleteSoapMockResponsesInput;
 import com.castlemock.service.mock.soap.project.output.DeleteSoapMockResponsesOutput;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -43,7 +43,7 @@ public class DeleteSoapMockResponsesServiceTest {
     @InjectMocks
     private DeleteSoapMockResponsesService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }

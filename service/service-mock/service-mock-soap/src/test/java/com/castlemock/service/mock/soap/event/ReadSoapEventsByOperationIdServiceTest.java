@@ -23,9 +23,9 @@ import com.castlemock.model.mock.soap.domain.SoapEventTestBuilder;
 import com.castlemock.repository.soap.event.SoapEventRepository;
 import com.castlemock.service.mock.soap.event.input.ReadSoapEventsByOperationIdInput;
 import com.castlemock.service.mock.soap.event.output.ReadSoapEventsByOperationIdOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -49,7 +49,7 @@ public class ReadSoapEventsByOperationIdServiceTest {
     @InjectMocks
     private ReadSoapEventsByOperationIdService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -74,16 +74,16 @@ public class ReadSoapEventsByOperationIdServiceTest {
         final ReadSoapEventsByOperationIdOutput output = serviceResult.getOutput();
 
 
-        Assert.assertEquals(2, output.getSoapEvents().size());
+        Assertions.assertEquals(2, output.getSoapEvents().size());
 
         for(int index = 0; index < 2; index++){
             final SoapEvent soapEvent = soapEvents.get(index);
             final SoapEvent returnedSoapEvent = output.getSoapEvents().get(index);
 
-            Assert.assertEquals(soapEvent.getId(), returnedSoapEvent.getId());
-            Assert.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
-            Assert.assertEquals(soapEvent.getPortId(), returnedSoapEvent.getPortId());
-            Assert.assertEquals(soapEvent.getProjectId(), returnedSoapEvent.getProjectId());
+            Assertions.assertEquals(soapEvent.getId(), returnedSoapEvent.getId());
+            Assertions.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
+            Assertions.assertEquals(soapEvent.getPortId(), returnedSoapEvent.getPortId());
+            Assertions.assertEquals(soapEvent.getProjectId(), returnedSoapEvent.getProjectId());
         }
     }
 }

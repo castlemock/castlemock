@@ -29,9 +29,9 @@ import com.castlemock.model.mock.rest.domain.RestResourceTestBuilder;
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import com.castlemock.service.mock.rest.project.input.CreateRestMethodInput;
 import com.castlemock.service.mock.rest.project.output.CreateRestMethodOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -50,7 +50,7 @@ public class CreateRestMethodServiceTest {
     private CreateRestMethodService service;
 
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -75,13 +75,13 @@ public class CreateRestMethodServiceTest {
         final CreateRestMethodOutput createRestApplicationOutput = serviceResult.getOutput();
         final RestMethod returnedRestMethod = createRestApplicationOutput.getCreatedRestMethod();
 
-        Assert.assertEquals(restMethod.getName(), returnedRestMethod.getName());
-        Assert.assertEquals(restMethod.getHttpMethod(), returnedRestMethod.getHttpMethod());
-        Assert.assertEquals(restMethod.getDefaultBody(), returnedRestMethod.getDefaultBody());
-        Assert.assertEquals(restMethod.getForwardedEndpoint(), returnedRestMethod.getForwardedEndpoint());
-        Assert.assertEquals(restMethod.getStatus(), returnedRestMethod.getStatus());
-        Assert.assertEquals(restMethod.getMockResponses(), returnedRestMethod.getMockResponses());
-        Assert.assertEquals(restMethod.getResponseStrategy(), returnedRestMethod.getResponseStrategy());
+        Assertions.assertEquals(restMethod.getName(), returnedRestMethod.getName());
+        Assertions.assertEquals(restMethod.getHttpMethod(), returnedRestMethod.getHttpMethod());
+        Assertions.assertEquals(restMethod.getDefaultBody(), returnedRestMethod.getDefaultBody());
+        Assertions.assertEquals(restMethod.getForwardedEndpoint(), returnedRestMethod.getForwardedEndpoint());
+        Assertions.assertEquals(restMethod.getStatus(), returnedRestMethod.getStatus());
+        Assertions.assertEquals(restMethod.getMockResponses(), returnedRestMethod.getMockResponses());
+        Assertions.assertEquals(restMethod.getResponseStrategy(), returnedRestMethod.getResponseStrategy());
     }
 
 }

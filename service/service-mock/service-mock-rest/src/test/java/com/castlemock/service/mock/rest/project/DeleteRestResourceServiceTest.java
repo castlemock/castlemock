@@ -29,8 +29,8 @@ import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import com.castlemock.repository.rest.project.RestResourceRepository;
 import com.castlemock.service.mock.rest.project.input.DeleteRestResourceInput;
 import com.castlemock.service.mock.rest.project.output.DeleteRestResourceOutput;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -57,7 +57,7 @@ public class DeleteRestResourceServiceTest {
     @InjectMocks
     private DeleteRestResourceService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }

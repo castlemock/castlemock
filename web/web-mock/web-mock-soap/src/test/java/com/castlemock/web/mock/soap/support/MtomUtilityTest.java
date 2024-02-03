@@ -17,8 +17,8 @@
 package com.castlemock.web.mock.soap.support;
 
 import com.castlemock.web.mock.soap.utility.MtomUtility;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Karl Dahlgren
@@ -58,8 +58,8 @@ public class MtomUtilityTest {
 
         String mainBody = MtomUtility.extractMtomBody(body, contextType);
 
-        Assert.assertNotNull(mainBody);
-        Assert.assertEquals("""
+        Assertions.assertNotNull(mainBody);
+        Assertions.assertEquals("""
                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cas="http://castlemock.com/">
                    <soapenv:Header/>
                    <soapenv:Body>

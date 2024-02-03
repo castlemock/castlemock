@@ -47,8 +47,8 @@ import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -182,7 +182,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         verify(soapClient, times(1)).getResponse(any(SoapRequest.class), any(SoapOperation.class));
     }
 
-    @Test(expected = SoapException.class)
+    @Test
     public void testMockedAutomaticForwardNoMockedResponseAndNoForwardURLIsDefined() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(REQUEST_BODY);
@@ -205,8 +205,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         when(serviceProcessor.process(any(IdentifySoapOperationInput.class))).thenReturn(identifySoapOperationOutput);
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
                 SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
-
-        soapServiceController.postMethod(PROJECT_ID, httpServletRequest);
+        Assertions.assertThrows(SoapException.class, () -> soapServiceController.postMethod(PROJECT_ID, httpServletRequest));
     }
 
     @Test
@@ -264,12 +263,12 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
                 SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
 
         final ResponseEntity<?> responseEntity = soapServiceController.postMethod(PROJECT_ID, httpServletRequest);
-        Assert.assertEquals(RESPONSE_BODY, responseEntity.getBody());
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
+        Assertions.assertEquals(RESPONSE_BODY, responseEntity.getBody());
+        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
     }
 
 
@@ -295,12 +294,12 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
                 SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
 
         final ResponseEntity<?> responseEntity = soapServiceController.postMethod(PROJECT_ID, httpServletRequest);
-        Assert.assertEquals(RESPONSE_BODY, responseEntity.getBody());
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
+        Assertions.assertEquals(RESPONSE_BODY, responseEntity.getBody());
+        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
     }
 
     @Test
@@ -327,12 +326,12 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
                 SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
 
         final ResponseEntity<?> responseEntity = soapServiceController.postMethod(PROJECT_ID, httpServletRequest);
-        Assert.assertEquals(RESPONSE_BODY, responseEntity.getBody());
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
+        Assertions.assertEquals(RESPONSE_BODY, responseEntity.getBody());
+        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
     }
 
     @Test
@@ -376,12 +375,12 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
                 SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
 
         final ResponseEntity<?> responseEntity = soapServiceController.postMethod(PROJECT_ID, httpServletRequest);
-        Assert.assertEquals(RESPONSE_BODY, responseEntity.getBody());
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
+        Assertions.assertEquals(RESPONSE_BODY, responseEntity.getBody());
+        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
     }
 
     @Test
@@ -406,7 +405,7 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         when(httpServletRequest.getRequestURI()).thenReturn(CONTEXT + SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT +
                 SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
 
-        Assert.assertThrows(SoapException.class, () -> soapServiceController.postMethod(PROJECT_ID, httpServletRequest));
+        Assertions.assertThrows(SoapException.class, () -> soapServiceController.postMethod(PROJECT_ID, httpServletRequest));
         verify(soapClient, times(0)).getResponse(any(SoapRequest.class), any(SoapOperation.class));
     }
 
@@ -433,15 +432,15 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
                 SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
 
         final ResponseEntity<?> responseEntity = soapServiceController.postMethod(PROJECT_ID, httpServletRequest);
-        Assert.assertEquals(RESPONSE_BODY, responseEntity.getBody());
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertNotNull(responseEntity.getHeaders());
-        Assert.assertNotNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER));
-        Assert.assertNotNull(responseEntity.getHeaders().get(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
+        Assertions.assertEquals(RESPONSE_BODY, responseEntity.getBody());
+        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assertions.assertNotNull(responseEntity.getHeaders());
+        Assertions.assertNotNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER));
+        Assertions.assertNotNull(responseEntity.getHeaders().get(ACCEPT_HEADER));
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
     }
 
 
@@ -486,15 +485,15 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
                 SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
 
         final ResponseEntity<?> responseEntity = soapServiceController.postMethod(PROJECT_ID, httpServletRequest);
-        Assert.assertEquals(RESPONSE_BODY, responseEntity.getBody());
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertNotNull(responseEntity.getHeaders());
-        Assert.assertNotNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER));
-        Assert.assertNotNull(responseEntity.getHeaders().get(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
+        Assertions.assertEquals(RESPONSE_BODY, responseEntity.getBody());
+        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assertions.assertNotNull(responseEntity.getHeaders());
+        Assertions.assertNotNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER));
+        Assertions.assertNotNull(responseEntity.getHeaders().get(ACCEPT_HEADER));
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(ACCEPT_HEADER)).getFirst());
     }
 
     @Test
@@ -520,11 +519,11 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
                 SLASH + PROJECT_ID + SLASH + SOAP_PORT_ID);
 
         final ResponseEntity<?> responseEntity = soapServiceController.postMethod(PROJECT_ID, httpServletRequest);
-        Assert.assertEquals(REQUEST_BODY, responseEntity.getBody());
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assert.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
-        Assert.assertFalse(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
-        Assert.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
+        Assertions.assertEquals(REQUEST_BODY, responseEntity.getBody());
+        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assertions.assertTrue(responseEntity.getHeaders().containsKey(CONTENT_TYPE_HEADER));
+        Assertions.assertFalse(responseEntity.getHeaders().containsKey(ACCEPT_HEADER));
+        Assertions.assertEquals(APPLICATION_XML, Objects.requireNonNull(responseEntity.getHeaders().get(CONTENT_TYPE_HEADER)).getFirst());
     }
 
     @Test
@@ -548,8 +547,8 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         when(serviceProcessor.process(isA(LoadSoapResourceInput.class))).thenReturn(loadSoapResourceOutput);
 
         final ResponseEntity<?> responseEntity = soapServiceController.getMethod(PROJECT_ID, httpServletRequest);
-        Assert.assertEquals(WSDL, responseEntity.getBody());
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assertions.assertEquals(WSDL, responseEntity.getBody());
+        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Test
@@ -573,8 +572,8 @@ public class SoapServiceControllerTest extends AbstractControllerTest {
         when(serviceProcessor.process(isA(LoadSoapResourceInput.class))).thenReturn(loadSoapResourceOutput);
 
         final ResponseEntity<?> responseEntity = soapServiceController.getWildcardMethod(PROJECT_ID, httpServletRequest);
-        Assert.assertEquals(WSDL, responseEntity.getBody());
-        Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Assertions.assertEquals(WSDL, responseEntity.getBody());
+        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Override

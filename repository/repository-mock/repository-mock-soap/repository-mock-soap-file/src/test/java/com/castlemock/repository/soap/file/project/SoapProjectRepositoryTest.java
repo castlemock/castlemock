@@ -21,9 +21,9 @@ import com.castlemock.model.mock.soap.domain.SoapProject;
 import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.soap.file.project.model.SoapProjectFile;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -47,7 +47,7 @@ public class SoapProjectRepositoryTest {
     private static final String DIRECTORY = "/directory";
     private static final String EXTENSION = ".extension";
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(repository, "soapProjectFileDirectory", DIRECTORY);
@@ -68,20 +68,20 @@ public class SoapProjectRepositoryTest {
     public void testFindOne(){
         final SoapProject soapProject = save();
         final SoapProject returnedSoapEvent = repository.findOne(soapProject.getId()).orElse(null);
-        Assert.assertNotNull(returnedSoapEvent);
-        Assert.assertEquals(returnedSoapEvent.getId(), soapProject.getId());
-        Assert.assertEquals(returnedSoapEvent.getName(), soapProject.getName());
-        Assert.assertEquals(returnedSoapEvent.getDescription(), soapProject.getDescription());
+        Assertions.assertNotNull(returnedSoapEvent);
+        Assertions.assertEquals(returnedSoapEvent.getId(), soapProject.getId());
+        Assertions.assertEquals(returnedSoapEvent.getName(), soapProject.getName());
+        Assertions.assertEquals(returnedSoapEvent.getDescription(), soapProject.getDescription());
     }
 
     @Test
     public void testFindAll(){
         final SoapProject soapProject = save();
         final List<SoapProject> soapProjects = repository.findAll();
-        Assert.assertEquals(soapProjects.size(), 1);
-        Assert.assertEquals(soapProjects.getFirst().getId(), soapProject.getId());
-        Assert.assertEquals(soapProjects.getFirst().getName(), soapProject.getName());
-        Assert.assertEquals(soapProjects.getFirst().getDescription(), soapProject.getDescription());
+        Assertions.assertEquals(soapProjects.size(), 1);
+        Assertions.assertEquals(soapProjects.getFirst().getId(), soapProject.getId());
+        Assertions.assertEquals(soapProjects.getFirst().getName(), soapProject.getName());
+        Assertions.assertEquals(soapProjects.getFirst().getDescription(), soapProject.getDescription());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class SoapProjectRepositoryTest {
     public void testCount(){
         save();
         final Integer count = repository.count();
-        Assert.assertEquals(Integer.valueOf(1), count);
+        Assertions.assertEquals(Integer.valueOf(1), count);
     }
 
     private SoapProject save(){

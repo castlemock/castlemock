@@ -24,9 +24,9 @@ import com.castlemock.model.core.configuration.ConfigurationType;
 import com.castlemock.repository.configuration.ConfigurationRepository;
 import com.castlemock.service.core.configuration.input.ReadAllConfigurationGroupsInput;
 import com.castlemock.service.core.configuration.output.ReadAllConfigurationGroupsOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -47,7 +47,7 @@ public class ReadAllConfigurationGroupsServiceTest {
     @InjectMocks
     private ReadAllConfigurationGroupsService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -74,15 +74,15 @@ public class ReadAllConfigurationGroupsServiceTest {
         final ReadAllConfigurationGroupsOutput output = serviceResult.getOutput();
 
         final List<ConfigurationGroup> returnedConfigurationGroups = output.configurationGroups();
-        Assert.assertEquals(returnedConfigurationGroups.size(), configurationGroups.size());
+        Assertions.assertEquals(returnedConfigurationGroups.size(), configurationGroups.size());
         final ConfigurationGroup returnedConfigurationGroup = returnedConfigurationGroups.getFirst();
-        Assert.assertEquals(returnedConfigurationGroup.getId(), configurationGroup.getId());
-        Assert.assertEquals(returnedConfigurationGroup.getName(), configurationGroup.getName());
-        Assert.assertEquals(returnedConfigurationGroup.getConfigurations().size(), configurationGroup.getConfigurations().size());
+        Assertions.assertEquals(returnedConfigurationGroup.getId(), configurationGroup.getId());
+        Assertions.assertEquals(returnedConfigurationGroup.getName(), configurationGroup.getName());
+        Assertions.assertEquals(returnedConfigurationGroup.getConfigurations().size(), configurationGroup.getConfigurations().size());
         final Configuration returnedConfiguration = returnedConfigurationGroup.getConfigurations().getFirst();
-        Assert.assertEquals(returnedConfiguration.getType(), configuration.getType());
-        Assert.assertEquals(returnedConfiguration.getKey(), configuration.getKey());
-        Assert.assertEquals(returnedConfiguration.getValue(), configuration.getValue());
+        Assertions.assertEquals(returnedConfiguration.getType(), configuration.getType());
+        Assertions.assertEquals(returnedConfiguration.getKey(), configuration.getKey());
+        Assertions.assertEquals(returnedConfiguration.getValue(), configuration.getValue());
     }
 
 

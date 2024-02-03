@@ -17,7 +17,7 @@
 package com.castlemock.service.core.project;
 
 import com.castlemock.model.core.service.project.ProjectServiceAdapter;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class ProjectServiceFacadeImplTest {
 
     private ProjectServiceAdapter projectServiceAdapter;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
         projectServiceAdapter = Mockito.mock(ProjectServiceAdapter.class);

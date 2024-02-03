@@ -50,7 +50,7 @@
         <commons.lang.version>3.14.0</commons.lang.version>
         <mockito.core.version>3.6.28</mockito.core.version>
         <commons.codec.version>1.16.0</commons.codec.version>
-        <junit.jupiter.version>5.7.0</junit.jupiter.version>
+        <junit.jupiter.version>5.10.1</junit.jupiter.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
         <tomcat.embedd.version>10.1.18</tomcat.embedd.version>
         <json.schema.validator>2.2.13</json.schema.validator>

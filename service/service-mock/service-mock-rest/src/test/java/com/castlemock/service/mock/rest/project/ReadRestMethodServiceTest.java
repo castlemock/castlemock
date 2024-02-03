@@ -13,9 +13,9 @@ import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import com.castlemock.repository.rest.project.RestResourceRepository;
 import com.castlemock.service.mock.rest.project.input.ReadRestMethodInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestMethodOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -38,7 +38,7 @@ public class ReadRestMethodServiceTest {
     @InjectMocks
     private ReadRestMethodService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -72,10 +72,10 @@ public class ReadRestMethodServiceTest {
         Mockito.verify(methodRepository, Mockito.times(1)).findOne(method.getId());
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithMethodId(method.getId());
 
-        Assert.assertNotNull(result.getOutput());
+        Assertions.assertNotNull(result.getOutput());
         // TODO FIX
-        //Assert.assertEquals(method, result.getOutput().getRestMethod());
-        //Assert.assertEquals(mockResponse.getName(), method.getDefaultResponseName());
+        //Assertions.assertEquals(method, result.getOutput().getRestMethod());
+        //Assertions.assertEquals(mockResponse.getName(), method.getDefaultResponseName());
     }
 
     @Test
@@ -103,8 +103,8 @@ public class ReadRestMethodServiceTest {
 
         // TODO FIX
 
-        Assert.assertNotNull(result.getOutput());
-        //Assert.assertEquals(method, result.getOutput().getRestMethod());
-        Assert.assertEquals("", method.getDefaultResponseName().orElse(null));
+        Assertions.assertNotNull(result.getOutput());
+        //Assertions.assertEquals(method, result.getOutput().getRestMethod());
+        Assertions.assertEquals("", method.getDefaultResponseName().orElse(null));
     }
 }

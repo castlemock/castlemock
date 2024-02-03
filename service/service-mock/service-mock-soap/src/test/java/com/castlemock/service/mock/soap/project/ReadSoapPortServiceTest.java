@@ -10,9 +10,9 @@ import com.castlemock.repository.soap.project.SoapOperationRepository;
 import com.castlemock.repository.soap.project.SoapPortRepository;
 import com.castlemock.service.mock.soap.project.input.ReadSoapPortInput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapPortOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -21,7 +21,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ReadSoapPortServiceTest {
 
@@ -34,7 +34,7 @@ public class ReadSoapPortServiceTest {
     @InjectMocks
     private ReadSoapPortService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -58,13 +58,13 @@ public class ReadSoapPortServiceTest {
         Mockito.verify(portRepository, Mockito.times(1)).findOne(port.getId());
         Mockito.verify(operationRepository, Mockito.times(1)).findWithPortId(port.getId());
 
-        Assert.assertNotNull(result.getOutput());
+        Assertions.assertNotNull(result.getOutput());
 
         final SoapPort returnedSoapPort = result.getOutput().getPort()
                 .orElse(null);
 
         assertNotNull(returnedSoapPort);
-        Assert.assertEquals(port.toBuilder()
+        Assertions.assertEquals(port.toBuilder()
                 .operations(List.of(operation))
                 .build(), returnedSoapPort);
     }

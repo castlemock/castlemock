@@ -17,8 +17,8 @@
 package com.castlemock.web.core.utility;
 
 import com.castlemock.model.core.http.HttpHeader;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -47,13 +47,13 @@ public class CharsetUtilityTest {
                 .build();
 
         final String charset = CharsetUtility.parseHttpHeaders(List.of(contentLength, contentEncoding, contentType));
-        Assert.assertEquals("ISO-8859-1", charset);
+        Assertions.assertEquals("ISO-8859-1", charset);
     }
 
     @Test
     public void testParseHttpHeadersNull(){
         final String charset = CharsetUtility.parseHttpHeaders(null);
-        Assert.assertEquals("UTF-8", charset);
+        Assertions.assertEquals("UTF-8", charset);
     }
 
     @Test
@@ -69,39 +69,39 @@ public class CharsetUtilityTest {
                 .build();
 
         final String charset = CharsetUtility.parseHttpHeaders(List.of(contentEncoding, contentLength));
-        Assert.assertEquals("UTF-8", charset);
+        Assertions.assertEquals("UTF-8", charset);
     }
 
     @Test
     public void testParseContentTypeUTF8(){
         final String contentType = "text/xml;charset=utf-8";
         final String charset = CharsetUtility.parseContentType(contentType);
-        Assert.assertEquals("UTF-8", charset);
+        Assertions.assertEquals("UTF-8", charset);
     }
 
     @Test
     public void testParseContentTypeISO(){
         final String contentType = "text/xml;charset=iso-8859-1";
         final String charset = CharsetUtility.parseContentType(contentType);
-        Assert.assertEquals("ISO-8859-1", charset);
+        Assertions.assertEquals("ISO-8859-1", charset);
     }
 
     @Test
     public void testParseContentTypeNull(){
         final String charset = CharsetUtility.parseContentType(null);
-        Assert.assertEquals("UTF-8", charset);
+        Assertions.assertEquals("UTF-8", charset);
     }
 
     @Test
     public void testParseContentTypeMissingCharset(){
         final String charset = CharsetUtility.parseContentType("text/xml");
-        Assert.assertEquals("UTF-8", charset);
+        Assertions.assertEquals("UTF-8", charset);
     }
 
     @Test
     public void testParseContentTypeInvalidString(){
         final String charset = CharsetUtility.parseContentType("InvalidString");
-        Assert.assertEquals("UTF-8", charset);
+        Assertions.assertEquals("UTF-8", charset);
     }
 
 }

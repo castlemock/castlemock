@@ -23,9 +23,9 @@ import com.castlemock.model.mock.soap.domain.SoapPortTestBuilder;
 import com.castlemock.repository.soap.project.SoapPortRepository;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapPortInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapPortOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class UpdateSoapPortServiceTest {
     @InjectMocks
     private UpdateSoapPortService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -70,11 +70,11 @@ public class UpdateSoapPortServiceTest {
         final SoapPort returnedSoapPort = output.getPort()
                         .orElse(null);
 
-        Assert.assertNotNull(returnedSoapPort);
-        Assert.assertEquals(port.getId(), returnedSoapPort.getId());
-        Assert.assertEquals(port.getName(), returnedSoapPort.getName());
-        Assert.assertEquals(port.getUri(), returnedSoapPort.getUri());
-        Assert.assertEquals(port.getProjectId(), returnedSoapPort.getProjectId());
+        Assertions.assertNotNull(returnedSoapPort);
+        Assertions.assertEquals(port.getId(), returnedSoapPort.getId());
+        Assertions.assertEquals(port.getName(), returnedSoapPort.getName());
+        Assertions.assertEquals(port.getUri(), returnedSoapPort.getUri());
+        Assertions.assertEquals(port.getProjectId(), returnedSoapPort.getProjectId());
 
         Mockito.verify(soapPortRepository, Mockito.times(1)).findOne(port.getId());
         Mockito.verify(soapPortRepository, Mockito.times(1)).update(port.getId(), port.toBuilder()

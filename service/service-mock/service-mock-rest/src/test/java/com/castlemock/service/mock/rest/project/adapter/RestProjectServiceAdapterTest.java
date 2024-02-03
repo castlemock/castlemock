@@ -21,9 +21,9 @@ import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.model.mock.rest.domain.RestProjectTestBuilder;
 import com.castlemock.service.mock.rest.project.input.ReadAllRestProjectsInput;
 import com.castlemock.service.mock.rest.project.output.ReadAllRestProjectsOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -43,7 +43,7 @@ public class RestProjectServiceAdapterTest {
     @InjectMocks
     private RestProjectServiceAdapter adapter;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -58,7 +58,7 @@ public class RestProjectServiceAdapterTest {
 
         final List<RestProject> returnedProjects = adapter.readAll();
 
-        Assert.assertEquals(projects, returnedProjects);
+        Assertions.assertEquals(projects, returnedProjects);
         Mockito.verify(serviceProcessor, Mockito.times(1)).process(Mockito.any(ReadAllRestProjectsInput.class));
     }
 

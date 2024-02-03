@@ -31,8 +31,8 @@ import com.castlemock.repository.soap.project.SoapOperationRepository;
 import com.castlemock.repository.soap.project.SoapPortRepository;
 import com.castlemock.service.mock.soap.project.input.DeleteSoapPortsInput;
 import com.castlemock.service.mock.soap.project.output.DeleteSoapPortsOutput;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -61,7 +61,7 @@ public class DeleteSoapPortsServiceTest {
     @InjectMocks
     private DeleteSoapPortsService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }

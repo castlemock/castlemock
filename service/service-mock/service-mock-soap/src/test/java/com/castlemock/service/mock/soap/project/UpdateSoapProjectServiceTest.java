@@ -23,9 +23,9 @@ import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.repository.soap.project.SoapProjectRepository;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapProjectInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapProjectOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -46,7 +46,7 @@ public class UpdateSoapProjectServiceTest {
     @InjectMocks
     private UpdateSoapProjectService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -70,12 +70,12 @@ public class UpdateSoapProjectServiceTest {
         final SoapProject returnedSoapProject = output.getProject()
                         .orElse(null);
 
-        Assert.assertNotNull(returnedSoapProject);
-        Assert.assertEquals(soapProject.getId(), returnedSoapProject.getId());
-        Assert.assertEquals(soapProject.getName(), returnedSoapProject.getName());
-        Assert.assertEquals(soapProject.getDescription(), returnedSoapProject.getDescription());
-        Assert.assertEquals(soapProject.getCreated(), returnedSoapProject.getCreated());
-        Assert.assertEquals(soapProject.getUpdated(), returnedSoapProject.getUpdated());
+        Assertions.assertNotNull(returnedSoapProject);
+        Assertions.assertEquals(soapProject.getId(), returnedSoapProject.getId());
+        Assertions.assertEquals(soapProject.getName(), returnedSoapProject.getName());
+        Assertions.assertEquals(soapProject.getDescription(), returnedSoapProject.getDescription());
+        Assertions.assertEquals(soapProject.getCreated(), returnedSoapProject.getCreated());
+        Assertions.assertEquals(soapProject.getUpdated(), returnedSoapProject.getUpdated());
 
         Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapProject.class));
     }

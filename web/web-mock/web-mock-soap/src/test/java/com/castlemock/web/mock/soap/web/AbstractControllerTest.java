@@ -18,7 +18,7 @@ package com.castlemock.web.mock.soap.web;
 
 import com.castlemock.web.core.controller.AbstractController;
 import jakarta.servlet.ServletContext;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.MessageSource;
@@ -50,7 +50,7 @@ public abstract class AbstractControllerTest {
     protected static final String MOCK = "mock";
     protected static final String SOAP = "soap";
 
-    @Before
+    @BeforeEach
     public void initiateTest() {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(getController()).build();

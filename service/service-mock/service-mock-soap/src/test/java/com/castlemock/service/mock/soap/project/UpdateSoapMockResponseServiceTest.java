@@ -23,9 +23,9 @@ import com.castlemock.model.mock.soap.domain.SoapMockResponseTestBuilder;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapMockResponseInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapMockResponseOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -44,7 +44,7 @@ public class UpdateSoapMockResponseServiceTest {
     @InjectMocks
     private UpdateSoapMockResponseService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -81,15 +81,15 @@ public class UpdateSoapMockResponseServiceTest {
         final SoapMockResponse returnedSoapMockResponse = output.getMockResponse()
                         .orElse(null);
 
-        Assert.assertNotNull(returnedSoapMockResponse);
-        Assert.assertEquals(mockResponse.getId(), returnedSoapMockResponse.getId());
-        Assert.assertEquals(mockResponse.getName(), returnedSoapMockResponse.getName());
-        Assert.assertEquals(mockResponse.getStatus(), returnedSoapMockResponse.getStatus());
-        Assert.assertEquals(mockResponse.getBody(), returnedSoapMockResponse.getBody());
-        Assert.assertEquals(mockResponse.getHttpStatusCode(), returnedSoapMockResponse.getHttpStatusCode());
-        Assert.assertEquals(mockResponse.getStatus(), returnedSoapMockResponse.getStatus());
-        Assert.assertEquals(mockResponse.getUsingExpressions(), returnedSoapMockResponse.getUsingExpressions());
-        Assert.assertEquals(mockResponse.getXpathExpressions(), returnedSoapMockResponse.getXpathExpressions());
+        Assertions.assertNotNull(returnedSoapMockResponse);
+        Assertions.assertEquals(mockResponse.getId(), returnedSoapMockResponse.getId());
+        Assertions.assertEquals(mockResponse.getName(), returnedSoapMockResponse.getName());
+        Assertions.assertEquals(mockResponse.getStatus(), returnedSoapMockResponse.getStatus());
+        Assertions.assertEquals(mockResponse.getBody(), returnedSoapMockResponse.getBody());
+        Assertions.assertEquals(mockResponse.getHttpStatusCode(), returnedSoapMockResponse.getHttpStatusCode());
+        Assertions.assertEquals(mockResponse.getStatus(), returnedSoapMockResponse.getStatus());
+        Assertions.assertEquals(mockResponse.getUsingExpressions(), returnedSoapMockResponse.getUsingExpressions());
+        Assertions.assertEquals(mockResponse.getXpathExpressions(), returnedSoapMockResponse.getXpathExpressions());
 
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findOne(mockResponse.getId());
         Mockito.verify(mockResponseRepository, Mockito.times(1)).update(mockResponse.getId(), mockResponse);

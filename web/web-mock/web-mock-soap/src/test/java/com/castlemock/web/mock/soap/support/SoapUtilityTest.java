@@ -18,8 +18,8 @@ package com.castlemock.web.mock.soap.support;
 
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
 import com.castlemock.service.mock.soap.utility.SoapUtility;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Karl Dahlgren
@@ -43,8 +43,8 @@ public class SoapUtilityTest {
                         </soap:Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
-        Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace().orElse(null));
+        Assertions.assertEquals("GetPrice", operationIdentifier.getName());
+        Assertions.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -62,8 +62,8 @@ public class SoapUtilityTest {
                         </soap:Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
-        Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace().orElse(null));
+        Assertions.assertEquals("GetPrice", operationIdentifier.getName());
+        Assertions.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -81,8 +81,8 @@ public class SoapUtilityTest {
                         </soapenv:Envelope>""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
-        Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace().orElse(null));
+        Assertions.assertEquals("GetPrice", operationIdentifier.getName());
+        Assertions.assertEquals("http://www.w3schools.com/prices", operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -100,8 +100,8 @@ public class SoapUtilityTest {
                         </soap:Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
-        Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertNull(operationIdentifier.getNamespace().orElse(null));
+        Assertions.assertEquals("GetPrice", operationIdentifier.getName());
+        Assertions.assertNull(operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -120,8 +120,8 @@ public class SoapUtilityTest {
                         </soap:Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
-        Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertNull(operationIdentifier.getNamespace().orElse(null));
+        Assertions.assertEquals("GetPrice", operationIdentifier.getName());
+        Assertions.assertNull(operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -139,8 +139,8 @@ public class SoapUtilityTest {
                         </soap:Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
-        Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertNull(operationIdentifier.getNamespace().orElse(null));
+        Assertions.assertEquals("GetPrice", operationIdentifier.getName());
+        Assertions.assertNull(operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -158,8 +158,8 @@ public class SoapUtilityTest {
                         </soapenv:Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
-        Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertNull(operationIdentifier.getNamespace().orElse(null));
+        Assertions.assertEquals("GetPrice", operationIdentifier.getName());
+        Assertions.assertNull(operationIdentifier.getNamespace().orElse(null));
     }
 
     @Test
@@ -176,13 +176,13 @@ public class SoapUtilityTest {
                         </Envelope>\s""";
 
         final SoapOperationIdentifier operationIdentifier = SoapUtility.extractSoapRequestName(requestBody);
-        Assert.assertEquals("GetPrice", operationIdentifier.getName());
-        Assert.assertNull(operationIdentifier.getNamespace().orElse(null));
+        Assertions.assertEquals("GetPrice", operationIdentifier.getName());
+        Assertions.assertNull(operationIdentifier.getNamespace().orElse(null));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testExtractSoapRequestNameInvalidRequestBody(){
-        SoapUtility.extractSoapRequestName("");
+        Assertions.assertThrows(IllegalStateException.class, () -> SoapUtility.extractSoapRequestName(""));
     }
 
 }

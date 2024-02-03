@@ -23,8 +23,8 @@ import com.castlemock.model.mock.rest.domain.RestMockResponseTestBuilder;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import com.castlemock.service.mock.rest.project.input.DeleteRestMockResponseInput;
 import com.castlemock.service.mock.rest.project.output.DeleteRestMockResponseOutput;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -44,7 +44,7 @@ public class DeleteRestMockResponseServiceTest {
     @InjectMocks
     private DeleteRestMockResponseService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }

@@ -21,9 +21,9 @@ import com.castlemock.model.mock.rest.domain.RestProject;
 import com.castlemock.model.mock.rest.domain.RestProjectTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.rest.file.project.model.RestProjectFile;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -47,7 +47,7 @@ public class RestProjectRepositoryTest {
     private static final String DIRECTORY = "/directory";
     private static final String EXTENSION = ".extension";
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(repository, "restProjectFileDirectory", DIRECTORY);
@@ -68,20 +68,20 @@ public class RestProjectRepositoryTest {
     public void testFindOne(){
         final RestProject restProject = save();
         final RestProject returnedRestEvent = repository.findOne(restProject.getId()).orElse(null);
-        Assert.assertNotNull(returnedRestEvent);
-        Assert.assertEquals(returnedRestEvent.getId(), restProject.getId());
-        Assert.assertEquals(returnedRestEvent.getDescription(), restProject.getDescription());
-        Assert.assertEquals(returnedRestEvent.getName(), restProject.getName());
+        Assertions.assertNotNull(returnedRestEvent);
+        Assertions.assertEquals(returnedRestEvent.getId(), restProject.getId());
+        Assertions.assertEquals(returnedRestEvent.getDescription(), restProject.getDescription());
+        Assertions.assertEquals(returnedRestEvent.getName(), restProject.getName());
     }
 
     @Test
     public void testFindAll(){
         final RestProject restProject = save();
         final List<RestProject> restProjects = repository.findAll();
-        Assert.assertEquals(restProjects.size(), 1);
-        Assert.assertEquals(restProjects.getFirst().getId(), restProject.getId());
-        Assert.assertEquals(restProjects.getFirst().getDescription(), restProject.getDescription());
-        Assert.assertEquals(restProjects.getFirst().getName(), restProject.getName());
+        Assertions.assertEquals(restProjects.size(), 1);
+        Assertions.assertEquals(restProjects.getFirst().getId(), restProject.getId());
+        Assertions.assertEquals(restProjects.getFirst().getDescription(), restProject.getDescription());
+        Assertions.assertEquals(restProjects.getFirst().getName(), restProject.getName());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class RestProjectRepositoryTest {
     public void testCount(){
         final RestProject restProject = save();
         final Integer count = repository.count();
-        Assert.assertEquals(Integer.valueOf(1), count);
+        Assertions.assertEquals(Integer.valueOf(1), count);
     }
 
     private RestProject save(){

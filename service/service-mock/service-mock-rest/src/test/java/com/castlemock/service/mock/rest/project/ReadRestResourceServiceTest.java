@@ -10,9 +10,9 @@ import com.castlemock.repository.rest.project.RestMethodRepository;
 import com.castlemock.repository.rest.project.RestResourceRepository;
 import com.castlemock.service.mock.rest.project.input.ReadRestResourceInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestResourceOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -32,7 +32,7 @@ public class ReadRestResourceServiceTest {
     @InjectMocks
     private ReadRestResourceService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -58,14 +58,14 @@ public class ReadRestResourceServiceTest {
         Mockito.verify(resourceRepository, Mockito.times(1)).findOne(resource.getId());
         Mockito.verify(methodRepository, Mockito.times(1)).findWithResourceId(resource.getId());
 
-        Assert.assertNotNull(result.getOutput());
+        Assertions.assertNotNull(result.getOutput());
 
         final RestResource restResource = result.getOutput()
                 .getRestResource()
                 .orElse(null);
 
-        Assert.assertNotNull(restResource);
-        Assert.assertEquals(resource, restResource);
+        Assertions.assertNotNull(restResource);
+        Assertions.assertEquals(resource, restResource);
     }
 
 }

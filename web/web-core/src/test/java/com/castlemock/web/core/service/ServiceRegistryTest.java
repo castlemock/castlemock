@@ -22,9 +22,9 @@ import com.castlemock.service.core.user.DeleteUserService;
 import com.castlemock.service.core.user.ReadUserService;
 import com.castlemock.service.core.user.input.DeleteUserInput;
 import com.castlemock.service.core.user.input.ReadUserInput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -47,7 +47,7 @@ public class ServiceRegistryTest {
     @InjectMocks
     private ServiceRegistry serviceRegistry;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
         final Map<String, Object> components = new HashMap<>();
@@ -63,7 +63,7 @@ public class ServiceRegistryTest {
 
         // Get registered service
         final ReadUserService readUserService = (ReadUserService) serviceRegistry.getService(readUserInput);
-        Assert.assertNotNull(readUserService);
+        Assertions.assertNotNull(readUserService);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ServiceRegistryTest {
 
         // Try to get a non-registered service
         final DeleteUserService deleteUserService = (DeleteUserService) serviceRegistry.getService(deleteUserInput);
-        Assert.assertNull(deleteUserService);
+        Assertions.assertNull(deleteUserService);
     }
 
     @Test

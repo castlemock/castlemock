@@ -18,8 +18,8 @@ package com.castlemock.web.core.filter;
 
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.IOException;
@@ -42,8 +42,8 @@ public class HttpServletRequestWrapperTest {
         final HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(request);
         final ServletInputStream stream = wrapper.getInputStream();
 
-        Assert.assertNotNull(stream);
-        Assert.assertEquals(-1, stream.read());
+        Assertions.assertNotNull(stream);
+        Assertions.assertEquals(-1, stream.read());
 
         Mockito.verify(inputStream, Mockito.times(1)).read(Mockito.any(byte[].class), anyInt(), anyInt());
     }
