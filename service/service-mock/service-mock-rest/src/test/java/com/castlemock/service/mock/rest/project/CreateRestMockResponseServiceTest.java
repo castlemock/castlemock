@@ -81,7 +81,7 @@ public class CreateRestMockResponseServiceTest {
         final ServiceResult<CreateRestMockResponseOutput> serviceResult = service.process(serviceTask);
 
         Assertions.assertNotNull(serviceResult.getOutput());
-        Assertions.assertEquals(mockResponse, serviceResult.getOutput().getRestMockResponse());
+        Assertions.assertEquals(mockResponse, serviceResult.getOutput().getMockResponse());
         Mockito.verify(mockResponseRepository, Mockito.times(1)).save(any());
     }
 

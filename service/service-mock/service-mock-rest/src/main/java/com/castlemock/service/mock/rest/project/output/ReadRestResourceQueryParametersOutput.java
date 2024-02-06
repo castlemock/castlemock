@@ -18,6 +18,7 @@ package com.castlemock.service.mock.rest.project.output;
 
 import com.castlemock.model.core.Output;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -33,6 +34,26 @@ public final class ReadRestResourceQueryParametersOutput implements Output {
         return Optional.of(queries)
                 .map(Set::copyOf)
                 .orElseGet(Set::of);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ReadRestResourceQueryParametersOutput that = (ReadRestResourceQueryParametersOutput) o;
+        return Objects.equals(queries, that.queries);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(queries);
+    }
+
+    @Override
+    public String toString() {
+        return "ReadRestResourceQueryParametersOutput{" +
+                "queries=" + queries +
+                '}';
     }
 
     public static Builder builder(){

@@ -38,11 +38,11 @@ public final class RestRequestFileConverter {
                 .httpHeaders(restRequest.getHttpHeaders()
                         .stream()
                         .map(HttpHeaderFileConverter::toHttpHeader)
-                        .collect(Collectors.toList()))
+                        .collect(Collectors.toSet()))
                 .httpParameters(restRequest.getHttpParameters()
                         .stream()
                         .map(HttpParameterFileConverter::toHttpParameter)
-                        .collect(Collectors.toList()))
+                        .collect(Collectors.toSet()))
                 .build();
     }
 

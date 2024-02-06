@@ -59,6 +59,30 @@ public final class UpdateRestResourcesStatusInput implements Input {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateRestResourcesStatusInput that = (UpdateRestResourcesStatusInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(applicationId, that.applicationId) &&
+                Objects.equals(resourceId, that.resourceId) && methodStatus == that.methodStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, applicationId, resourceId, methodStatus);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateRestResourcesStatusInput{" +
+                "projectId='" + projectId + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", resourceId='" + resourceId + '\'' +
+                ", methodStatus=" + methodStatus +
+                '}';
+    }
+
     public static final class Builder {
 
         private String projectId;

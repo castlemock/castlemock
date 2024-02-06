@@ -17,6 +17,7 @@
 package com.castlemock.web.core.utility;
 
 
+import com.castlemock.model.core.http.HttpParameter;
 import com.castlemock.service.core.utility.UrlUtility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -94,7 +95,10 @@ public class UrlUtilityTest {
 
     @Test
     public void canGetQueryStringParameters(){
-        final Map<String, Set<String>> queryParams = Map.of("userId", Set.of("1"));
+        final Set<HttpParameter> queryParams = Set.of(HttpParameter.builder()
+                .name("userId")
+                .value("1")
+                .build());
         final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}", queryParams);
 
         Assertions.assertTrue(map.containsKey("userId"));
@@ -104,8 +108,10 @@ public class UrlUtilityTest {
 
     @Test
     public void canGetQueryStringParametersWithDifferentName(){
-        final Map<String, Set<String>> queryParams = Map.of("userId", Set.of("1"));
-        final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={id}", queryParams);
+        final Set<HttpParameter> queryParams = Set.of(HttpParameter.builder()
+                .name("userId")
+                .value("1")
+                .build());        final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={id}", queryParams);
 
         Assertions.assertTrue(map.containsKey("userId"));
         Assertions.assertEquals(1, map.get("userId").size());
@@ -114,9 +120,10 @@ public class UrlUtilityTest {
 
     @Test
     public void canGetQueryStringMultipleParameters(){
-        final Map<String, Set<String>> queryParams = Map.of(
-                "userId", Set.of("1"),
-                "username", Set.of("Karl"));
+        final Set<HttpParameter> queryParams = Set.of(
+                HttpParameter.builder().name("userId").value("1").build(),
+                HttpParameter.builder().name("username").value("Karl").build());
+
         final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}&username={username}", queryParams);
 
         Assertions.assertTrue(map.containsKey("userId"));
@@ -129,8 +136,9 @@ public class UrlUtilityTest {
 
     @Test
     public void canGetQueryStringMultipleParameterValues(){
-        final Map<String, Set<String>> queryParams = Map.of(
-                "userId", Set.of("1", "2"));
+        final Set<HttpParameter> queryParams = Set.of(
+                HttpParameter.builder().name("userId").value("1").build(),
+                HttpParameter.builder().name("userId").value("2").build());
         final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}&userId=1", queryParams);
 
         Assertions.assertTrue(map.containsKey("userId"));

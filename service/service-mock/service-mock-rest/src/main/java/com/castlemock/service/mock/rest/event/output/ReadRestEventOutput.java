@@ -27,14 +27,14 @@ import java.util.Optional;
  */
 public final class ReadRestEventOutput implements Output {
 
-    private final RestEvent restEvent;
+    private final RestEvent event;
 
-    private ReadRestEventOutput(final RestEvent restEvent) {
-        this.restEvent = restEvent;
+    private ReadRestEventOutput(final RestEvent event) {
+        this.event = event;
     }
 
-    public Optional<RestEvent> getRestEvent() {
-        return Optional.ofNullable(restEvent);
+    public Optional<RestEvent> getEvent() {
+        return Optional.ofNullable(event);
     }
 
     public static Builder builder(){
@@ -43,15 +43,15 @@ public final class ReadRestEventOutput implements Output {
 
     public static final class Builder {
 
-        private RestEvent restEvent;
+        private RestEvent event;
 
-        public Builder restEvent(final RestEvent restEvent){
-            this.restEvent = restEvent;
+        public Builder event(final RestEvent event){
+            this.event = event;
             return this;
         }
 
         public ReadRestEventOutput build(){
-            return new ReadRestEventOutput(this.restEvent);
+            return new ReadRestEventOutput(this.event);
         }
 
     }

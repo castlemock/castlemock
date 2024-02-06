@@ -46,11 +46,11 @@ public class CreateRestResourceService extends AbstractRestProjectService implem
                 .id(IdUtility.generateId())
                 .name(input.getName())
                 .uri(input.getUri())
-                .applicationId(input.getRestApplicationId())
+                .applicationId(input.getApplicationId())
                 .build();
         final RestResource createdRestResource = this.resourceRepository.save(resource);
         return createServiceResult(CreateRestResourceOutput.builder()
-                .savedRestApplication(createdRestResource)
+                .resource(createdRestResource)
                 .build());
     }
 }

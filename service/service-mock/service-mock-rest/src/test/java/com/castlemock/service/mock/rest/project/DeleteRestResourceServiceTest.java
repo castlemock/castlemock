@@ -77,9 +77,9 @@ public class DeleteRestResourceServiceTest {
         Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(List.of(mockResponse));
 
         final DeleteRestResourceInput input = DeleteRestResourceInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
-                .restResourceId(resourceId)
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
                 .build();
         final ServiceTask<DeleteRestResourceInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<DeleteRestResourceOutput> serviceResult = service.process(serviceTask);

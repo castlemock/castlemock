@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -55,13 +56,26 @@ public class HttpMessageSupportTest {
         Mockito.when(httpServletRequest.getHeader("Accept")).thenReturn("application/json");
         Mockito.when(httpServletRequest.getHeader("Content-Length")).thenReturn("1024");
 
-        List<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
+        Set<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
 
         Assertions.assertEquals(headerNames.size(), httpHeaders.size());
 
-        HttpHeader contentTypeHeader = httpHeaders.getFirst();
-        HttpHeader acceptHeader = httpHeaders.get(1);
-        HttpHeader contentLengthHeader = httpHeaders.get(2);
+        HttpHeader contentTypeHeader = httpHeaders.stream()
+                .filter(parameter -> parameter.getName().equals("Content-Type"))
+                .findFirst()
+                .orElse(null);
+        HttpHeader acceptHeader = httpHeaders.stream()
+                .filter(parameter -> parameter.getName().equals("Accept"))
+                .findFirst()
+                .orElse(null);
+        HttpHeader contentLengthHeader = httpHeaders.stream()
+                .filter(parameter -> parameter.getName().equals("Content-Length"))
+                .findFirst()
+                .orElse(null);
+
+        Assertions.assertNotNull(contentTypeHeader);
+        Assertions.assertNotNull(acceptHeader);
+        Assertions.assertNotNull(contentLengthHeader);
 
         Assertions.assertEquals("Content-Type", contentTypeHeader.getName());
         Assertions.assertEquals("application/xml", contentTypeHeader.getValue());
@@ -137,12 +151,21 @@ public class HttpMessageSupportTest {
         Mockito.when(httpServletRequest.getParameterValues("Parameter1")).thenReturn(new String[]{"Value1"});
         Mockito.when(httpServletRequest.getParameterValues("Parameter2")).thenReturn(new String[]{"Value2"});
 
-        List<HttpParameter> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
+        Set<HttpParameter> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
 
         Assertions.assertEquals(parameterNames.size(), parameters.size());
 
-        HttpParameter parameter1 = parameters.getFirst();
-        HttpParameter parameter2 = parameters.get(1);
+        HttpParameter parameter1 = parameters.stream()
+                .filter(parameter -> parameter.getName().equals("Parameter1"))
+                .findFirst()
+                .orElse(null);
+        HttpParameter parameter2 = parameters.stream()
+                .filter(parameter -> parameter.getName().equals("Parameter2"))
+                .findFirst()
+                .orElse(null);
+
+        Assertions.assertNotNull(parameter1);
+        Assertions.assertNotNull(parameter2);
 
         Assertions.assertEquals("Parameter1", parameter1.getName());
         Assertions.assertEquals("Value1", parameter1.getValue());
@@ -158,12 +181,23 @@ public class HttpMessageSupportTest {
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
         Mockito.when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(parameterNames));
         Mockito.when(httpServletRequest.getParameterValues("Parameter1")).thenReturn(new String[]{"Value1", "Value2"});
-        List<HttpParameter> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
+        Set<HttpParameter> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
 
         Assertions.assertEquals(2, parameters.size());
 
-        HttpParameter parameter1 = parameters.getFirst();
-        HttpParameter parameter2 = parameters.get(1);
+        HttpParameter parameter1 = parameters.stream()
+                .filter(parameter -> parameter.getName().equals("Parameter1"))
+                .filter(parameter -> parameter.getValue().equals("Value1"))
+                .findFirst()
+                .orElse(null);
+        HttpParameter parameter2 = parameters.stream()
+                .filter(parameter -> parameter.getName().equals("Parameter1"))
+                .filter(parameter -> parameter.getValue().equals("Value2"))
+                .findFirst()
+                .orElse(null);
+
+        Assertions.assertNotNull(parameter1);
+        Assertions.assertNotNull(parameter2);
 
         Assertions.assertEquals("Parameter1", parameter1.getName());
         Assertions.assertEquals("Value1", parameter1.getValue());
@@ -184,9 +218,10 @@ public class HttpMessageSupportTest {
                 .value("Value2")
                 .build();
 
-        final String uri = HttpMessageSupport.buildParameterUri(Arrays.asList(parameter1, parameter2));
+        final String uri = HttpMessageSupport.buildParameterUri(Set.of(parameter1, parameter2));
 
-        Assertions.assertEquals("?Parameter1=Value1&Parameter2=Value2", uri);
+        Assertions.assertTrue(uri.equals("?Parameter1=Value1&Parameter2=Value2") ||
+                uri.equals("?Parameter2=Value2&Parameter1=Value1"));
     }
 
 

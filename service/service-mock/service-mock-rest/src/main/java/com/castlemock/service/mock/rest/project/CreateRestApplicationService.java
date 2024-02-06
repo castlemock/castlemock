@@ -49,7 +49,7 @@ public class CreateRestApplicationService extends AbstractRestProjectService imp
                 .build();
         final RestApplication createdRestApplication = this.applicationRepository.save(application);
         return createServiceResult(CreateRestApplicationOutput.builder()
-                .savedRestApplication(createdRestApplication)
+                .application(createdRestApplication)
                 .build());
     }
 }

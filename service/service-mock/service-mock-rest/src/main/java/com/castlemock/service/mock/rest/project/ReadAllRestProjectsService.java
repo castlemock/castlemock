@@ -44,7 +44,7 @@ public class ReadAllRestProjectsService extends AbstractRestProjectService imple
     public ServiceResult<ReadAllRestProjectsOutput> process(final ServiceTask<ReadAllRestProjectsInput> serviceTask) {
         final List<RestProject> restProjects = findAll();
         return createServiceResult(ReadAllRestProjectsOutput.builder()
-                .restProjects(restProjects)
+                .projects(restProjects)
                 .build());
     }
 }

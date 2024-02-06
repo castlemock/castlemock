@@ -93,10 +93,10 @@ public class RestProjectRestController extends AbstractRestController {
             @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId) {
         final ReadRestProjectOutput output = super.serviceProcessor.process(ReadRestProjectInput.builder()
-                .restProjectId(projectId)
+                .projectId(projectId)
                 .build());
 
-        return output.getRestProject()
+        return output.getProject()
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());    }
 
@@ -113,7 +113,7 @@ public class RestProjectRestController extends AbstractRestController {
                 .description(request.getDescription().orElse(null))
                 .build());
 
-        return ResponseEntity.ok(output.getSavedRestProject());
+        return ResponseEntity.ok(output.getProject());
     }
 
     /**
@@ -132,7 +132,7 @@ public class RestProjectRestController extends AbstractRestController {
                 .name(request.getName())
                 .description(request.getDescription().orElse(null))
                 .build());
-        return output.getUpdatedRestProject()
+        return output.getProject()
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());     }
 
@@ -189,7 +189,7 @@ public class RestProjectRestController extends AbstractRestController {
         try {
             final File file = fileManager.uploadFile(multipartFile);
             super.serviceProcessor.process(ImportRestDefinitionInput.builder()
-                    .restProjectId(projectId)
+                    .projectId(projectId)
                     .files(List.of(file))
                     .generateResponse(generateResponse)
                     .definitionType(definitionType)
@@ -211,7 +211,7 @@ public class RestProjectRestController extends AbstractRestController {
             @PathVariable(value = "projectId") final String projectId,
             @RequestBody final LinkDefinitionRequest request){
         super.serviceProcessor.process(ImportRestDefinitionInput.builder()
-                .restProjectId(projectId)
+                .projectId(projectId)
                 .files(null)
                 .generateResponse(request.getGenerateResponse())
                 .location(request.getUrl())
@@ -234,7 +234,7 @@ public class RestProjectRestController extends AbstractRestController {
             @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable("projectId") final String projectId) {
         final DeleteRestProjectOutput output = this.serviceProcessor.process(DeleteRestProjectInput.builder()
-                .restProjectId(projectId)
+                .projectId(projectId)
                 .build());
         return output.getProject()
                 .map(ResponseEntity::ok)
@@ -287,7 +287,7 @@ public class RestProjectRestController extends AbstractRestController {
             @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable("projectId") final String projectId) {
         final ExportRestProjectOutput output = this.serviceProcessor.process(ExportRestProjectInput.builder()
-                .restProjectId(projectId)
+                .projectId(projectId)
                 .build());
         return output.getExportedProject()
                 .map(ResponseEntity::ok)

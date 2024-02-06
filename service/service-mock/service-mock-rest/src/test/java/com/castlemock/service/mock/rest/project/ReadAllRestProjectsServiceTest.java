@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ReadAllRestProjectsServiceTest {
@@ -45,7 +44,7 @@ public class ReadAllRestProjectsServiceTest {
         Mockito.verify(repository, Mockito.times(1)).findAll();
 
         Assertions.assertNotNull(result.getOutput());
-        Assertions.assertEquals(projects, result.getOutput().getRestProjects());
+        Assertions.assertEquals(projects, result.getOutput().getProjects());
     }
 
 }

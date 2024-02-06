@@ -44,6 +44,29 @@ public class ReadRestResourceQueryParametersInput implements Input {
         return resourceId;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReadRestResourceQueryParametersInput that = (ReadRestResourceQueryParametersInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(applicationId, that.applicationId) &&
+                Objects.equals(resourceId, that.resourceId);
+    }
+
+    @Override
+    public String toString() {
+        return "ReadRestResourceQueryParametersInput{" +
+                "projectId='" + projectId + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", resourceId='" + resourceId + '\'' +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, applicationId, resourceId);
+    }
+
     public static Builder builder(){
         return new Builder();
     }

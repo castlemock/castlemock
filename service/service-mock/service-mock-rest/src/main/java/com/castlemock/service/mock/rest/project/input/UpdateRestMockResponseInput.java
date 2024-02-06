@@ -35,11 +35,11 @@ import java.util.Optional;
  */
 public final class UpdateRestMockResponseInput implements Input {
 
-    private final String restProjectId;
-    private final String restApplicationId;
-    private final String restResourceId;
-    private final String restMethodId;
-    private final String restMockResponseId;
+    private final String projectId;
+    private final String applicationId;
+    private final String resourceId;
+    private final String methodId;
+    private final String mockResponseId;
     private final String name;
     private final Integer httpStatusCode;
     private final RestMockResponseStatus status;
@@ -53,11 +53,11 @@ public final class UpdateRestMockResponseInput implements Input {
     private final List<RestHeaderQuery> headerQueries;
 
     private UpdateRestMockResponseInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId, "restApplicationId");
-        this.restResourceId = Objects.requireNonNull(builder.restResourceId, "restResourceId");
-        this.restMethodId = Objects.requireNonNull(builder.restMethodId, "restMethodId");
-        this.restMockResponseId = Objects.requireNonNull(builder.restMockResponseId, "restMockResponseId");
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
+        this.resourceId = Objects.requireNonNull(builder.resourceId, "resourceId");
+        this.methodId = Objects.requireNonNull(builder.methodId, "methodId");
+        this.mockResponseId = Objects.requireNonNull(builder.mockResponseId, "mockResponseId");
         this.name = Objects.requireNonNull(builder.name, "name");
         this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
         this.status = Objects.requireNonNull(builder.status, "status");
@@ -71,24 +71,24 @@ public final class UpdateRestMockResponseInput implements Input {
         this.headerQueries = builder.headerQueries;
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getRestApplicationId() {
-        return restApplicationId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public String getRestResourceId() {
-        return restResourceId;
+    public String getResourceId() {
+        return resourceId;
     }
 
-    public String getRestMethodId() {
-        return restMethodId;
+    public String getMethodId() {
+        return methodId;
     }
 
-    public String getRestMockResponseId() {
-        return restMockResponseId;
+    public String getMockResponseId() {
+        return mockResponseId;
     }
 
     public String getName() {
@@ -147,17 +147,63 @@ public final class UpdateRestMockResponseInput implements Input {
                 .orElseGet(List::of);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateRestMockResponseInput that = (UpdateRestMockResponseInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(applicationId, that.applicationId) &&
+                Objects.equals(resourceId, that.resourceId) && Objects.equals(methodId, that.methodId) &&
+                Objects.equals(mockResponseId, that.mockResponseId) && Objects.equals(name, that.name) &&
+                Objects.equals(httpStatusCode, that.httpStatusCode) && status == that.status &&
+                Objects.equals(body, that.body) && Objects.equals(usingExpressions, that.usingExpressions) &&
+                Objects.equals(httpHeaders, that.httpHeaders) && Objects.equals(contentEncodings, that.contentEncodings) &&
+                Objects.equals(parameterQueries, that.parameterQueries) &&
+                Objects.equals(xpathExpressions, that.xpathExpressions) &&
+                Objects.equals(jsonPathExpressions, that.jsonPathExpressions) &&
+                Objects.equals(headerQueries, that.headerQueries);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, applicationId, resourceId, methodId, mockResponseId,
+                name, httpStatusCode, status, body, usingExpressions, httpHeaders,
+                contentEncodings, parameterQueries, xpathExpressions, jsonPathExpressions, headerQueries);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateRestMockResponseInput{" +
+                "projectId='" + projectId + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", resourceId='" + resourceId + '\'' +
+                ", methodId='" + methodId + '\'' +
+                ", mockResponseId='" + mockResponseId + '\'' +
+                ", name='" + name + '\'' +
+                ", httpStatusCode=" + httpStatusCode +
+                ", status=" + status +
+                ", body='" + body + '\'' +
+                ", usingExpressions=" + usingExpressions +
+                ", httpHeaders=" + httpHeaders +
+                ", contentEncodings=" + contentEncodings +
+                ", parameterQueries=" + parameterQueries +
+                ", xpathExpressions=" + xpathExpressions +
+                ", jsonPathExpressions=" + jsonPathExpressions +
+                ", headerQueries=" + headerQueries +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }
 
     public static final class Builder {
 
-        private String restProjectId;
-        private String restApplicationId;
-        private String restResourceId;
-        private String restMethodId;
-        private String restMockResponseId;
+        private String projectId;
+        private String applicationId;
+        private String resourceId;
+        private String methodId;
+        private String mockResponseId;
         private String name;
         private String body;
         private Integer httpStatusCode;
@@ -170,28 +216,28 @@ public final class UpdateRestMockResponseInput implements Input {
         private List<RestJsonPathExpression> jsonPathExpressions;
         private List<RestHeaderQuery> headerQueries;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 
-        public Builder restApplicationId(final String restApplicationId){
-            this.restApplicationId = restApplicationId;
+        public Builder applicationId(final String applicationId){
+            this.applicationId = applicationId;
             return this;
         }
 
-        public Builder restResourceId(final String restResourceId){
-            this.restResourceId = restResourceId;
+        public Builder resourceId(final String resourceId){
+            this.resourceId = resourceId;
             return this;
         }
 
-        public Builder restMethodId(final String restMethodId){
-            this.restMethodId = restMethodId;
+        public Builder methodId(final String methodId){
+            this.methodId = methodId;
             return this;
         }
 
-        public Builder restMockResponseId(final String restMockResponseId){
-            this.restMockResponseId = restMockResponseId;
+        public Builder mockResponseId(final String mockResponseId){
+            this.mockResponseId = mockResponseId;
             return this;
         }
 

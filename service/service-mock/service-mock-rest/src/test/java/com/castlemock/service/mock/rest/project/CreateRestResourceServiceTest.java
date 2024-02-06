@@ -58,8 +58,8 @@ public class CreateRestResourceServiceTest {
         Mockito.when(resourceRepository.save(any(RestResource.class))).thenReturn(resource);
 
         final CreateRestResourceInput input = CreateRestResourceInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
+                .projectId(projectId)
+                .applicationId(applicationId)
                 .name(resource.getName())
                 .uri(resource.getUri())
                 .build();
@@ -67,7 +67,7 @@ public class CreateRestResourceServiceTest {
         final ServiceResult<CreateRestResourceOutput> serviceResult = service.process(serviceTask);
 
         Assertions.assertNotNull(serviceResult.getOutput());
-        Assertions.assertEquals(resource, serviceResult.getOutput().getCreatedRestResource());
+        Assertions.assertEquals(resource, serviceResult.getOutput().getResource());
         Mockito.verify(resourceRepository, Mockito.times(1)).save(any());
     }
 

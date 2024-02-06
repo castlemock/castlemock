@@ -73,7 +73,7 @@ public class CreateRestMethodServiceTest {
         final ServiceTask<CreateRestMethodInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateRestMethodOutput> serviceResult = service.process(serviceTask);
         final CreateRestMethodOutput createRestApplicationOutput = serviceResult.getOutput();
-        final RestMethod returnedRestMethod = createRestApplicationOutput.getCreatedRestMethod();
+        final RestMethod returnedRestMethod = createRestApplicationOutput.getMethod();
 
         Assertions.assertEquals(restMethod.getName(), returnedRestMethod.getName());
         Assertions.assertEquals(restMethod.getHttpMethod(), returnedRestMethod.getHttpMethod());

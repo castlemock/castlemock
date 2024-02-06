@@ -66,7 +66,8 @@ public class SoapPortRestController extends AbstractRestController {
                 .build());
         return output.getPort()
                 .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());    }
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @Operation(summary =  "Delete Port")
     @RequestMapping(method = RequestMethod.DELETE, value = "/project/{projectId}/port/{portId}")

@@ -55,10 +55,10 @@ public class ReadRestMethodServiceTest {
                 .build();
         final ReadRestMethodInput input =
                 ReadRestMethodInput.builder()
-                        .restProjectId("ProjectId")
-                        .restApplicationId("ApplicationId")
-                        .restResourceId(resource.getId())
-                        .restMethodId(method.getId())
+                        .projectId("ProjectId")
+                        .applicationId("ApplicationId")
+                        .resourceId(resource.getId())
+                        .methodId(method.getId())
                         .build();
         final ServiceTask<ReadRestMethodInput> serviceTask = ServiceTask.of(input, "user");
 
@@ -84,10 +84,10 @@ public class ReadRestMethodServiceTest {
         final RestMethod method = RestMethodTestBuilder.builder().build();
         final ReadRestMethodInput input =
                 ReadRestMethodInput.builder()
-                        .restProjectId("ProjectId")
-                        .restApplicationId("ApplicationId")
-                        .restResourceId(resource.getId())
-                        .restMethodId(method.getId())
+                        .projectId("ProjectId")
+                        .applicationId("ApplicationId")
+                        .resourceId(resource.getId())
+                        .methodId(method.getId())
                         .build();
         final ServiceTask<ReadRestMethodInput> serviceTask = ServiceTask.of(input, "user");
 

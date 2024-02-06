@@ -64,7 +64,7 @@ public class CreateRestApplicationServiceTest {
         final ServiceResult<CreateRestApplicationOutput> serviceResult = service.process(serviceTask);
 
         Assertions.assertNotNull(serviceResult.getOutput());
-        Assertions.assertEquals(application, serviceResult.getOutput().getSavedRestApplication());
+        Assertions.assertEquals(application, serviceResult.getOutput().getApplication());
         Mockito.verify(applicationRepository, Mockito.times(1)).save(any());
     }
 

@@ -51,7 +51,7 @@ public class ExportRestProjectService extends AbstractRestProjectService impleme
     @Override
     public ServiceResult<ExportRestProjectOutput> process(final ServiceTask<ExportRestProjectInput> serviceTask) {
         final ExportRestProjectInput input = serviceTask.getInput();
-        final Optional<String> serialized = repository.findOne(input.getRestProjectId())
+        final Optional<String> serialized = repository.findOne(input.getProjectId())
                 .map(this::serializeProject);
 
         return createServiceResult(ExportRestProjectOutput.builder()

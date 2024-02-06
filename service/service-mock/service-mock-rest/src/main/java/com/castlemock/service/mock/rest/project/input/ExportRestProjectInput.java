@@ -26,14 +26,34 @@ import java.util.Objects;
  */
 public final class ExportRestProjectInput implements Input {
 
-    private final String restProjectId;
+    private final String projectId;
 
     private ExportRestProjectInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExportRestProjectInput that = (ExportRestProjectInput) o;
+        return Objects.equals(projectId, that.projectId);
+    }
+
+    @Override
+    public String toString() {
+        return "ExportRestProjectInput{" +
+                "projectId='" + projectId + '\'' +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId);
     }
 
     public static Builder builder(){
@@ -42,10 +62,10 @@ public final class ExportRestProjectInput implements Input {
 
     public static final class Builder {
 
-        private String restProjectId;
+        private String projectId;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 

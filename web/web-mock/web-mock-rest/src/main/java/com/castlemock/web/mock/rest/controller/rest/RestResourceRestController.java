@@ -77,11 +77,11 @@ public class RestResourceRestController extends AbstractRestController {
             @Parameter(name = "resourceId", description = "The id of the resource")
             @PathVariable(value = "resourceId") final String resourceId) {
         final ReadRestResourceOutput output = super.serviceProcessor.process(ReadRestResourceInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
-                .restResourceId(resourceId)
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
                 .build());
-        return output.getRestResource()
+        return output.getResource()
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -123,9 +123,9 @@ public class RestResourceRestController extends AbstractRestController {
             @Parameter(name = "resourceId", description = "The id of the resource")
             @PathVariable(value = "resourceId") final String resourceId) {
         final DeleteRestResourceOutput output = super.serviceProcessor.process(DeleteRestResourceInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
-                .restResourceId(resourceId)
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
                 .build());
         return output.getResource()
                 .map(ResponseEntity::ok)
@@ -147,13 +147,13 @@ public class RestResourceRestController extends AbstractRestController {
             @PathVariable(value = "resourceId") final String resourceId,
             @RequestBody UpdateRestResourceRequest request) {
         final UpdateRestResourceOutput output = super.serviceProcessor.process(UpdateRestResourceInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
-                .restResourceId(resourceId)
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
                 .name(request.getName())
                 .uri(request.getUri())
                 .build());
-        return output.getUpdatedRestResource()
+        return output.getResource()
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -171,12 +171,12 @@ public class RestResourceRestController extends AbstractRestController {
             @PathVariable(value = "applicationId") final String applicationId,
             @RequestBody CreateRestResourceRequest request) {
         final CreateRestResourceOutput output = super.serviceProcessor.process(CreateRestResourceInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
+                .projectId(projectId)
+                .applicationId(applicationId)
                 .name(request.getName())
                 .uri(request.getUri())
                 .build());
-        return ResponseEntity.ok(output.getCreatedRestResource());
+        return ResponseEntity.ok(output.getResource());
     }
 
     @Operation(summary =  "Update resource statuses")

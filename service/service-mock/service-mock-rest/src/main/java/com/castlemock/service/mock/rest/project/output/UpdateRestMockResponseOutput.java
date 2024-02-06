@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -27,16 +28,35 @@ import java.util.Optional;
  */
 public final class UpdateRestMockResponseOutput implements Output {
 
-    private final RestMockResponse updatedRestMockResponse;
+    private final RestMockResponse mockResponse;
 
-    private UpdateRestMockResponseOutput(final RestMockResponse updatedRestMockResponse) {
-        this.updatedRestMockResponse = updatedRestMockResponse;
+    private UpdateRestMockResponseOutput(final RestMockResponse mockResponse) {
+        this.mockResponse = mockResponse;
     }
 
-    public Optional<RestMockResponse> getUpdatedRestMockResponse() {
-        return Optional.ofNullable(updatedRestMockResponse);
+    public Optional<RestMockResponse> getMockResponse() {
+        return Optional.ofNullable(mockResponse);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateRestMockResponseOutput that = (UpdateRestMockResponseOutput) o;
+        return Objects.equals(mockResponse, that.mockResponse);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mockResponse);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateRestMockResponseOutput{" +
+                "mockResponse=" + mockResponse +
+                '}';
+    }
 
     public static Builder builder(){
         return new Builder();
@@ -44,15 +64,15 @@ public final class UpdateRestMockResponseOutput implements Output {
 
     public static final class Builder {
 
-        private RestMockResponse updatedRestMockResponse;
+        private RestMockResponse mockResponse;
 
-        public Builder updatedRestMockResponse(final RestMockResponse updatedRestMockResponse){
-            this.updatedRestMockResponse = updatedRestMockResponse;
+        public Builder mockResponse(final RestMockResponse mockResponse){
+            this.mockResponse = mockResponse;
             return this;
         }
 
         public UpdateRestMockResponseOutput build(){
-            return new UpdateRestMockResponseOutput(this.updatedRestMockResponse);
+            return new UpdateRestMockResponseOutput(this.mockResponse);
         }
 
     }

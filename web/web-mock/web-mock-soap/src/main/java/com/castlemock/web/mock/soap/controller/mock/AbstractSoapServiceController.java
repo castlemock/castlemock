@@ -75,6 +75,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * The AbstractSoapServiceController provides functionality that are shared for all the SOAP controllers
@@ -214,7 +215,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
 
         final String serviceUri = httpServletRequest.getRequestURI().replace(servletContext.getContextPath() +
                 SLASH + MOCK + SLASH + SOAP + SLASH + PROJECT + SLASH + projectId + SLASH, EMPTY);
-        final List<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
+        final Set<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
 
         final SoapVersion type = SoapVersion.convert(httpServletRequest.getContentType());
         return SoapRequest.builder()

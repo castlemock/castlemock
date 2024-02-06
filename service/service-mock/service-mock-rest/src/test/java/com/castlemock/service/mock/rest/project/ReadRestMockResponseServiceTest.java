@@ -39,11 +39,11 @@ public class ReadRestMockResponseServiceTest {
         final RestMockResponse mockResponse = RestMockResponseTestBuilder.builder().build();
 
         final ReadRestMockResponseInput input = ReadRestMockResponseInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
-                .restResourceId(resourceId)
-                .restMethodId(methodId)
-                .restMockResponse(mockResponse.getId())
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
+                .mockResponseId(methodId)
+                .methodId(mockResponse.getId())
                 .build();
         final ServiceTask<ReadRestMockResponseInput> serviceTask = ServiceTask.of(input, "user");
 
@@ -54,7 +54,7 @@ public class ReadRestMockResponseServiceTest {
 
         Assertions.assertNotNull(result.getOutput());
 
-        final RestMockResponse restMockResponse = result.getOutput().getRestMockResponse()
+        final RestMockResponse restMockResponse = result.getOutput().getMockResponse()
                 .orElse(null);
 
         Assertions.assertNotNull(restMockResponse);

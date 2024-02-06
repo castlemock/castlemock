@@ -46,6 +46,27 @@ public final class CreateRestApplicationInput implements Input {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CreateRestApplicationInput that = (CreateRestApplicationInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, name);
+    }
+
+    @Override
+    public String toString() {
+        return "CreateRestApplicationInput{" +
+                "projectId='" + projectId + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     public static final class Builder {
         private String projectId;
         private String name;

@@ -27,9 +27,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Karl Dahlgren
@@ -66,7 +66,7 @@ public class SoapRequest {
 
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
-    private final List<HttpHeader> httpHeaders;
+    private final Set<HttpHeader> httpHeaders;
 
     @XmlElement
     private final SoapOperationIdentifier operationIdentifier;
@@ -79,7 +79,7 @@ public class SoapRequest {
         this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
         this.operationName = builder.operationName;
         this.soapVersion = Objects.requireNonNull(builder.soapVersion, "soapVersion");
-        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(List::of);
+        this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(Set::of);
         this.operationIdentifier = Objects.requireNonNull(builder.operationIdentifier, "operationIdentifier");
     }
 
@@ -116,10 +116,10 @@ public class SoapRequest {
         return soapVersion;
     }
 
-    public List<HttpHeader> getHttpHeaders() {
+    public Set<HttpHeader> getHttpHeaders() {
         return Optional.ofNullable(httpHeaders)
-                .map(List::copyOf)
-                .orElseGet(List::of);
+                .map(Set::copyOf)
+                .orElseGet(Set::of);
     }
 
     public static Builder builder() {
@@ -165,7 +165,7 @@ public class SoapRequest {
         private HttpMethod httpMethod;
         private String operationName;
         private SoapVersion soapVersion;
-        private List<HttpHeader> httpHeaders;
+        private Set<HttpHeader> httpHeaders;
         private SoapOperationIdentifier operationIdentifier;
 
         private Builder() {
@@ -206,7 +206,7 @@ public class SoapRequest {
             return this;
         }
 
-        public Builder httpHeaders(final List<HttpHeader> httpHeaders) {
+        public Builder httpHeaders(final Set<HttpHeader> httpHeaders) {
             this.httpHeaders = httpHeaders;
             return this;
         }

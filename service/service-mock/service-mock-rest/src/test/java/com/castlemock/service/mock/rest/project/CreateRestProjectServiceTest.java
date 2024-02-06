@@ -61,7 +61,7 @@ public class CreateRestProjectServiceTest {
         final ServiceResult<CreateRestProjectOutput> serviceResult = service.process(serviceTask);
 
         Assertions.assertNotNull(serviceResult.getOutput());
-        Assertions.assertEquals(project, serviceResult.getOutput().getSavedRestProject());
+        Assertions.assertEquals(project, serviceResult.getOutput().getProject());
         Mockito.verify(repository, Mockito.times(1)).save(Mockito.any());
     }
 }

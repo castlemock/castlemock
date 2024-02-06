@@ -32,7 +32,7 @@ public final class RestHeaderQueryValidator {
     }
 
     public static boolean validate(final List<RestHeaderQuery> headerQueries,
-                                   final List<HttpHeader> headers){
+                                   final Set<HttpHeader> headers){
 
         for(HttpHeader header : headers){
 

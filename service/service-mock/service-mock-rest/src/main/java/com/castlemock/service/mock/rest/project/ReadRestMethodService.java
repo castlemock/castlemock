@@ -47,7 +47,7 @@ public class ReadRestMethodService extends AbstractRestProjectService implements
     public ServiceResult<ReadRestMethodOutput> process(final ServiceTask<ReadRestMethodInput> serviceTask) {
         final ReadRestMethodInput input = serviceTask.getInput();
         return createServiceResult(ReadRestMethodOutput.builder()
-                .restMethod(getMethod(input.getRestMethodId(), input.getRestResourceId()).orElse(null))
+                .method(getMethod(input.getMethodId(), input.getResourceId()).orElse(null))
                 .build());
     }
 

@@ -16,6 +16,7 @@
 
 package com.castlemock.service.core.utility;
 
+import com.castlemock.model.core.http.HttpParameter;
 import org.springframework.http.server.PathContainer;
 import org.springframework.web.util.pattern.PathPattern;
 import org.springframework.web.util.pattern.PathPatternParser;
@@ -30,6 +31,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -70,7 +72,12 @@ public class UrlUtility {
     }
 
     public static Map<String, Set<String>> getQueryStringParameters(final String uri,
-                                                               final Map<String, Set<String>> httpParameters) {
+                                                               final Set<HttpParameter> httpParameters) {
+        final Map<String, Set<HttpParameter>> lookupHttpParameters = httpParameters
+                .stream()
+                .collect(Collectors.groupingBy(HttpParameter::getName, Collectors.toSet()));
+
+
         final HashMap<String, Set<String>> output = new HashMap<>();
         if(uri.indexOf('?') > 0){
             final String queryString = uri.split("\\?")[1];
@@ -87,12 +94,12 @@ public class UrlUtility {
                 final String queryValue = queryParts[1];
 
                 if(queryValue.startsWith("{") && queryValue.endsWith("}")){
-                    final Set<String> values = httpParameters.get(queryName);
+                    final Set<HttpParameter> values = lookupHttpParameters.get(queryName);
                     if(values != null){
                         if(!output.containsKey(queryName)) {
                             output.put(queryName, new HashSet<>());
                         }
-                        values.forEach(value -> output.get(queryName).add(value));
+                        values.forEach(value -> output.get(queryName).add(value.getValue()));
                     }
                 }
             }

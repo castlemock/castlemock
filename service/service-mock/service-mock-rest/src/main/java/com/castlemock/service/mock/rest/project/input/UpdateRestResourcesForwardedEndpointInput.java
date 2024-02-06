@@ -59,6 +59,30 @@ public final class UpdateRestResourcesForwardedEndpointInput implements Input {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateRestResourcesForwardedEndpointInput that = (UpdateRestResourcesForwardedEndpointInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(applicationId, that.applicationId) &&
+                Objects.equals(resourceIds, that.resourceIds) && Objects.equals(forwardedEndpoint, that.forwardedEndpoint);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, applicationId, resourceIds, forwardedEndpoint);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateRestResourcesForwardedEndpointInput{" +
+                "projectId='" + projectId + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", resourceIds=" + resourceIds +
+                ", forwardedEndpoint='" + forwardedEndpoint + '\'' +
+                '}';
+    }
+
     public static final class Builder {
 
         private String projectId;

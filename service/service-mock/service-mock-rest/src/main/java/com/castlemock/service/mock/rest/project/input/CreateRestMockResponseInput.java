@@ -141,6 +141,49 @@ public final class CreateRestMockResponseInput implements Input {
                 .orElseGet(List::of);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CreateRestMockResponseInput that = (CreateRestMockResponseInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(applicationId, that.applicationId) &&
+                Objects.equals(resourceId, that.resourceId) && Objects.equals(methodId, that.methodId) &&
+                Objects.equals(name, that.name) && Objects.equals(body, that.body) &&
+                Objects.equals(httpStatusCode, that.httpStatusCode) && status == that.status &&
+                Objects.equals(usingExpressions, that.usingExpressions) && Objects.equals(httpHeaders, that.httpHeaders) &&
+                Objects.equals(contentEncodings, that.contentEncodings) && Objects.equals(parameterQueries, that.parameterQueries) &&
+                Objects.equals(xpathExpressions, that.xpathExpressions) && Objects.equals(jsonPathExpressions, that.jsonPathExpressions) &&
+                Objects.equals(headerQueries, that.headerQueries);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, applicationId, resourceId, methodId, name, body,
+                httpStatusCode, status, usingExpressions, httpHeaders, contentEncodings,
+                parameterQueries, xpathExpressions, jsonPathExpressions, headerQueries);
+    }
+
+    @Override
+    public String toString() {
+        return "CreateRestMockResponseInput{" +
+                "projectId='" + projectId + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", resourceId='" + resourceId + '\'' +
+                ", methodId='" + methodId + '\'' +
+                ", name='" + name + '\'' +
+                ", body='" + body + '\'' +
+                ", httpStatusCode=" + httpStatusCode +
+                ", status=" + status +
+                ", usingExpressions=" + usingExpressions +
+                ", httpHeaders=" + httpHeaders +
+                ", contentEncodings=" + contentEncodings +
+                ", parameterQueries=" + parameterQueries +
+                ", xpathExpressions=" + xpathExpressions +
+                ", jsonPathExpressions=" + jsonPathExpressions +
+                ", headerQueries=" + headerQueries +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

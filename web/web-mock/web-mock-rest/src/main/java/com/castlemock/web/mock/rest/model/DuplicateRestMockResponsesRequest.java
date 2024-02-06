@@ -25,12 +25,12 @@ import java.util.Optional;
 import java.util.Set;
 
 @XmlRootElement
-@JsonDeserialize(builder = DuplicateRestMockOperationsRequest.Builder.class)
-public class DuplicateRestMockOperationsRequest {
+@JsonDeserialize(builder = DuplicateRestMockResponsesRequest.Builder.class)
+public class DuplicateRestMockResponsesRequest {
 
     private final Set<String> mockResponseIds;
 
-    private DuplicateRestMockOperationsRequest(final Builder builder) {
+    private DuplicateRestMockResponsesRequest(final Builder builder) {
         this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds, "mockResponseIds");
     }
 
@@ -44,7 +44,7 @@ public class DuplicateRestMockOperationsRequest {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final DuplicateRestMockOperationsRequest that = (DuplicateRestMockOperationsRequest) o;
+        final DuplicateRestMockResponsesRequest that = (DuplicateRestMockResponsesRequest) o;
         return Objects.equals(mockResponseIds, that.mockResponseIds);
     }
 
@@ -77,8 +77,8 @@ public class DuplicateRestMockOperationsRequest {
             return this;
         }
 
-        public DuplicateRestMockOperationsRequest build() {
-            return new DuplicateRestMockOperationsRequest(this);
+        public DuplicateRestMockResponsesRequest build() {
+            return new DuplicateRestMockResponsesRequest(this);
         }
     }
 

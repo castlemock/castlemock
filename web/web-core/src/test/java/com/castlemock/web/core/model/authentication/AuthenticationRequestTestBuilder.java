@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.core.model;
-
-import com.castlemock.web.core.model.authentication.AuthenticationRequest;
+package com.castlemock.web.core.model.authentication;
 
 public class AuthenticationRequestTestBuilder {
 

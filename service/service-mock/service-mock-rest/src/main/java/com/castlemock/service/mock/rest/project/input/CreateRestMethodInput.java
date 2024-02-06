@@ -65,6 +65,30 @@ public final class CreateRestMethodInput implements Input {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CreateRestMethodInput that = (CreateRestMethodInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(applicationId, that.applicationId) && Objects.equals(resourceId, that.resourceId) && Objects.equals(name, that.name) && httpMethod == that.httpMethod;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, applicationId, resourceId, name, httpMethod);
+    }
+
+    @Override
+    public String toString() {
+        return "CreateRestMethodInput{" +
+                "projectId='" + projectId + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", resourceId='" + resourceId + '\'' +
+                ", name='" + name + '\'' +
+                ", httpMethod=" + httpMethod +
+                '}';
+    }
+
     public static class Builder {
         private String projectId;
         private String applicationId;

@@ -58,7 +58,7 @@ public class ReadRestProjectServiceTest {
         final RestMethod method = RestMethodTestBuilder.builder().build();
 
         final ReadRestProjectInput input = ReadRestProjectInput.builder()
-                .restProjectId(project.getId())
+                .projectId(project.getId())
                 .build();
         final ServiceTask<ReadRestProjectInput> serviceTask = ServiceTask.of(input, "user");
 

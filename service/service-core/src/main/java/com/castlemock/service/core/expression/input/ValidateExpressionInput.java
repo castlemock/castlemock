@@ -46,6 +46,27 @@ public final class ValidateExpressionInput implements Input {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ValidateExpressionInput that = (ValidateExpressionInput) o;
+        return Objects.equals(requestBody, that.requestBody) && Objects.equals(responseBody, that.responseBody);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(requestBody, responseBody);
+    }
+
+    @Override
+    public String toString() {
+        return "ValidateExpressionInput{" +
+                "requestBody='" + requestBody + '\'' +
+                ", responseBody='" + responseBody + '\'' +
+                '}';
+    }
+
     public static final class Builder {
 
         private String requestBody;

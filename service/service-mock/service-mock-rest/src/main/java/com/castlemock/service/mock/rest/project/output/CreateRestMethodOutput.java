@@ -27,31 +27,51 @@ import java.util.Objects;
  */
 public final class CreateRestMethodOutput implements Output {
 
-    private final RestMethod createdRestMethod;
+    private final RestMethod method;
 
-    private CreateRestMethodOutput(final RestMethod createdRestMethod) {
-        this.createdRestMethod = Objects.requireNonNull(createdRestMethod, "createdRestMethod");
+    private CreateRestMethodOutput(final RestMethod method) {
+        this.method = Objects.requireNonNull(method, "method");
     }
 
-    public RestMethod getCreatedRestMethod() {
-        return createdRestMethod;
+    public RestMethod getMethod() {
+        return method;
     }
 
     public static Builder builder(){
         return new Builder();
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CreateRestMethodOutput that = (CreateRestMethodOutput) o;
+        return Objects.equals(method, that.method);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(method);
+    }
+
+    @Override
+    public String toString() {
+        return "CreateRestMethodOutput{" +
+                "method=" + method +
+                '}';
+    }
+
     public static final class Builder {
 
-        private RestMethod createdRestMethod;
+        private RestMethod method;
 
-        public Builder createdRestMethod(final RestMethod createdRestMethod){
-            this.createdRestMethod = createdRestMethod;
+        public Builder method(final RestMethod method){
+            this.method = method;
             return this;
         }
 
         public CreateRestMethodOutput build(){
-            return new CreateRestMethodOutput(this.createdRestMethod);
+            return new CreateRestMethodOutput(this.method);
         }
 
     }

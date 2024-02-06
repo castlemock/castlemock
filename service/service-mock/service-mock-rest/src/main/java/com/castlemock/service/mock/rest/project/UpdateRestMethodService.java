@@ -43,7 +43,7 @@ public class UpdateRestMethodService extends AbstractRestProjectService implemen
     @Override
     public ServiceResult<UpdateRestMethodOutput> process(final ServiceTask<UpdateRestMethodInput> serviceTask) {
         final UpdateRestMethodInput input = serviceTask.getInput();
-        final Optional<RestMethod> updated = this.methodRepository.findOne(input.getRestMethodId())
+        final Optional<RestMethod> updated = this.methodRepository.findOne(input.getMethodId())
                 .map(method -> method.toBuilder()
                         .name(input.getName())
                         .httpMethod(input.getHttpMethod())
@@ -60,10 +60,10 @@ public class UpdateRestMethodService extends AbstractRestProjectService implemen
                         .defaultMockResponseId(input.getDefaultMockResponseId()
                                 .orElse(null))
                         .build())
-                .map(method -> this.methodRepository.update(input.getRestMethodId(), method));
+                .map(method -> this.methodRepository.update(input.getMethodId(), method));
 
         return createServiceResult(UpdateRestMethodOutput.builder()
-                .restMethod(updated.orElse(null))
+                .method(updated.orElse(null))
                 .build());
     }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.web.rest.controller;
+package com.castlemock.web.mock.rest.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.http.HttpHeader;
@@ -35,16 +35,16 @@ import com.castlemock.model.mock.rest.domain.RestXPathExpression;
 import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
 import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.core.controller.AbstractController;
-import com.castlemock.web.mock.rest.controller.mock.RestClient;
+import com.castlemock.web.mock.rest.utility.RestClient;
 import com.castlemock.web.mock.rest.controller.mock.RestServiceController;
 import com.castlemock.web.mock.rest.model.RestException;
-import com.castlemock.web.mock.rest.web.AbstractControllerTest;
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -118,7 +118,8 @@ public class RestServiceControllerTest extends AbstractControllerTest {
             }""";
 
     @Test
-    public void testMockedSequence() {
+    @DisplayName("Get - Mock sequence")
+    public void testGetMockedSequence() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
@@ -128,11 +129,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
-                .restProjectId(PROJECT_ID)
-                .restApplicationId(APPLICATION_ID)
-                .restResourceId(RESOURCE_ID)
-                .restMethodId(METHOD_ID)
-                .restMethod(restMethod)
+                .projectId(PROJECT_ID)
+                .applicationId(APPLICATION_ID)
+                .resourceId(RESOURCE_ID)
+                .methodId(METHOD_ID)
+                .method(restMethod)
                 .pathParameters(PATH_PARAMETERS)
                 .build();
 
@@ -152,6 +153,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
 
 
     @Test
+    @DisplayName("Get - Mock random")
     public void testMockedRandom() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
@@ -162,11 +164,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
-                .restProjectId(PROJECT_ID)
-                .restApplicationId(APPLICATION_ID)
-                .restResourceId(RESOURCE_ID)
-                .restMethodId(METHOD_ID)
-                .restMethod(restMethod)
+                .projectId(PROJECT_ID)
+                .applicationId(APPLICATION_ID)
+                .resourceId(RESOURCE_ID)
+                .methodId(METHOD_ID)
+                .method(restMethod)
                 .pathParameters(PATH_PARAMETERS)
                 .build();
 
@@ -182,6 +184,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @DisplayName("Get - Mock query")
     public void testMockedQuery() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
@@ -192,11 +195,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
-                .restProjectId(PROJECT_ID)
-                .restApplicationId(APPLICATION_ID)
-                .restResourceId(RESOURCE_ID)
-                .restMethodId(METHOD_ID)
-                .restMethod(restMethod)
+                .projectId(PROJECT_ID)
+                .applicationId(APPLICATION_ID)
+                .resourceId(RESOURCE_ID)
+                .methodId(METHOD_ID)
+                .method(restMethod)
                 .pathParameters(PATH_PARAMETERS)
                 .build();
 
@@ -212,6 +215,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @DisplayName("Get - Mock query - Default mock response")
     public void testMockedQueryDefaultMockResponse() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
@@ -222,11 +226,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
-                .restProjectId(PROJECT_ID)
-                .restApplicationId(APPLICATION_ID)
-                .restResourceId(RESOURCE_ID)
-                .restMethodId(METHOD_ID)
-                .restMethod(restMethod)
+                .projectId(PROJECT_ID)
+                .applicationId(APPLICATION_ID)
+                .resourceId(RESOURCE_ID)
+                .methodId(METHOD_ID)
+                .method(restMethod)
                 .pathParameters(NO_MATCHING_PATH_PARAMETERS)
                 .build();
 
@@ -242,17 +246,18 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @DisplayName("Get - Forwarding strategy")
     public void testForwardingStrategy() {
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
         final HttpServletResponse httpServletResponse = getHttpServletResponse();
 
         final RestMethod restMethod = getForwardingRestMethod();
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
-                .restProjectId(PROJECT_ID)
-                .restApplicationId(APPLICATION_ID)
-                .restResourceId(RESOURCE_ID)
-                .restMethodId(METHOD_ID)
-                .restMethod(restMethod)
+                .projectId(PROJECT_ID)
+                .applicationId(APPLICATION_ID)
+                .resourceId(RESOURCE_ID)
+                .methodId(METHOD_ID)
+                .method(restMethod)
                 .build();
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
         when(restClient.getResponse(any(), any())).thenReturn(Optional.of(RestResponseTestBuilder.builder().build()));
@@ -263,6 +268,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @DisplayName("Get - Mock query - No match, no default response and forwarding URL without automatic forward")
     public void testMockedQueryNoMatchNoDefaultResponseAndForwardingUrlWithoutAutomaticForward() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
@@ -274,11 +280,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
-                .restProjectId(PROJECT_ID)
-                .restApplicationId(APPLICATION_ID)
-                .restResourceId(RESOURCE_ID)
-                .restMethodId(METHOD_ID)
-                .restMethod(restMethod)
+                .projectId(PROJECT_ID)
+                .applicationId(APPLICATION_ID)
+                .resourceId(RESOURCE_ID)
+                .methodId(METHOD_ID)
+                .method(restMethod)
                 .pathParameters(PATH_PARAMETERS)
                 .build();
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
@@ -290,6 +296,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @DisplayName("Get - Mock query - No match, no default response and forwarding URL with automatic forward")
     public void testMockedQueryNoMatchNoDefaultResponseAndForwardingUrlWithAutomaticForward() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
@@ -300,11 +307,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
-                .restProjectId(PROJECT_ID)
-                .restApplicationId(APPLICATION_ID)
-                .restResourceId(RESOURCE_ID)
-                .restMethodId(METHOD_ID)
-                .restMethod(restMethod)
+                .projectId(PROJECT_ID)
+                .applicationId(APPLICATION_ID)
+                .resourceId(RESOURCE_ID)
+                .methodId(METHOD_ID)
+                .method(restMethod)
                 .pathParameters(PATH_PARAMETERS)
                 .build();
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
@@ -316,6 +323,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @DisplayName("Get - Mock query - No match, no default response and no forwarding url")
     public void testMockedQueryNoMatchAndDefaultResponseAndForwardingUrl() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest("");
@@ -326,11 +334,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
-                .restProjectId(PROJECT_ID)
-                .restApplicationId(APPLICATION_ID)
-                .restResourceId(RESOURCE_ID)
-                .restMethodId(METHOD_ID)
-                .restMethod(restMethod)
+                .projectId(PROJECT_ID)
+                .applicationId(APPLICATION_ID)
+                .resourceId(RESOURCE_ID)
+                .methodId(METHOD_ID)
+                .method(restMethod)
                 .pathParameters(PATH_PARAMETERS)
                 .build();
         when(serviceProcessor.process(any(IdentifyRestMethodInput.class))).thenReturn(identifyRestMethodOutput);
@@ -341,6 +349,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @DisplayName("Get - Echo")
     public void testEcho() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(XML_REQUEST_BODY);
@@ -351,11 +360,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
-                .restProjectId(PROJECT_ID)
-                .restApplicationId(APPLICATION_ID)
-                .restResourceId(RESOURCE_ID)
-                .restMethodId(METHOD_ID)
-                .restMethod(restMethod)
+                .projectId(PROJECT_ID)
+                .applicationId(APPLICATION_ID)
+                .resourceId(RESOURCE_ID)
+                .methodId(METHOD_ID)
+                .method(restMethod)
                 .pathParameters(PATH_PARAMETERS)
                 .build();
 
@@ -371,6 +380,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @DisplayName("Get - Mock XPath - Match")
     public void testMockedXpathMatch() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(XML_REQUEST_BODY);
@@ -403,11 +413,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
-                .restProjectId(PROJECT_ID)
-                .restApplicationId(APPLICATION_ID)
-                .restResourceId(RESOURCE_ID)
-                .restMethodId(METHOD_ID)
-                .restMethod(restMethod)
+                .projectId(PROJECT_ID)
+                .applicationId(APPLICATION_ID)
+                .resourceId(RESOURCE_ID)
+                .methodId(METHOD_ID)
+                .method(restMethod)
                 .pathParameters(PATH_PARAMETERS)
                 .build();
 
@@ -425,6 +435,7 @@ public class RestServiceControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    @DisplayName("Get - Mock JSON path - Match")
     public void testMockedJsonPathMatch() {
         // Input
         final HttpServletRequest httpServletRequest = getMockedHttpServletRequest(JSON_REQUEST_BODY);
@@ -457,11 +468,11 @@ public class RestServiceControllerTest extends AbstractControllerTest {
                 .build();
 
         final IdentifyRestMethodOutput identifyRestMethodOutput = IdentifyRestMethodOutput.builder()
-                .restProjectId(PROJECT_ID)
-                .restApplicationId(APPLICATION_ID)
-                .restResourceId(RESOURCE_ID)
-                .restMethodId(METHOD_ID)
-                .restMethod(restMethod)
+                .projectId(PROJECT_ID)
+                .applicationId(APPLICATION_ID)
+                .resourceId(RESOURCE_ID)
+                .methodId(METHOD_ID)
+                .method(restMethod)
                 .pathParameters(PATH_PARAMETERS)
                 .build();
 

@@ -45,9 +45,9 @@ public class ReadRestResourceServiceTest {
         final RestMethod method = RestMethodTestBuilder.builder().build();
 
         final ReadRestResourceInput input = ReadRestResourceInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
-                .restResourceId(resource.getId())
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resource.getId())
                 .build();
         final ServiceTask<ReadRestResourceInput> serviceTask = ServiceTask.of(input, "user");
 
@@ -61,7 +61,7 @@ public class ReadRestResourceServiceTest {
         Assertions.assertNotNull(result.getOutput());
 
         final RestResource restResource = result.getOutput()
-                .getRestResource()
+                .getResource()
                 .orElse(null);
 
         Assertions.assertNotNull(restResource);

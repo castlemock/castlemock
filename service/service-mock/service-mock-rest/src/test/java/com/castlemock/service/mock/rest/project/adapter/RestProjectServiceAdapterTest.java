@@ -52,7 +52,7 @@ public class RestProjectServiceAdapterTest {
     public void testReadAll(){
         final RestProject project = RestProjectTestBuilder.builder().build();
         final List<RestProject> projects = List.of(project);
-        final ReadAllRestProjectsOutput output = ReadAllRestProjectsOutput.builder().restProjects(projects).build();
+        final ReadAllRestProjectsOutput output = ReadAllRestProjectsOutput.builder().projects(projects).build();
 
         Mockito.when(serviceProcessor.process(Mockito.any(ReadAllRestProjectsInput.class))).thenReturn(output);
 

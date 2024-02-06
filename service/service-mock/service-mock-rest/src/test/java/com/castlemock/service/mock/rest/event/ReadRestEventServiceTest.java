@@ -61,7 +61,7 @@ public class ReadRestEventServiceTest {
         final ServiceTask<ReadRestEventInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadRestEventOutput> serviceResult = service.process(serviceTask);
         final ReadRestEventOutput output = serviceResult.getOutput();
-        final RestEvent returnedRestEvent = output.getRestEvent()
+        final RestEvent returnedRestEvent = output.getEvent()
                 .orElse(null);
 
         Assertions.assertNotNull(returnedRestEvent);

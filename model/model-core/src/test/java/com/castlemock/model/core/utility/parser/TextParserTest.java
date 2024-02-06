@@ -25,9 +25,8 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -185,7 +184,7 @@ public class TextParserTest {
 
     @Test
     public void testParseQueryString() {
-        final List<HttpParameter> queryStringParameters = new ArrayList<>();
+        final Set<HttpParameter> queryStringParameters = new HashSet<>();
         queryStringParameters.add(HttpParameter.builder()
                 .name("queryParam1")
                 .value("Apple")

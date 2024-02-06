@@ -27,31 +27,51 @@ import java.util.Objects;
  */
 public final class CreateRestApplicationOutput implements Output {
 
-    private final RestApplication savedRestApplication;
+    private final RestApplication application;
 
-    private CreateRestApplicationOutput(final RestApplication savedRestApplication) {
-        this.savedRestApplication = Objects.requireNonNull(savedRestApplication, "savedRestApplication");
+    private CreateRestApplicationOutput(final RestApplication application) {
+        this.application = Objects.requireNonNull(application, "application");
     }
 
-    public RestApplication getSavedRestApplication() {
-        return savedRestApplication;
+    public RestApplication getApplication() {
+        return application;
     }
 
     public static Builder builder(){
         return new Builder();
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CreateRestApplicationOutput that = (CreateRestApplicationOutput) o;
+        return Objects.equals(application, that.application);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(application);
+    }
+
+    @Override
+    public String toString() {
+        return "CreateRestApplicationOutput{" +
+                "application=" + application +
+                '}';
+    }
+
     public static final class Builder {
 
-        private RestApplication savedRestApplication;
+        private RestApplication application;
 
-        public Builder savedRestApplication(final RestApplication savedRestApplication){
-            this.savedRestApplication = savedRestApplication;
+        public Builder application(final RestApplication application){
+            this.application = application;
             return this;
         }
 
         public CreateRestApplicationOutput build(){
-            return new CreateRestApplicationOutput(this.savedRestApplication);
+            return new CreateRestApplicationOutput(this.application);
         }
 
     }

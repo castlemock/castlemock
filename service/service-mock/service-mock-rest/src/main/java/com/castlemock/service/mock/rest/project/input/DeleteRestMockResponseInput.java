@@ -26,38 +26,62 @@ import java.util.Objects;
  */
 public final class DeleteRestMockResponseInput implements Input{
 
-    private final String restProjectId;
-    private final String restApplicationId;
-    private final String restResourceId;
-    private final String restMethodId;
-    private final String restMockResponseId;
+    private final String projectId;
+    private final String applicationId;
+    private final String resourceId;
+    private final String methodId;
+    private final String mockResponseId;
 
     private DeleteRestMockResponseInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.restResourceId = Objects.requireNonNull(builder.restResourceId);
-        this.restMethodId = Objects.requireNonNull(builder.restMethodId);
-        this.restMockResponseId = Objects.requireNonNull(builder.restMockResponseId);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
+        this.resourceId = Objects.requireNonNull(builder.resourceId, "resourceId");
+        this.methodId = Objects.requireNonNull(builder.methodId, "methodId");
+        this.mockResponseId = Objects.requireNonNull(builder.mockResponseId, "mockResponseId");
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getRestApplicationId() {
-        return restApplicationId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public String getRestResourceId() {
-        return restResourceId;
+    public String getResourceId() {
+        return resourceId;
     }
 
-    public String getRestMethodId() {
-        return restMethodId;
+    public String getMethodId() {
+        return methodId;
     }
 
-    public String getRestMockResponseId() {
-        return restMockResponseId;
+    public String getMockResponseId() {
+        return mockResponseId;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final DeleteRestMockResponseInput that = (DeleteRestMockResponseInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(applicationId, that.applicationId) && Objects.equals(resourceId, that.resourceId) && Objects.equals(methodId, that.methodId) && Objects.equals(mockResponseId, that.mockResponseId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, applicationId, resourceId, methodId, mockResponseId);
+    }
+
+    @Override
+    public String toString() {
+        return "DeleteRestMockResponseInput{" +
+                "projectId='" + projectId + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", resourceId='" + resourceId + '\'' +
+                ", methodId='" + methodId + '\'' +
+                ", mockResponseId='" + mockResponseId + '\'' +
+                '}';
     }
 
     public static Builder builder(){
@@ -66,35 +90,35 @@ public final class DeleteRestMockResponseInput implements Input{
 
     public static final class Builder {
 
-        private String restProjectId;
-        private String restApplicationId;
-        private String restResourceId;
-        private String restMethodId;
-        private String restMockResponseId;
+        private String projectId;
+        private String applicationId;
+        private String resourceId;
+        private String methodId;
+        private String mockResponseId;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 
 
-        public Builder restApplicationId(final String restApplicationId){
-            this.restApplicationId = restApplicationId;
+        public Builder applicationId(final String applicationId){
+            this.applicationId = applicationId;
             return this;
         }
 
-        public Builder restResourceId(final String restResourceId){
-            this.restResourceId = restResourceId;
+        public Builder resourceId(final String resourceId){
+            this.resourceId = resourceId;
             return this;
         }
 
-        public Builder restMethodId(final String restMethodId){
-            this.restMethodId = restMethodId;
+        public Builder methodId(final String methodId){
+            this.methodId = methodId;
             return this;
         }
 
-        public Builder restMockResponseId(final String restMockResponseId){
-            this.restMockResponseId = restMockResponseId;
+        public Builder mockResponseId(final String mockResponseId){
+            this.mockResponseId = mockResponseId;
             return this;
         }
 
