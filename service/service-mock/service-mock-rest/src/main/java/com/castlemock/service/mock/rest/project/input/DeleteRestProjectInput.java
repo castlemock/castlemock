@@ -64,6 +64,9 @@ public final class DeleteRestProjectInput implements Input{
 
         private String projectId;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

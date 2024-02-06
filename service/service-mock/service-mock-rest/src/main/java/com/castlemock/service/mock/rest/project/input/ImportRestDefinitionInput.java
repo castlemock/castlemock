@@ -104,6 +104,9 @@ public final class ImportRestDefinitionInput implements Input {
         private List<File> files;
         private String location;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

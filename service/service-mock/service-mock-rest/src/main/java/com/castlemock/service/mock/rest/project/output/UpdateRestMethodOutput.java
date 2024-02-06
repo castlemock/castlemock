@@ -66,6 +66,9 @@ public final class UpdateRestMethodOutput implements Output {
 
         private RestMethod method;
 
+        private Builder() {
+        }
+
         public Builder method(final RestMethod method){
             this.method = method;
             return this;

@@ -65,6 +65,9 @@ public final class CreateRestApplicationOutput implements Output {
 
         private RestApplication application;
 
+        private Builder() {
+        }
+
         public Builder application(final RestApplication application){
             this.application = application;
             return this;

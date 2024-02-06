@@ -64,6 +64,9 @@ public final class ReadRestResourceQueryParametersOutput implements Output {
 
         private Set<String> queries;
 
+        private Builder() {
+        }
+
         public Builder queries(final Set<String> queries){
             this.queries = queries;
             return this;

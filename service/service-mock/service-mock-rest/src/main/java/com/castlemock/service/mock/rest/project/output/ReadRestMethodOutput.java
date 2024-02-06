@@ -67,6 +67,9 @@ public final class ReadRestMethodOutput implements Output{
 
         private RestMethod method;
 
+        private Builder() {
+        }
+
         public Builder method(final RestMethod method){
             this.method = method;
             return this;

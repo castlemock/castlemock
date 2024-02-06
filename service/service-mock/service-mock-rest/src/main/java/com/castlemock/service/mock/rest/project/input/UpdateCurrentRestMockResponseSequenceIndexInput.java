@@ -98,6 +98,9 @@ public final class UpdateCurrentRestMockResponseSequenceIndexInput implements In
         private String methodId;
         private Integer currentRestMockResponseSequenceIndex;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

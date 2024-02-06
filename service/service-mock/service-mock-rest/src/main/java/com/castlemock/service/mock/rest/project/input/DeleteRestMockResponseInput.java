@@ -96,11 +96,13 @@ public final class DeleteRestMockResponseInput implements Input{
         private String methodId;
         private String mockResponseId;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;
         }
-
 
         public Builder applicationId(final String applicationId){
             this.applicationId = applicationId;

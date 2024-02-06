@@ -71,6 +71,8 @@ public final class CreateRestApplicationInput implements Input {
         private String projectId;
         private String name;
 
+        private Builder() {
+        }
 
         public Builder projectId(final String restProjectId){
             this.projectId = restProjectId;

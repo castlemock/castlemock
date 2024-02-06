@@ -97,6 +97,9 @@ public final class DuplicateRestMockResponsesInput implements Input {
         private String methodId;
         private Set<String> mockResponseIds;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

@@ -81,6 +81,9 @@ public final class DeleteRestResourceInput implements Input{
         private String applicationId;
         private String resourceId;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

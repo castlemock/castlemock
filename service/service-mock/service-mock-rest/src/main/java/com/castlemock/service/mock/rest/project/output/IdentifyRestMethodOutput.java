@@ -91,6 +91,9 @@ public final class IdentifyRestMethodOutput implements Output{
         private RestMethod method;
         private Map<String, Set<String>> pathParameters;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

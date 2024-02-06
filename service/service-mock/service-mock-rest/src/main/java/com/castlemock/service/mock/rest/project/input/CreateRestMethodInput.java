@@ -96,6 +96,9 @@ public final class CreateRestMethodInput implements Input {
         private String name;
         private HttpMethod httpMethod;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String restProjectId){
             this.projectId = restProjectId;
             return this;

@@ -74,6 +74,9 @@ public final class DeleteRestApplicationInput implements Input{
 
         private String applicationId;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

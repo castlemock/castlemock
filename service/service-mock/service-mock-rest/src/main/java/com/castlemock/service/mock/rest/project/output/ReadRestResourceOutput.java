@@ -66,6 +66,9 @@ public final class ReadRestResourceOutput implements Output{
 
         private RestResource resource;
 
+        private Builder() {
+        }
+
         public Builder resource(final RestResource resource){
             this.resource = resource;
             return this;

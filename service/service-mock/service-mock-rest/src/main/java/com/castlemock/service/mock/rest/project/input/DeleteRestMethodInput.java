@@ -88,7 +88,8 @@ public final class DeleteRestMethodInput implements Input{
         private String resourceId;
         private String methodId;
 
-
+        private Builder() {
+        }
 
         public Builder projectId(final String projectId){
             this.projectId = projectId;

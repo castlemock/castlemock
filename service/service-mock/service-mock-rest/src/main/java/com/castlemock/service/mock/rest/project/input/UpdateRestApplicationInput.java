@@ -81,6 +81,9 @@ public final class UpdateRestApplicationInput implements Input {
         private String applicationId;
         private String name;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

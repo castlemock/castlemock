@@ -34,6 +34,9 @@ public final class ImportRestDefinitionOutput implements Output {
 
     public static final class Builder {
 
+        private Builder() {
+        }
+
         public ImportRestDefinitionOutput build(){
             return new ImportRestDefinitionOutput();
         }

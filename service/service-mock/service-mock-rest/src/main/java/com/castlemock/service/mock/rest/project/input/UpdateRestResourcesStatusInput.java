@@ -90,6 +90,9 @@ public final class UpdateRestResourcesStatusInput implements Input {
         private String resourceId;
         private RestMethodStatus methodStatus;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

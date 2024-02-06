@@ -82,6 +82,9 @@ public final class UpdateRestApplicationsForwardedEndpointInput implements Input
         private String forwardedEndpoint;
         private Set<String> applicationIds;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

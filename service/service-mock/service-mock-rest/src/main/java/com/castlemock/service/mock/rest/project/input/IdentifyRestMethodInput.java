@@ -102,6 +102,9 @@ public final class IdentifyRestMethodInput implements Input {
         private HttpMethod httpMethod;
         private Set<HttpParameter> httpParameters;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

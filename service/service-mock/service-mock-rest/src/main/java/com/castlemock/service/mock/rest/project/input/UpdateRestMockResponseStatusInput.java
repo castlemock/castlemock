@@ -86,6 +86,9 @@ public class UpdateRestMockResponseStatusInput implements Input {
         private String mockResponseId;
         private RestMockResponseStatus status;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

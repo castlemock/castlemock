@@ -88,6 +88,9 @@ public final class CreateRestResourceInput implements Input {
         private String name;
         private String uri;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

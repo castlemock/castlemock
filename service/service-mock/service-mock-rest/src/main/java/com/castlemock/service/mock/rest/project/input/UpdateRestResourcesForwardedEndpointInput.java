@@ -90,6 +90,9 @@ public final class UpdateRestResourcesForwardedEndpointInput implements Input {
         private Set<String> resourceIds;
         private String forwardedEndpoint;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

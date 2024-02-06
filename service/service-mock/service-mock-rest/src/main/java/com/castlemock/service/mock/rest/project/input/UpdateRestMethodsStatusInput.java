@@ -99,6 +99,9 @@ public final class UpdateRestMethodsStatusInput implements Input {
         private String methodId;
         private RestMethodStatus methodStatus;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

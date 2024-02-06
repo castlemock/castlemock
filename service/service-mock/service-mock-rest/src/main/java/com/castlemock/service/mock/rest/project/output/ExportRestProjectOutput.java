@@ -65,6 +65,9 @@ public final class ExportRestProjectOutput implements Output{
 
         private String exportedProject;
 
+        private Builder() {
+        }
+
         public Builder exportedProject(final String exportedProject){
             this.exportedProject = exportedProject;
             return this;

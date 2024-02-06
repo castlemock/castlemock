@@ -64,6 +64,9 @@ public final class ImportRestProjectInput implements Input {
 
         private String projectRaw;
 
+        private Builder() {
+        }
+
         public Builder projectRaw(final String projectRaw){
             this.projectRaw = projectRaw;
             return this;

@@ -88,6 +88,9 @@ public final class UpdateRestMethodsForwardedEndpointInput implements Input {
         private Set<String> methodIds;
         private String forwardedEndpoint;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String restProjectId){
             this.projectId = restProjectId;
             return this;

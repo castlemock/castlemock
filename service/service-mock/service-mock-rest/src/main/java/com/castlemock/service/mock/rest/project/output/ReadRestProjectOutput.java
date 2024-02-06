@@ -46,6 +46,9 @@ public final class ReadRestProjectOutput implements Output{
 
         private RestProject project;
 
+        private Builder() {
+        }
+
         public Builder project(final RestProject project){
             this.project = project;
             return this;

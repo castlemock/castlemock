@@ -68,6 +68,9 @@ public final class ReadAllRestProjectsOutput implements Output {
 
         private List<RestProject> projects;
 
+        private Builder() {
+        }
+
         public Builder projects(final List<RestProject> projects){
             this.projects = projects;
             return this;

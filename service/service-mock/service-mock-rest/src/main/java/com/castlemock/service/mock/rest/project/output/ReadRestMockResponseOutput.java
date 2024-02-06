@@ -66,6 +66,9 @@ public final class ReadRestMockResponseOutput implements Output{
 
         private RestMockResponse mockResponse;
 
+        private Builder() {
+        }
+
         public Builder mockResponse(final RestMockResponse mockResponse){
             this.mockResponse = mockResponse;
             return this;

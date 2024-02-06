@@ -74,6 +74,9 @@ public final class ReadRestApplicationInput implements Input {
         private String projectId;
         private String applicationId;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

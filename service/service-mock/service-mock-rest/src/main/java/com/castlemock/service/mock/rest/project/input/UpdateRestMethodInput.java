@@ -175,6 +175,9 @@ public final class UpdateRestMethodInput implements Input {
         private String defaultMockResponseId;
         private Boolean automaticForward;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

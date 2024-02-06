@@ -34,6 +34,9 @@ public final class UpdateCurrentRestMockResponseSequenceIndexOutput implements O
 
     public static final class Builder {
 
+        private Builder() {
+        }
+
         public UpdateCurrentRestMockResponseSequenceIndexOutput build(){
             return new UpdateCurrentRestMockResponseSequenceIndexOutput();
         }

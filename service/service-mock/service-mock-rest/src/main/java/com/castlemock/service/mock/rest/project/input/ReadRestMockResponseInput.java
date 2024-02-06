@@ -97,6 +97,9 @@ public final class ReadRestMockResponseInput implements Input {
         private String methodId;
         private String mockResponseId;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String projectId){
             this.projectId = projectId;
             return this;

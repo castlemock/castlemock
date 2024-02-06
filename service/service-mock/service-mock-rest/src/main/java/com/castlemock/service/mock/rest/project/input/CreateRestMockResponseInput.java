@@ -205,6 +205,9 @@ public final class CreateRestMockResponseInput implements Input {
         private List<RestJsonPathExpression> jsonPathExpressions;
         private List<RestHeaderQuery> headerQueries;
 
+        private Builder() {
+        }
+
         public Builder projectId(final String restProjectId){
             this.projectId = restProjectId;
             return this;

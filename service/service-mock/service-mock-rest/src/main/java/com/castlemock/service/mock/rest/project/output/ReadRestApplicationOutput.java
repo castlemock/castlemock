@@ -66,6 +66,9 @@ public final class ReadRestApplicationOutput implements Output{
 
         private RestApplication restApplication;
 
+        private Builder() {
+        }
+
         public Builder application(final RestApplication restApplication){
             this.restApplication = restApplication;
             return this;

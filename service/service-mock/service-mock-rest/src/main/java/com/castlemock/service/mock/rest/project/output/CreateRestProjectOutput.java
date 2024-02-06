@@ -65,7 +65,10 @@ public final class CreateRestProjectOutput implements Output {
 
         private RestProject project;
 
-        public Builder savedRestApplication(final RestProject project){
+        private Builder() {
+        }
+
+        public Builder project(final RestProject project){
             this.project = project;
             return this;
         }
