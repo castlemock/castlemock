@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.rest.controller.rest;
+package com.castlemock.web.mock.rest.controller.mock;
 
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.http.HttpHeader;
@@ -35,9 +35,9 @@ import com.castlemock.model.mock.rest.domain.RestXPathExpression;
 import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
 import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.core.controller.AbstractController;
-import com.castlemock.web.mock.rest.utility.RestClient;
-import com.castlemock.web.mock.rest.controller.mock.RestServiceController;
+import com.castlemock.web.mock.rest.controller.rest.AbstractControllerTest;
 import com.castlemock.web.mock.rest.model.RestException;
+import com.castlemock.web.mock.rest.utility.RestClient;
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;

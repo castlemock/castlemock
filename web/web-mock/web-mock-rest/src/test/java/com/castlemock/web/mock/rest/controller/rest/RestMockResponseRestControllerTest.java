@@ -253,7 +253,6 @@ class RestMockResponseRestControllerTest {
     void testDuplicateMockResponse() {
         final ServiceProcessor serviceProcessor = Mockito.mock(ServiceProcessor.class);
         final RestMockResponseRestController controller = new RestMockResponseRestController(serviceProcessor);
-        final RestMockResponse mockResponse = RestMockResponseTestBuilder.build();
         final String projectId = UUID.randomUUID().toString();
         final String applicationId = UUID.randomUUID().toString();
         final String resourceId = UUID.randomUUID().toString();

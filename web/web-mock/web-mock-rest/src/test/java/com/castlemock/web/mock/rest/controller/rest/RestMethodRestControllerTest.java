@@ -28,7 +28,6 @@ import java.util.UUID;
 
 class RestMethodRestControllerTest {
 
-
     @Test
     @DisplayName("Get method")
     void testGetMethod() {

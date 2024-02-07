@@ -195,6 +195,13 @@
 
             <!-- Castle Mock test dependencies -->
             <dependency>
+                <groupId>com.castlemock.web</groupId>
+                <artifactId>web-core</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>com.castlemock.model</groupId>
                 <artifactId>model-core</artifactId>
                 <version>${project.version}</version>

@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public final class RestHeaderQueryValidator {
 
@@ -33,20 +32,10 @@ public final class RestHeaderQueryValidator {
 
     public static boolean validate(final List<RestHeaderQuery> headerQueries,
                                    final Set<HttpHeader> headers){
-
-        for(HttpHeader header : headers){
-
-            final Set<RestHeaderQuery> matching = headerQueries.stream()
-                    .filter(headerQuery -> headerQuery.getHeader().equalsIgnoreCase(header.getName()))
-                    .filter(headerQuery -> validate(header.getValue(), headerQuery))
-                    .collect(Collectors.toSet());
-
-            if(!matching.isEmpty()){
-                return true;
-            }
-        }
-
-        return false;
+        return headers.stream()
+                .anyMatch(header -> headerQueries.stream()
+                        .filter(headerQuery -> headerQuery.getHeader().equalsIgnoreCase(header.getName()))
+                        .anyMatch(headerQuery -> validate(header.getValue(), headerQuery)));
     }
 
     private static boolean validate(final String inputQuery,

@@ -185,7 +185,7 @@ public class RestResourceRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/status")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    ResponseEntity<Void> updateResourceStatuses(
+    ResponseEntity<Void> updateMethodStatuses(
             @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @Parameter(name = "applicationId", description = "The id of the application")
@@ -210,14 +210,14 @@ public class RestResourceRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/application/{applicationId}/resource/{resourceId}/method/endpoint/forwarded")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    ResponseEntity<Void> updateResourceForwardedEndpoints(
+    ResponseEntity<Void> updateMethodForwardedEndpoints(
             @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @Parameter(name = "applicationId", description = "The id of the application")
             @PathVariable(value = "applicationId") final String applicationId,
             @Parameter(name = "resourceId", description = "The id of the resource")
             @PathVariable(value = "resourceId") final String resourceId,
-            @org.springframework.web.bind.annotation.RequestBody UpdateRestMethodForwardedEndpointsRequest request){
+            @RequestBody final UpdateRestMethodForwardedEndpointsRequest request){
         super.serviceProcessor.process(UpdateRestMethodsForwardedEndpointInput.builder()
                 .projectId(projectId)
                 .applicationId(applicationId)
