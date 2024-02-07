@@ -29,7 +29,7 @@ import com.castlemock.service.mock.soap.project.output.ReadSoapMockResponseOutpu
 import com.castlemock.service.mock.soap.project.output.UpdateSoapMockResponseOutput;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.CreateSoapMockResponseRequest;
-import com.castlemock.web.mock.soap.model.DuplicateSoapMockOperationsRequest;
+import com.castlemock.web.mock.soap.model.DuplicateSoapMockResponsesRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapMockResponseRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -164,14 +164,14 @@ public class SoapMockResponseRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.POST,
             value = "/project/{projectId}/port/{portId}/operation/{operationId}/mockresponse/duplicate")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
-    public ResponseEntity<SoapMockResponse> duplicateMockResponse(
+    public ResponseEntity<Void> duplicateMockResponse(
             @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @Parameter(name = "portId", description = "The id of the port")
             @PathVariable(value = "portId") final String portId,
             @Parameter(name = "operationId", description = "The id of the operation")
             @PathVariable(value = "operationId") final String operationId,
-            @RequestBody DuplicateSoapMockOperationsRequest request) {
+            @RequestBody DuplicateSoapMockResponsesRequest request) {
         super.serviceProcessor.process(DuplicateSoapMockResponsesInput.builder()
                 .projectId(projectId)
                 .portId(portId)

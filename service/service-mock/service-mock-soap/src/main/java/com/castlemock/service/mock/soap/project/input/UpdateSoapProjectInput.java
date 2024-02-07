@@ -49,6 +49,29 @@ public final class UpdateSoapProjectInput implements Input {
         return Optional.ofNullable(description);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateSoapProjectInput that = (UpdateSoapProjectInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(name, that.name) &&
+                Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, name, description);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateSoapProjectInput{" +
+                "projectId='" + projectId + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

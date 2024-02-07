@@ -49,6 +49,29 @@ public final class ImportSoapResourceInput implements Input {
         return raw;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ImportSoapResourceInput that = (ImportSoapResourceInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(resource, that.resource) &&
+                Objects.equals(raw, that.raw);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, resource, raw);
+    }
+
+    @Override
+    public String toString() {
+        return "ImportSoapResourceInput{" +
+                "projectId='" + projectId + '\'' +
+                ", resource=" + resource +
+                ", raw='" + raw + '\'' +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

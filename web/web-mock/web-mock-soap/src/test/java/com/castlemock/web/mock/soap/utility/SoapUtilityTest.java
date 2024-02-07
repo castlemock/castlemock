@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.support;
+package com.castlemock.web.mock.soap.utility;
 
 import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
 import com.castlemock.service.mock.soap.utility.SoapUtility;

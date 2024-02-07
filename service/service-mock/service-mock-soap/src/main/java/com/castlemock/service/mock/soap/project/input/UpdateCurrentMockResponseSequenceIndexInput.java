@@ -32,10 +32,10 @@ public final class UpdateCurrentMockResponseSequenceIndexInput implements Input 
     private final Integer currentResponseSequenceIndex;
 
     public UpdateCurrentMockResponseSequenceIndexInput(final Builder builder) {
-        this.projectId = Objects.requireNonNull(builder.projectId);
-        this.portId = Objects.requireNonNull(builder.portId);
-        this.operationId = Objects.requireNonNull(builder.operationId);
-        this.currentResponseSequenceIndex = Objects.requireNonNull(builder.currentResponseSequenceIndex);
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.portId = Objects.requireNonNull(builder.portId, "portId");
+        this.operationId = Objects.requireNonNull(builder.operationId, "operationId");
+        this.currentResponseSequenceIndex = Objects.requireNonNull(builder.currentResponseSequenceIndex, "currentResponseSequenceIndex");
     }
 
     public String getOperationId() {
@@ -52,6 +52,31 @@ public final class UpdateCurrentMockResponseSequenceIndexInput implements Input 
 
     public String getPortId() {
         return portId;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateCurrentMockResponseSequenceIndexInput that = (UpdateCurrentMockResponseSequenceIndexInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(portId, that.portId) &&
+                Objects.equals(operationId, that.operationId) &&
+                Objects.equals(currentResponseSequenceIndex, that.currentResponseSequenceIndex);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, portId, operationId, currentResponseSequenceIndex);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateCurrentMockResponseSequenceIndexInput{" +
+                "projectId='" + projectId + '\'' +
+                ", portId='" + portId + '\'' +
+                ", operationId='" + operationId + '\'' +
+                ", currentResponseSequenceIndex=" + currentResponseSequenceIndex +
+                '}';
     }
 
     public static Builder builder(){

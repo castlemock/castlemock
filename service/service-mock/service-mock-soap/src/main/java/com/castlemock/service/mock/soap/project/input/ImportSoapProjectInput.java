@@ -36,6 +36,26 @@ public final class ImportSoapProjectInput implements Input {
         return projectRaw;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ImportSoapProjectInput that = (ImportSoapProjectInput) o;
+        return Objects.equals(projectRaw, that.projectRaw);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectRaw);
+    }
+
+    @Override
+    public String toString() {
+        return "ImportSoapProjectInput{" +
+                "projectRaw='" + projectRaw + '\'' +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

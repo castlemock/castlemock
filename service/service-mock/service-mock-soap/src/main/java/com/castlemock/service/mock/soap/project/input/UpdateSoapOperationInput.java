@@ -41,7 +41,6 @@ public final class UpdateSoapOperationInput implements Input {
     private final String defaultMockResponseId;
     private final Boolean mockOnFailure;
     private final SoapOperationIdentifyStrategy identifyStrategy;
-
     private final Boolean automaticForward;
 
     public UpdateSoapOperationInput(final Builder builder) {
@@ -106,6 +105,42 @@ public final class UpdateSoapOperationInput implements Input {
 
     public Optional<Boolean> getAutomaticForward() {
         return Optional.ofNullable(automaticForward);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateSoapOperationInput that = (UpdateSoapOperationInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(portId, that.portId) &&
+                Objects.equals(operationId, that.operationId) && responseStrategy == that.responseStrategy && status == that.status &&
+                Objects.equals(forwardedEndpoint, that.forwardedEndpoint) && Objects.equals(simulateNetworkDelay, that.simulateNetworkDelay) &&
+                Objects.equals(networkDelay, that.networkDelay) && Objects.equals(defaultMockResponseId, that.defaultMockResponseId) &&
+                Objects.equals(mockOnFailure, that.mockOnFailure) && identifyStrategy == that.identifyStrategy && Objects.equals(automaticForward, that.automaticForward);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, portId, operationId, responseStrategy, status, forwardedEndpoint,
+                simulateNetworkDelay, networkDelay, defaultMockResponseId, mockOnFailure, identifyStrategy, automaticForward);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateSoapOperationInput{" +
+                "projectId='" + projectId + '\'' +
+                ", portId='" + portId + '\'' +
+                ", operationId='" + operationId + '\'' +
+                ", responseStrategy=" + responseStrategy +
+                ", status=" + status +
+                ", forwardedEndpoint='" + forwardedEndpoint + '\'' +
+                ", simulateNetworkDelay=" + simulateNetworkDelay +
+                ", networkDelay=" + networkDelay +
+                ", defaultMockResponseId='" + defaultMockResponseId + '\'' +
+                ", mockOnFailure=" + mockOnFailure +
+                ", identifyStrategy=" + identifyStrategy +
+                ", automaticForward=" + automaticForward +
+                '}';
     }
 
     public static Builder builder(){

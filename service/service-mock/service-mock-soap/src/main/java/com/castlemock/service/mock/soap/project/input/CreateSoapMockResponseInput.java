@@ -102,6 +102,36 @@ public final class CreateSoapMockResponseInput implements Input {
                 .orElseGet(List::of);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CreateSoapMockResponseInput that = (CreateSoapMockResponseInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(portId, that.portId) && Objects.equals(operationId, that.operationId) && Objects.equals(name, that.name) && status == that.status && Objects.equals(body, that.body) && Objects.equals(httpStatusCode, that.httpStatusCode) && Objects.equals(httpHeaders, that.httpHeaders) && Objects.equals(xpathExpressions, that.xpathExpressions) && Objects.equals(usingExpressions, that.usingExpressions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, portId, operationId, name, status, body,
+                httpStatusCode, httpHeaders, xpathExpressions, usingExpressions);
+    }
+
+    @Override
+    public String toString() {
+        return "CreateSoapMockResponseInput{" +
+                "projectId='" + projectId + '\'' +
+                ", portId='" + portId + '\'' +
+                ", operationId='" + operationId + '\'' +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", body='" + body + '\'' +
+                ", httpStatusCode=" + httpStatusCode +
+                ", httpHeaders=" + httpHeaders +
+                ", xpathExpressions=" + xpathExpressions +
+                ", usingExpressions=" + usingExpressions +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

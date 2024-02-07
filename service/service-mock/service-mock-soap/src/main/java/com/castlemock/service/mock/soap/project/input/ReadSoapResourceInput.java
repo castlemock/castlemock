@@ -42,6 +42,27 @@ public final class ReadSoapResourceInput implements Input {
         return resourceId;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ReadSoapResourceInput that = (ReadSoapResourceInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(resourceId, that.resourceId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, resourceId);
+    }
+
+    @Override
+    public String toString() {
+        return "ReadSoapResourceInput{" +
+                "projectId='" + projectId + '\'' +
+                ", resourceId='" + resourceId + '\'' +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

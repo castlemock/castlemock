@@ -19,6 +19,7 @@ package com.castlemock.service.mock.soap.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.soap.domain.SoapPort;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -35,6 +36,26 @@ public final class ReadSoapPortOutput implements Output{
 
     public Optional<SoapPort> getPort() {
         return Optional.ofNullable(port);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ReadSoapPortOutput that = (ReadSoapPortOutput) o;
+        return Objects.equals(port, that.port);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(port);
+    }
+
+    @Override
+    public String toString() {
+        return "ReadSoapPortOutput{" +
+                "port=" + port +
+                '}';
     }
 
     public static Builder builder(){

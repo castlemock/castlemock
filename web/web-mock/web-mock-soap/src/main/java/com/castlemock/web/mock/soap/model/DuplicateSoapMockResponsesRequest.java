@@ -28,12 +28,12 @@ import java.util.Set;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
-@JsonDeserialize(builder = DuplicateSoapMockOperationsRequest.Builder.class)
-public class DuplicateSoapMockOperationsRequest {
+@JsonDeserialize(builder = DuplicateSoapMockResponsesRequest.Builder.class)
+public class DuplicateSoapMockResponsesRequest {
 
     private final Set<String> mockResponseIds;
 
-    private DuplicateSoapMockOperationsRequest(final Builder builder) {
+    private DuplicateSoapMockResponsesRequest(final Builder builder) {
         this.mockResponseIds = Objects.requireNonNull(builder.mockResponseIds, "mockResponseIds");
     }
 
@@ -47,7 +47,7 @@ public class DuplicateSoapMockOperationsRequest {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DuplicateSoapMockOperationsRequest that = (DuplicateSoapMockOperationsRequest) o;
+        DuplicateSoapMockResponsesRequest that = (DuplicateSoapMockResponsesRequest) o;
         return Objects.equals(mockResponseIds, that.mockResponseIds);
     }
 
@@ -80,8 +80,8 @@ public class DuplicateSoapMockOperationsRequest {
             return this;
         }
 
-        public DuplicateSoapMockOperationsRequest build() {
-            return new DuplicateSoapMockOperationsRequest(this);
+        public DuplicateSoapMockResponsesRequest build() {
+            return new DuplicateSoapMockResponsesRequest(this);
         }
     }
 

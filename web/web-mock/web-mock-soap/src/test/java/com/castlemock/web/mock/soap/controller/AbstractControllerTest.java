@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.web;
+package com.castlemock.web.mock.soap.controller;
 
 import com.castlemock.web.core.controller.AbstractController;
 import jakarta.servlet.ServletContext;

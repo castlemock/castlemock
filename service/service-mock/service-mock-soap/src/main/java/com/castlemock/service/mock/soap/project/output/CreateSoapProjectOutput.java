@@ -37,6 +37,26 @@ public final class CreateSoapProjectOutput implements Output {
         return project;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CreateSoapProjectOutput that = (CreateSoapProjectOutput) o;
+        return Objects.equals(project, that.project);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(project);
+    }
+
+    @Override
+    public String toString() {
+        return "CreateSoapProjectOutput{" +
+                "project=" + project +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

@@ -36,6 +36,26 @@ public final class ReadSoapProjectInput implements Input {
         return projectId;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ReadSoapProjectInput that = (ReadSoapProjectInput) o;
+        return Objects.equals(projectId, that.projectId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId);
+    }
+
+    @Override
+    public String toString() {
+        return "ReadSoapProjectInput{" +
+                "projectId='" + projectId + '\'' +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

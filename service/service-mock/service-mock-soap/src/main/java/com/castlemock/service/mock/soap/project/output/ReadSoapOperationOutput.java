@@ -19,6 +19,7 @@ package com.castlemock.service.mock.soap.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -35,6 +36,26 @@ public final class ReadSoapOperationOutput implements Output{
 
     public Optional<SoapOperation> getOperation() {
         return Optional.ofNullable(operation);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ReadSoapOperationOutput that = (ReadSoapOperationOutput) o;
+        return Objects.equals(operation, that.operation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(operation);
+    }
+
+    @Override
+    public String toString() {
+        return "ReadSoapOperationOutput{" +
+                "operation=" + operation +
+                '}';
     }
 
     public static Builder builder(){

@@ -61,7 +61,7 @@ public class ReadSoapEventServiceTest {
         final ServiceTask<ReadSoapEventInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<ReadSoapEventOutput> serviceResult = service.process(serviceTask);
         final ReadSoapEventOutput output = serviceResult.getOutput();
-        final SoapEvent returnedSoapEvent = output.getSoapEvent()
+        final SoapEvent returnedSoapEvent = output.getEvent()
                         .orElse(null);
 
         Assertions.assertNotNull(returnedSoapEvent);

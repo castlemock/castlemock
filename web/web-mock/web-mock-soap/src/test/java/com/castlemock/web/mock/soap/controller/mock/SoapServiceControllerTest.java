@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.web.soap.controller;
+package com.castlemock.web.mock.soap.controller.mock;
 
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.http.HttpHeader;
@@ -39,10 +39,8 @@ import com.castlemock.service.mock.soap.project.output.IdentifySoapOperationOutp
 import com.castlemock.service.mock.soap.project.output.LoadSoapResourceOutput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapProjectOutput;
 import com.castlemock.web.core.controller.AbstractController;
-import com.castlemock.web.mock.soap.controller.mock.SoapClient;
-import com.castlemock.web.mock.soap.controller.mock.SoapServiceController;
 import com.castlemock.web.mock.soap.model.SoapException;
-import com.castlemock.web.mock.soap.web.AbstractControllerTest;
+import com.castlemock.web.mock.soap.controller.AbstractControllerTest;
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;

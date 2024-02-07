@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.support;
+package com.castlemock.web.mock.soap.utility;
 
 import com.castlemock.web.mock.soap.utility.MtomUtility;
 import org.junit.jupiter.api.Assertions;

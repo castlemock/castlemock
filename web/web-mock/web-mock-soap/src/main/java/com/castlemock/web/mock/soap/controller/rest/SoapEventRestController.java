@@ -54,7 +54,7 @@ public class SoapEventRestController extends AbstractRestController {
                 .soapEventId(eventId)
                 .build());
 
-        return output.getSoapEvent()
+        return output.getEvent()
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());    }
 
