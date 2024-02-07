@@ -158,7 +158,8 @@ public class SoapMockResponseRestController extends AbstractRestController {
                 .build());
         return output.getMockResponse()
                 .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());    }
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @Operation(summary =  "Duplicate mocked response")
     @RequestMapping(method = RequestMethod.POST,
