@@ -14,21 +14,16 @@
  * limitations under the License.
  */
 
-package com.castlemock.web.mock.soap.model;
+package com.castlemock.web.mock.soap.stategy;
 
-public final class UpdateSoapPortRequestTestBuilder {
+import com.castlemock.model.mock.soap.domain.SoapOperation;
+import com.castlemock.model.mock.soap.domain.SoapRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
-    private UpdateSoapPortRequestTestBuilder() {
+public interface SoapStrategy {
 
-    }
-
-    public static UpdateSoapPortRequest.Builder builder() {
-        return UpdateSoapPortRequest.builder()
-                .uri("http://localhost:8080/");
-    }
-
-    public static UpdateSoapPortRequest build() {
-        return builder().build();
-    }
+    SoapStrategyResult process(SoapRequest request, String projectId,
+                                  String portId, SoapOperation operation,
+                                  HttpServletRequest httpServletRequest);
 
 }

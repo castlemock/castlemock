@@ -16,7 +16,6 @@
 
 package com.castlemock.web.mock.soap.utility;
 
-import com.castlemock.web.mock.soap.utility.MtomUtility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

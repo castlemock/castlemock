@@ -90,7 +90,7 @@ public class DeleteUserServiceTest {
                 .build();
         final ServiceTask<DeleteUserInput> serviceTask = ServiceTask.of(input, "user");
         assertThrows(IllegalArgumentException.class, () -> service.process(serviceTask));
-        Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyString());
+        Mockito.verify(repository, Mockito.never()).delete(Mockito.anyString());
     }
 
 

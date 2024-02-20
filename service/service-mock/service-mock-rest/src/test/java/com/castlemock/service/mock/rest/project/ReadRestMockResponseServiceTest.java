@@ -42,8 +42,8 @@ public class ReadRestMockResponseServiceTest {
                 .projectId(projectId)
                 .applicationId(applicationId)
                 .resourceId(resourceId)
-                .mockResponseId(methodId)
-                .methodId(mockResponse.getId())
+                .mockResponseId(mockResponse.getId())
+                .methodId(methodId)
                 .build();
         final ServiceTask<ReadRestMockResponseInput> serviceTask = ServiceTask.of(input, "user");
 

@@ -242,7 +242,7 @@ public class IdentifyRestMethodServiceTest {
                 .httpMethod(HttpMethod.GET)
                 .build();
         final ServiceTask<IdentifyRestMethodInput> serviceTask1 = ServiceTask.of(input1, "user");
-        assertThrows(IllegalStateException.class, () -> service.process(serviceTask1));
+        assertThrows(IllegalArgumentException.class, () -> service.process(serviceTask1));
     }
 
     @Test
