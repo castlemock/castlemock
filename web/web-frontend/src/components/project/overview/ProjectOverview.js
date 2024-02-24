@@ -18,6 +18,7 @@ import React, {PureComponent} from 'react';
 // import BootstrapTable from 'react-bootstrap-table-next';
 // import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
 // import PaginationFactory from "react-bootstrap-table2-paginator";
+import DataTable from '../../utility/DataTable';
 import axios from "axios";
 import {Link} from "react-router-dom";
 import Badge from 'react-bootstrap/Badge'
@@ -314,6 +315,14 @@ class ProjectOverview extends PureComponent {
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="table-result">
+                            <DataTable
+                                columns={this.columns}
+                                data={this.state.projects}
+                                keyField="id"
+                                search
+                                noDataIndication="Click on 'New project' button to create a new project"
+                                selectRow={this.selectRow}
+                            ></DataTable>
                             {/* <ToolkitProvider bootstrap4
                                              columns={ this.columns}
                                              data={ this.state.projects }
@@ -441,6 +450,11 @@ class ProjectOverview extends PureComponent {
                             <div className="modal-body">
                                 <p>Do you want delete the following projects?</p>
                                 <div className="table-result">
+                                <DataTable
+                                    columns={this.deleteColumns}
+                                    data={this.state.selectedProjects}
+                                    keyField="id"
+                                ></DataTable>
                                     {/* <ToolkitProvider bootstrap4
                                                      columns={ this.deleteColumns}
                                                      data={ this.state.selectedProjects }
