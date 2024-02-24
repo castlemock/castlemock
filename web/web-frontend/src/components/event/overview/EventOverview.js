@@ -15,16 +15,16 @@
  */
 
 import React, {PureComponent} from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
-import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
-import PaginationFactory from "react-bootstrap-table2-paginator";
+// import BootstrapTable from 'react-bootstrap-table-next';
+// import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
+// import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import validateErrorResponse from "../../../utility/HttpResponseValidator";
 import {Link} from "react-router-dom";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const { SearchBar } = Search;
+// const { SearchBar } = Search;
 
 class EventOverview extends PureComponent {
 
@@ -132,7 +132,7 @@ class EventOverview extends PureComponent {
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="table-result">
-                            <ToolkitProvider bootstrap4
+                            {/* <ToolkitProvider bootstrap4
                                              columns={ this.columns}
                                              data={ this.state.events }
                                              keyField="id"
@@ -153,7 +153,7 @@ class EventOverview extends PureComponent {
                                             </div>
                                         </div>
                                     )}
-                            </ToolkitProvider>
+                            </ToolkitProvider> */}
                         </div>
                     </div>
                 </section>

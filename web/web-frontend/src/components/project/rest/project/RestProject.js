@@ -17,9 +17,9 @@
 import React, {PureComponent} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
-import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import PaginationFactory from "react-bootstrap-table2-paginator";
+// import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
+// import BootstrapTable from "react-bootstrap-table-next";
+// import PaginationFactory from "react-bootstrap-table2-paginator";
 import validateErrorResponse from "../../../../utility/HttpResponseValidator";
 import Badge from "react-bootstrap/Badge";
 import UpdateStatusModal from "./modal/UpdateStatusModal";
@@ -34,7 +34,7 @@ import AuthenticationContext from "../../../../context/AuthenticationContext";
 import {faCloudDownloadAlt, faFile, faTrash, faCloudUploadAlt, faEdit, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const { SearchBar } = Search;
+// const { SearchBar } = Search;
 const SELECT = true;
 const DESELECT = false;
 
@@ -242,7 +242,7 @@ class RestProject extends PureComponent {
                             <h3 className="panel-title">Applications</h3>
                         </div>
                         <div className="table-result">
-                            <ToolkitProvider bootstrap4
+                            {/* <ToolkitProvider bootstrap4
                                              columns={ this.columns}
                                              data={this.state.project.applications}
                                              keyField="id"
@@ -261,7 +261,7 @@ class RestProject extends PureComponent {
                                                             pagination={ PaginationFactory() }/>
                                         </div>
                                     )}
-                            </ToolkitProvider>
+                            </ToolkitProvider> */}
                             <AuthenticationContext.Consumer>
                                 {context => (
                                     <div className="panel-buttons">

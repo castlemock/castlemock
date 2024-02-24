@@ -15,9 +15,9 @@
  */
 
 import React, {PureComponent} from "react";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import PaginationFactory from "react-bootstrap-table2-paginator";
+// import ToolkitProvider from "react-bootstrap-table2-toolkit";
+// import BootstrapTable from "react-bootstrap-table-next";
+// import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
@@ -74,7 +74,7 @@ class DeletePortsModal extends PureComponent {
                         <div className="modal-body">
                             <p>Do you want delete the following ports?</p>
                             <div className="table-result">
-                                <ToolkitProvider bootstrap4
+                                {/* <ToolkitProvider bootstrap4
                                                  columns={ this.columns}
                                                  data={ this.props.selectedPorts }
                                                  keyField="id">
@@ -87,7 +87,7 @@ class DeletePortsModal extends PureComponent {
                                                                 pagination={ PaginationFactory({hideSizePerPage: true}) }/>
                                             </div>
                                         )}
-                                </ToolkitProvider>
+                                </ToolkitProvider> */}
                             </div>
                         </div>
                         <div className="modal-footer">

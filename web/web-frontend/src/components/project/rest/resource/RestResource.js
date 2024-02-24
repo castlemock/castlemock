@@ -17,9 +17,9 @@
 import React, {PureComponent} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
-import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import PaginationFactory from "react-bootstrap-table2-paginator";
+// import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
+// import BootstrapTable from "react-bootstrap-table-next";
+// import PaginationFactory from "react-bootstrap-table2-paginator";
 import validateErrorResponse from "../../../../utility/HttpResponseValidator";
 import DeleteMethodsModal from "./modal/DeleteMethodsModal";
 import DeleteResourceModal from "./modal/DeleteResourceModal";
@@ -34,7 +34,7 @@ import ContextContext from "../../../../context/ContextContext";
 import {faEdit, faTrash, faFile, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const { SearchBar } = Search;
+// const { SearchBar } = Search;
 const SELECT = true;
 const DESELECT = false;
 
@@ -214,7 +214,7 @@ class RestResource extends PureComponent {
                             <h3 className="panel-title">Methods</h3>
                         </div>
                         <div className="table-result">
-                            <ToolkitProvider bootstrap4
+                            {/* <ToolkitProvider bootstrap4
                                              columns={ this.columns}
                                              data={this.state.resource.methods}
                                              keyField="id"
@@ -232,7 +232,7 @@ class RestResource extends PureComponent {
                                                             pagination={ PaginationFactory() }/>
                                         </div>
                                     )}
-                            </ToolkitProvider>
+                            </ToolkitProvider> */}
                             <AuthenticationContext.Consumer>
                                 {context => (
                                     <div className="panel-buttons">

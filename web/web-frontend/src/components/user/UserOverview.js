@@ -15,9 +15,9 @@
  */
 
 import React, {PureComponent} from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
-import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
-import PaginationFactory from "react-bootstrap-table2-paginator";
+// import BootstrapTable from 'react-bootstrap-table-next';
+// import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
+// import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import validateErrorResponse from "../../utility/HttpResponseValidator";
@@ -27,7 +27,7 @@ import {userStatusFormatter, userRoleFormatter} from "../user/utility/UserFormat
 import {faUserPlus, faUserMinus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const { SearchBar } = Search;
+// const { SearchBar } = Search;
 
 const SELECT = true;
 const DESELECT = false;
@@ -227,7 +227,7 @@ class UserOverview extends PureComponent {
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="table-result">
-                            <ToolkitProvider bootstrap4
+                            {/* <ToolkitProvider bootstrap4
                                              columns={ this.columns}
                                              data={ this.state.users }
                                              keyField="id"
@@ -248,7 +248,7 @@ class UserOverview extends PureComponent {
                                             </div>
                                         </div>
                                     )}
-                            </ToolkitProvider>
+                            </ToolkitProvider> */}
                         </div>
                         <div className="table-result">
                             <div className="panel-buttons">

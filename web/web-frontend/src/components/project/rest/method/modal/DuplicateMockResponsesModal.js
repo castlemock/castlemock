@@ -17,9 +17,9 @@
 import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import PaginationFactory from "react-bootstrap-table2-paginator";
+// import ToolkitProvider from "react-bootstrap-table2-toolkit";
+// import BootstrapTable from "react-bootstrap-table-next";
+// import PaginationFactory from "react-bootstrap-table2-paginator";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -80,7 +80,7 @@ class DuplicateMockResponsesModal extends PureComponent {
                         <div className="modal-body">
                             <p>Do you want duplicate the following responses?</p>
                             <div className="table-result">
-                                <ToolkitProvider bootstrap4
+                                {/* <ToolkitProvider bootstrap4
                                                  columns={ this.columns}
                                                  data={ this.props.selectedMockResponses }
                                                  keyField="id">
@@ -93,7 +93,7 @@ class DuplicateMockResponsesModal extends PureComponent {
                                                                 pagination={ PaginationFactory({hideSizePerPage: true}) }/>
                                             </div>
                                         )}
-                                </ToolkitProvider>
+                                </ToolkitProvider> */}
                             </div>
                         </div>
                         <div className="modal-footer">

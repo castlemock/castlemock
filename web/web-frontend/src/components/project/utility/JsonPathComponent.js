@@ -15,8 +15,8 @@
  */
 
 import React, {PureComponent} from "react";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
+// import ToolkitProvider from "react-bootstrap-table2-toolkit";
+// import BootstrapTable from "react-bootstrap-table-next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 
@@ -97,7 +97,7 @@ class JsonPathComponent extends PureComponent {
                     </div>
                 </div>
                 <div className="table-result">
-                    <ToolkitProvider bootstrap4
+                    {/* <ToolkitProvider bootstrap4
                                      columns={ this.jsonPathColumns}
                                      data={this.props.jsonPathExpressions}
                                      keyField="name"
@@ -112,7 +112,7 @@ class JsonPathComponent extends PureComponent {
                                                     selectRow={this.selectRow}/>
                                 </div>
                             )}
-                    </ToolkitProvider>
+                    </ToolkitProvider> */}
                 </div>
             </div>
         )

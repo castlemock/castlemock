@@ -15,9 +15,9 @@
  */
 
 import React, {PureComponent} from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
-import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
-import PaginationFactory from "react-bootstrap-table2-paginator";
+// import BootstrapTable from 'react-bootstrap-table-next';
+// import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
+// import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import Badge from 'react-bootstrap/Badge'
@@ -28,7 +28,7 @@ import {isOnlyReader} from "../../../utility/AuthorizeUtility";
 import preventEnterEvent from "../../../utility/KeyboardUtility";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const { SearchBar } = Search;
+// const { SearchBar } = Search;
 
 const SELECT = true;
 const DESELECT = false;
@@ -314,7 +314,7 @@ class ProjectOverview extends PureComponent {
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="table-result">
-                            <ToolkitProvider bootstrap4
+                            {/* <ToolkitProvider bootstrap4
                                              columns={ this.columns}
                                              data={ this.state.projects }
                                              keyField="id"
@@ -335,7 +335,7 @@ class ProjectOverview extends PureComponent {
                                             </div>
                                             </div>
                                     )}
-                            </ToolkitProvider>
+                            </ToolkitProvider> */}
                         </div>
                         <div className="table-result">
                             <div className="panel-buttons">
@@ -441,7 +441,7 @@ class ProjectOverview extends PureComponent {
                             <div className="modal-body">
                                 <p>Do you want delete the following projects?</p>
                                 <div className="table-result">
-                                    <ToolkitProvider bootstrap4
+                                    {/* <ToolkitProvider bootstrap4
                                                      columns={ this.deleteColumns}
                                                      data={ this.state.selectedProjects }
                                                      keyField="id">
@@ -454,7 +454,7 @@ class ProjectOverview extends PureComponent {
                                                                     pagination={ PaginationFactory({hideSizePerPage: true}) }/>
                                                 </div>
                                             )}
-                                    </ToolkitProvider>
+                                    </ToolkitProvider> */}
                                 </div>
                             </div>
                             <div className="modal-footer">

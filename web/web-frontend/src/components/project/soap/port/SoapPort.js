@@ -17,9 +17,9 @@
 import React, {PureComponent} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
-import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import PaginationFactory from "react-bootstrap-table2-paginator";
+// import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
+// import BootstrapTable from "react-bootstrap-table-next";
+// import PaginationFactory from "react-bootstrap-table2-paginator";
 import validateErrorResponse from "../../../../utility/HttpResponseValidator";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
 import UpdatePortModal from "./modal/UpdatePortModal";
@@ -32,7 +32,7 @@ import ContextContext from "../../../../context/ContextContext";
 import {faTrash, faEdit, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const { SearchBar } = Search;
+// const { SearchBar } = Search;
 const SELECT = true;
 const DESELECT = false;
 
@@ -251,7 +251,7 @@ class SoapPort extends PureComponent {
                             <h3 className="panel-title">Operations</h3>
                         </div>
                         <div className="table-result">
-                            <ToolkitProvider bootstrap4
+                            {/* <ToolkitProvider bootstrap4
                                              columns={ this.columns}
                                              data={this.state.port.operations}
                                              keyField="id"
@@ -271,7 +271,7 @@ class SoapPort extends PureComponent {
                                                             pagination={ PaginationFactory() }/>
                                         </div>
                                     )}
-                            </ToolkitProvider>
+                            </ToolkitProvider> */}
                             <AuthenticationContext.Consumer>
                                 {context => (
                                     <div className="panel-buttons">

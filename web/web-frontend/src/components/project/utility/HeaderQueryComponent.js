@@ -15,8 +15,8 @@
  */
 
 import React, {PureComponent} from "react";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
+// import ToolkitProvider from "react-bootstrap-table2-toolkit";
+// import BootstrapTable from "react-bootstrap-table-next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 
@@ -180,7 +180,7 @@ class HeaderQueryComponent extends PureComponent {
                     </div>
                 </div>
                 <div className="table-result">
-                    <ToolkitProvider bootstrap4
+                    {/* <ToolkitProvider bootstrap4
                                      columns={ this.headerQueryColumns}
                                      data={this.props.headerQueries}
                                      keyField="header"
@@ -194,7 +194,7 @@ class HeaderQueryComponent extends PureComponent {
                                                     noDataIndication="No header queries"/>
                                 </div>
                             )}
-                    </ToolkitProvider>
+                    </ToolkitProvider> */}
                 </div>
             </div>
         )

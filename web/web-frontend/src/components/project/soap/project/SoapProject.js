@@ -17,9 +17,9 @@
 import React, {PureComponent} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
-import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import PaginationFactory from "react-bootstrap-table2-paginator";
+// import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
+// import BootstrapTable from "react-bootstrap-table-next";
+// import PaginationFactory from "react-bootstrap-table2-paginator";
 import validateErrorResponse from "../../../../utility/HttpResponseValidator";
 import Badge from "react-bootstrap/Badge";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
@@ -33,7 +33,7 @@ import UploadWSDLModal from "./modal/UploadWSDLModal"
 import {faEdit, faTrash, faCloudDownloadAlt, faCloudUploadAlt, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const { SearchBar } = Search;
+// const { SearchBar } = Search;
 
 const SELECT = true;
 const DESELECT = false;
@@ -313,7 +313,7 @@ class SoapProject extends PureComponent {
                             <h3 className="panel-title">Ports</h3>
                         </div>
                         <div className="table-result">
-                            <ToolkitProvider bootstrap4
+                            {/* <ToolkitProvider bootstrap4
                                              columns={ this.columns}
                                              data={this.state.project.ports}
                                              keyField="id"
@@ -332,7 +332,7 @@ class SoapProject extends PureComponent {
                                                             pagination={ PaginationFactory() }/>
                                         </div>
                                     )}
-                            </ToolkitProvider>
+                            </ToolkitProvider> */}
                             <AuthenticationContext.Consumer>
                                 {context => (
                                     <div className="panel-buttons">
@@ -355,7 +355,7 @@ class SoapProject extends PureComponent {
                             <h3 className="panel-title">Resources</h3>
                         </div>
                         <div className="table-result">
-                            <ToolkitProvider bootstrap4
+                            {/* <ToolkitProvider bootstrap4
                                              columns={ this.resourceColumns}
                                              data={this.state.project.resources}
                                              keyField="id"
@@ -370,7 +370,7 @@ class SoapProject extends PureComponent {
                                                             pagination={ PaginationFactory() }/>
                                         </div>
                                     )}
-                            </ToolkitProvider>
+                            </ToolkitProvider> */}
                         </div>
                     </div>
                 </section>

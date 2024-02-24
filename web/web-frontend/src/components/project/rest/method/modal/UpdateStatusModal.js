@@ -15,9 +15,9 @@
  */
 
 import React, {PureComponent} from "react";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import PaginationFactory from "react-bootstrap-table2-paginator";
+// import ToolkitProvider from "react-bootstrap-table2-toolkit";
+// import BootstrapTable from "react-bootstrap-table-next";
+// import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import {mockResponseStatusFormatter} from "../../utility/RestFormatter";
@@ -91,7 +91,7 @@ class UpdateStatusModal extends PureComponent {
                         <div className="modal-body">
                             <p>Do you want update the status for the following methods?</p>
                             <div className="table-result">
-                                <ToolkitProvider bootstrap4
+                                {/* <ToolkitProvider bootstrap4
                                                  columns={ this.columns}
                                                  data={ this.props.selectedMockResponses }
                                                  keyField="id">
@@ -104,7 +104,7 @@ class UpdateStatusModal extends PureComponent {
                                                                 pagination={ PaginationFactory({hideSizePerPage: true}) }/>
                                             </div>
                                         )}
-                                </ToolkitProvider>
+                                </ToolkitProvider> */}
                             </div>
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Status</label>

@@ -20,9 +20,9 @@ import validateErrorResponse from "../../../utility/HttpResponseValidator";
 import {Link} from "react-router-dom";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import PaginationFactory from "react-bootstrap-table2-paginator";
+// import ToolkitProvider from "react-bootstrap-table2-toolkit";
+// import BootstrapTable from "react-bootstrap-table-next";
+// import PaginationFactory from "react-bootstrap-table2-paginator";
 
 class SoapEvent extends PureComponent {
 
@@ -140,7 +140,7 @@ class SoapEvent extends PureComponent {
                                 }
                                 <h2>Headers</h2>
                                 <div className="table-result">
-                                    <ToolkitProvider bootstrap4
+                                    {/* <ToolkitProvider bootstrap4
                                                      columns={ this.columns}
                                                      data={this.state.event.request.httpHeaders}
                                                      keyField="name"
@@ -156,7 +156,7 @@ class SoapEvent extends PureComponent {
                                                                     pagination={ PaginationFactory() }/>
                                                 </div>
                                             )}
-                                    </ToolkitProvider>
+                                    </ToolkitProvider> */}
                                 </div>
                             </Tab>
                             {this.state.event.response !== null &&
@@ -171,7 +171,7 @@ class SoapEvent extends PureComponent {
                                 <div>
                                     <h2>Headers</h2>
                                     <div className="table-result">
-                                        <ToolkitProvider bootstrap4
+                                        {/* <ToolkitProvider bootstrap4
                                                          columns={ this.columns}
                                                          data={this.state.event.response.httpHeaders}
                                                          keyField="name"
@@ -187,7 +187,7 @@ class SoapEvent extends PureComponent {
                                                                         pagination={ PaginationFactory() }/>
                                                     </div>
                                                 )}
-                                        </ToolkitProvider>
+                                        </ToolkitProvider> */}
                                     </div>
                                 </div>
                             </Tab>
