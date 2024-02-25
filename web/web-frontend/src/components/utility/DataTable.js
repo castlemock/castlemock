@@ -20,72 +20,74 @@ import Table from "react-bootstrap/Table";
 import FormControl from "react-bootstrap/FormControl"
 import { memoize } from "underscore";
 
+import "../../css/DataTable.css";
+
 /**
  * Simple implementation of a Bootstrap Table with search, sorting and pagination capabilities.
  * 
- * @typedef DataTableColumn
+ * @typedef DTColumn
  * @property {string} dataField
  * @property {string} text
  * @property {boolean} hidden
  * @property {(cell, row) => any} formatter
  * @property {() => any} headerStyle
  * 
- * @typedef {object} DataTableData
+ * @typedef {object} DTData
  * 
- * @typedef DataTableSelectRow
+ * @typedef DTSelectRow
  * @property {"checkbox"} mode
- * @property {(value: DataTableData, mode: boolean) => void} onSelect
+ * @property {(value: DTData, mode: boolean) => void} onSelect
  * @property {(mode: boolean) => void} onSelectAll
  * 
- * @typedef {object} DataTableProps
- * @property {DataTableColumn[]} columns
- * @property {DataTableData[]} data
+ * @typedef {object} DTProps
+ * @property {DTColumn[]} columns
+ * @property {DTData[]} data
  * @property {string} keyField
  * @property {string} noDataIndication
  * @property {boolean} search
- * @property {DataTableSelectRow} selectRow
+ * @property {DTSelectRow} selectRow
  * 
- * @extends {PureComponent<DataTableProps>}
+ * @extends {PureComponent<DTProps>}
  */
 class DataTable extends PureComponent {
 
     constructor(props) {
         super(props);
-        this.onRowSelect = this.onSelect.bind(this);
-        this.onSelectAll = this.onSelectAll.bind(this);
+        this.onRowSelect = this.onRowSelect.bind(this);
+        this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.onSearchInput = this.onSearchInput.bind(this);
 
         this.state = {
-            selectedIds: new Set(),
+            selectedKeys: new Set(),
             allSelected: false,
             searchText: "",
         };
     }
 
-    onSelect(row) {
-        const id = row[this.props.keyField];
-        const selected = !this.state.selectedIds.has(id);
-        const newSelectedIds = new Set(this.state.selectedIds);
+    onRowSelect(row) {
+        const rowKey = row[this.props.keyField];
+        const selected = !this.state.selectedKeys.has(rowKey);
+        const newSelectedKeys = new Set(this.state.selectedKeys);
         if (selected) {
-            newSelectedIds.add(id)
+            newSelectedKeys.add(rowKey)
         } else {
-            newSelectedIds.delete(id);
+            newSelectedKeys.delete(rowKey);
         }
-        const newAllSelected = newSelectedIds.size === this.props.data.length;
+        const newAllSelected = newSelectedKeys.size === this.props.data.length;
         this.setState({
-            selectedIds: newSelectedIds,
+            selectedKeys: newSelectedKeys,
             allSelected: newAllSelected,
         });
         this.props.selectRow.onSelect(row, selected);
     }
 
-    onSelectAll() {
+    onRowSelectAll() {
         const newAllSelected = !this.state.allSelected;
-        const newSelectedIds = newAllSelected
+        const newSelectedKeys = newAllSelected
             ? new Set(this.props.data.map(row => row[this.props.keyField]))
             : new Set();
         this.setState({
-            selectedIds: newSelectedIds,
+            selectedKeys: newSelectedKeys,
             allSelected: newAllSelected,
         });
         this.props.selectRow.onSelectAll(newAllSelected);
@@ -127,12 +129,12 @@ class DataTable extends PureComponent {
                     <thead>
                         <tr>
                             {this.props.selectRow && (
-                                <th style={{ width: 0 }} onClick={() => this.onSelectAll()}>
+                                <th style={{ width: 0 }} onClick={() => this.onRowSelectAll()}>
                                     <FormCheck
                                         className="m-0"
                                         inline
                                         checked={this.state.allSelected}
-                                        onChange={() => this.onSelectAll()}
+                                        onChange={() => this.onRowSelectAll()}
                                     ></FormCheck>
                                 </th>
                             )}
@@ -153,16 +155,16 @@ class DataTable extends PureComponent {
                                 </tr>
                             ) : (
                                 filteredData.map((row) => {
-                                    const rowId = row[this.props.keyField];
+                                    const rowKey = row[this.props.keyField];
                                     return (
-                                        <tr key={rowId}>
+                                        <tr key={rowKey}>
                                             {this.props.selectRow && (
-                                                <td style={{ width: 0 }} onClick={() => this.onSelect(row)}>
+                                                <td style={{ width: 0 }} onClick={() => this.onRowSelect(row)}>
                                                     <FormCheck
                                                         className="m-0"
                                                         inline
-                                                        checked={this.state.selectedIds.has(rowId)}
-                                                        onChange={() => this.onSelect(row)}
+                                                        checked={this.state.selectedKeys.has(rowKey)}
+                                                        onChange={() => this.onRowSelect(row)}
                                                     ></FormCheck>
                                                 </td>
                                             )}
