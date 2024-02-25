@@ -16,7 +16,7 @@
 
 import React, { PureComponent } from "react";
 import { FormCheck, Table, FormControl, Pagination } from "react-bootstrap";
-import { sortBy } from "underscore";
+import { get, sortBy } from "underscore";
 import cn from "classnames";
 
 import "../../css/DataTable.css";
@@ -26,8 +26,8 @@ const SORT_ORDER_CYCLE = new Map([
     ["desc", "asc"],
     ["asc", "desc"]
 ]);
-const DEFAULT_SIZE_PER_PAGE = 5;
-const DEFAULT_SIZE_PER_PAGE_LIST = [5, 10, 20, 50];
+const DEFAULT_SIZE_PER_PAGE_LIST = [10, 25, 30, 50];
+const DEFAULT_SIZE_PER_PAGE = DEFAULT_SIZE_PER_PAGE_LIST[0];
 
 /**
  * Simple implementation of a Bootstrap Table with search, sorting and pagination capabilities.
@@ -248,7 +248,9 @@ class DataTable extends PureComponent {
                         {
                             !this.props.data?.length ? (
                                 <tr>
-                                    <td className="text-center" colSpan={numberOfColumns}>{this.props.noDataIndication}</td>
+                                    <td className="text-center" colSpan={numberOfColumns}>{
+                                        this.props.noDataIndication || "No data"
+                                    }</td>
                                 </tr>
                             ) : !paginatedData.length ? (
                                 <tr>
@@ -270,7 +272,8 @@ class DataTable extends PureComponent {
                                                 </td>
                                             )}
                                             {visibleColumns.map((column) => {
-                                                const cell = row[column.dataField];
+                                                const fieldPath = column.dataField.split(".");
+                                                const cell = get(row, fieldPath);
                                                 return (
                                                     <td key={column.dataField}>
                                                         {column.formatter ? column.formatter(cell, row) : cell}
