@@ -322,6 +322,7 @@ class ProjectOverview extends PureComponent {
                                 search
                                 noDataIndication="Click on 'New project' button to create a new project"
                                 selectRow={this.selectRow}
+                                defaultSort={this.defaultSort}
                             ></DataTable>
                             {/* <ToolkitProvider bootstrap4
                                              columns={ this.columns}

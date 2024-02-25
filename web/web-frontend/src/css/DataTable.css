@@ -1,0 +1,23 @@
+.table th.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.table th.sortable .sort-icons::before {
+    margin-left: 3.5px;
+    content: "\2191";
+    opacity: 0.4;
+}
+
+.table th.sortable .sort-icons::after {
+    content: "\2193";
+    opacity: 0.4;
+}
+
+.table th.sortable.asc .sort-icons::before {
+    opacity: 1;
+}
+
+.table th.sortable.desc .sort-icons::after {
+    opacity: 1;
+}
