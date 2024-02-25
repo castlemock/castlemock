@@ -15,9 +15,7 @@
  */
 
 import React, {PureComponent} from "react";
-// import ToolkitProvider from "react-bootstrap-table2-toolkit";
-// import BootstrapTable from "react-bootstrap-table-next";
-// import PaginationFactory from "react-bootstrap-table2-paginator";
+import DataTable from "../../../../utility/DataTable";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import preventEnterEvent from "../../../../../utility/KeyboardUtility";
@@ -89,20 +87,13 @@ class UpdateEndpointModal extends PureComponent {
                         <div className="modal-body">
                             <p>Do you want update the endpoint for the following methods?</p>
                             <div className="table-result">
-                                {/* <ToolkitProvider bootstrap4
-                                                 columns={ this.columns}
-                                                 data={ this.props.selectedMethods }
-                                                 keyField="id">
-                                    {
-                                        (props) => (
-                                            <div>
-                                                <BootstrapTable { ...props.baseProps } bootstrap4 data={this.props.selectedMethods} columns={this.columns}
-                                                                defaultSorted={ this.defaultSort } keyField='id' hover
-                                                                striped
-                                                                pagination={ PaginationFactory({hideSizePerPage: true}) }/>
-                                            </div>
-                                        )}
-                                </ToolkitProvider> */}
+                                <DataTable
+                                    columns={this.columns}
+                                    data={this.props.selectedMethods}
+                                    keyField="id"
+                                    defaultSort={this.defaultSort}
+                                    pagination={{ hideSizePerPage: true }}
+                                ></DataTable>
                             </div>
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Endpoint</label>

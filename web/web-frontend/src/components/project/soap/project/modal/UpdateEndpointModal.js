@@ -23,6 +23,7 @@ import validateErrorResponse from "../../../../../utility/HttpResponseValidator"
 import preventEnterEvent from "../../../../../utility/KeyboardUtility";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import DataTable from "../../../../utility/DataTable";
 
 
 class UpdateEndpointModal extends PureComponent {
@@ -88,20 +89,13 @@ class UpdateEndpointModal extends PureComponent {
                         <div className="modal-body">
                             <p>Do you want update the endpoint for the following ports?</p>
                             <div className="table-result">
-                                {/* <ToolkitProvider bootstrap4
-                                                 columns={ this.updateColumns}
-                                                 data={ this.props.selectedPorts }
-                                                 keyField="id">
-                                    {
-                                        (props) => (
-                                            <div>
-                                                <BootstrapTable { ...props.baseProps } bootstrap4 data={this.props.selectedPorts} columns={this.updateColumns}
-                                                                defaultSorted={ this.defaultSort } keyField='id' hover
-                                                                striped
-                                                                pagination={ PaginationFactory({hideSizePerPage: true}) }/>
-                                            </div>
-                                        )}
-                                </ToolkitProvider> */}
+                                <DataTable
+                                    columns={this.updateColumns}
+                                    data={this.props.selectedPorts}
+                                    keyField="id"
+                                    defaultSort={this.defaultSort}
+                                    pagination={{ hideSizePerPage: true }}
+                                ></DataTable>
                             </div>
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Endpoint</label>
