@@ -17,9 +17,7 @@
 import React, {PureComponent} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
-// import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
-// import BootstrapTable from "react-bootstrap-table-next";
-// import PaginationFactory from "react-bootstrap-table2-paginator";
+import DataTable from '../../../utility/DataTable';
 import validateErrorResponse from "../../../../utility/HttpResponseValidator";
 import DeleteApplicationModal from "./modal/DeleteApplicationModal";
 import DeleteResourcesModal from "./modal/DeleteResourcesModal";
@@ -32,7 +30,6 @@ import AuthenticationContext from "../../../../context/AuthenticationContext";
 import {faEdit, faTrash, faFile, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-// const { SearchBar } = Search;
 const SELECT = true;
 const DESELECT = false;
 
@@ -210,25 +207,16 @@ class RestApplication extends PureComponent {
                             <h3 className="panel-title">Resources</h3>
                         </div>
                         <div className="table-result">
-                            {/* <ToolkitProvider bootstrap4
-                                             columns={ this.columns}
-                                             data={this.state.application.resources}
-                                             keyField="id"
-                                             search>
-                                {
-                                    (props) => (
-                                        <div>
-                                            <div>
-                                                <SearchBar {...props.searchProps} className={"table-filter-field"}/>
-                                            </div>
-                                            <BootstrapTable {...props.baseProps} bootstrap4
-                                                            data={this.state.application.resources} columns={this.columns}
-                                                            defaultSorted={this.defaultSort} keyField='id' hover
-                                                            selectRow={this.selectRow}
-                                                            pagination={ PaginationFactory() }/>
-                                        </div>
-                                    )}
-                            </ToolkitProvider> */}
+                            <DataTable
+                                columns={this.columns}
+                                data={this.state.application.resources}
+                                keyField="id"
+                                search
+                                defaultSort={this.defaultSort}
+                                noDataIndication="No resources"
+                                selectRow={this.selectRow}
+                                pagination
+                            ></DataTable>
                             <AuthenticationContext.Consumer>
                                 {context => (
                                     <div className="panel-buttons">

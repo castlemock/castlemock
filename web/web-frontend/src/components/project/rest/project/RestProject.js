@@ -246,7 +246,7 @@ class RestProject extends PureComponent {
                                 search
                                 defaultSort={this.defaultSort}
                                 selectRow={this.selectRow}
-                                noDataIndication="Click on the 'Upload' to upload a REST API definition"
+                                noDataIndication="Click on the 'Upload' button to upload a REST API definition"
                                 pagination
                             ></DataTable>
                             <AuthenticationContext.Consumer>

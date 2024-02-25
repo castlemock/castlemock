@@ -17,9 +17,7 @@
 import React, {PureComponent} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
-// import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
-// import BootstrapTable from "react-bootstrap-table-next";
-// import PaginationFactory from "react-bootstrap-table2-paginator";
+import DataTable from '../../../utility/DataTable';
 import validateErrorResponse from "../../../../utility/HttpResponseValidator";
 import DeleteMethodModal from "./modal/DeleteMethodModal";
 import DeleteMockResponsesModal from "./modal/DeleteMockResponsesModal";
@@ -34,7 +32,6 @@ import ContextContext from "../../../../context/ContextContext";
 import {faEdit, faFile, faTrash, faCopy} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-// const { SearchBar } = Search;
 const SELECT = true;
 const DESELECT = false;
 
@@ -240,26 +237,16 @@ class RestMethod extends PureComponent {
                             <h3 className="panel-title">Mock responses</h3>
                         </div>
                         <div className="table-result">
-                            {/* <ToolkitProvider bootstrap4
-                                             columns={ this.columns}
-                                             data={this.state.method.mockResponses}
-                                             keyField="id"
-                                             search>
-                                {
-                                    (props) => (
-                                        <div>
-                                            <div>
-                                                <SearchBar {...props.searchProps} className={"table-filter-field"}/>
-                                            </div>
-                                            <BootstrapTable {...props.baseProps} bootstrap4
-                                                            data={this.state.method.mockResponses} columns={this.columns}
-                                                            defaultSorted={this.defaultSort} keyField='id' hover
-                                                            selectRow={this.selectRow}
-                                                            noDataIndication="No mocked responses"
-                                                            pagination={ PaginationFactory() }/>
-                                        </div>
-                                    )}
-                            </ToolkitProvider> */}
+                            <DataTable
+                                columns={this.columns}
+                                data={this.state.method.mockResponses}
+                                keyField="id"
+                                search
+                                defaultSort={this.defaultSort}
+                                selectRow={this.selectRow}
+                                noDataIndication="No mocked responses"
+                                pagination
+                            ></DataTable>
                             <AuthenticationContext.Consumer>
                                 {context => (
                                     <div className="panel-buttons">
