@@ -15,16 +15,13 @@
  */
 
 import React, {PureComponent} from 'react';
-// import BootstrapTable from 'react-bootstrap-table-next';
-// import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
-// import PaginationFactory from "react-bootstrap-table2-paginator";
+import DataTable from '../../utility/DataTable';
 import axios from "axios";
 import validateErrorResponse from "../../../utility/HttpResponseValidator";
 import {Link} from "react-router-dom";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-// const { SearchBar } = Search;
 
 class EventOverview extends PureComponent {
 
@@ -132,28 +129,16 @@ class EventOverview extends PureComponent {
                     </div>
                     <div className="panel panel-primary table-panel">
                         <div className="table-result">
-                            {/* <ToolkitProvider bootstrap4
-                                             columns={ this.columns}
-                                             data={ this.state.events }
-                                             keyField="id"
-                                             search>
-                                {
-                                    (props) => (
-                                        <div>
-                                            <div>
-                                                <SearchBar { ...props.searchProps } className={"table-filter-field"} />
-                                            </div>
-                                            <div>
-                                                <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.events} columns={this.columns}
-                                                                defaultSorted={ this.defaultSort } keyField='id' hover
-                                                                selectRow={ this.selectRow }
-                                                                striped
-                                                                noDataIndication="No events has so far been recorded"
-                                                                pagination={ PaginationFactory() }/>
-                                            </div>
-                                        </div>
-                                    )}
-                            </ToolkitProvider> */}
+                            <DataTable
+                                columns={this.columns}
+                                data={this.state.events}
+                                keyField="id"
+                                search
+                                defaultSort={this.defaultSort}
+                                selectRow={this.selectRow}
+                                noDataIndication="No events has so far been recorded"
+                                pagination
+                            ></DataTable>
                         </div>
                     </div>
                 </section>
