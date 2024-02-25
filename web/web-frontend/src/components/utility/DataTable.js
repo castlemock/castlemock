@@ -18,6 +18,7 @@ import React, { PureComponent } from "react";
 import FormCheck from "react-bootstrap/FormCheck";
 import Table from "react-bootstrap/Table";
 import FormControl from "react-bootstrap/FormControl"
+import { memoize } from "underscore";
 
 /**
  * Simple implementation of a Bootstrap Table with search, sorting and pagination capabilities.
@@ -50,10 +51,13 @@ class DataTable extends PureComponent {
     constructor(props) {
         super(props);
         this.onRowSelect = this.onSelect.bind(this);
+        this.onSelectAll = this.onSelectAll.bind(this);
+        this.onSearchInput = this.onSearchInput.bind(this);
 
         this.state = {
             selectedIds: new Set(),
             allSelected: false,
+            searchText: "",
         };
     }
 
@@ -86,14 +90,37 @@ class DataTable extends PureComponent {
         this.props.selectRow.onSelectAll(newAllSelected);
     }
 
+    onSearchInput(inputEvent) {
+        this.setState({
+            searchText: inputEvent.target.value.toLowerCase(),
+        });
+    }
+
+    getFilteredData = memoize(
+        (data, searchText) => {
+            return searchText
+                ? data.filter(row => this.props.columns
+                    .some(column => row[column.dataField]?.toLowerCase()?.includes(searchText)))
+                : data;
+        },
+        (data, searchText) => {
+            return data.map(row => row[this.props.keyField]).join(",") + "-" + searchText;
+        }
+    );
+
     render() {
         const visibleColumns = this.props.columns.filter(column => !column.hidden);
         const totalColumns = visibleColumns.length + (this.props.selectRow ? 1 : 0);
+        const filteredData = this.getFilteredData(this.props.data, this.state.searchText);
 
         return (
             <>
                 {
-                    this.props.search && <FormControl placeholder="Search" className="table-filter-field"></FormControl>
+                    this.props.search && <FormControl
+                        className="table-filter-field"
+                        placeholder="Search"
+                        onInput={this.onSearchInput}
+                    ></FormControl>
                 }
                 <Table bordered striped>
                     <thead>
@@ -119,8 +146,12 @@ class DataTable extends PureComponent {
                                 <tr>
                                     <td className="text-center" colSpan={totalColumns}>{this.props.noDataIndication}</td>
                                 </tr>
+                            ) : filteredData.length === 0 ? (
+                                <tr>
+                                    <td className="text-center" colSpan={totalColumns}>No search results</td>
+                                </tr>
                             ) : (
-                                this.props.data.map((row) => {
+                                filteredData.map((row) => {
                                     const rowId = row[this.props.keyField];
                                     return (
                                         <tr key={rowId}>
