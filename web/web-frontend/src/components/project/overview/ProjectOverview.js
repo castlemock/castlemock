@@ -15,9 +15,6 @@
  */
 
 import React, {PureComponent} from 'react';
-// import BootstrapTable from 'react-bootstrap-table-next';
-// import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
-// import PaginationFactory from "react-bootstrap-table2-paginator";
 import DataTable from '../../utility/DataTable';
 import axios from "axios";
 import {Link} from "react-router-dom";
@@ -28,8 +25,6 @@ import AuthenticationContext from "../../../context/AuthenticationContext";
 import {isOnlyReader} from "../../../utility/AuthorizeUtility";
 import preventEnterEvent from "../../../utility/KeyboardUtility";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
-// const { SearchBar } = Search;
 
 const SELECT = true;
 const DESELECT = false;
@@ -319,34 +314,12 @@ class ProjectOverview extends PureComponent {
                                 columns={this.columns}
                                 data={this.state.projects}
                                 keyField="id"
-                                noDataIndication="Click on 'New project' button to create a new project"
+                                search
                                 defaultSort={this.defaultSort}
                                 selectRow={this.selectRow}
-                                search
+                                noDataIndication="Click on 'New project' button to create a new project"
                                 pagination
                             ></DataTable>
-                            {/* <ToolkitProvider bootstrap4
-                                             columns={ this.columns}
-                                             data={ this.state.projects }
-                                             keyField="id"
-                                             search>
-                                {
-                                    (props) => (
-                                        <div>
-                                            <div>
-                                                <SearchBar { ...props.searchProps } className={"table-filter-field"} />
-                                            </div>
-                                            <div>
-                                                <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.projects} columns={this.columns}
-                                                                defaultSorted={ this.defaultSort } keyField='id' hover
-                                                                selectRow={ this.selectRow }
-                                                                striped
-                                                                noDataIndication="Click on 'New project' button to create a new project"
-                                                                pagination={ PaginationFactory() }/>
-                                            </div>
-                                            </div>
-                                    )}
-                            </ToolkitProvider> */}
                         </div>
                         <div className="table-result">
                             <div className="panel-buttons">
@@ -452,25 +425,13 @@ class ProjectOverview extends PureComponent {
                             <div className="modal-body">
                                 <p>Do you want delete the following projects?</p>
                                 <div className="table-result">
-                                <DataTable
-                                    columns={this.deleteColumns}
-                                    data={this.state.selectedProjects}
-                                    keyField="id"
-                                ></DataTable>
-                                    {/* <ToolkitProvider bootstrap4
-                                                     columns={ this.deleteColumns}
-                                                     data={ this.state.selectedProjects }
-                                                     keyField="id">
-                                        {
-                                            (props) => (
-                                                <div>
-                                                    <BootstrapTable { ...props.baseProps } bootstrap4 data={this.state.selectedProjects} columns={this.deleteColumns}
-                                                                    defaultSorted={ this.defaultSort } keyField='id' hover
-                                                                    striped
-                                                                    pagination={ PaginationFactory({hideSizePerPage: true}) }/>
-                                                </div>
-                                            )}
-                                    </ToolkitProvider> */}
+                                    <DataTable
+                                        columns={this.deleteColumns}
+                                        data={this.state.selectedProjects}
+                                        keyField="id"
+                                        defaultSort={this.defaultSort}
+                                        pagination={{ hideSizePerPage: true }}
+                                    ></DataTable>
                                 </div>
                             </div>
                             <div className="modal-footer">

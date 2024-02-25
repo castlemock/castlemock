@@ -50,6 +50,7 @@ const SORT_ORDER_CYCLE = new Map([
  * @typedef DTPagination
  * @property {number} sizePerPage
  * @property {number[]} sizePerPageList
+ * @property {boolean} hideSizePerPage
  *
  * @typedef {object} DTProps
  * @property {DTColumn[]} columns
@@ -188,7 +189,7 @@ class DataTable extends PureComponent {
 
     render() {
         const visibleColumns = this.props.columns.filter(column => !column.hidden);
-        const totalColumns = visibleColumns.length + (this.props.selectRow ? 1 : 0);
+        const numberOfColumns = visibleColumns.length + (this.props.selectRow ? 1 : 0);
         const filteredData = this.filterData(this.props.data);
         const sortedData = this.sortData(filteredData);
         const paginatedData = this.paginateData(sortedData);
@@ -203,7 +204,7 @@ class DataTable extends PureComponent {
                         onInput={this.onSearchInput}
                     ></FormControl>
                 }
-                <Table bordered striped>
+                <Table bordered striped hover>
                     <thead>
                         <tr>
                             {this.props.selectRow && (
@@ -236,11 +237,11 @@ class DataTable extends PureComponent {
                         {
                             this.props.data.length === 0 ? (
                                 <tr>
-                                    <td className="text-center" colSpan={totalColumns}>{this.props.noDataIndication}</td>
+                                    <td className="text-center" colSpan={numberOfColumns}>{this.props.noDataIndication}</td>
                                 </tr>
                             ) : paginatedData.length === 0 ? (
                                 <tr>
-                                    <td className="text-center" colSpan={totalColumns}>No search results</td>
+                                    <td className="text-center" colSpan={numberOfColumns}>No search results</td>
                                 </tr>
                             ) : (
                                 paginatedData.map((row) => {
@@ -273,20 +274,24 @@ class DataTable extends PureComponent {
                 </Table>
                 {
                     this.props.pagination && (
-                        <div className="d-flex justify-content-between">
-                            <FormControl
-                                as="select"
-                                className="w-auto"
-                                defaultValue={this.state.sizePerPage}
-                                onChange={this.onSizePerPageChange}
-                            >
-                                {
-                                    this.state.sizePerPageList.map((size) => (
-                                        <option value={size} key={size}>{size}</option>
-                                    ))
-                                }
-                            </FormControl>
-                            <Pagination>
+                        <div className="d-flex">
+                            {
+                                this.props.pagination.hideSizePerPage !== true && (
+                                    <FormControl
+                                        as="select"
+                                        className="w-auto mr-auto"
+                                        defaultValue={this.state.sizePerPage}
+                                        onChange={this.onSizePerPageChange}
+                                    >
+                                        {
+                                            this.state.sizePerPageList.map((size) => (
+                                                <option value={size} key={size}>{size}</option>
+                                            ))
+                                        }
+                                    </FormControl>
+                                )
+                            }
+                            <Pagination className="ml-auto">
                                 {
                                     Array.from({ length: numberOfPages }).map((_, pageIndex) => (
                                         <Pagination.Item
