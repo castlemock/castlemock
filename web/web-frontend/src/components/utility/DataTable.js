@@ -26,6 +26,8 @@ const SORT_ORDER_CYCLE = new Map([
     ["desc", "asc"],
     ["asc", "desc"]
 ]);
+const DEFAULT_SIZE_PER_PAGE = 5;
+const DEFAULT_SIZE_PER_PAGE_LIST = [5, 10, 20, 50];
 
 /**
  * Simple implementation of a Bootstrap Table with search, sorting and pagination capabilities.
@@ -79,7 +81,16 @@ class DataTable extends PureComponent {
         this.onPageChange = this.onPageChange.bind(this);
 
         if (this.props.defaultSort?.length > 1) {
-            console.warn("DataTable : 'defaultSort' attribute doesn't (yet) support multiple columns");
+            console.warn("DataTable : 'defaultSort' prop doesn't (yet) support multiple columns");
+        }
+        if (!this.props.columns) {
+            console.error("DataTable : 'columns' prop is mandatory");
+        }
+        if (!this.props.data) {
+            console.error("DataTable : 'data' prop is mandatory");
+        }
+        if (!this.props.keyField) {
+            console.error("DataTable : 'keyField' prop is mandatory");
         }
 
         this.state = {
@@ -87,8 +98,8 @@ class DataTable extends PureComponent {
             allSelected: false,
             searchText: "",
             columnSort: this.props.defaultSort?.slice(0, 1) || [],
-            sizePerPage: this.props.pagination?.sizePerPage || 5,
-            sizePerPageList: this.props.pagination?.sizePerPageList || [5, 10, 20, 50],
+            sizePerPage: this.props.pagination?.sizePerPage || DEFAULT_SIZE_PER_PAGE,
+            sizePerPageList: this.props.pagination?.sizePerPageList || DEFAULT_SIZE_PER_PAGE_LIST,
             currentPageIndex: 0,
         };
     }
@@ -102,24 +113,24 @@ class DataTable extends PureComponent {
         } else {
             newSelectedKeys.delete(rowKey);
         }
-        const newAllSelected = newSelectedKeys.size === this.props.data.length;
+        const newAllSelected = newSelectedKeys.size === this.props.data?.length;
         this.setState({
             selectedKeys: newSelectedKeys,
             allSelected: newAllSelected,
         });
-        this.props.selectRow.onSelect(row, selected);
+        this.props.selectRow?.onSelect(row, selected);
     }
 
     onRowSelectAll() {
         const newAllSelected = !this.state.allSelected;
         const newSelectedKeys = newAllSelected
-            ? new Set(this.props.data.map(row => row[this.props.keyField]))
+            ? new Set(this.props.data?.map(row => row[this.props.keyField]) || [])
             : new Set();
         this.setState({
             selectedKeys: newSelectedKeys,
             allSelected: newAllSelected,
         });
-        this.props.selectRow.onSelectAll(newAllSelected);
+        this.props.selectRow?.onSelectAll(newAllSelected);
     }
 
     onSearchInput(inputEvent) {
@@ -145,7 +156,7 @@ class DataTable extends PureComponent {
         let list = data;
         if (this.state.searchText) {
             list = list.filter(row => this.props.columns
-                .some(column => row[column.dataField]?.toLowerCase()?.includes(this.state.searchText)))
+                ?.some(column => row[column.dataField]?.toLowerCase()?.includes(this.state.searchText)))
         }
         return list;
     }
@@ -188,9 +199,9 @@ class DataTable extends PureComponent {
     }
 
     render() {
-        const visibleColumns = this.props.columns.filter(column => !column.hidden);
+        const visibleColumns = this.props.columns?.filter(column => !column.hidden) || [];
         const numberOfColumns = visibleColumns.length + (this.props.selectRow ? 1 : 0);
-        const filteredData = this.filterData(this.props.data);
+        const filteredData = this.filterData(this.props.data || []);
         const sortedData = this.sortData(filteredData);
         const paginatedData = this.paginateData(sortedData);
         const numberOfPages = Math.ceil(sortedData.length / this.state.sizePerPage);
@@ -235,11 +246,11 @@ class DataTable extends PureComponent {
                     </thead>
                     <tbody>
                         {
-                            this.props.data.length === 0 ? (
+                            !this.props.data?.length ? (
                                 <tr>
                                     <td className="text-center" colSpan={numberOfColumns}>{this.props.noDataIndication}</td>
                                 </tr>
-                            ) : paginatedData.length === 0 ? (
+                            ) : !paginatedData.length ? (
                                 <tr>
                                     <td className="text-center" colSpan={numberOfColumns}>No search results</td>
                                 </tr>
