@@ -17,9 +17,7 @@
 import React, {PureComponent} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
-// import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
-// import BootstrapTable from "react-bootstrap-table-next";
-// import PaginationFactory from "react-bootstrap-table2-paginator";
+import DataTable from '../../../utility/DataTable';
 import validateErrorResponse from "../../../../utility/HttpResponseValidator";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
 import UpdatePortModal from "./modal/UpdatePortModal";
@@ -32,7 +30,6 @@ import ContextContext from "../../../../context/ContextContext";
 import {faTrash, faEdit, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-// const { SearchBar } = Search;
 const SELECT = true;
 const DESELECT = false;
 
@@ -251,27 +248,16 @@ class SoapPort extends PureComponent {
                             <h3 className="panel-title">Operations</h3>
                         </div>
                         <div className="table-result">
-                            {/* <ToolkitProvider bootstrap4
-                                             columns={ this.columns}
-                                             data={this.state.port.operations}
-                                             keyField="id"
-                                             search>
-                                {
-                                    (props) => (
-                                        <div>
-                                            <div>
-                                                <SearchBar {...props.searchProps} className={"table-filter-field"}/>
-                                            </div>
-                                            <BootstrapTable {...props.baseProps} bootstrap4
-                                                            data={this.state.port.operations} columns={this.columns}
-                                                            defaultSorted={this.defaultSort} keyField='id' hover
-                                                            selectRow={this.selectRow}
-                                                            striped
-                                                            noDataIndication="Table is Empty"
-                                                            pagination={ PaginationFactory() }/>
-                                        </div>
-                                    )}
-                            </ToolkitProvider> */}
+                            <DataTable
+                                columns={this.columns}
+                                data={this.state.port.operations}
+                                keyField="id"
+                                search
+                                defaultSort={this.defaultSort}
+                                selectRow={this.selectRow}
+                                noDataIndication="Table is Empty"
+                                pagination
+                            ></DataTable>
                             <AuthenticationContext.Consumer>
                                 {context => (
                                     <div className="panel-buttons">

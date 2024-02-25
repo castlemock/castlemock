@@ -17,9 +17,7 @@
 import React, {PureComponent} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
-// import ToolkitProvider, {Search} from "react-bootstrap-table2-toolkit";
-// import BootstrapTable from "react-bootstrap-table-next";
-// import PaginationFactory from "react-bootstrap-table2-paginator";
+import DataTable from '../../../utility/DataTable';
 import validateErrorResponse from "../../../../utility/HttpResponseValidator";
 import Badge from "react-bootstrap/Badge";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
@@ -33,7 +31,6 @@ import UploadWSDLModal from "./modal/UploadWSDLModal"
 import {faEdit, faTrash, faCloudDownloadAlt, faCloudUploadAlt, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-// const { SearchBar } = Search;
 
 const SELECT = true;
 const DESELECT = false;
@@ -313,26 +310,16 @@ class SoapProject extends PureComponent {
                             <h3 className="panel-title">Ports</h3>
                         </div>
                         <div className="table-result">
-                            {/* <ToolkitProvider bootstrap4
-                                             columns={ this.columns}
-                                             data={this.state.project.ports}
-                                             keyField="id"
-                                             search>
-                                {
-                                    (props) => (
-                                        <div>
-                                            <div>
-                                                <SearchBar {...props.searchProps} className={"table-filter-field"}/>
-                                            </div>
-                                            <BootstrapTable {...props.baseProps} bootstrap4
-                                                            data={this.state.project.ports} columns={this.columns}
-                                                            defaultSorted={this.defaultSort} keyField='id' hover
-                                                            selectRow={this.selectRow}
-                                                            noDataIndication="Upload a WSDL file to load ports"
-                                                            pagination={ PaginationFactory() }/>
-                                        </div>
-                                    )}
-                            </ToolkitProvider> */}
+                            <DataTable
+                                columns={this.columns}
+                                data={this.state.project.ports}
+                                keyField="id"
+                                search
+                                defaultSort={this.defaultSort}
+                                selectRow={this.selectRow}
+                                noDataIndication="Upload a WSDL file to load ports"
+                                pagination
+                            ></DataTable>
                             <AuthenticationContext.Consumer>
                                 {context => (
                                     <div className="panel-buttons">
@@ -355,22 +342,15 @@ class SoapProject extends PureComponent {
                             <h3 className="panel-title">Resources</h3>
                         </div>
                         <div className="table-result">
-                            {/* <ToolkitProvider bootstrap4
-                                             columns={ this.resourceColumns}
-                                             data={this.state.project.resources}
-                                             keyField="id"
-                                             search>
-                                {
-                                    (props) => (
-                                        <div>
-                                            <BootstrapTable {...props.baseProps} bootstrap4
-                                                            data={this.state.project.resources} columns={this.resourceColumns}
-                                                            defaultSorted={this.defaultSort} keyField='id' hover
-                                                            noDataIndication="Upload a WSDL file to load ports"
-                                                            pagination={ PaginationFactory() }/>
-                                        </div>
-                                    )}
-                            </ToolkitProvider> */}
+                            <DataTable
+                                columns={this.resourceColumns}
+                                data={this.state.project.resources}
+                                keyField="id"
+                                search
+                                defaultSort={this.defaultSort}
+                                noDataIndication="Upload a WSDL file to load ports"
+                                pagination
+                            ></DataTable>
                         </div>
                     </div>
                 </section>

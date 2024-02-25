@@ -29,6 +29,14 @@ const SORT_ORDER_CYCLE = new Map([
 const DEFAULT_SIZE_PER_PAGE_LIST = [10, 25, 30, 50];
 const DEFAULT_SIZE_PER_PAGE = DEFAULT_SIZE_PER_PAGE_LIST[0];
 
+function normalizeString(value) {
+    return value?.toString().toLowerCase() || ""
+}
+
+function getValue(row, dottedPath) {
+    return get(row, dottedPath.split("."));
+}
+
 /**
  * Simple implementation of a Bootstrap Table with search, sorting and pagination capabilities.
  * 
@@ -135,7 +143,7 @@ class DataTable extends PureComponent {
 
     onSearchInput(inputEvent) {
         this.setState({
-            searchText: inputEvent.target.value.toLowerCase(),
+            searchText: normalizeString(inputEvent.target.value),
             currentPageIndex: 0,
         });
     }
@@ -155,8 +163,11 @@ class DataTable extends PureComponent {
     filterData(data) {
         let list = data;
         if (this.state.searchText) {
-            list = list.filter(row => this.props.columns
-                ?.some(column => row[column.dataField]?.toLowerCase()?.includes(this.state.searchText)))
+            list = list.filter((row) => {
+                return this.props.columns?.some((column) => {
+                    return normalizeString(getValue(row, column.dataField)).includes(this.state.searchText)
+                });
+            });
         }
         return list;
     }
@@ -165,7 +176,7 @@ class DataTable extends PureComponent {
         let list = data;
         const columnSort = this.state.columnSort[0];
         if (columnSort) {
-            const fieldExtractor = (row) => row[columnSort.dataField]?.toLowerCase();
+            const fieldExtractor = (row) => normalizeString(getValue(row, columnSort.dataField));
             if (columnSort.order === "asc") {
                 list = sortBy(list, fieldExtractor);
             } else if (columnSort.order === "desc") {
@@ -272,8 +283,7 @@ class DataTable extends PureComponent {
                                                 </td>
                                             )}
                                             {visibleColumns.map((column) => {
-                                                const fieldPath = column.dataField.split(".");
-                                                const cell = get(row, fieldPath);
+                                                const cell = getValue(row, column.dataField);
                                                 return (
                                                     <td key={column.dataField}>
                                                         {column.formatter ? column.formatter(cell, row) : cell}
