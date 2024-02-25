@@ -17,9 +17,7 @@
 import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
-// import ToolkitProvider from "react-bootstrap-table2-toolkit";
-// import BootstrapTable from "react-bootstrap-table-next";
-// import PaginationFactory from "react-bootstrap-table2-paginator";
+import DataTable from "../../../../utility/DataTable";
 import {mockResponseStatusFormatter} from "../../utility/SoapFormatter"
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -88,20 +86,13 @@ class UpdateStatusModal extends PureComponent {
                         <div className="modal-body">
                             <p>Do you want update the status for the following mock responses?</p>
                             <div className="table-result">
-                                {/* <ToolkitProvider bootstrap4
-                                                 columns={ this.columns}
-                                                 data={ this.props.selectedMockResponses }
-                                                 keyField="id">
-                                    {
-                                        (props) => (
-                                            <div>
-                                                <BootstrapTable { ...props.baseProps } bootstrap4 data={this.props.selectedMockResponses} columns={this.columns}
-                                                                defaultSorted={ this.defaultSort } keyField='id' hover
-                                                                striped
-                                                                pagination={ PaginationFactory({hideSizePerPage: true}) }/>
-                                            </div>
-                                        )}
-                                </ToolkitProvider> */}
+                                <DataTable
+                                    columns={this.columns}
+                                    data={this.props.selectedMockResponses}
+                                    keyField="id"
+                                    defaultSort={this.defaultSort}
+                                    pagination={{ hideSizePerPage: true }}
+                                ></DataTable>
                             </div>
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Status</label>
