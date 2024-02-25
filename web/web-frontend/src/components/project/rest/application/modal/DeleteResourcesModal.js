@@ -17,9 +17,7 @@
 import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
-// import ToolkitProvider from "react-bootstrap-table2-toolkit";
-// import BootstrapTable from "react-bootstrap-table-next";
-// import PaginationFactory from "react-bootstrap-table2-paginator";
+import DataTable from "../../../../utility/DataTable";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -73,20 +71,12 @@ class DeleteResourcesModal extends PureComponent {
                         <div className="modal-body">
                             <p>Do you want delete the following resources?</p>
                             <div className="table-result">
-                                {/* <ToolkitProvider bootstrap4
-                                                 columns={ this.columns}
-                                                 data={ this.props.selectedResources }
-                                                 keyField="id">
-                                    {
-                                        (props) => (
-                                            <div>
-                                                <BootstrapTable { ...props.baseProps } bootstrap4 data={this.props.selectedResources} columns={this.columns}
-                                                                defaultSorted={ this.defaultSort } keyField='id' hover
-                                                                striped
-                                                                pagination={ PaginationFactory({hideSizePerPage: true}) }/>
-                                            </div>
-                                        )}
-                                </ToolkitProvider> */}
+                                <DataTable
+                                    columns={this.columns}
+                                    data={this.props.selectedResources}
+                                    keyField="id"
+                                    pagination={{ hideSizePerPage: true }}
+                                ></DataTable>
                             </div>
                         </div>
                         <div className="modal-footer">
