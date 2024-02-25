@@ -15,11 +15,9 @@
  */
 
 import React, { PureComponent } from "react";
-import FormCheck from "react-bootstrap/FormCheck";
-import Table from "react-bootstrap/Table";
-import FormControl from "react-bootstrap/FormControl"
-import cn from "classnames";
+import { FormCheck, Table, FormControl, Pagination } from "react-bootstrap";
 import { sortBy } from "underscore";
+import cn from "classnames";
 
 import "../../css/DataTable.css";
 
@@ -49,6 +47,10 @@ const SORT_ORDER_CYCLE = new Map([
  * @property {(value: DTData, mode: boolean) => void} onSelect
  * @property {(mode: boolean) => void} onSelectAll
  * 
+ * @typedef DTPagination
+ * @property {number} sizePerPage
+ * @property {number[]} sizePerPageList
+ *
  * @typedef {object} DTProps
  * @property {DTColumn[]} columns
  * @property {DTData[]} data
@@ -57,6 +59,7 @@ const SORT_ORDER_CYCLE = new Map([
  * @property {boolean} search
  * @property {DTSelectRow} selectRow
  * @property {DTColumnSort[]} defaultSort
+ * @property {boolean | DTPagination} pagination
  * 
  * @extends {PureComponent<DTProps>}
  */
@@ -68,7 +71,11 @@ class DataTable extends PureComponent {
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
         this.onSearchInput = this.onSearchInput.bind(this);
         this.onColumnSort = this.onColumnSort.bind(this);
-        this.getFilteredData = this.getFilteredData.bind(this);
+        this.filterData = this.filterData.bind(this);
+        this.sortData = this.sortData.bind(this);
+        this.paginateData = this.paginateData.bind(this);
+        this.onSizePerPageChange = this.onSizePerPageChange.bind(this);
+        this.onPageChange = this.onPageChange.bind(this);
 
         if (this.props.defaultSort?.length > 1) {
             console.warn("DataTable : 'defaultSort' attribute doesn't (yet) support multiple columns");
@@ -79,6 +86,9 @@ class DataTable extends PureComponent {
             allSelected: false,
             searchText: "",
             columnSort: this.props.defaultSort?.slice(0, 1) || [],
+            sizePerPage: this.props.pagination?.sizePerPage || 5,
+            sizePerPageList: this.props.pagination?.sizePerPageList || [5, 10, 20, 50],
+            currentPageIndex: 0,
         };
     }
 
@@ -114,6 +124,7 @@ class DataTable extends PureComponent {
     onSearchInput(inputEvent) {
         this.setState({
             searchText: inputEvent.target.value.toLowerCase(),
+            currentPageIndex: 0,
         });
     }
 
@@ -129,27 +140,59 @@ class DataTable extends PureComponent {
         this.setState({ columnSort: newColumnSort });
     }
 
-    getFilteredData(data, searchText) {
-        let filtered = searchText
-            ? data.filter(row => this.props.columns
-                .some(column => row[column.dataField]?.toLowerCase()?.includes(searchText)))
-            : data;
+    filterData(data) {
+        let list = data;
+        if (this.state.searchText) {
+            list = list.filter(row => this.props.columns
+                .some(column => row[column.dataField]?.toLowerCase()?.includes(this.state.searchText)))
+        }
+        return list;
+    }
+
+    sortData(data) {
+        let list = data;
         const columnSort = this.state.columnSort[0];
         if (columnSort) {
             const fieldExtractor = (row) => row[columnSort.dataField]?.toLowerCase();
             if (columnSort.order === "asc") {
-                filtered = sortBy(filtered, fieldExtractor);
+                list = sortBy(list, fieldExtractor);
             } else if (columnSort.order === "desc") {
-                filtered = sortBy(filtered, fieldExtractor).reverse();
+                list = sortBy(list, fieldExtractor).reverse();
             }
         }
-        return filtered;
+        return list;
+    }
+
+    paginateData(data) {
+        let list = data;
+        if (this.props.pagination) {
+            const startIndex = this.state.currentPageIndex * this.state.sizePerPage;
+            const endIndex = startIndex + this.state.sizePerPage;
+            list = list.slice(startIndex, endIndex);
+        }
+        return list;
+    }
+
+    onSizePerPageChange(event) {
+        this.setState({
+            sizePerPage: +event.target.value,
+            currentPageIndex: 0,
+        });
+    }
+
+    onPageChange(pageIndex) {
+        this.setState({
+            currentPageIndex: pageIndex,
+        });
     }
 
     render() {
         const visibleColumns = this.props.columns.filter(column => !column.hidden);
         const totalColumns = visibleColumns.length + (this.props.selectRow ? 1 : 0);
-        const filteredData = this.getFilteredData(this.props.data, this.state.searchText);
+        const filteredData = this.filterData(this.props.data);
+        const sortedData = this.sortData(filteredData);
+        const paginatedData = this.paginateData(sortedData);
+        const numberOfPages = Math.ceil(sortedData.length / this.state.sizePerPage);
 
         return (
             <>
@@ -195,12 +238,12 @@ class DataTable extends PureComponent {
                                 <tr>
                                     <td className="text-center" colSpan={totalColumns}>{this.props.noDataIndication}</td>
                                 </tr>
-                            ) : filteredData.length === 0 ? (
+                            ) : paginatedData.length === 0 ? (
                                 <tr>
                                     <td className="text-center" colSpan={totalColumns}>No search results</td>
                                 </tr>
                             ) : (
-                                filteredData.map((row) => {
+                                paginatedData.map((row) => {
                                     const rowKey = row[this.props.keyField];
                                     return (
                                         <tr key={rowKey}>
@@ -228,6 +271,35 @@ class DataTable extends PureComponent {
                             )}
                     </tbody>
                 </Table>
+                {
+                    this.props.pagination && (
+                        <div className="d-flex justify-content-between">
+                            <FormControl
+                                as="select"
+                                className="w-auto"
+                                defaultValue={this.state.sizePerPage}
+                                onChange={this.onSizePerPageChange}
+                            >
+                                {
+                                    this.state.sizePerPageList.map((size) => (
+                                        <option value={size} key={size}>{size}</option>
+                                    ))
+                                }
+                            </FormControl>
+                            <Pagination>
+                                {
+                                    Array.from({ length: numberOfPages }).map((_, pageIndex) => (
+                                        <Pagination.Item
+                                            key={pageIndex}
+                                            onClick={() => this.onPageChange(pageIndex)}
+                                            active={this.state.currentPageIndex === pageIndex}
+                                        >{pageIndex + 1}</Pagination.Item>
+                                    ))
+                                }
+                            </Pagination>
+                        </div>
+                    )
+                }
             </>
         );
     }

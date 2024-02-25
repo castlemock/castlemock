@@ -21,3 +21,8 @@
 .table th.sortable.desc .sort-icons::after {
     opacity: 1;
 }
+
+.pagination .visually-hidden {
+    visibility: hidden;
+    font-size: 0;
+}

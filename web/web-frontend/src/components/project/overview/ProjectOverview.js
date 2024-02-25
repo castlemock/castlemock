@@ -319,10 +319,11 @@ class ProjectOverview extends PureComponent {
                                 columns={this.columns}
                                 data={this.state.projects}
                                 keyField="id"
-                                search
                                 noDataIndication="Click on 'New project' button to create a new project"
-                                selectRow={this.selectRow}
                                 defaultSort={this.defaultSort}
+                                selectRow={this.selectRow}
+                                search
+                                pagination
                             ></DataTable>
                             {/* <ToolkitProvider bootstrap4
                                              columns={ this.columns}
