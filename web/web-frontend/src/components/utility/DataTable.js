@@ -28,6 +28,7 @@ import { memoize } from "underscore";
  * @property {string} text
  * @property {boolean} hidden
  * @property {(cell, row) => any} formatter
+ * @property {() => any} headerStyle
  * 
  * @typedef {object} DataTableData
  * 
@@ -136,7 +137,7 @@ class DataTable extends PureComponent {
                                 </th>
                             )}
                             {visibleColumns.map((column) => (
-                                <th key={column.dataField}>{column.text}</th>
+                                <th key={column.dataField} style={column.headerStyle?.() || {}}>{column.text}</th>
                             ))}
                         </tr>
                     </thead>
