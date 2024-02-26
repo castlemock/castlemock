@@ -15,8 +15,7 @@
  */
 
 import React, {PureComponent} from "react";
-// import ToolkitProvider from "react-bootstrap-table2-toolkit";
-// import BootstrapTable from "react-bootstrap-table-next";
+import DataTable from "../../utility/DataTable";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 
@@ -180,21 +179,13 @@ class HeaderQueryComponent extends PureComponent {
                     </div>
                 </div>
                 <div className="table-result">
-                    {/* <ToolkitProvider bootstrap4
-                                     columns={ this.headerQueryColumns}
-                                     data={this.props.headerQueries}
-                                     keyField="header"
-                                     search>
-                        {
-                            (props) => (
-                                <div>
-                                    <BootstrapTable {...props.baseProps} bootstrap4
-                                                    data={this.props.headerQueries} columns={this.headerQueryColumns}
-                                                    keyField='header' hover
-                                                    noDataIndication="No header queries"/>
-                                </div>
-                            )}
-                    </ToolkitProvider> */}
+                    <DataTable
+                        columns={this.headerQueryColumns}
+                        data={this.props.headerQueries}
+                        keyField="header"
+                        search
+                        noDataIndication="No header queries"
+                    ></DataTable>
                 </div>
             </div>
         )

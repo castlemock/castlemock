@@ -15,15 +15,12 @@
  */
 
 import React, {PureComponent} from "react";
-// import ToolkitProvider from "react-bootstrap-table2-toolkit";
-// import BootstrapTable from "react-bootstrap-table-next";
-// import PaginationFactory from "react-bootstrap-table2-paginator";
+import DataTable from "../../../../utility/DataTable";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import preventEnterEvent from "../../../../../utility/KeyboardUtility";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import DataTable from "../../../../utility/DataTable";
 
 
 class UpdateEndpointModal extends PureComponent {

@@ -1,5 +1,5 @@
 /*
- Copyright 2020 Karl Dahlgren
+ Copyright 2024 Karl Dahlgren
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -38,8 +38,12 @@ function getValue(row, dottedPath) {
 }
 
 /**
- * Simple implementation of a Bootstrap Table with search, sorting and pagination capabilities.
- * 
+ * Custom implementation of a Bootstrap Table component with search, sorting and
+ * pagination capabilities. This replaces the legacy package `react-bootstrap-table2`
+ * and uses almost the same prop names but does not implement all of its features.
+ *
+ * @see https://react-bootstrap-table.github.io/react-bootstrap-table2/
+ *
  * @typedef DTColumn
  * @property {string} dataField
  * @property {string} text
@@ -112,6 +116,11 @@ class DataTable extends PureComponent {
         };
     }
 
+    /**
+     * Handles a change in the selection state of a single row.
+     *
+     * @param {DTData} row Selected of unselected row
+     */
     onRowSelect(row) {
         const rowKey = row[this.props.keyField];
         const selected = !this.state.selectedKeys.has(rowKey);
@@ -129,6 +138,9 @@ class DataTable extends PureComponent {
         this.props.selectRow?.onSelect(row, selected);
     }
 
+    /**
+     * Handles a change in the selection state of all rows at once.
+     */
     onRowSelectAll() {
         const newAllSelected = !this.state.allSelected;
         const newSelectedKeys = newAllSelected
@@ -141,16 +153,26 @@ class DataTable extends PureComponent {
         this.props.selectRow?.onSelectAll(newAllSelected);
     }
 
-    onSearchInput(inputEvent) {
+    /**
+     * Handles change events in the search input.
+     *
+     * @param {Event} event Search input event
+     */
+    onSearchInput(event) {
         this.setState({
-            searchText: normalizeString(inputEvent.target.value),
+            searchText: normalizeString(event.target.value),
             currentPageIndex: 0,
         });
     }
 
+    /**
+     * Handles a change in the sort order of a column, if it is sortable.
+     *
+     * @param {DTColumn} column
+     */
     onColumnSort(column) {
         if (!column.sort) {
-            return false;
+            return;
         }
         const currentSort = this.state.columnSort.find(sort => sort.dataField === column.dataField);
         const newColumnSort = [{
@@ -160,6 +182,12 @@ class DataTable extends PureComponent {
         this.setState({ columnSort: newColumnSort });
     }
 
+    /**
+     * Filters a data array according to the value of the search input.
+     *
+     * @param {DTData[]} data The data array to filter
+     * @returns {DTData[]} The filtered data
+     */
     filterData(data) {
         let list = data;
         if (this.state.searchText) {
@@ -172,6 +200,12 @@ class DataTable extends PureComponent {
         return list;
     }
 
+    /**
+     * Sorts a data array according to the current column sort.
+     *
+     * @param {DTData[]} data The data array to sort
+     * @returns {DTData[]} The sorted data
+     */
     sortData(data) {
         let list = data;
         const columnSort = this.state.columnSort[0];
@@ -186,6 +220,12 @@ class DataTable extends PureComponent {
         return list;
     }
 
+    /**
+     * Slices the data array according to the current page index and sizePerPage.
+     *
+     * @param {DTData[]} data The data to paginate
+     * @returns {DTData[]} The paginated data
+     */
     paginateData(data) {
         let list = data;
         if (this.props.pagination) {
@@ -196,6 +236,11 @@ class DataTable extends PureComponent {
         return list;
     }
 
+    /**
+     * Handles a change in the number of element per page.
+     *
+     * @param {Event} event Change event
+     */
     onSizePerPageChange(event) {
         this.setState({
             sizePerPage: +event.target.value,
@@ -203,6 +248,11 @@ class DataTable extends PureComponent {
         });
     }
 
+    /**
+     * Handles a change of page.
+     *
+     * @param {number} pageIndex Index of the selected page
+     */
     onPageChange(pageIndex) {
         this.setState({
             currentPageIndex: pageIndex,
@@ -239,11 +289,11 @@ class DataTable extends PureComponent {
                                     ></FormCheck>
                                 </th>
                             )}
-                            {visibleColumns.map((column) => {
+                            {visibleColumns.map((column, columnIndex) => {
                                 const sort = this.state.columnSort.find(sort => sort.dataField === column.dataField);
                                 return (
                                     <th
-                                        key={column.dataField}
+                                        key={columnIndex}
                                         style={column.headerStyle?.() || {}}
                                         className={cn({ sortable: column.sort }, sort?.order)}
                                         tabIndex={0}
@@ -282,10 +332,10 @@ class DataTable extends PureComponent {
                                                     ></FormCheck>
                                                 </td>
                                             )}
-                                            {visibleColumns.map((column) => {
+                                            {visibleColumns.map((column, columnIndex) => {
                                                 const cell = getValue(row, column.dataField);
                                                 return (
-                                                    <td key={column.dataField}>
+                                                    <td key={columnIndex}>
                                                         {column.formatter ? column.formatter(cell, row) : cell}
                                                     </td>
                                                 );

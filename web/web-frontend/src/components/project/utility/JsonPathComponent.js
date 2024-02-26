@@ -15,8 +15,7 @@
  */
 
 import React, {PureComponent} from "react";
-// import ToolkitProvider from "react-bootstrap-table2-toolkit";
-// import BootstrapTable from "react-bootstrap-table-next";
+import DataTable from "../../utility/DataTable";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 
@@ -97,22 +96,15 @@ class JsonPathComponent extends PureComponent {
                     </div>
                 </div>
                 <div className="table-result">
-                    {/* <ToolkitProvider bootstrap4
-                                     columns={ this.jsonPathColumns}
-                                     data={this.props.jsonPathExpressions}
-                                     keyField="name"
-                                     search>
-                        {
-                            (props) => (
-                                <div>
-                                    <BootstrapTable {...props.baseProps} bootstrap4
-                                                    data={this.props.jsonPathExpressions} columns={this.jsonPathColumns}
-                                                    defaultSorted={this.defaultSort} keyField='expression' hover
-                                                    noDataIndication="No JsonPaths"
-                                                    selectRow={this.selectRow}/>
-                                </div>
-                            )}
-                    </ToolkitProvider> */}
+                    <DataTable
+                        columns={this.jsonPathColumns}
+                        data={this.props.jsonPathExpressions}
+                        keyField="expression"
+                        search
+                        defaultSort={this.defaultSort}
+                        noDataIndication="No JsonPaths"
+                        selectRow={this.selectRow}
+                    ></DataTable>
                 </div>
             </div>
         )

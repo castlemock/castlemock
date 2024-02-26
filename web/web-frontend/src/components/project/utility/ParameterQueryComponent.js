@@ -16,8 +16,7 @@
 
 import React, {PureComponent} from "react";
 import axios from "axios";
-// import ToolkitProvider from "react-bootstrap-table2-toolkit";
-// import BootstrapTable from "react-bootstrap-table-next";
+import DataTable from "../../utility/DataTable";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTrash} from "@fortawesome/free-solid-svg-icons";
 
@@ -228,21 +227,13 @@ class ParameterQueryComponent extends PureComponent {
                     </div>
                 </div>
                 <div className="table-result">
-                    {/* <ToolkitProvider bootstrap4
-                                     columns={ this.parameterQueryColumns}
-                                     data={this.props.parameterQueries}
-                                     keyField="parameter"
-                                     search>
-                        {
-                            (props) => (
-                                <div>
-                                    <BootstrapTable {...props.baseProps} bootstrap4
-                                                    data={this.props.parameterQueries} columns={this.parameterQueryColumns}
-                                                    keyField='parameter' hover
-                                                    noDataIndication="No parameter queries"/>
-                                </div>
-                            )}
-                    </ToolkitProvider> */}
+                    <DataTable
+                        columns={this.parameterQueryColumns}
+                        data={this.props.parameterQueries}
+                        keyField="parameter"
+                        search
+                        noDataIndication="No parameter queries"
+                    ></DataTable>
                 </div>
             </div>
         )
