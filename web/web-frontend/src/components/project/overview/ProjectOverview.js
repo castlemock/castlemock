@@ -53,7 +53,7 @@ class ProjectOverview extends PureComponent {
             hidden: true
         }, {
             dataField: 'type',
-            width: "20",
+            width: 20,
             maxWidth: 20,
             text: 'Type',
             sort: true,
@@ -178,7 +178,7 @@ class ProjectOverview extends PureComponent {
     }
 
     typeHeaderStyle() {
-        return { 'whiteSpace': 'nowrap', width: '150px' };
+        return { 'whiteSpace': 'nowrap', width: '20px' };
     }
 
     onRowSelect(value, mode) {

@@ -22,6 +22,10 @@
     opacity: 1;
 }
 
+.table input[type="checkbox"] {
+    margin: 0 4px;
+}
+
 .pagination .visually-hidden {
     visibility: hidden;
     font-size: 0;

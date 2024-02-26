@@ -51,6 +51,8 @@ function getValue(row, dottedPath) {
  * @property {boolean} sort
  * @property {(cell, row) => any} formatter
  * @property {() => any} headerStyle
+ * @property {number} width
+ * @property {"left" | "center" | "right"} align
  * 
  * @typedef {object} DTData
  * @typedef {"desc" | "asc" | undefined} DTOrder
@@ -335,7 +337,10 @@ class DataTable extends PureComponent {
                                             {visibleColumns.map((column, columnIndex) => {
                                                 const cell = getValue(row, column.dataField);
                                                 return (
-                                                    <td key={columnIndex}>
+                                                    <td key={columnIndex} style={{
+                                                        width: column.width,
+                                                        textAlign: column.align,
+                                                    }}>
                                                         {column.formatter ? column.formatter(cell, row) : cell}
                                                     </td>
                                                 );
