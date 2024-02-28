@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-import React, { PureComponent } from "react";
+import React, { PureComponent, createRef } from "react";
 import { FormCheck, Table, FormControl, Pagination } from "react-bootstrap";
 import { get, sortBy } from "underscore";
 import cn from "classnames";
@@ -107,6 +107,8 @@ class DataTable extends PureComponent {
             console.error("DataTable : 'keyField' prop is mandatory");
         }
 
+        this.selectAllCheckboxRef = createRef();
+
         this.state = {
             selectedKeys: new Set(),
             allSelected: false,
@@ -137,6 +139,7 @@ class DataTable extends PureComponent {
             selectedKeys: newSelectedKeys,
             allSelected: newAllSelected,
         });
+        this.selectAllCheckboxRef.current.indeterminate = newSelectedKeys.size > 0 && !newAllSelected;
         this.props.selectRow?.onSelect(row, selected);
     }
 
@@ -152,6 +155,7 @@ class DataTable extends PureComponent {
             selectedKeys: newSelectedKeys,
             allSelected: newAllSelected,
         });
+        this.selectAllCheckboxRef.current.indeterminate = newSelectedKeys.size > 0 && !newAllSelected;
         this.props.selectRow?.onSelectAll(newAllSelected);
     }
 
@@ -288,6 +292,7 @@ class DataTable extends PureComponent {
                                         inline
                                         checked={this.state.allSelected}
                                         onChange={() => this.onRowSelectAll()}
+                                        ref={this.selectAllCheckboxRef}
                                     ></FormCheck>
                                 </th>
                             )}
