@@ -20,12 +20,6 @@ import { createBrowserHistory } from 'history';
 import '../css/App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
-// import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-// import 'react-bootstrap-table-next/dist/react-bootstrap-table-next.min.js';
-// import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
-// import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.js';
-// import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
-// import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.js';
 import LoginContainer from './LoginContainer'
 import LogoutContainer from './LogoutContainer'
 import MainContainer from './MainContainer'
