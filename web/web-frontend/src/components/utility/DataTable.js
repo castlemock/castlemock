@@ -78,7 +78,16 @@ function getValue(row, dottedPath) {
  * @property {DTColumnSort[]} defaultSort
  * @property {boolean | DTPagination} pagination
  * 
- * @extends {PureComponent<DTProps>}
+ * @typedef DTState
+ * @property {Set<string>} selectedKeys
+ * @property {boolean} allSelected
+ * @property {string} searchText
+ * @property {DTColumnSort[]} columnSort
+ * @property {number} sizePerPage
+ * @property {number[]} sizePerPageList
+ * @property {number} currentPageIndex
+ *
+ * @extends {PureComponent<DTProps, DTState>}
  */
 class DataTable extends PureComponent {
 
@@ -139,7 +148,6 @@ class DataTable extends PureComponent {
             selectedKeys: newSelectedKeys,
             allSelected: newAllSelected,
         });
-        this.selectAllCheckboxRef.current.indeterminate = newSelectedKeys.size > 0 && !newAllSelected;
         this.props.selectRow?.onSelect(row, selected);
     }
 
@@ -155,7 +163,6 @@ class DataTable extends PureComponent {
             selectedKeys: newSelectedKeys,
             allSelected: newAllSelected,
         });
-        this.selectAllCheckboxRef.current.indeterminate = newSelectedKeys.size > 0 && !newAllSelected;
         this.props.selectRow?.onSelectAll(newAllSelected);
     }
 
@@ -263,6 +270,30 @@ class DataTable extends PureComponent {
         this.setState({
             currentPageIndex: pageIndex,
         });
+    }
+
+    /**
+     * React to props and state changes.
+     *
+     * @param {DTProps} prevProps Previous props
+     * @param {DTState} prevState Previous state
+     */
+    componentDidUpdate(prevProps, prevState) {
+        // If an element of data has been deleted, remove it from selectedKeys state
+        if (prevProps.data.length !== this.props.data.length) {
+            const newDataKeys = new Set(this.props.data.map(row => row[this.props.keyField]))
+            const newSelectedKeys = new Set([...this.state.selectedKeys].filter(key => newDataKeys.has(key)));
+            const newAllSelected = newSelectedKeys.size > 0 && newSelectedKeys.size === this.props.data.length;
+            this.setState({
+                selectedKeys: newSelectedKeys,
+                allSelected: newAllSelected,
+            });
+        }
+        // If selection state has changed, update indeterminate state for the "select all" checkbox
+        if (prevState.selectedKeys.size !== this.state.selectedKeys.size && this.selectAllCheckboxRef.current) {
+            const indeterminate = this.state.selectedKeys.size > 0 && !this.state.allSelected
+            this.selectAllCheckboxRef.current.indeterminate = indeterminate;
+        }
     }
 
     render() {
