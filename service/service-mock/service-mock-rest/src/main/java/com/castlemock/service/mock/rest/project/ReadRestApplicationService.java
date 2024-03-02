@@ -46,11 +46,11 @@ public class ReadRestApplicationService extends AbstractRestProjectService imple
     @Override
     public ServiceResult<ReadRestApplicationOutput> process(final ServiceTask<ReadRestApplicationInput> serviceTask) {
         final ReadRestApplicationInput input = serviceTask.getInput();
-        final Optional<RestApplication> application = this.applicationRepository.findOne(input.getRestApplicationId())
+        final Optional<RestApplication> application = this.applicationRepository.findOne(input.getApplicationId())
                 .map(this::prepareApplication);
 
         return createServiceResult(ReadRestApplicationOutput.builder()
-                .restApplication(application.orElse(null))
+                .application(application.orElse(null))
                 .build());
     }
 

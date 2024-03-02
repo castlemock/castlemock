@@ -69,6 +69,32 @@ public final class CreateSoapPortsInput implements Input {
         return Optional.ofNullable(includeImports);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CreateSoapPortsInput that = (CreateSoapPortsInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(generateResponse, that.generateResponse) &&
+                Objects.equals(includeImports, that.includeImports) && Objects.equals(files, that.files) &&
+                Objects.equals(location, that.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, generateResponse, includeImports, files, location);
+    }
+
+    @Override
+    public String toString() {
+        return "CreateSoapPortsInput{" +
+                "projectId='" + projectId + '\'' +
+                ", generateResponse=" + generateResponse +
+                ", includeImports=" + includeImports +
+                ", files=" + files +
+                ", location='" + location + '\'' +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }
@@ -77,7 +103,7 @@ public final class CreateSoapPortsInput implements Input {
 
         private String projectId;
         private boolean includeImports;
-        private boolean generateResponse;
+        private Boolean generateResponse;
         private List<File> files;
         private String location;
 
@@ -95,7 +121,7 @@ public final class CreateSoapPortsInput implements Input {
             return this;
         }
 
-        public Builder generateResponse(final boolean generateResponse){
+        public Builder generateResponse(final Boolean generateResponse){
             this.generateResponse = generateResponse;
             return this;
         }

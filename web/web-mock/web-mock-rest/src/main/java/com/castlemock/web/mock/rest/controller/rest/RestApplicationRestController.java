@@ -69,10 +69,10 @@ public class RestApplicationRestController extends AbstractRestController {
             @Parameter(name = "applicationId", description = "The id of the application")
             @PathVariable(value = "applicationId") final String applicationId) {
         final ReadRestApplicationOutput output = super.serviceProcessor.process(ReadRestApplicationInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
+                .projectId(projectId)
+                .applicationId(applicationId)
                 .build());
-        return output.getRestApplication()
+        return output.getApplicationId()
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -88,8 +88,8 @@ public class RestApplicationRestController extends AbstractRestController {
             @Parameter(name = "applicationId", description = "The id of the application")
             @PathVariable(value = "applicationId") final String applicationId) {
         final DeleteRestApplicationOutput output = super.serviceProcessor.process(DeleteRestApplicationInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
+                .projectId(projectId)
+                .applicationId(applicationId)
                 .build());
         return output.getApplication()
                 .map(ResponseEntity::ok)
@@ -108,11 +108,11 @@ public class RestApplicationRestController extends AbstractRestController {
             @PathVariable(value = "applicationId") final String applicationId,
             @RequestBody final UpdateRestApplicationRequest request) {
         final UpdateRestApplicationOutput output = super.serviceProcessor.process(UpdateRestApplicationInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
+                .projectId(projectId)
+                .applicationId(applicationId)
                 .name(request.getName())
                 .build());
-        return output.getUpdatedRestApplication()
+        return output.getApplication()
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -130,7 +130,7 @@ public class RestApplicationRestController extends AbstractRestController {
                 .projectId(projectId)
                 .name(request.getName())
                 .build());
-        return ResponseEntity.ok(output.getSavedRestApplication());
+        return ResponseEntity.ok(output.getApplication());
     }
 
     @Operation(summary =  "Update resource statuses")

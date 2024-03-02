@@ -21,9 +21,9 @@ import com.castlemock.model.core.user.User;
 import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.service.core.user.input.ReadUserByUsernameInput;
 import com.castlemock.service.core.user.output.ReadUserByUsernameOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class UserDetailSecurityServiceTest {
     @InjectMocks
     private UserDetailSecurityService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -59,12 +59,12 @@ public class UserDetailSecurityServiceTest {
         Mockito.when(serviceProcessor.process(Mockito.any(ReadUserByUsernameInput.class))).thenReturn(output);
 
         final UserDetails userDetails = service.loadUserByUsername("username");
-        Assert.assertEquals(user.getUsername(), userDetails.getUsername());
-        Assert.assertEquals(user.getPassword(), userDetails.getPassword());
+        Assertions.assertEquals(user.getUsername(), userDetails.getUsername());
+        Assertions.assertEquals(user.getPassword(), userDetails.getPassword());
         final Collection<? extends GrantedAuthority> grantedAuthorityList = userDetails.getAuthorities();
-        Assert.assertEquals(1, grantedAuthorityList.size());
+        Assertions.assertEquals(1, grantedAuthorityList.size());
         for(GrantedAuthority grantedAuthority : grantedAuthorityList){
-            Assert.assertEquals(user.getRole().name(), grantedAuthority.getAuthority());
+            Assertions.assertEquals(user.getRole().name(), grantedAuthority.getAuthority());
         }
     }
 }

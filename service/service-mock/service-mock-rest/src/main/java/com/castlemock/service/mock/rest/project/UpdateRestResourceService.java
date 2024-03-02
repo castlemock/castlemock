@@ -43,14 +43,14 @@ public class UpdateRestResourceService extends AbstractRestProjectService implem
     @Override
     public ServiceResult<UpdateRestResourceOutput> process(final ServiceTask<UpdateRestResourceInput> serviceTask) {
         final UpdateRestResourceInput input = serviceTask.getInput();
-        final Optional<RestResource> updatedResource = this.resourceRepository.findOne(input.getRestResourceId())
+        final Optional<RestResource> updatedResource = this.resourceRepository.findOne(input.getResourceId())
                 .map(resource -> resource.toBuilder()
                         .name(input.getName())
                         .uri(input.getUri())
                         .build())
-                .map(resource -> this.resourceRepository.update(input.getRestResourceId(), resource));
+                .map(resource -> this.resourceRepository.update(input.getResourceId(), resource));
         return createServiceResult(UpdateRestResourceOutput.builder()
-                .updatedRestResource(updatedResource.orElse(null))
+                .resource(updatedResource.orElse(null))
                 .build());
     }
 }

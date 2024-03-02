@@ -40,9 +40,32 @@ public final class ImportRestProjectInput implements Input {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ImportRestProjectInput that = (ImportRestProjectInput) o;
+        return Objects.equals(projectRaw, that.projectRaw);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectRaw);
+    }
+
+    @Override
+    public String toString() {
+        return "ImportRestProjectInput{" +
+                "projectRaw='" + projectRaw + '\'' +
+                '}';
+    }
+
     public static final class Builder {
 
         private String projectRaw;
+
+        private Builder() {
+        }
 
         public Builder projectRaw(final String projectRaw){
             this.projectRaw = projectRaw;

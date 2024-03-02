@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -28,16 +29,35 @@ import java.util.Optional;
  */
 public final class ReadRestMethodOutput implements Output{
 
-    private final RestMethod restMethod;
+    private final RestMethod method;
 
-    private ReadRestMethodOutput(final RestMethod restMethod) {
-        this.restMethod = restMethod;
+    private ReadRestMethodOutput(final RestMethod method) {
+        this.method = method;
     }
 
-    public Optional<RestMethod> getRestMethod() {
-        return Optional.ofNullable(restMethod);
+    public Optional<RestMethod> getMethod() {
+        return Optional.ofNullable(method);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ReadRestMethodOutput that = (ReadRestMethodOutput) o;
+        return Objects.equals(method, that.method);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(method);
+    }
+
+    @Override
+    public String toString() {
+        return "ReadRestMethodOutput{" +
+                "method=" + method +
+                '}';
+    }
 
     public static Builder builder(){
         return new Builder();
@@ -45,15 +65,18 @@ public final class ReadRestMethodOutput implements Output{
 
     public static final class Builder {
 
-        private RestMethod restMethod;
+        private RestMethod method;
 
-        public Builder restMethod(final RestMethod restMethod){
-            this.restMethod = restMethod;
+        private Builder() {
+        }
+
+        public Builder method(final RestMethod method){
+            this.method = method;
             return this;
         }
 
         public ReadRestMethodOutput build(){
-            return new ReadRestMethodOutput(this.restMethod);
+            return new ReadRestMethodOutput(this.method);
         }
 
     }

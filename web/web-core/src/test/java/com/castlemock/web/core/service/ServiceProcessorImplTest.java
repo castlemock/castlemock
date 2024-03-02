@@ -23,9 +23,9 @@ import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.service.core.ServiceProcessorImpl;
 import com.castlemock.service.core.ServiceRegistry;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -44,7 +44,7 @@ public class ServiceProcessorImplTest {
     @InjectMocks
     private ServiceProcessorImpl serviceProcessor;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -61,7 +61,7 @@ public class ServiceProcessorImplTest {
         Mockito.when(serviceRegistry.getService(Mockito.any(Input.class))).thenReturn(service);
         Mockito.when(service.process(Mockito.any(ServiceTask.class))).thenReturn(serviceResult);
         Output serviceOutput = serviceProcessor.process(input);
-        Assert.assertEquals(output, serviceOutput);
+        Assertions.assertEquals(output, serviceOutput);
     }
 
 }

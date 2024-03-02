@@ -60,7 +60,7 @@ public class CreateRestMockResponseService extends AbstractRestProjectService im
                 .build();
         final RestMockResponse createdMockResponse = mockResponseRepository.save(mockResponse);
         return createServiceResult(CreateRestMockResponseOutput.builder()
-                .restMockResponse(createdMockResponse)
+                .mockResponse(createdMockResponse)
                 .build());
     }
 }

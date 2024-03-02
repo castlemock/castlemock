@@ -44,7 +44,7 @@ public class UpdateRestMockResponseService extends AbstractRestProjectService im
     @Override
     public ServiceResult<UpdateRestMockResponseOutput> process(final ServiceTask<UpdateRestMockResponseInput> serviceTask) {
         final UpdateRestMockResponseInput input = serviceTask.getInput();
-        final Optional<RestMockResponse> updated = this.mockResponseRepository.findOne(input.getRestMockResponseId())
+        final Optional<RestMockResponse> updated = this.mockResponseRepository.findOne(input.getMockResponseId())
                 .map(mockResponse -> mockResponse.toBuilder()
                         .name(input.getName())
                         .body(input.getBody().orElse(null))
@@ -61,7 +61,7 @@ public class UpdateRestMockResponseService extends AbstractRestProjectService im
                 .map(mockResponse -> this.mockResponseRepository.update(mockResponse.getId(), mockResponse));
 
         return createServiceResult(UpdateRestMockResponseOutput.builder()
-                .updatedRestMockResponse(updated.orElse(null))
+                .mockResponse(updated.orElse(null))
                 .build());
     }
 }

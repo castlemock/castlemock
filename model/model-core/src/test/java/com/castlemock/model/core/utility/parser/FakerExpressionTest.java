@@ -19,17 +19,17 @@ package com.castlemock.model.core.utility.parser;
 import com.castlemock.model.core.utility.parser.expression.ExpressionInput;
 import com.castlemock.model.core.utility.parser.expression.FakerExpression;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FakerExpressionTest {
 

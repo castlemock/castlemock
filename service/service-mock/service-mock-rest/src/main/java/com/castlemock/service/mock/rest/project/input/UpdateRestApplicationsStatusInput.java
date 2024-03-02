@@ -49,6 +49,29 @@ public final class UpdateRestApplicationsStatusInput implements Input {
         return methodStatus;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateRestApplicationsStatusInput that = (UpdateRestApplicationsStatusInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(applicationId, that.applicationId) &&
+                methodStatus == that.methodStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, applicationId, methodStatus);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateRestApplicationsStatusInput{" +
+                "projectId='" + projectId + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", methodStatus=" + methodStatus +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }
@@ -58,6 +81,9 @@ public final class UpdateRestApplicationsStatusInput implements Input {
         private String projectId;
         private String applicationId;
         private RestMethodStatus methodStatus;
+
+        private Builder() {
+        }
 
         public Builder projectId(final String projectId){
             this.projectId = projectId;

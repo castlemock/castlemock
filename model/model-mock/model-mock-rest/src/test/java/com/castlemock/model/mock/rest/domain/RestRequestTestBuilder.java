@@ -18,7 +18,7 @@ package com.castlemock.model.mock.rest.domain;
 
 import com.castlemock.model.core.http.HttpMethod;
 
-import java.util.List;
+import java.util.Set;
 
 public final class RestRequestTestBuilder {
 
@@ -32,8 +32,8 @@ public final class RestRequestTestBuilder {
                 .body("Rest request body")
                 .contentType("application/json")
                 .httpMethod(HttpMethod.POST)
-                .httpHeaders(List.of())
-                .httpParameters(List.of());
+                .httpHeaders(Set.of())
+                .httpParameters(Set.of());
     }
 
     public static RestRequest build() {

@@ -23,9 +23,9 @@ import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
 import com.castlemock.repository.soap.project.SoapProjectRepository;
 import com.castlemock.service.mock.soap.project.input.CreateSoapProjectInput;
 import com.castlemock.service.mock.soap.project.output.CreateSoapProjectOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class CreateSoapProjectServiceTest {
     @InjectMocks
     private CreateSoapProjectService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -65,8 +65,8 @@ public class CreateSoapProjectServiceTest {
         final CreateSoapProjectOutput output = serviceResult.getOutput();
         final SoapProject returnedSoapProject = output.getProject();
 
-        Assert.assertEquals(soapProject.getName(), returnedSoapProject.getName());
-        Assert.assertEquals(soapProject.getDescription(), returnedSoapProject.getDescription());
+        Assertions.assertEquals(soapProject.getName(), returnedSoapProject.getName());
+        Assertions.assertEquals(soapProject.getDescription(), returnedSoapProject.getDescription());
 
         Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(SoapProject.class));
     }

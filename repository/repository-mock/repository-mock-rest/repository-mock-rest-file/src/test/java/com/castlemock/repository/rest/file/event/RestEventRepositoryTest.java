@@ -21,9 +21,9 @@ import com.castlemock.model.mock.rest.domain.RestEvent;
 import com.castlemock.model.mock.rest.domain.RestEventTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.rest.file.event.model.RestEventFile;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -47,7 +47,7 @@ public class RestEventRepositoryTest {
     private static final String DIRECTORY = "/directory";
     private static final String EXTENSION = ".extension";
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(repository, "restEventFileDirectory", DIRECTORY);
@@ -68,24 +68,24 @@ public class RestEventRepositoryTest {
     public void testFindOne(){
         final RestEvent restEvent = save();
         final RestEvent returnedRestEvent = repository.findOne(restEvent.getId()).orElse(null);
-        Assert.assertNotNull(returnedRestEvent);
-        Assert.assertEquals(returnedRestEvent.getResourceId(), restEvent.getResourceId());
-        Assert.assertEquals(returnedRestEvent.getApplicationId(), restEvent.getApplicationId());
-        Assert.assertEquals(returnedRestEvent.getMethodId(), restEvent.getMethodId());
-        Assert.assertEquals(returnedRestEvent.getProjectId(), restEvent.getProjectId());
-        Assert.assertEquals(returnedRestEvent.getResourceName(), restEvent.getResourceName());
+        Assertions.assertNotNull(returnedRestEvent);
+        Assertions.assertEquals(returnedRestEvent.getResourceId(), restEvent.getResourceId());
+        Assertions.assertEquals(returnedRestEvent.getApplicationId(), restEvent.getApplicationId());
+        Assertions.assertEquals(returnedRestEvent.getMethodId(), restEvent.getMethodId());
+        Assertions.assertEquals(returnedRestEvent.getProjectId(), restEvent.getProjectId());
+        Assertions.assertEquals(returnedRestEvent.getResourceName(), restEvent.getResourceName());
     }
 
     @Test
     public void testFindAll(){
         final RestEvent restEvent = save();
         final List<RestEvent> restEvents = repository.findAll();
-        Assert.assertEquals(restEvents.size(), 1);
-        Assert.assertEquals(restEvents.getFirst().getResourceId(), restEvent.getResourceId());
-        Assert.assertEquals(restEvents.getFirst().getApplicationId(), restEvent.getApplicationId());
-        Assert.assertEquals(restEvents.getFirst().getMethodId(), restEvent.getMethodId());
-        Assert.assertEquals(restEvents.getFirst().getProjectId(), restEvent.getProjectId());
-        Assert.assertEquals(restEvents.getFirst().getResourceName(), restEvent.getResourceName());
+        Assertions.assertEquals(restEvents.size(), 1);
+        Assertions.assertEquals(restEvents.getFirst().getResourceId(), restEvent.getResourceId());
+        Assertions.assertEquals(restEvents.getFirst().getApplicationId(), restEvent.getApplicationId());
+        Assertions.assertEquals(restEvents.getFirst().getMethodId(), restEvent.getMethodId());
+        Assertions.assertEquals(restEvents.getFirst().getProjectId(), restEvent.getProjectId());
+        Assertions.assertEquals(restEvents.getFirst().getResourceName(), restEvent.getResourceName());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class RestEventRepositoryTest {
     public void testCount(){
         final RestEvent restEvent = save();
         final Integer count = repository.count();
-        Assert.assertEquals(Integer.valueOf(1), count);
+        Assertions.assertEquals(Integer.valueOf(1), count);
     }
 
     private RestEvent save(){

@@ -27,14 +27,14 @@ import java.util.Optional;
  */
 public final class ReadSoapEventOutput implements Output {
 
-    private final SoapEvent soapEvent;
+    private final SoapEvent event;
 
-    private ReadSoapEventOutput(final SoapEvent soapEvent) {
-        this.soapEvent = soapEvent;
+    private ReadSoapEventOutput(final Builder builder) {
+        this.event = builder.event;
     }
 
-    public Optional<SoapEvent> getSoapEvent() {
-        return Optional.ofNullable(soapEvent);
+    public Optional<SoapEvent> getEvent() {
+        return Optional.ofNullable(event);
     }
 
     public static Builder builder(){
@@ -43,15 +43,15 @@ public final class ReadSoapEventOutput implements Output {
 
     public static final class Builder {
 
-        private SoapEvent soapEvent;
+        private SoapEvent event;
 
-        public Builder soapEvent(final SoapEvent soapEvent){
-            this.soapEvent = soapEvent;
+        public Builder event(final SoapEvent event){
+            this.event = event;
             return this;
         }
 
         public ReadSoapEventOutput build(){
-            return new ReadSoapEventOutput(this.soapEvent);
+            return new ReadSoapEventOutput(this);
         }
 
     }

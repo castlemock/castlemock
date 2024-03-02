@@ -43,7 +43,7 @@ public class DeleteRestMockResponseService extends AbstractRestProjectService im
     @Override
     public ServiceResult<DeleteRestMockResponseOutput> process(final ServiceTask<DeleteRestMockResponseInput> serviceTask) {
         final DeleteRestMockResponseInput input = serviceTask.getInput();
-        final Optional<RestMockResponse> mockResponse = this.deleteMockResponse(input.getRestMockResponseId());
+        final Optional<RestMockResponse> mockResponse = this.deleteMockResponse(input.getMockResponseId());
         return createServiceResult(DeleteRestMockResponseOutput.builder()
                 .mockResponse(mockResponse.orElse(null))
                 .build());

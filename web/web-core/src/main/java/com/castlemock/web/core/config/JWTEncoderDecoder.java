@@ -61,7 +61,7 @@ public class JWTEncoderDecoder {
         }
     }
 
-    public String createToken(Map<String, String> claims) {
+    public String createToken(final Map<String, String> claims) {
         final Date expiresAt = getExpirationDate();
         final JWTCreator.Builder builder = JWT.create()
                 .withIssuer(ISSUER)
@@ -77,7 +77,7 @@ public class JWTEncoderDecoder {
         return expiresAt;
     }
 
-    public Map<String, Claim> verify(String token) throws IllegalArgumentException {
+    public Map<String, Claim> verify(final String token) throws IllegalArgumentException {
         try {
             final DecodedJWT jwt = verifier.verify(token);
             return jwt.getClaims();

@@ -27,15 +27,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 class ExternalInputBuilderTest {
 	private static Map<String, Set<String>> pathParameters;
-	private static List<HttpParameter> queryStringParameters;
+	private static Set<HttpParameter> queryStringParameters;
 	
 	@BeforeAll
 	static void initAll() {
@@ -44,7 +43,7 @@ class ExternalInputBuilderTest {
     	pathParameters.put("param2", Set.of("Y"));
     	pathParameters.put("param3", Set.of("Z"));
 
-    	queryStringParameters = new ArrayList<>();
+    	queryStringParameters = new HashSet<>();
     	queryStringParameters.add(HttpParameter.builder()
 				.name("queryParam1")
 				.value("Apple")

@@ -35,6 +35,8 @@ public final class UpdateRestApplicationsStatusOutput implements Output {
 
     public static final class Builder {
 
+        private Builder() {
+        }
         public UpdateRestApplicationsStatusOutput build(){
             return new UpdateRestApplicationsStatusOutput();
         }

@@ -30,51 +30,51 @@ import java.util.Set;
  */
 public final class IdentifyRestMethodOutput implements Output{
 
-    private final String restProjectId;
+    private final String projectId;
 
-    private final String restApplicationId;
+    private final String applicationId;
 
-    private final String restResourceId;
+    private final String resourceId;
 
-    private final String restMethodId;
+    private final String methodId;
 
-    private final RestMethod restMethod;
+    private final RestMethod method;
 
     private final Map<String, Set<String>> pathParameters;
 
-    private IdentifyRestMethodOutput(final String restProjectId, final String restApplicationId,
-                                    final String restResourceId, final String restMethodId,
-                                    final RestMethod restMethod, final Map<String, Set<String>> pathParameters) {
-        this.restProjectId = Objects.requireNonNull(restProjectId, "restProjectId");
-        this.restApplicationId = Objects.requireNonNull(restApplicationId, "restApplicationId");
-        this.restResourceId = Objects.requireNonNull(restResourceId, "restResourceId");
-        this.restMethodId = Objects.requireNonNull(restMethodId, "restMethodId");
-        this.restMethod = Objects.requireNonNull(restMethod, "restMethod");
-        this.pathParameters = Optional.ofNullable(pathParameters).orElseGet(Map::of);
+    private IdentifyRestMethodOutput(final Builder builder) {
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
+        this.resourceId = Objects.requireNonNull(builder.resourceId, "resourceId");
+        this.methodId = Objects.requireNonNull(builder.methodId, "methodId");
+        this.method = Objects.requireNonNull(builder.method, "method");
+        this.pathParameters = Optional.ofNullable(builder.pathParameters).orElseGet(Map::of);
     }
 
-    public RestMethod getRestMethod() {
-        return restMethod;
+    public RestMethod getMethod() {
+        return method;
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getRestApplicationId() {
-        return restApplicationId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public String getRestResourceId() {
-        return restResourceId;
+    public String getResourceId() {
+        return resourceId;
     }
 
-    public String getRestMethodId() {
-        return restMethodId;
+    public String getMethodId() {
+        return methodId;
     }
 
     public Map<String, Set<String>> getPathParameters() {
-        return pathParameters;
+        return Optional.ofNullable(pathParameters)
+                .map(Map::copyOf)
+                .orElseGet(Map::of);
     }
 
 
@@ -84,35 +84,38 @@ public final class IdentifyRestMethodOutput implements Output{
 
     public static final class Builder {
 
-        private String restProjectId;
-        private String restApplicationId;
-        private String restResourceId;
-        private String restMethodId;
-        private RestMethod restMethod;
+        private String projectId;
+        private String applicationId;
+        private String resourceId;
+        private String methodId;
+        private RestMethod method;
         private Map<String, Set<String>> pathParameters;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        private Builder() {
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 
-        public Builder restApplicationId(final String restApplicationId){
-            this.restApplicationId = restApplicationId;
+        public Builder applicationId(final String applicationId){
+            this.applicationId = applicationId;
             return this;
         }
 
-        public Builder restResourceId(final String restResourceId){
-            this.restResourceId = restResourceId;
+        public Builder resourceId(final String resourceId){
+            this.resourceId = resourceId;
             return this;
         }
 
-        public Builder restMethodId(final String restMethodId){
-            this.restMethodId = restMethodId;
+        public Builder methodId(final String methodId){
+            this.methodId = methodId;
             return this;
         }
 
-        public Builder restMethod(final RestMethod restMethod){
-            this.restMethod = restMethod;
+        public Builder method(final RestMethod method){
+            this.method = method;
             return this;
         }
 
@@ -122,8 +125,7 @@ public final class IdentifyRestMethodOutput implements Output{
         }
 
         public IdentifyRestMethodOutput build(){
-            return new IdentifyRestMethodOutput(this.restProjectId, this.restApplicationId,
-                    this.restResourceId, this.restMethodId, this.restMethod, this.pathParameters);
+            return new IdentifyRestMethodOutput(this);
         }
 
     }

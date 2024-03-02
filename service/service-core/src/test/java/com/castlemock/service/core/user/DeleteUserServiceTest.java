@@ -23,8 +23,8 @@ import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.repository.token.SessionTokenRepository;
 import com.castlemock.repository.user.UserRepository;
 import com.castlemock.service.core.user.input.DeleteUserInput;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -33,6 +33,8 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Karl Dahlgren
@@ -49,7 +51,7 @@ public class DeleteUserServiceTest {
     @InjectMocks
     private DeleteUserService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -70,7 +72,7 @@ public class DeleteUserServiceTest {
         Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyString());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testProcessDeleteLastAdmin(){
         final User user = UserTestBuilder
                 .builder()
@@ -87,8 +89,8 @@ public class DeleteUserServiceTest {
                 .userId("")
                 .build();
         final ServiceTask<DeleteUserInput> serviceTask = ServiceTask.of(input, "user");
-        service.process(serviceTask);
-        Mockito.verify(repository, Mockito.times(1)).delete(Mockito.anyString());
+        assertThrows(IllegalArgumentException.class, () -> service.process(serviceTask));
+        Mockito.verify(repository, Mockito.never()).delete(Mockito.anyString());
     }
 
 

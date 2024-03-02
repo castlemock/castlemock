@@ -58,8 +58,8 @@ public class CreateRestMockResponseRequest {
     private CreateRestMockResponseRequest(final Builder builder){
         this.name = Objects.requireNonNull(builder.name, "name");
         this.body = builder.body;
-        this.httpStatusCode = Objects.requireNonNull(builder.httpStatusCode, "httpStatusCode");
-        this.status = Objects.requireNonNull(builder.status, "status");
+        this.httpStatusCode = builder.httpStatusCode;
+        this.status = builder.status;
         this.usingExpressions = builder.usingExpressions;
         this.httpHeaders = Optional.ofNullable(builder.httpHeaders).orElseGet(List::of);
         this.contentEncodings = Optional.ofNullable(builder.contentEncodings).orElseGet(List::of);
@@ -76,12 +76,12 @@ public class CreateRestMockResponseRequest {
         return Optional.ofNullable(body);
     }
 
-    public Integer getHttpStatusCode() {
-        return httpStatusCode;
+    public Optional<Integer> getHttpStatusCode() {
+        return Optional.ofNullable(httpStatusCode);
     }
 
-    public RestMockResponseStatus getStatus() {
-        return status;
+    public Optional<RestMockResponseStatus> getStatus() {
+        return Optional.ofNullable(status);
     }
 
     public Optional<Boolean> getUsingExpressions() {

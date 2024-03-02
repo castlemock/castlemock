@@ -23,9 +23,9 @@ import com.castlemock.model.mock.rest.domain.RestResourceTestBuilder;
 import com.castlemock.repository.rest.project.RestResourceRepository;
 import com.castlemock.service.mock.rest.project.input.CreateRestResourceInput;
 import com.castlemock.service.mock.rest.project.output.CreateRestResourceOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class CreateRestResourceServiceTest {
     @InjectMocks
     private CreateRestResourceService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -58,16 +58,16 @@ public class CreateRestResourceServiceTest {
         Mockito.when(resourceRepository.save(any(RestResource.class))).thenReturn(resource);
 
         final CreateRestResourceInput input = CreateRestResourceInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
+                .projectId(projectId)
+                .applicationId(applicationId)
                 .name(resource.getName())
                 .uri(resource.getUri())
                 .build();
         final ServiceTask<CreateRestResourceInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateRestResourceOutput> serviceResult = service.process(serviceTask);
 
-        Assert.assertNotNull(serviceResult.getOutput());
-        Assert.assertEquals(resource, serviceResult.getOutput().getCreatedRestResource());
+        Assertions.assertNotNull(serviceResult.getOutput());
+        Assertions.assertEquals(resource, serviceResult.getOutput().getResource());
         Mockito.verify(resourceRepository, Mockito.times(1)).save(any());
     }
 

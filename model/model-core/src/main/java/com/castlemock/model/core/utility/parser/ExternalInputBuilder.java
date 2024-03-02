@@ -26,7 +26,6 @@ import com.castlemock.model.core.utility.parser.expression.argument.ExpressionAr
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,7 +33,7 @@ public class ExternalInputBuilder {
 	private String requestBody;
 	private String requestUrl;
 	private Map<String, Set<String>> pathParameters;
-	private List<HttpParameter> queryStringParameters;
+	private Set<HttpParameter> queryStringParameters;
 	
 	public ExternalInputBuilder requestBody(final String requestBody) {
 		this.requestBody = requestBody;
@@ -51,7 +50,7 @@ public class ExternalInputBuilder {
 		return this;
 	}
 	
-	public ExternalInputBuilder queryStringParameters(final List<HttpParameter> queryStringParameters) {
+	public ExternalInputBuilder queryStringParameters(final Set<HttpParameter> queryStringParameters) {
 		this.queryStringParameters = queryStringParameters;
 		return this;
 	}

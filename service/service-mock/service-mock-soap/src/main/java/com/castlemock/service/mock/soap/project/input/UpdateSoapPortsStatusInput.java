@@ -49,6 +49,29 @@ public final class UpdateSoapPortsStatusInput implements Input {
         return operationStatus;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateSoapPortsStatusInput that = (UpdateSoapPortsStatusInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(portId, that.portId) &&
+                operationStatus == that.operationStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, portId, operationStatus);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateSoapPortsStatusInput{" +
+                "projectId='" + projectId + '\'' +
+                ", portId='" + portId + '\'' +
+                ", operationStatus=" + operationStatus +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

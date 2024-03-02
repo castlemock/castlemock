@@ -53,10 +53,10 @@ public class AuthenticationResponse {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AuthenticationResponse that = (AuthenticationResponse) o;
+        final AuthenticationResponse that = (AuthenticationResponse) o;
         return Objects.equals(token, that.token);
     }
 
@@ -86,17 +86,17 @@ public class AuthenticationResponse {
         }
 
 
-        public Builder token(String token) {
+        public Builder token(final String token) {
             this.token = token;
             return this;
         }
 
-        public Builder username(String username) {
+        public Builder username(final String username) {
             this.username = username;
             return this;
         }
 
-        public Builder role(Role role) {
+        public Builder role(final Role role) {
             this.role = role;
             return this;
         }

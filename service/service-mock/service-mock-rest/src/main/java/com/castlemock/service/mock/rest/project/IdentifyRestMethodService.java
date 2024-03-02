@@ -55,9 +55,9 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
     public ServiceResult<IdentifyRestMethodOutput> process(final ServiceTask<IdentifyRestMethodInput> serviceTask) {
         final IdentifyRestMethodInput input = serviceTask.getInput();
         final Map<String, RestResource> resources =
-                this.resourceRepository.findWithApplicationId(input.getRestApplicationId())
+                this.resourceRepository.findWithApplicationId(input.getApplicationId())
                         .stream()
-                        .filter(resource -> UrlUtility.isPatternMatch(resource.getUri(), input.getRestResourceUri()))
+                        .filter(resource -> UrlUtility.isPatternMatch(resource.getUri(), input.getResourceUri()))
                         .collect(toMap(RestResource::getId, Function.identity()));
 
         final RestMethod method = resources
@@ -69,22 +69,22 @@ public class IdentifyRestMethodService extends AbstractRestProjectService implem
                 .filter(m -> input.getHttpMethod().equals(m.getHttpMethod()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Unable to identify REST method: " +
-                        input.getRestResourceUri() + " (" + input.getHttpMethod() + ")"));
+                        input.getResourceUri() + " (" + input.getHttpMethod() + ")"));
 
         final RestResource resource = Optional.ofNullable(resources.get(method.getResourceId()))
                 .orElseThrow(() -> new IllegalArgumentException("Unable to get REST resource: " + method.getResourceId()));
 
         final Map<String, Set<String>> pathParameters = new HashMap<>();
-        pathParameters.putAll(UrlUtility.getPathParameters(resource.getUri(), input.getRestResourceUri()));
+        pathParameters.putAll(UrlUtility.getPathParameters(resource.getUri(), input.getResourceUri()));
         pathParameters.putAll(UrlUtility.getQueryStringParameters(resource.getUri(), input.getHttpParameters()));
 
         final List<RestMockResponse> mockResponses = this.mockResponseRepository.findWithMethodId(method.getId());
         return createServiceResult(IdentifyRestMethodOutput.builder()
-                        .restProjectId(input.getRestProjectId())
-                        .restApplicationId(input.getRestApplicationId())
-                        .restResourceId(resource.getId())
-                        .restMethodId(method.getId())
-                        .restMethod(method.toBuilder()
+                        .projectId(input.getProjectId())
+                        .applicationId(input.getApplicationId())
+                        .resourceId(resource.getId())
+                        .methodId(method.getId())
+                        .method(method.toBuilder()
                                 .mockResponses(mockResponses)
                                 .build())
                         .pathParameters(pathParameters)

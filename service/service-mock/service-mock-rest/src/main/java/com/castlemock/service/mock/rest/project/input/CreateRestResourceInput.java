@@ -26,24 +26,24 @@ import java.util.Objects;
  */
 public final class CreateRestResourceInput implements Input {
 
-    private final String restProjectId;
-    private final String restApplicationId;
+    private final String projectId;
+    private final String applicationId;
     private final String name;
     private final String uri;
 
     private CreateRestResourceInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId, "restApplicationId");
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
         this.name = Objects.requireNonNull(builder.name, "name");
         this.uri = Objects.requireNonNull(builder.uri, "uri");
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getRestApplicationId() {
-        return restApplicationId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
     public String getName() {
@@ -58,20 +58,46 @@ public final class CreateRestResourceInput implements Input {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CreateRestResourceInput that = (CreateRestResourceInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(applicationId, that.applicationId) && Objects.equals(name, that.name) && Objects.equals(uri, that.uri);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, applicationId, name, uri);
+    }
+
+    @Override
+    public String toString() {
+        return "CreateRestResourceInput{" +
+                "projectId='" + projectId + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", name='" + name + '\'' +
+                ", uri='" + uri + '\'' +
+                '}';
+    }
+
     public static final class Builder {
 
-        private String restProjectId;
-        private String restApplicationId;
+        private String projectId;
+        private String applicationId;
         private String name;
         private String uri;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        private Builder() {
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 
-        public Builder restApplicationId(final String restApplicationId){
-            this.restApplicationId = restApplicationId;
+        public Builder applicationId(final String applicationId){
+            this.applicationId = applicationId;
             return this;
         }
 

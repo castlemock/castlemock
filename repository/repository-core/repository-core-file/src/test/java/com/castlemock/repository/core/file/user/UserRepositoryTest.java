@@ -21,9 +21,9 @@ import com.castlemock.model.core.user.User;
 import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.core.file.user.model.UserFile;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -48,7 +48,7 @@ public class UserRepositoryTest {
     private static final String DIRECTORY = "/directory";
     private static final String EXTENSION = ".extension";
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(repository, "userFileDirectory", DIRECTORY);
@@ -70,21 +70,21 @@ public class UserRepositoryTest {
         final User user = save();
         final User returnedUser = repository.findOne(user.getId())
                         .orElse(null);
-        Assert.assertNotNull(returnedUser);
-        Assert.assertEquals(user.getId(), returnedUser.getId());
-        Assert.assertEquals(user.getEmail(), returnedUser.getEmail());
-        Assert.assertEquals(user.getPassword(), returnedUser.getPassword());
-        Assert.assertEquals(user.getRole(), returnedUser.getRole());
-        Assert.assertEquals(user.getStatus(), returnedUser.getStatus());
-        Assert.assertEquals(user.getUsername(), returnedUser.getUsername());
+        Assertions.assertNotNull(returnedUser);
+        Assertions.assertEquals(user.getId(), returnedUser.getId());
+        Assertions.assertEquals(user.getEmail(), returnedUser.getEmail());
+        Assertions.assertEquals(user.getPassword(), returnedUser.getPassword());
+        Assertions.assertEquals(user.getRole(), returnedUser.getRole());
+        Assertions.assertEquals(user.getStatus(), returnedUser.getStatus());
+        Assertions.assertEquals(user.getUsername(), returnedUser.getUsername());
     }
 
     @Test
     public void testFindAll(){
         final User user = save();
         final List<User> users = repository.findAll();
-        Assert.assertEquals(users.size(), 1);
-        Assert.assertEquals(users.getFirst(), user);
+        Assertions.assertEquals(users.size(), 1);
+        Assertions.assertEquals(users.getFirst(), user);
     }
 
     @Test
@@ -104,7 +104,7 @@ public class UserRepositoryTest {
     public void testCount(){
         save();
         final Integer count = repository.count();
-        Assert.assertEquals(Integer.valueOf(1), count);
+        Assertions.assertEquals(Integer.valueOf(1), count);
     }
 
     private User save(){

@@ -30,7 +30,7 @@ import java.util.Optional;
  */
 public final class ImportRestDefinitionInput implements Input {
 
-    private final String restProjectId;
+    private final String projectId;
     private final RestDefinitionType definitionType;
 
     private final Boolean generateResponse;
@@ -38,7 +38,7 @@ public final class ImportRestDefinitionInput implements Input {
     private final String location;
 
     private ImportRestDefinitionInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
         this.definitionType = Objects.requireNonNull(builder.definitionType, "definitionType");
         this.location = builder.location;
         this.generateResponse = builder.generateResponse;
@@ -46,8 +46,8 @@ public final class ImportRestDefinitionInput implements Input {
                 .orElseGet(List::of);
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
     }
 
     public List<File> getFiles() {
@@ -66,24 +66,53 @@ public final class ImportRestDefinitionInput implements Input {
         return definitionType;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ImportRestDefinitionInput that = (ImportRestDefinitionInput) o;
+        return Objects.equals(projectId, that.projectId) && definitionType == that.definitionType &&
+                Objects.equals(generateResponse, that.generateResponse) && Objects.equals(files, that.files) &&
+                Objects.equals(location, that.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, definitionType, generateResponse, files, location);
+    }
+
+    @Override
+    public String toString() {
+        return "ImportRestDefinitionInput{" +
+                "projectId='" + projectId + '\'' +
+                ", definitionType=" + definitionType +
+                ", generateResponse=" + generateResponse +
+                ", files=" + files +
+                ", location='" + location + '\'' +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }
 
     public static final class Builder {
 
-        private String restProjectId;
-        private boolean generateResponse;
+        private String projectId;
+        private Boolean generateResponse;
         private RestDefinitionType definitionType;
         private List<File> files;
         private String location;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        private Builder() {
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 
-        public Builder generateResponse(final boolean generateResponse){
+        public Builder generateResponse(final Boolean generateResponse){
             this.generateResponse = generateResponse;
             return this;
         }

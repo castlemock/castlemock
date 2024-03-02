@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -37,6 +38,26 @@ public final class DeleteRestMockResponseOutput implements Output {
         return Optional.ofNullable(mockResponse);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final DeleteRestMockResponseOutput that = (DeleteRestMockResponseOutput) o;
+        return Objects.equals(mockResponse, that.mockResponse);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mockResponse);
+    }
+
+    @Override
+    public String toString() {
+        return "DeleteRestMockResponseOutput{" +
+                "mockResponse=" + mockResponse +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }
@@ -44,6 +65,9 @@ public final class DeleteRestMockResponseOutput implements Output {
     public static final class Builder {
 
         private RestMockResponse mockResponse;
+
+        private Builder() {
+        }
 
         public Builder mockResponse(final RestMockResponse mockResponse){
             this.mockResponse = mockResponse;

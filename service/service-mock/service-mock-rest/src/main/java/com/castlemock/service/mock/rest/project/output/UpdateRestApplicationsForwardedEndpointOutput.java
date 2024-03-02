@@ -34,6 +34,8 @@ public final class UpdateRestApplicationsForwardedEndpointOutput implements Outp
 
     public static final class Builder {
 
+        private Builder() {
+        }
         public UpdateRestApplicationsForwardedEndpointOutput build(){
             return new UpdateRestApplicationsForwardedEndpointOutput();
         }

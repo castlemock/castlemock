@@ -19,6 +19,8 @@ package com.castlemock.service.mock.rest.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestProject;
 
+import java.util.Objects;
+
 /**
  * @author Karl Dahlgren
  * @since 1.0
@@ -35,6 +37,25 @@ public final class ImportRestProjectOutput implements Output{
         return project;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ImportRestProjectOutput output = (ImportRestProjectOutput) o;
+        return Objects.equals(project, output.project);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(project);
+    }
+
+    @Override
+    public String toString() {
+        return "ImportRestProjectOutput{" +
+                "project=" + project +
+                '}';
+    }
 
     public static Builder builder(){
         return new Builder();
@@ -43,6 +64,9 @@ public final class ImportRestProjectOutput implements Output{
     public static final class Builder {
 
         private RestProject project;
+
+        private Builder() {
+        }
 
         public Builder project(final RestProject project){
             this.project = project;

@@ -7,9 +7,9 @@ import com.castlemock.model.mock.rest.domain.RestMockResponseTestBuilder;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import com.castlemock.service.mock.rest.project.input.ReadRestMockResponseInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestMockResponseOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -25,7 +25,7 @@ public class ReadRestMockResponseServiceTest {
     @InjectMocks
     private ReadRestMockResponseService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -39,11 +39,11 @@ public class ReadRestMockResponseServiceTest {
         final RestMockResponse mockResponse = RestMockResponseTestBuilder.builder().build();
 
         final ReadRestMockResponseInput input = ReadRestMockResponseInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
-                .restResourceId(resourceId)
-                .restMethodId(methodId)
-                .restMockResponse(mockResponse.getId())
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
+                .mockResponseId(mockResponse.getId())
+                .methodId(methodId)
                 .build();
         final ServiceTask<ReadRestMockResponseInput> serviceTask = ServiceTask.of(input, "user");
 
@@ -52,13 +52,13 @@ public class ReadRestMockResponseServiceTest {
 
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findOne(mockResponse.getId());
 
-        Assert.assertNotNull(result.getOutput());
+        Assertions.assertNotNull(result.getOutput());
 
-        final RestMockResponse restMockResponse = result.getOutput().getRestMockResponse()
+        final RestMockResponse restMockResponse = result.getOutput().getMockResponse()
                 .orElse(null);
 
-        Assert.assertNotNull(restMockResponse);
-        Assert.assertEquals(mockResponse, restMockResponse);
+        Assertions.assertNotNull(restMockResponse);
+        Assertions.assertEquals(mockResponse, restMockResponse);
     }
 
 }

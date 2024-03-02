@@ -19,6 +19,7 @@ package com.castlemock.service.mock.soap.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -35,6 +36,26 @@ public final class UpdateSoapProjectOutput implements Output {
 
     public Optional<SoapProject> getProject() {
         return Optional.ofNullable(project);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateSoapProjectOutput that = (UpdateSoapProjectOutput) o;
+        return Objects.equals(project, that.project);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(project);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateSoapProjectOutput{" +
+                "project=" + project +
+                '}';
     }
 
     public static Builder builder(){

@@ -18,7 +18,7 @@ package com.castlemock.model.mock.soap.domain;
 
 import com.castlemock.model.core.http.HttpMethod;
 
-import java.util.List;
+import java.util.Set;
 
 public final class SoapRequestTestBuilder {
 
@@ -37,7 +37,7 @@ public final class SoapRequestTestBuilder {
                 .body(body)
                 .envelope(body)
                 .contentType("application/json")
-                .httpHeaders(List.of())
+                .httpHeaders(Set.of())
                 .httpMethod(HttpMethod.POST)
                 .operationIdentifier(SoapOperationIdentifier.builder()
                         .name("")

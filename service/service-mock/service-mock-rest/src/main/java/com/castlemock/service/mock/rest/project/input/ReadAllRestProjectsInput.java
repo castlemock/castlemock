@@ -32,6 +32,8 @@ public final class ReadAllRestProjectsInput implements Input {
 
     public static final class Builder {
 
+        private Builder() {
+        }
         public ReadAllRestProjectsInput build(){
             return new ReadAllRestProjectsInput();
         }

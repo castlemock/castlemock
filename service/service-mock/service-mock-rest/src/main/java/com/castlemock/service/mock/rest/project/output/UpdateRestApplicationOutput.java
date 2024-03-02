@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestApplication;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -27,16 +28,35 @@ import java.util.Optional;
  */
 public final class UpdateRestApplicationOutput implements Output {
 
-    private final RestApplication updatedRestApplication;
+    private final RestApplication application;
 
-    private UpdateRestApplicationOutput(final RestApplication updatedRestApplication) {
-        this.updatedRestApplication = updatedRestApplication;
+    private UpdateRestApplicationOutput(final RestApplication application) {
+        this.application = application;
     }
 
-    public Optional<RestApplication> getUpdatedRestApplication() {
-        return Optional.ofNullable(updatedRestApplication);
+    public Optional<RestApplication> getApplication() {
+        return Optional.ofNullable(application);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateRestApplicationOutput that = (UpdateRestApplicationOutput) o;
+        return Objects.equals(application, that.application);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(application);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateRestApplicationOutput{" +
+                "application=" + application +
+                '}';
+    }
 
     public static Builder builder(){
         return new Builder();
@@ -44,15 +64,18 @@ public final class UpdateRestApplicationOutput implements Output {
 
     public static final class Builder {
 
-        private RestApplication updatedRestApplication;
+        private RestApplication application;
 
-        public Builder updatedRestApplication(final RestApplication updatedRestApplication){
-            this.updatedRestApplication = updatedRestApplication;
+        private Builder() {
+        }
+
+        public Builder application(final RestApplication application){
+            this.application = application;
             return this;
         }
 
         public UpdateRestApplicationOutput build(){
-            return new UpdateRestApplicationOutput(this.updatedRestApplication);
+            return new UpdateRestApplicationOutput(this.application);
         }
 
     }

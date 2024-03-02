@@ -7,9 +7,9 @@ import com.castlemock.model.mock.soap.domain.SoapResourceTestBuilder;
 import com.castlemock.repository.soap.project.SoapResourceRepository;
 import com.castlemock.service.mock.soap.project.input.ReadSoapResourceInput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapResourceOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -25,7 +25,7 @@ public class ReadSoapResourceServiceTest {
     @InjectMocks
     private ReadSoapResourceService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -46,13 +46,13 @@ public class ReadSoapResourceServiceTest {
 
         Mockito.verify(resourceRepository, Mockito.times(1)).findOne(resource.getId());
 
-        Assert.assertNotNull(result.getOutput());
+        Assertions.assertNotNull(result.getOutput());
 
         final SoapResource returnedSoapResource = result.getOutput().getResource()
                 .orElse(null);
 
-        Assert.assertNotNull(returnedSoapResource);
-        Assert.assertEquals(resource, returnedSoapResource);
+        Assertions.assertNotNull(returnedSoapResource);
+        Assertions.assertEquals(resource, returnedSoapResource);
     }
 
 }

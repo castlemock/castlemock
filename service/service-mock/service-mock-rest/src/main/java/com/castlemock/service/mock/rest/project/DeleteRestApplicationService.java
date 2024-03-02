@@ -43,7 +43,7 @@ public class DeleteRestApplicationService extends AbstractRestProjectService imp
     @Override
     public ServiceResult<DeleteRestApplicationOutput> process(final ServiceTask<DeleteRestApplicationInput> serviceTask) {
         final DeleteRestApplicationInput input = serviceTask.getInput();
-        final Optional<RestApplication> deletedApplication = this.deleteApplication(input.getRestApplicationId());
+        final Optional<RestApplication> deletedApplication = this.deleteApplication(input.getApplicationId());
         return createServiceResult(DeleteRestApplicationOutput.builder()
                 .application(deletedApplication.orElse(null))
                 .build());

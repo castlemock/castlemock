@@ -25,8 +25,8 @@ import com.castlemock.model.mock.soap.domain.SoapPortTestBuilder;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapPortsForwardedEndpointInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapPortsForwardedEndpointOutput;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -47,7 +47,7 @@ public class UpdateSoapPortsForwardedEndpointServiceTest {
     @InjectMocks
     private UpdateSoapPortsForwardedEndpointService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }

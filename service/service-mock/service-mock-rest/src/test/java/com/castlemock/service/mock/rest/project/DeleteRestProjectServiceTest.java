@@ -35,14 +35,13 @@ import com.castlemock.repository.rest.project.RestProjectRepository;
 import com.castlemock.repository.rest.project.RestResourceRepository;
 import com.castlemock.service.mock.rest.project.input.DeleteRestProjectInput;
 import com.castlemock.service.mock.rest.project.output.DeleteRestProjectOutput;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -69,7 +68,7 @@ public class DeleteRestProjectServiceTest {
     @InjectMocks
     private DeleteRestProjectService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -88,7 +87,7 @@ public class DeleteRestProjectServiceTest {
         Mockito.when(mockResponseRepository.findWithMethodId(method.getId())).thenReturn(List.of(mockResponse));
 
         final DeleteRestProjectInput input = DeleteRestProjectInput.builder()
-                .restProjectId(project.getId())
+                .projectId(project.getId())
                 .build();
         final ServiceTask<DeleteRestProjectInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<DeleteRestProjectOutput> serviceResult = service.process(serviceTask);

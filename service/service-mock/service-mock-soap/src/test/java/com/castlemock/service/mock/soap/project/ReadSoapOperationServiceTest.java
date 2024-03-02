@@ -10,9 +10,9 @@ import com.castlemock.repository.soap.project.SoapMockResponseRepository;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import com.castlemock.service.mock.soap.project.input.ReadSoapOperationInput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapOperationOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -33,7 +33,7 @@ public class ReadSoapOperationServiceTest {
     @InjectMocks
     private ReadSoapOperationService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -59,16 +59,16 @@ public class ReadSoapOperationServiceTest {
         Mockito.verify(operationRepository, Mockito.times(1)).findOne(operation.getId());
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithOperationId(operation.getId());
 
-        Assert.assertNotNull(result.getOutput());
+        Assertions.assertNotNull(result.getOutput());
 
         final SoapOperation returnedSoapOperation = result.getOutput().getOperation()
                 .orElse(null);
 
-        Assert.assertNotNull(returnedSoapOperation);
-        Assert.assertEquals(operation.toBuilder()
+        Assertions.assertNotNull(returnedSoapOperation);
+        Assertions.assertEquals(operation.toBuilder()
                 .mockResponses(List.of(mockResponse))
                 .build(), returnedSoapOperation);
-        Assert.assertNull(operation.getDefaultResponseName().orElse(null));
+        Assertions.assertNull(operation.getDefaultResponseName().orElse(null));
     }
 
     @Test
@@ -94,13 +94,13 @@ public class ReadSoapOperationServiceTest {
         Mockito.verify(operationRepository, Mockito.times(1)).findOne(operation.getId());
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findWithOperationId(operation.getId());
 
-        Assert.assertNotNull(result.getOutput());
+        Assertions.assertNotNull(result.getOutput());
 
         final SoapOperation returnedSoapOperation = result.getOutput().getOperation()
                 .orElse(null);
 
-        Assert.assertNotNull(returnedSoapOperation);
-        Assert.assertEquals(operation.toBuilder()
+        Assertions.assertNotNull(returnedSoapOperation);
+        Assertions.assertEquals(operation.toBuilder()
                 .defaultResponseName(mockResponse.getName())
                 .mockResponses(List.of(mockResponse))
                 .build(), returnedSoapOperation);

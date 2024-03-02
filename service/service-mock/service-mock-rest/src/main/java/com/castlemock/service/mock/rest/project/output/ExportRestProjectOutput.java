@@ -18,6 +18,7 @@ package com.castlemock.service.mock.rest.project.output;
 
 import com.castlemock.model.core.Output;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -36,6 +37,25 @@ public final class ExportRestProjectOutput implements Output{
         return Optional.ofNullable(exportedProject);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ExportRestProjectOutput output = (ExportRestProjectOutput) o;
+        return Objects.equals(exportedProject, output.exportedProject);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(exportedProject);
+    }
+
+    @Override
+    public String toString() {
+        return "ExportRestProjectOutput{" +
+                "exportedProject='" + exportedProject + '\'' +
+                '}';
+    }
 
     public static Builder builder(){
         return new Builder();
@@ -44,6 +64,9 @@ public final class ExportRestProjectOutput implements Output{
     public static final class Builder {
 
         private String exportedProject;
+
+        private Builder() {
+        }
 
         public Builder exportedProject(final String exportedProject){
             this.exportedProject = exportedProject;

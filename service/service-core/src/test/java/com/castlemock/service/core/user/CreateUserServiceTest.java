@@ -25,9 +25,9 @@ import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.repository.user.UserRepository;
 import com.castlemock.service.core.user.input.CreateUserInput;
 import com.castlemock.service.core.user.output.CreateUserOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class CreateUserServiceTest {
     @InjectMocks
     private CreateUserService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -74,13 +74,13 @@ public class CreateUserServiceTest {
         final CreateUserOutput output = serviceResult.getOutput();
 
         final User returnedUser = output.getSavedUser();
-        Assert.assertNotNull(returnedUser);
-        Assert.assertEquals(returnedUser.getId(), user.getId());
-        Assert.assertEquals(user.getPassword(), returnedUser.getPassword());
-        Assert.assertEquals(user.getEmail(), returnedUser.getEmail());
-        Assert.assertEquals(user.getRole(), returnedUser.getRole());
-        Assert.assertEquals(user.getStatus(), returnedUser.getStatus());
-        Assert.assertEquals(user.getUsername(), returnedUser.getUsername());
+        Assertions.assertNotNull(returnedUser);
+        Assertions.assertEquals(returnedUser.getId(), user.getId());
+        Assertions.assertEquals(user.getPassword(), returnedUser.getPassword());
+        Assertions.assertEquals(user.getEmail(), returnedUser.getEmail());
+        Assertions.assertEquals(user.getRole(), returnedUser.getRole());
+        Assertions.assertEquals(user.getStatus(), returnedUser.getStatus());
+        Assertions.assertEquals(user.getUsername(), returnedUser.getUsername());
         Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(User.class));
     }
 

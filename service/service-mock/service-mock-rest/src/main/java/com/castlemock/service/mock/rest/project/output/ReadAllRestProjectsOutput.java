@@ -20,6 +20,8 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestProject;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Karl Dahlgren
@@ -27,16 +29,36 @@ import java.util.List;
  */
 public final class ReadAllRestProjectsOutput implements Output {
 
-    private final List<RestProject> restProjects;
+    private final List<RestProject> projects;
 
-    private ReadAllRestProjectsOutput(List<RestProject> restProjects) {
-        this.restProjects = restProjects;
+    private ReadAllRestProjectsOutput(final Builder builder) {
+        this.projects = Optional.ofNullable(builder.projects)
+                .orElseGet(List::of);
     }
 
-    public List<RestProject> getRestProjects() {
-        return restProjects;
+    public List<RestProject> getProjects() {
+        return projects;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ReadAllRestProjectsOutput that = (ReadAllRestProjectsOutput) o;
+        return Objects.equals(projects, that.projects);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projects);
+    }
+
+    @Override
+    public String toString() {
+        return "ReadAllRestProjectsOutput{" +
+                "projects=" + projects +
+                '}';
+    }
 
     public static Builder builder(){
         return new Builder();
@@ -44,15 +66,18 @@ public final class ReadAllRestProjectsOutput implements Output {
 
     public static final class Builder {
 
-        private List<RestProject> restProjects;
+        private List<RestProject> projects;
 
-        public Builder restProjects(final List<RestProject> restProjects){
-            this.restProjects = restProjects;
+        private Builder() {
+        }
+
+        public Builder projects(final List<RestProject> projects){
+            this.projects = projects;
             return this;
         }
 
         public ReadAllRestProjectsOutput build(){
-            return new ReadAllRestProjectsOutput(this.restProjects);
+            return new ReadAllRestProjectsOutput(this);
         }
 
     }

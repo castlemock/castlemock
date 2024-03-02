@@ -48,6 +48,29 @@ public final class UpdateSoapPortInput implements Input {
         return uri;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateSoapPortInput that = (UpdateSoapPortInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(portId, that.portId) &&
+                Objects.equals(uri, that.uri);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, portId, uri);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateSoapPortInput{" +
+                "projectId='" + projectId + '\'' +
+                ", portId='" + portId + '\'' +
+                ", uri='" + uri + '\'' +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

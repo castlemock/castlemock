@@ -73,12 +73,12 @@ public class RestMethodRestController extends AbstractRestController {
             @Parameter(name = "methodId", description = "The id of the method")
             @PathVariable(value = "methodId") final String methodId) {
         final ReadRestMethodOutput output = super.serviceProcessor.process(ReadRestMethodInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
-                .restResourceId(resourceId)
-                .restMethodId(methodId)
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
+                .methodId(methodId)
                 .build());
-        return output.getRestMethod()
+        return output.getMethod()
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -99,10 +99,10 @@ public class RestMethodRestController extends AbstractRestController {
             @Parameter(name = "methodId", description = "The id of the method")
             @PathVariable(value = "methodId") final String methodId) {
         final DeleteRestMethodOutput output = super.serviceProcessor.process(DeleteRestMethodInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
-                .restResourceId(resourceId)
-                .restMethodId(methodId)
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
+                .methodId(methodId)
                 .build());
         return output.getMethod()
                 .map(ResponseEntity::ok)
@@ -125,10 +125,10 @@ public class RestMethodRestController extends AbstractRestController {
             @PathVariable(value = "methodId") final String methodId,
             @RequestBody UpdateRestMethodRequest request) {
         final UpdateRestMethodOutput output = super.serviceProcessor.process(UpdateRestMethodInput.builder()
-                .restProjectId(projectId)
-                .restApplicationId(applicationId)
-                .restResourceId(resourceId)
-                .restMethodId(methodId)
+                .projectId(projectId)
+                .applicationId(applicationId)
+                .resourceId(resourceId)
+                .methodId(methodId)
                 .name(request.getName())
                 .httpMethod(request.getHttpMethod())
                 .responseStrategy(request.getResponseStrategy())
@@ -144,7 +144,7 @@ public class RestMethodRestController extends AbstractRestController {
                 .automaticForward(request.getAutomaticForward()
                         .orElse(null))
                 .build());
-        return output.getRestMethod()
+        return output.getMethod()
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());    }
 
@@ -170,7 +170,7 @@ public class RestMethodRestController extends AbstractRestController {
                 .name(request.getName())
                 .httpMethod(request.getHttpMethod())
                 .build());
-       return ResponseEntity.ok(output.getCreatedRestMethod());
+       return ResponseEntity.ok(output.getMethod());
     }
 
     @Operation(summary =  "Update mock response statuses")

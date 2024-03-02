@@ -43,12 +43,12 @@ public class ReadRestResourceService extends AbstractRestProjectService implemen
     @Override
     public ServiceResult<ReadRestResourceOutput> process(final ServiceTask<ReadRestResourceInput> serviceTask) {
         final ReadRestResourceInput input = serviceTask.getInput();
-        final Optional<RestResource> restResource = this.resourceRepository.findOne(input.getRestResourceId())
+        final Optional<RestResource> restResource = this.resourceRepository.findOne(input.getResourceId())
                 .map(resource -> resource.toBuilder()
                         .methods(this.methodRepository.findWithResourceId(resource.getId()))
                         .build());
         return createServiceResult(ReadRestResourceOutput.builder()
-                .restResource(restResource.orElse(null))
+                .resource(restResource.orElse(null))
                 .build());
     }
 }

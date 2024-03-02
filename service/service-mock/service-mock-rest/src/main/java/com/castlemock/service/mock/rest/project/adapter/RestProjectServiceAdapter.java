@@ -47,7 +47,7 @@ public class RestProjectServiceAdapter implements ProjectServiceAdapter<RestProj
     @Override
     public List<RestProject> readAll() {
         final ReadAllRestProjectsOutput output = serviceProcessor.process(ReadAllRestProjectsInput.builder().build());
-        return output.getRestProjects();
+        return output.getProjects();
     }
 
     @Override

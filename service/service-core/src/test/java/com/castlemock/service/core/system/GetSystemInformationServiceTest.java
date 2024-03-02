@@ -6,9 +6,9 @@ import com.castlemock.model.core.ServiceTask;
 import com.castlemock.repository.Profiles;
 import com.castlemock.service.core.system.input.GetSystemInformationInput;
 import com.castlemock.service.core.system.output.GetSystemInformationOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -27,7 +27,7 @@ public class GetSystemInformationServiceTest {
     @Mock
     private org.springframework.core.env.Environment springEnvironment;
 
-    @Before
+    @BeforeEach
     public void setup() {
         final org.springframework.core.env.Profiles fileProfiles =
                 org.springframework.core.env.Profiles.of(Profiles.FILE);
@@ -46,6 +46,6 @@ public class GetSystemInformationServiceTest {
         final GetSystemInformationInput input = new GetSystemInformationInput();
         final ServiceTask<GetSystemInformationInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<GetSystemInformationOutput> output = service.process(serviceTask);
-        Assert.assertNotNull(output);
+        Assertions.assertNotNull(output);
     }
 }

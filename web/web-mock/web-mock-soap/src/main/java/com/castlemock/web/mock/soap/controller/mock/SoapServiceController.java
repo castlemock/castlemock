@@ -20,6 +20,7 @@ import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapProject;
+import com.castlemock.web.mock.soap.factory.SoapStrategyFactory;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,8 @@ public class SoapServiceController extends AbstractSoapServiceController {
     @Autowired
     public SoapServiceController(final ServiceProcessor serviceProcessor,
                                  final ServletContext servletContext,
-                                 final SoapClient soapClient){
-        super(serviceProcessor, servletContext, soapClient);
+                                 final SoapStrategyFactory strategyFactory){
+        super(serviceProcessor, servletContext, strategyFactory);
     }
 
     /**

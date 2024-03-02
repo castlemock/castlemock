@@ -45,11 +45,11 @@ public class ReadRestProjectService extends AbstractRestProjectService implement
     @Override
     public ServiceResult<ReadRestProjectOutput> process(final ServiceTask<ReadRestProjectInput> serviceTask) {
         final ReadRestProjectInput input = serviceTask.getInput();
-        final Optional<RestProject> restProject = find(input.getRestProjectId())
+        final Optional<RestProject> restProject = find(input.getProjectId())
                 .map(this::prepareRestProject);
 
         return createServiceResult(ReadRestProjectOutput.builder()
-                .restProject(restProject.orElse(null))
+                .project(restProject.orElse(null))
                 .build());
     }
 

@@ -63,6 +63,31 @@ public final class IdentifySoapOperationInput implements Input {
         return type;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final IdentifySoapOperationInput that = (IdentifySoapOperationInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(operationIdentifier, that.operationIdentifier) &&
+                Objects.equals(uri, that.uri) && httpMethod == that.httpMethod && type == that.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, operationIdentifier, uri, httpMethod, type);
+    }
+
+    @Override
+    public String toString() {
+        return "IdentifySoapOperationInput{" +
+                "projectId='" + projectId + '\'' +
+                ", operationIdentifier=" + operationIdentifier +
+                ", uri='" + uri + '\'' +
+                ", httpMethod=" + httpMethod +
+                ", type=" + type +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

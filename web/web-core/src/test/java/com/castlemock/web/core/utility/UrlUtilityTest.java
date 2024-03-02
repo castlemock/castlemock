@@ -17,9 +17,10 @@
 package com.castlemock.web.core.utility;
 
 
+import com.castlemock.model.core.http.HttpParameter;
 import com.castlemock.service.core.utility.UrlUtility;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.Set;
@@ -33,145 +34,152 @@ public class UrlUtilityTest {
 
     @Test
     public void isPatternMatch1(){
-        Assert.assertTrue(UrlUtility.isPatternMatch("/user", "/user"));
+        Assertions.assertTrue(UrlUtility.isPatternMatch("/user", "/user"));
     }
 
     @Test
     public void isPatternMatch2(){
-        Assert.assertTrue(UrlUtility.isPatternMatch("/user/id", "/user/id"));
+        Assertions.assertTrue(UrlUtility.isPatternMatch("/user/id", "/user/id"));
     }
 
 
     @Test
     public void isPatternMatch3(){
-        Assert.assertTrue(UrlUtility.isPatternMatch("/user/id.json", "/user/id.json"));
+        Assertions.assertTrue(UrlUtility.isPatternMatch("/user/id.json", "/user/id.json"));
     }
 
     @Test
     public void isPatternMatch4(){
-        Assert.assertTrue(UrlUtility.isPatternMatch("/user/{id}", "/user/1"));
+        Assertions.assertTrue(UrlUtility.isPatternMatch("/user/{id}", "/user/1"));
     }
 
     @Test
     public void isPatternMatch5(){
-        Assert.assertTrue(UrlUtility.isPatternMatch("/user/{id}.json", "/user/1.json"));
+        Assertions.assertTrue(UrlUtility.isPatternMatch("/user/{id}.json", "/user/1.json"));
     }
 
     @Test
     public void isPatternMatch6(){
-        Assert.assertTrue(UrlUtility.isPatternMatch("/user/1.{format}", "/user/1.json"));
-        Assert.assertTrue(UrlUtility.isPatternMatch("/user/1.{format}", "/user/1.xml"));
-        Assert.assertFalse(UrlUtility.isPatternMatch("/user/1.{format}", "/user/2.xml"));
+        Assertions.assertTrue(UrlUtility.isPatternMatch("/user/1.{format}", "/user/1.json"));
+        Assertions.assertTrue(UrlUtility.isPatternMatch("/user/1.{format}", "/user/1.xml"));
+        Assertions.assertFalse(UrlUtility.isPatternMatch("/user/1.{format}", "/user/2.xml"));
     }
 
     @Test
     public void isPatternMatch7(){
-        Assert.assertTrue(UrlUtility.isPatternMatch("/user/{id}.{format}", "/user/1.json"));
-        Assert.assertTrue(UrlUtility.isPatternMatch("/user/{id}.{format}", "/user/2.xml"));
+        Assertions.assertTrue(UrlUtility.isPatternMatch("/user/{id}.{format}", "/user/1.json"));
+        Assertions.assertTrue(UrlUtility.isPatternMatch("/user/{id}.{format}", "/user/2.xml"));
     }
 
     @Test
     public void isPatternMatch8(){
-        Assert.assertTrue(UrlUtility.isPatternMatch("/company/{company}/user/{id}.{format}", "/company/Castle Mock/user/1.json"));
+        Assertions.assertTrue(UrlUtility.isPatternMatch("/company/{company}/user/{id}.{format}", "/company/Castle Mock/user/1.json"));
     }
 
     @Test
     public void isPatternMatch9(){
-        Assert.assertFalse(UrlUtility.isPatternMatch("/user/{id", "/user/1"));
+        Assertions.assertFalse(UrlUtility.isPatternMatch("/user/{id", "/user/1"));
     }
 
     @Test
     public void isPatternMatch10(){
-        Assert.assertTrue(UrlUtility.isPatternMatch("/user/id?test={hej}", "/user/id"));
+        Assertions.assertTrue(UrlUtility.isPatternMatch("/user/id?test={hej}", "/user/id"));
     }
 
     @Test
     public void canGetPathParameters(){
         final Set<String> parts = UrlUtility.getPathParameters("/rest/api/user/{userId}/");
-        Assert.assertEquals(1, parts.size());
-        Assert.assertTrue(parts.contains("userId"));
+        Assertions.assertEquals(1, parts.size());
+        Assertions.assertTrue(parts.contains("userId"));
     }
 
     @Test
     public void canGetQueryStringParameters(){
-        final Map<String, Set<String>> queryParams = Map.of("userId", Set.of("1"));
+        final Set<HttpParameter> queryParams = Set.of(HttpParameter.builder()
+                .name("userId")
+                .value("1")
+                .build());
         final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}", queryParams);
 
-        Assert.assertTrue(map.containsKey("userId"));
-        Assert.assertEquals(1, map.get("userId").size());
-        Assert.assertTrue(map.get("userId").contains("1"));
+        Assertions.assertTrue(map.containsKey("userId"));
+        Assertions.assertEquals(1, map.get("userId").size());
+        Assertions.assertTrue(map.get("userId").contains("1"));
     }
 
     @Test
     public void canGetQueryStringParametersWithDifferentName(){
-        final Map<String, Set<String>> queryParams = Map.of("userId", Set.of("1"));
-        final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={id}", queryParams);
+        final Set<HttpParameter> queryParams = Set.of(HttpParameter.builder()
+                .name("userId")
+                .value("1")
+                .build());        final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={id}", queryParams);
 
-        Assert.assertTrue(map.containsKey("userId"));
-        Assert.assertEquals(1, map.get("userId").size());
-        Assert.assertTrue(map.get("userId").contains("1"));
+        Assertions.assertTrue(map.containsKey("userId"));
+        Assertions.assertEquals(1, map.get("userId").size());
+        Assertions.assertTrue(map.get("userId").contains("1"));
     }
 
     @Test
     public void canGetQueryStringMultipleParameters(){
-        final Map<String, Set<String>> queryParams = Map.of(
-                "userId", Set.of("1"),
-                "username", Set.of("Karl"));
+        final Set<HttpParameter> queryParams = Set.of(
+                HttpParameter.builder().name("userId").value("1").build(),
+                HttpParameter.builder().name("username").value("Karl").build());
+
         final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}&username={username}", queryParams);
 
-        Assert.assertTrue(map.containsKey("userId"));
-        Assert.assertTrue(map.containsKey("username"));
-        Assert.assertEquals(1, map.get("userId").size());
-        Assert.assertEquals(1, map.get("username").size());
-        Assert.assertTrue(map.get("userId").contains("1"));
-        Assert.assertTrue(map.get("username").contains("Karl"));
+        Assertions.assertTrue(map.containsKey("userId"));
+        Assertions.assertTrue(map.containsKey("username"));
+        Assertions.assertEquals(1, map.get("userId").size());
+        Assertions.assertEquals(1, map.get("username").size());
+        Assertions.assertTrue(map.get("userId").contains("1"));
+        Assertions.assertTrue(map.get("username").contains("Karl"));
     }
 
     @Test
     public void canGetQueryStringMultipleParameterValues(){
-        final Map<String, Set<String>> queryParams = Map.of(
-                "userId", Set.of("1", "2"));
+        final Set<HttpParameter> queryParams = Set.of(
+                HttpParameter.builder().name("userId").value("1").build(),
+                HttpParameter.builder().name("userId").value("2").build());
         final Map<String, Set<String>> map = UrlUtility.getQueryStringParameters("/rest/api/user/?userId={userId}&userId=1", queryParams);
 
-        Assert.assertTrue(map.containsKey("userId"));
-        Assert.assertEquals(2, map.get("userId").size());
-        Assert.assertTrue(map.get("userId").contains("1"));
-        Assert.assertTrue(map.get("userId").contains("2"));
+        Assertions.assertTrue(map.containsKey("userId"));
+        Assertions.assertEquals(2, map.get("userId").size());
+        Assertions.assertTrue(map.get("userId").contains("1"));
+        Assertions.assertTrue(map.get("userId").contains("2"));
     }
 
     @Test
     public void getPathParametersShouldNotConsiderQueryParameters(){
         Map<String, Set<String>> pathParameters = UrlUtility.getPathParameters("/rest/api/{user}?param={param}", "/rest/api/johndoe");
-        Assert.assertEquals(1, pathParameters.size());
-        Assert.assertTrue(pathParameters.containsKey("user"));
-        Assert.assertEquals(1, pathParameters.get("user").size());
-        Assert.assertTrue(pathParameters.get("user").contains("johndoe"));
+        Assertions.assertEquals(1, pathParameters.size());
+        Assertions.assertTrue(pathParameters.containsKey("user"));
+        Assertions.assertEquals(1, pathParameters.get("user").size());
+        Assertions.assertTrue(pathParameters.get("user").contains("johndoe"));
     }
 
     @Test
     public void getQueryStringParameters(){
         final Set<String> parts = UrlUtility.getPathParameters("/rest/api/user/?userId={userId}&id={id}");
-        Assert.assertEquals(2, parts.size());
-        Assert.assertTrue(parts.contains("userId"));
-        Assert.assertTrue(parts.contains("id"));
+        Assertions.assertEquals(2, parts.size());
+        Assertions.assertTrue(parts.contains("userId"));
+        Assertions.assertTrue(parts.contains("id"));
     }
 
     @Test
     public void canGetPathParametersMultiple(){
         final Set<String> parts = UrlUtility.getPathParameters("/rest/api/user/{userId}/{format}/{parameter}");
-        Assert.assertEquals(3, parts.size());
-        Assert.assertTrue(parts.contains("userId"));
-        Assert.assertTrue(parts.contains("format"));
-        Assert.assertTrue(parts.contains("parameter"));
+        Assertions.assertEquals(3, parts.size());
+        Assertions.assertTrue(parts.contains("userId"));
+        Assertions.assertTrue(parts.contains("format"));
+        Assertions.assertTrue(parts.contains("parameter"));
     }
 
     @Test
     public void getPatternMatchScore1(){
-        Assert.assertEquals(0, UrlUtility.getPatternMatchScore("/user", "/user"));
+        Assertions.assertEquals(0, UrlUtility.getPatternMatchScore("/user", "/user"));
     }
 
     @Test
     public void getPatternMatchScore2(){
-        Assert.assertEquals(1, UrlUtility.getPatternMatchScore("/user/{id}.json", "/user/1.json"));
+        Assertions.assertEquals(1, UrlUtility.getPatternMatchScore("/user/{id}.json", "/user/1.json"));
     }
 }

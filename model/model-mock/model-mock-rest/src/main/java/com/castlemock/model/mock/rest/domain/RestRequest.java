@@ -28,9 +28,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Karl Dahlgren
@@ -57,11 +57,11 @@ public class RestRequest {
 
     @XmlElementWrapper(name = "httpHeaders")
     @XmlElement(name = "httpHeader")
-    private final List<HttpHeader> httpHeaders;
+    private final Set<HttpHeader> httpHeaders;
 
     @XmlElementWrapper(name = "httpParameters")
     @XmlElement(name = "httpParameter")
-    private final List<HttpParameter> httpParameters;
+    private final Set<HttpParameter> httpParameters;
 
     private RestRequest(final Builder builder){
         this.uri = Objects.requireNonNull(builder.uri, "uri");
@@ -88,16 +88,16 @@ public class RestRequest {
         return httpMethod;
     }
 
-    public List<HttpHeader> getHttpHeaders() {
+    public Set<HttpHeader> getHttpHeaders() {
         return Optional.ofNullable(httpHeaders)
-                .map(List::copyOf)
-                .orElseGet(List::of);
+                .map(Set::copyOf)
+                .orElseGet(Set::of);
     }
 
-    public List<HttpParameter> getHttpParameters() {
+    public Set<HttpParameter> getHttpParameters() {
         return Optional.ofNullable(httpParameters)
-                .map(List::copyOf)
-                .orElseGet(List::of);
+                .map(Set::copyOf)
+                .orElseGet(Set::of);
     }
 
     @Override
@@ -139,8 +139,8 @@ public class RestRequest {
         private String contentType;
         private String uri;
         private HttpMethod httpMethod;
-        private List<HttpHeader> httpHeaders;
-        private List<HttpParameter> httpParameters;
+        private Set<HttpHeader> httpHeaders;
+        private Set<HttpParameter> httpParameters;
 
         private Builder() {
         }
@@ -165,12 +165,12 @@ public class RestRequest {
             return this;
         }
 
-        public Builder httpHeaders(final List<HttpHeader> httpHeaders) {
+        public Builder httpHeaders(final Set<HttpHeader> httpHeaders) {
             this.httpHeaders = httpHeaders;
             return this;
         }
 
-        public Builder httpParameters(final List<HttpParameter> httpParameters) {
+        public Builder httpParameters(final Set<HttpParameter> httpParameters) {
             this.httpParameters = httpParameters;
             return this;
         }

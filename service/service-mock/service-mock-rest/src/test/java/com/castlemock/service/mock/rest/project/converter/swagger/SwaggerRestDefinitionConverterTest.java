@@ -8,8 +8,8 @@ import com.castlemock.model.mock.rest.domain.RestMockResponse;
 import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
 import com.castlemock.model.mock.rest.domain.RestResource;
 import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -43,13 +43,13 @@ public class SwaggerRestDefinitionConverterTest {
     private void verifyResult(final List<RestApplication> restApplications,
                               final boolean generatedResponse){
 
-        Assert.assertNotNull(restApplications);
-        Assert.assertEquals(1, restApplications.size());
+        Assertions.assertNotNull(restApplications);
+        Assertions.assertEquals(1, restApplications.size());
 
         final RestApplication restApplication = restApplications.getFirst();
 
-        Assert.assertEquals("Castle Mock Swagger", restApplication.getName());
-        Assert.assertEquals(2, restApplication.getResources().size());
+        Assertions.assertEquals("Castle Mock Swagger", restApplication.getName());
+        Assertions.assertEquals(2, restApplication.getResources().size());
 
 
         // /mock
@@ -58,9 +58,9 @@ public class SwaggerRestDefinitionConverterTest {
                 .findFirst()
                 .orElse(null);
 
-        Assert.assertNotNull(mockResource);
-        Assert.assertEquals("/mock", mockResource.getName());
-        Assert.assertEquals("/mock", mockResource.getUri());
+        Assertions.assertNotNull(mockResource);
+        Assertions.assertEquals("/mock", mockResource.getName());
+        Assertions.assertEquals("/mock", mockResource.getUri());
 
         // /mock (GET) - getAllMockServices
 
@@ -69,18 +69,18 @@ public class SwaggerRestDefinitionConverterTest {
                 .findFirst()
                 .orElse(null);
 
-        Assert.assertNotNull(getAllMockServicesMethod);
-        Assert.assertEquals("getAllMockServices", getAllMockServicesMethod.getName());
-        Assert.assertEquals("http://castlemock.com/v1", getAllMockServicesMethod.getForwardedEndpoint().orElse(null));
-        Assert.assertEquals(HttpMethod.GET, getAllMockServicesMethod.getHttpMethod());
-        Assert.assertEquals(RestMethodStatus.MOCKED, getAllMockServicesMethod.getStatus());
-        Assert.assertEquals(RestResponseStrategy.SEQUENCE, getAllMockServicesMethod.getResponseStrategy());
-        Assert.assertEquals(Integer.valueOf(0), getAllMockServicesMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), getAllMockServicesMethod.getNetworkDelay().orElse(0L));
-        Assert.assertFalse(getAllMockServicesMethod.getSimulateNetworkDelay().orElse(false));
+        Assertions.assertNotNull(getAllMockServicesMethod);
+        Assertions.assertEquals("getAllMockServices", getAllMockServicesMethod.getName());
+        Assertions.assertEquals("http://castlemock.com/v1", getAllMockServicesMethod.getForwardedEndpoint().orElse(null));
+        Assertions.assertEquals(HttpMethod.GET, getAllMockServicesMethod.getHttpMethod());
+        Assertions.assertEquals(RestMethodStatus.MOCKED, getAllMockServicesMethod.getStatus());
+        Assertions.assertEquals(RestResponseStrategy.SEQUENCE, getAllMockServicesMethod.getResponseStrategy());
+        Assertions.assertEquals(Integer.valueOf(0), getAllMockServicesMethod.getCurrentResponseSequenceIndex());
+        Assertions.assertEquals(Long.valueOf(0L), getAllMockServicesMethod.getNetworkDelay().orElse(0L));
+        Assertions.assertFalse(getAllMockServicesMethod.getSimulateNetworkDelay().orElse(false));
 
         if(generatedResponse){
-            Assert.assertEquals(4, getAllMockServicesMethod.getMockResponses().size());
+            Assertions.assertEquals(4, getAllMockServicesMethod.getMockResponses().size());
 
             // JSON
             RestMockResponse response200Xml = getAllMockServicesMethod.getMockResponses().stream()
@@ -88,19 +88,19 @@ public class SwaggerRestDefinitionConverterTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(response200Xml);
-            Assert.assertEquals("successful operation (application/xml)", response200Xml.getName());
-            Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
+            Assertions.assertNotNull(response200Xml);
+            Assertions.assertEquals("successful operation (application/xml)", response200Xml.getName());
+            Assertions.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
                     "<Mock><name>${RANDOM_STRING()}</name><id>${RANDOM_LONG()}</id><createdBy>${RANDOM_STRING()}</createdBy>" +
                     "<mockStatus>${RANDOM_INTEGER()}</mockStatus></Mock>", response200Xml.getBody().orElse(null));
 
-            Assert.assertEquals(Integer.valueOf(200), response200Xml.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.ENABLED, response200Xml.getStatus());
-            Assert.assertTrue(response200Xml.getUsingExpressions().orElse(false));
-            Assert.assertTrue(response200Xml.getContentEncodings().isEmpty());
-            Assert.assertEquals(1, response200Xml.getHttpHeaders().size());
-            Assert.assertEquals("Content-Type", response200Xml.getHttpHeaders().getFirst().getName());
-            Assert.assertEquals("application/xml", response200Xml.getHttpHeaders().getFirst().getValue());
+            Assertions.assertEquals(Integer.valueOf(200), response200Xml.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.ENABLED, response200Xml.getStatus());
+            Assertions.assertTrue(response200Xml.getUsingExpressions().orElse(false));
+            Assertions.assertTrue(response200Xml.getContentEncodings().isEmpty());
+            Assertions.assertEquals(1, response200Xml.getHttpHeaders().size());
+            Assertions.assertEquals("Content-Type", response200Xml.getHttpHeaders().getFirst().getName());
+            Assertions.assertEquals("application/xml", response200Xml.getHttpHeaders().getFirst().getValue());
 
             // XML
             RestMockResponse response200Json = getAllMockServicesMethod.getMockResponses().stream()
@@ -108,19 +108,19 @@ public class SwaggerRestDefinitionConverterTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(response200Json);
-            Assert.assertEquals("successful operation (application/json)", response200Json.getName());
-            Assert.assertEquals("{\"name\":\"${RANDOM_STRING()}\",\"id\":\"${RANDOM_LONG()}\"," +
+            Assertions.assertNotNull(response200Json);
+            Assertions.assertEquals("successful operation (application/json)", response200Json.getName());
+            Assertions.assertEquals("{\"name\":\"${RANDOM_STRING()}\",\"id\":\"${RANDOM_LONG()}\"," +
                     "\"createdBy\":\"${RANDOM_STRING()}\",\"mockStatus\":\"${RANDOM_INTEGER()}\"}",
                     response200Json.getBody().orElse(null));
 
-            Assert.assertEquals(Integer.valueOf(200), response200Json.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.ENABLED, response200Json.getStatus());
-            Assert.assertTrue(response200Json.getUsingExpressions().orElse(false));
-            Assert.assertTrue(response200Json.getContentEncodings().isEmpty());
-            Assert.assertEquals(1, response200Json.getHttpHeaders().size());
-            Assert.assertEquals("Content-Type", response200Json.getHttpHeaders().getFirst().getName());
-            Assert.assertEquals("application/json", response200Json.getHttpHeaders().getFirst().getValue());
+            Assertions.assertEquals(Integer.valueOf(200), response200Json.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.ENABLED, response200Json.getStatus());
+            Assertions.assertTrue(response200Json.getUsingExpressions().orElse(false));
+            Assertions.assertTrue(response200Json.getContentEncodings().isEmpty());
+            Assertions.assertEquals(1, response200Json.getHttpHeaders().size());
+            Assertions.assertEquals("Content-Type", response200Json.getHttpHeaders().getFirst().getName());
+            Assertions.assertEquals("application/json", response200Json.getHttpHeaders().getFirst().getValue());
 
 
             // Invalid mock id supplied
@@ -129,14 +129,14 @@ public class SwaggerRestDefinitionConverterTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(invalidMockResponse);
-            Assert.assertEquals("Invalid mock id supplied", invalidMockResponse.getName());
+            Assertions.assertNotNull(invalidMockResponse);
+            Assertions.assertEquals("Invalid mock id supplied", invalidMockResponse.getName());
 
-            Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
-            Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
-            Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
+            Assertions.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
+            Assertions.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
+            Assertions.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
+            Assertions.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
             // Mock not found
             RestMockResponse notFoundResponse = getAllMockServicesMethod.getMockResponses().stream()
@@ -144,16 +144,16 @@ public class SwaggerRestDefinitionConverterTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(notFoundResponse);
-            Assert.assertEquals("Mock not found", notFoundResponse.getName());
+            Assertions.assertNotNull(notFoundResponse);
+            Assertions.assertEquals("Mock not found", notFoundResponse.getName());
 
-            Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
-            Assert.assertTrue(notFoundResponse.getUsingExpressions().orElse(false));
-            Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
-            Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
+            Assertions.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
+            Assertions.assertTrue(notFoundResponse.getUsingExpressions().orElse(false));
+            Assertions.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
+            Assertions.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
-            Assert.assertEquals(0, getAllMockServicesMethod.getMockResponses().size());
+            Assertions.assertEquals(0, getAllMockServicesMethod.getMockResponses().size());
         }
 
 
@@ -164,18 +164,18 @@ public class SwaggerRestDefinitionConverterTest {
                 .findFirst()
                 .orElse(null);
 
-        Assert.assertNotNull(createMockMethod);
-        Assert.assertEquals("createMock", createMockMethod.getName());
-        Assert.assertEquals("http://castlemock.com/v1", createMockMethod.getForwardedEndpoint().orElse(null));
-        Assert.assertEquals(HttpMethod.POST, createMockMethod.getHttpMethod());
-        Assert.assertEquals(RestMethodStatus.MOCKED, createMockMethod.getStatus());
-        Assert.assertEquals(RestResponseStrategy.SEQUENCE, createMockMethod.getResponseStrategy());
-        Assert.assertEquals(Integer.valueOf(0), createMockMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), createMockMethod.getNetworkDelay().orElse(0L));
-        Assert.assertFalse(createMockMethod.getSimulateNetworkDelay().orElse(false));
+        Assertions.assertNotNull(createMockMethod);
+        Assertions.assertEquals("createMock", createMockMethod.getName());
+        Assertions.assertEquals("http://castlemock.com/v1", createMockMethod.getForwardedEndpoint().orElse(null));
+        Assertions.assertEquals(HttpMethod.POST, createMockMethod.getHttpMethod());
+        Assertions.assertEquals(RestMethodStatus.MOCKED, createMockMethod.getStatus());
+        Assertions.assertEquals(RestResponseStrategy.SEQUENCE, createMockMethod.getResponseStrategy());
+        Assertions.assertEquals(Integer.valueOf(0), createMockMethod.getCurrentResponseSequenceIndex());
+        Assertions.assertEquals(Long.valueOf(0L), createMockMethod.getNetworkDelay().orElse(0L));
+        Assertions.assertFalse(createMockMethod.getSimulateNetworkDelay().orElse(false));
 
         if(generatedResponse){
-            Assert.assertEquals(1, createMockMethod.getMockResponses().size());
+            Assertions.assertEquals(1, createMockMethod.getMockResponses().size());
 
             // Invalid mock id supplied
             RestMockResponse invalidMockResponse = getAllMockServicesMethod.getMockResponses().stream()
@@ -183,17 +183,17 @@ public class SwaggerRestDefinitionConverterTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(invalidMockResponse);
-            Assert.assertEquals("Invalid mock id supplied", invalidMockResponse.getName());
+            Assertions.assertNotNull(invalidMockResponse);
+            Assertions.assertEquals("Invalid mock id supplied", invalidMockResponse.getName());
 
-            Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
-            Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
-            Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
+            Assertions.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
+            Assertions.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
+            Assertions.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
+            Assertions.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
         } else {
-            Assert.assertEquals(0, createMockMethod.getMockResponses().size());
+            Assertions.assertEquals(0, createMockMethod.getMockResponses().size());
         }
 
 
@@ -207,15 +207,15 @@ public class SwaggerRestDefinitionConverterTest {
                 .findFirst()
                 .orElse(null);
 
-        Assert.assertNotNull(headMockMethod);
-        Assert.assertEquals("headMock", headMockMethod.getName());
-        Assert.assertEquals("http://castlemock.com/v1", headMockMethod.getForwardedEndpoint().orElse(null));
-        Assert.assertEquals(HttpMethod.HEAD, headMockMethod.getHttpMethod());
-        Assert.assertEquals(RestMethodStatus.MOCKED, headMockMethod.getStatus());
-        Assert.assertEquals(RestResponseStrategy.SEQUENCE, headMockMethod.getResponseStrategy());
-        Assert.assertEquals(Integer.valueOf(0), headMockMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), headMockMethod.getNetworkDelay().orElse(null));
-        Assert.assertFalse(headMockMethod.getSimulateNetworkDelay().orElse(false));
+        Assertions.assertNotNull(headMockMethod);
+        Assertions.assertEquals("headMock", headMockMethod.getName());
+        Assertions.assertEquals("http://castlemock.com/v1", headMockMethod.getForwardedEndpoint().orElse(null));
+        Assertions.assertEquals(HttpMethod.HEAD, headMockMethod.getHttpMethod());
+        Assertions.assertEquals(RestMethodStatus.MOCKED, headMockMethod.getStatus());
+        Assertions.assertEquals(RestResponseStrategy.SEQUENCE, headMockMethod.getResponseStrategy());
+        Assertions.assertEquals(Integer.valueOf(0), headMockMethod.getCurrentResponseSequenceIndex());
+        Assertions.assertEquals(Long.valueOf(0L), headMockMethod.getNetworkDelay().orElse(null));
+        Assertions.assertFalse(headMockMethod.getSimulateNetworkDelay().orElse(false));
 
         // /mock (OPTIONS) - headerMock
 
@@ -224,15 +224,15 @@ public class SwaggerRestDefinitionConverterTest {
                 .findFirst()
                 .orElse(null);
 
-        Assert.assertNotNull(optionsMockMethod);
-        Assert.assertEquals("optionsMock", optionsMockMethod.getName());
-        Assert.assertEquals("http://castlemock.com/v1", optionsMockMethod.getForwardedEndpoint().orElse(null));
-        Assert.assertEquals(HttpMethod.OPTIONS, optionsMockMethod.getHttpMethod());
-        Assert.assertEquals(RestMethodStatus.MOCKED, optionsMockMethod.getStatus());
-        Assert.assertEquals(RestResponseStrategy.SEQUENCE, optionsMockMethod.getResponseStrategy());
-        Assert.assertEquals(Integer.valueOf(0), optionsMockMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), optionsMockMethod.getNetworkDelay().orElse(null));
-        Assert.assertFalse(optionsMockMethod.getSimulateNetworkDelay().orElse(false));
+        Assertions.assertNotNull(optionsMockMethod);
+        Assertions.assertEquals("optionsMock", optionsMockMethod.getName());
+        Assertions.assertEquals("http://castlemock.com/v1", optionsMockMethod.getForwardedEndpoint().orElse(null));
+        Assertions.assertEquals(HttpMethod.OPTIONS, optionsMockMethod.getHttpMethod());
+        Assertions.assertEquals(RestMethodStatus.MOCKED, optionsMockMethod.getStatus());
+        Assertions.assertEquals(RestResponseStrategy.SEQUENCE, optionsMockMethod.getResponseStrategy());
+        Assertions.assertEquals(Integer.valueOf(0), optionsMockMethod.getCurrentResponseSequenceIndex());
+        Assertions.assertEquals(Long.valueOf(0L), optionsMockMethod.getNetworkDelay().orElse(null));
+        Assertions.assertFalse(optionsMockMethod.getSimulateNetworkDelay().orElse(false));
 
 
         // /mock/{mockId}
@@ -241,9 +241,9 @@ public class SwaggerRestDefinitionConverterTest {
                 .findFirst()
                 .orElse(null);
 
-        Assert.assertNotNull(mockWithParameterResource);
-        Assert.assertEquals("/mock/{mockId}", mockWithParameterResource.getName());
-        Assert.assertEquals("/mock/{mockId}", mockWithParameterResource.getUri());
+        Assertions.assertNotNull(mockWithParameterResource);
+        Assertions.assertEquals("/mock/{mockId}", mockWithParameterResource.getName());
+        Assertions.assertEquals("/mock/{mockId}", mockWithParameterResource.getUri());
 
         // /mock/{mockId} (GET) - getMockById
 
@@ -252,18 +252,18 @@ public class SwaggerRestDefinitionConverterTest {
                 .findFirst()
                 .orElse(null);
 
-        Assert.assertNotNull(getMockByIdMethod);
-        Assert.assertEquals("Get mock by mock id", getMockByIdMethod.getName());
-        Assert.assertEquals("http://castlemock.com/v1", getMockByIdMethod.getForwardedEndpoint().orElse(null));
-        Assert.assertEquals(HttpMethod.GET, getMockByIdMethod.getHttpMethod());
-        Assert.assertEquals(RestMethodStatus.MOCKED, getMockByIdMethod.getStatus());
-        Assert.assertEquals(RestResponseStrategy.SEQUENCE, getMockByIdMethod.getResponseStrategy());
-        Assert.assertEquals(Integer.valueOf(0), getMockByIdMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), getMockByIdMethod.getNetworkDelay().orElse(null));
-        Assert.assertFalse(getMockByIdMethod.getSimulateNetworkDelay().orElse(false));
+        Assertions.assertNotNull(getMockByIdMethod);
+        Assertions.assertEquals("Get mock by mock id", getMockByIdMethod.getName());
+        Assertions.assertEquals("http://castlemock.com/v1", getMockByIdMethod.getForwardedEndpoint().orElse(null));
+        Assertions.assertEquals(HttpMethod.GET, getMockByIdMethod.getHttpMethod());
+        Assertions.assertEquals(RestMethodStatus.MOCKED, getMockByIdMethod.getStatus());
+        Assertions.assertEquals(RestResponseStrategy.SEQUENCE, getMockByIdMethod.getResponseStrategy());
+        Assertions.assertEquals(Integer.valueOf(0), getMockByIdMethod.getCurrentResponseSequenceIndex());
+        Assertions.assertEquals(Long.valueOf(0L), getMockByIdMethod.getNetworkDelay().orElse(null));
+        Assertions.assertFalse(getMockByIdMethod.getSimulateNetworkDelay().orElse(false));
 
         if(generatedResponse){
-            Assert.assertEquals(4, getMockByIdMethod.getMockResponses().size());
+            Assertions.assertEquals(4, getMockByIdMethod.getMockResponses().size());
 
             // JSON
             RestMockResponse response200Xml = getMockByIdMethod.getMockResponses().stream()
@@ -271,20 +271,20 @@ public class SwaggerRestDefinitionConverterTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(response200Xml);
-            Assert.assertEquals("successful operation (application/xml)", response200Xml.getName());
-            Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
+            Assertions.assertNotNull(response200Xml);
+            Assertions.assertEquals("successful operation (application/xml)", response200Xml.getName());
+            Assertions.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
                     "<Mock><name>${RANDOM_STRING()}" +
                     "</name><id>${RANDOM_LONG()}</id><createdBy>${RANDOM_STRING()}" +
                     "</createdBy><mockStatus>${RANDOM_INTEGER()}</mockStatus></Mock>", response200Xml.getBody().orElse(null));
 
-            Assert.assertEquals(Integer.valueOf(200), response200Xml.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.ENABLED, response200Xml.getStatus());
-            Assert.assertTrue(response200Xml.getUsingExpressions().orElse(false));
-            Assert.assertTrue(response200Xml.getContentEncodings().isEmpty());
-            Assert.assertEquals(1, response200Xml.getHttpHeaders().size());
-            Assert.assertEquals("Content-Type", response200Xml.getHttpHeaders().getFirst().getName());
-            Assert.assertEquals("application/xml", response200Xml.getHttpHeaders().getFirst().getValue());
+            Assertions.assertEquals(Integer.valueOf(200), response200Xml.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.ENABLED, response200Xml.getStatus());
+            Assertions.assertTrue(response200Xml.getUsingExpressions().orElse(false));
+            Assertions.assertTrue(response200Xml.getContentEncodings().isEmpty());
+            Assertions.assertEquals(1, response200Xml.getHttpHeaders().size());
+            Assertions.assertEquals("Content-Type", response200Xml.getHttpHeaders().getFirst().getName());
+            Assertions.assertEquals("application/xml", response200Xml.getHttpHeaders().getFirst().getValue());
 
             // XML
             RestMockResponse response200Json = getMockByIdMethod.getMockResponses().stream()
@@ -292,19 +292,19 @@ public class SwaggerRestDefinitionConverterTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(response200Json);
-            Assert.assertEquals("successful operation (application/json)", response200Json.getName());
-            Assert.assertEquals("{\"name\":\"${RANDOM_STRING()}\",\"id\":\"${RANDOM_LONG()}\",\"createdBy\":\"" +
+            Assertions.assertNotNull(response200Json);
+            Assertions.assertEquals("successful operation (application/json)", response200Json.getName());
+            Assertions.assertEquals("{\"name\":\"${RANDOM_STRING()}\",\"id\":\"${RANDOM_LONG()}\",\"createdBy\":\"" +
                             "${RANDOM_STRING()}\",\"mockStatus\":\"${RANDOM_INTEGER()}\"}",
                     response200Json.getBody().orElse(null));
 
-            Assert.assertEquals(Integer.valueOf(200), response200Json.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.ENABLED, response200Json.getStatus());
-            Assert.assertTrue(response200Json.getUsingExpressions().orElse(false));
-            Assert.assertTrue(response200Json.getContentEncodings().isEmpty());
-            Assert.assertEquals(1, response200Json.getHttpHeaders().size());
-            Assert.assertEquals("Content-Type", response200Json.getHttpHeaders().getFirst().getName());
-            Assert.assertEquals("application/json", response200Json.getHttpHeaders().getFirst().getValue());
+            Assertions.assertEquals(Integer.valueOf(200), response200Json.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.ENABLED, response200Json.getStatus());
+            Assertions.assertTrue(response200Json.getUsingExpressions().orElse(false));
+            Assertions.assertTrue(response200Json.getContentEncodings().isEmpty());
+            Assertions.assertEquals(1, response200Json.getHttpHeaders().size());
+            Assertions.assertEquals("Content-Type", response200Json.getHttpHeaders().getFirst().getName());
+            Assertions.assertEquals("application/json", response200Json.getHttpHeaders().getFirst().getValue());
 
 
             // Invalid mock id supplied
@@ -313,14 +313,14 @@ public class SwaggerRestDefinitionConverterTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(invalidMockResponse);
-            Assert.assertEquals("Invalid mock id supplied", invalidMockResponse.getName());
+            Assertions.assertNotNull(invalidMockResponse);
+            Assertions.assertEquals("Invalid mock id supplied", invalidMockResponse.getName());
 
-            Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
-            Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
-            Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
+            Assertions.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
+            Assertions.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
+            Assertions.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
+            Assertions.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
             // Mock not found
             RestMockResponse notFoundResponse = getMockByIdMethod.getMockResponses().stream()
@@ -328,16 +328,16 @@ public class SwaggerRestDefinitionConverterTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(notFoundResponse);
-            Assert.assertEquals("Mock not found", notFoundResponse.getName());
+            Assertions.assertNotNull(notFoundResponse);
+            Assertions.assertEquals("Mock not found", notFoundResponse.getName());
 
-            Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
-            Assert.assertTrue(notFoundResponse.getUsingExpressions().orElse(false));
-            Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
-            Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
+            Assertions.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
+            Assertions.assertTrue(notFoundResponse.getUsingExpressions().orElse(false));
+            Assertions.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
+            Assertions.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
-            Assert.assertEquals(0, getMockByIdMethod.getMockResponses().size());
+            Assertions.assertEquals(0, getMockByIdMethod.getMockResponses().size());
         }
 
 
@@ -348,18 +348,18 @@ public class SwaggerRestDefinitionConverterTest {
                 .findFirst()
                 .orElse(null);
 
-        Assert.assertNotNull(updateMockMethod);
-        Assert.assertEquals("updateMock", updateMockMethod.getName());
-        Assert.assertEquals("http://castlemock.com/v1", updateMockMethod.getForwardedEndpoint().orElse(null));
-        Assert.assertEquals(HttpMethod.PUT, updateMockMethod.getHttpMethod());
-        Assert.assertEquals(RestMethodStatus.MOCKED, updateMockMethod.getStatus());
-        Assert.assertEquals(RestResponseStrategy.SEQUENCE, updateMockMethod.getResponseStrategy());
-        Assert.assertEquals(Integer.valueOf(0), updateMockMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), updateMockMethod.getNetworkDelay().orElse(null));
-        Assert.assertFalse(updateMockMethod.getSimulateNetworkDelay().orElse(false));
+        Assertions.assertNotNull(updateMockMethod);
+        Assertions.assertEquals("updateMock", updateMockMethod.getName());
+        Assertions.assertEquals("http://castlemock.com/v1", updateMockMethod.getForwardedEndpoint().orElse(null));
+        Assertions.assertEquals(HttpMethod.PUT, updateMockMethod.getHttpMethod());
+        Assertions.assertEquals(RestMethodStatus.MOCKED, updateMockMethod.getStatus());
+        Assertions.assertEquals(RestResponseStrategy.SEQUENCE, updateMockMethod.getResponseStrategy());
+        Assertions.assertEquals(Integer.valueOf(0), updateMockMethod.getCurrentResponseSequenceIndex());
+        Assertions.assertEquals(Long.valueOf(0L), updateMockMethod.getNetworkDelay().orElse(null));
+        Assertions.assertFalse(updateMockMethod.getSimulateNetworkDelay().orElse(false));
 
         if(generatedResponse){
-            Assert.assertEquals(2, updateMockMethod.getMockResponses().size());
+            Assertions.assertEquals(2, updateMockMethod.getMockResponses().size());
 
             // Invalid mock id supplied
             RestMockResponse invalidMockResponse = updateMockMethod.getMockResponses().stream()
@@ -367,14 +367,14 @@ public class SwaggerRestDefinitionConverterTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(invalidMockResponse);
-            Assert.assertEquals("Invalid mock supplied", invalidMockResponse.getName());
+            Assertions.assertNotNull(invalidMockResponse);
+            Assertions.assertEquals("Invalid mock supplied", invalidMockResponse.getName());
 
-            Assert.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
-            Assert.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
-            Assert.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
-            Assert.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
+            Assertions.assertEquals(Integer.valueOf(400), invalidMockResponse.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.DISABLED, invalidMockResponse.getStatus());
+            Assertions.assertTrue(invalidMockResponse.getUsingExpressions().orElse(false));
+            Assertions.assertTrue(invalidMockResponse.getContentEncodings().isEmpty());
+            Assertions.assertEquals(0, invalidMockResponse.getHttpHeaders().size());
 
             // Mock not found
             RestMockResponse notFoundResponse = updateMockMethod.getMockResponses().stream()
@@ -382,16 +382,16 @@ public class SwaggerRestDefinitionConverterTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(notFoundResponse);
-            Assert.assertEquals("Mock not found", notFoundResponse.getName());
+            Assertions.assertNotNull(notFoundResponse);
+            Assertions.assertEquals("Mock not found", notFoundResponse.getName());
 
-            Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
-            Assert.assertTrue(notFoundResponse.getUsingExpressions().orElse(false));
-            Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
-            Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
+            Assertions.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
+            Assertions.assertTrue(notFoundResponse.getUsingExpressions().orElse(false));
+            Assertions.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
+            Assertions.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
-            Assert.assertEquals(0, updateMockMethod.getMockResponses().size());
+            Assertions.assertEquals(0, updateMockMethod.getMockResponses().size());
         }
 
         // /mock/{mockId} (DELETE) - getMockById
@@ -401,18 +401,18 @@ public class SwaggerRestDefinitionConverterTest {
                 .findFirst()
                 .orElse(null);
 
-        Assert.assertNotNull(deleteMockMethod);
-        Assert.assertEquals("deleteMock", deleteMockMethod.getName());
-        Assert.assertEquals("http://castlemock.com/v1", deleteMockMethod.getForwardedEndpoint().orElse(null));
-        Assert.assertEquals(HttpMethod.DELETE, deleteMockMethod.getHttpMethod());
-        Assert.assertEquals(RestMethodStatus.MOCKED, deleteMockMethod.getStatus());
-        Assert.assertEquals(RestResponseStrategy.SEQUENCE, deleteMockMethod.getResponseStrategy());
-        Assert.assertEquals(Integer.valueOf(0), deleteMockMethod.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(Long.valueOf(0L), deleteMockMethod.getNetworkDelay().orElse(null));
-        Assert.assertFalse(deleteMockMethod.getSimulateNetworkDelay().orElse(false));
+        Assertions.assertNotNull(deleteMockMethod);
+        Assertions.assertEquals("deleteMock", deleteMockMethod.getName());
+        Assertions.assertEquals("http://castlemock.com/v1", deleteMockMethod.getForwardedEndpoint().orElse(null));
+        Assertions.assertEquals(HttpMethod.DELETE, deleteMockMethod.getHttpMethod());
+        Assertions.assertEquals(RestMethodStatus.MOCKED, deleteMockMethod.getStatus());
+        Assertions.assertEquals(RestResponseStrategy.SEQUENCE, deleteMockMethod.getResponseStrategy());
+        Assertions.assertEquals(Integer.valueOf(0), deleteMockMethod.getCurrentResponseSequenceIndex());
+        Assertions.assertEquals(Long.valueOf(0L), deleteMockMethod.getNetworkDelay().orElse(null));
+        Assertions.assertFalse(deleteMockMethod.getSimulateNetworkDelay().orElse(false));
 
         if(generatedResponse){
-            Assert.assertEquals(1, deleteMockMethod.getMockResponses().size());
+            Assertions.assertEquals(1, deleteMockMethod.getMockResponses().size());
 
             // Mock not found
             RestMockResponse notFoundResponse = deleteMockMethod.getMockResponses().stream()
@@ -420,16 +420,16 @@ public class SwaggerRestDefinitionConverterTest {
                     .findFirst()
                     .orElse(null);
 
-            Assert.assertNotNull(notFoundResponse);
-            Assert.assertEquals("Mock not found", notFoundResponse.getName());
+            Assertions.assertNotNull(notFoundResponse);
+            Assertions.assertEquals("Mock not found", notFoundResponse.getName());
 
-            Assert.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
-            Assert.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
-            Assert.assertTrue(notFoundResponse.getUsingExpressions().orElse(false));
-            Assert.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
-            Assert.assertEquals(0, notFoundResponse.getHttpHeaders().size());
+            Assertions.assertEquals(Integer.valueOf(404), notFoundResponse.getHttpStatusCode());
+            Assertions.assertEquals(RestMockResponseStatus.DISABLED, notFoundResponse.getStatus());
+            Assertions.assertTrue(notFoundResponse.getUsingExpressions().orElse(false));
+            Assertions.assertTrue(notFoundResponse.getContentEncodings().isEmpty());
+            Assertions.assertEquals(0, notFoundResponse.getHttpHeaders().size());
         } else {
-            Assert.assertEquals(0, deleteMockMethod.getMockResponses().size());
+            Assertions.assertEquals(0, deleteMockMethod.getMockResponses().size());
         }
     }
 }

@@ -23,9 +23,9 @@ import com.castlemock.model.mock.soap.domain.SoapEventTestBuilder;
 import com.castlemock.repository.soap.event.SoapEventRepository;
 import com.castlemock.service.mock.soap.event.input.CreateSoapEventInput;
 import com.castlemock.service.mock.soap.event.output.CreateSoapEventOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -46,7 +46,7 @@ public class CreateSoapEventServiceTest {
     @InjectMocks
     private CreateSoapEventService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(service, "soapMaxEventCount", 5);
@@ -67,9 +67,9 @@ public class CreateSoapEventServiceTest {
         Mockito.verify(repository, Mockito.times(0)).deleteOldestEvent();
         Mockito.verify(repository, Mockito.times(1)).save(soapEvent);
 
-        Assert.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
-        Assert.assertEquals(soapEvent.getPortId(), returnedSoapEvent.getPortId());
-        Assert.assertEquals(soapEvent.getProjectId(), returnedSoapEvent.getProjectId());
+        Assertions.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
+        Assertions.assertEquals(soapEvent.getPortId(), returnedSoapEvent.getPortId());
+        Assertions.assertEquals(soapEvent.getProjectId(), returnedSoapEvent.getProjectId());
     }
 
     @Test
@@ -87,9 +87,9 @@ public class CreateSoapEventServiceTest {
         Mockito.verify(repository, Mockito.times(1)).deleteOldestEvent();
         Mockito.verify(repository, Mockito.times(1)).save(soapEvent);
 
-        Assert.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
-        Assert.assertEquals(soapEvent.getPortId(), returnedSoapEvent.getPortId());
-        Assert.assertEquals(soapEvent.getProjectId(), returnedSoapEvent.getProjectId());
+        Assertions.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
+        Assertions.assertEquals(soapEvent.getPortId(), returnedSoapEvent.getPortId());
+        Assertions.assertEquals(soapEvent.getProjectId(), returnedSoapEvent.getProjectId());
     }
 
 }

@@ -104,6 +104,41 @@ public final class UpdateSoapMockResponseInput implements Input {
         return List.copyOf(xpathExpressions);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateSoapMockResponseInput that = (UpdateSoapMockResponseInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(portId, that.portId) &&
+                Objects.equals(operationId, that.operationId) && Objects.equals(mockResponseId, that.mockResponseId) &&
+                Objects.equals(name, that.name) && Objects.equals(body, that.body) && status == that.status &&
+                Objects.equals(httpStatusCode, that.httpStatusCode) && Objects.equals(httpHeaders, that.httpHeaders) &&
+                Objects.equals(xpathExpressions, that.xpathExpressions) && Objects.equals(usingExpressions, that.usingExpressions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, portId, operationId, mockResponseId, name, body, status,
+                httpStatusCode, httpHeaders, xpathExpressions, usingExpressions);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateSoapMockResponseInput{" +
+                "projectId='" + projectId + '\'' +
+                ", portId='" + portId + '\'' +
+                ", operationId='" + operationId + '\'' +
+                ", mockResponseId='" + mockResponseId + '\'' +
+                ", name='" + name + '\'' +
+                ", body='" + body + '\'' +
+                ", status=" + status +
+                ", httpStatusCode=" + httpStatusCode +
+                ", httpHeaders=" + httpHeaders +
+                ", xpathExpressions=" + xpathExpressions +
+                ", usingExpressions=" + usingExpressions +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

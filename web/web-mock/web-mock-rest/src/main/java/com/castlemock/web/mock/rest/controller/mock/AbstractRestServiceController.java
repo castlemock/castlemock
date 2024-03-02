@@ -43,6 +43,7 @@ import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
 import com.castlemock.web.core.controller.AbstractController;
 import com.castlemock.web.core.utility.HttpMessageSupport;
 import com.castlemock.web.mock.rest.model.RestException;
+import com.castlemock.web.mock.rest.utility.RestClient;
 import com.castlemock.web.mock.rest.utility.RestHeaderQueryValidator;
 import com.castlemock.web.mock.rest.utility.RestParameterQueryValidator;
 import com.castlemock.web.mock.rest.utility.compare.RestMockResponseNameComparator;
@@ -98,8 +99,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
                                             final ServletContext servletContext,
                                             final RestClient restClient){
         super(serviceProcessor);
-        this.servletContext = Objects.requireNonNull(servletContext);
-        this.restClient = restClient;
+        this.servletContext = Objects.requireNonNull(servletContext, "servletContext");
+        this.restClient = Objects.requireNonNull(restClient, "restClient");
     }
 
     /**
@@ -124,16 +125,16 @@ public abstract class AbstractRestServiceController extends AbstractController {
             final RestRequest restRequest = prepareRequest(projectId, applicationId, httpMethod, httpServletRequest);
 
             final IdentifyRestMethodOutput output = serviceProcessor.process(IdentifyRestMethodInput.builder()
-                    .restProjectId(projectId)
-                    .restApplicationId(applicationId)
-                    .restResourceUri(restRequest.getUri())
+                    .projectId(projectId)
+                    .applicationId(applicationId)
+                    .resourceUri(restRequest.getUri())
                     .httpMethod(httpMethod)
                     .httpParameters(restRequest.getHttpParameters())
                     .build());
-            final String resourceId = output.getRestResourceId();
+            final String resourceId = output.getResourceId();
 
             return process(restRequest, projectId, applicationId, resourceId,
-                    output.getRestMethod(), output.getPathParameters(),
+                    output.getMethod(), output.getPathParameters(),
                     httpServletRequest);
         } catch (Exception exception) {
             LOGGER.error("REST service exception: " + exception.getMessage(), exception);
@@ -159,8 +160,8 @@ public abstract class AbstractRestServiceController extends AbstractController {
         final String incomingRequestUri = httpServletRequest.getRequestURI();
         final String restResourceUri = incomingRequestUri.replace(servletContext.getContextPath() + SLASH + MOCK + SLASH + REST +
                 SLASH + PROJECT + SLASH + projectId + SLASH + APPLICATION + SLASH + applicationId, EMPTY);
-        final List<HttpParameter> httpParameters = HttpMessageSupport.extractParameters(httpServletRequest);
-        final List<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
+        final Set<HttpParameter> httpParameters = HttpMessageSupport.extractParameters(httpServletRequest);
+        final Set<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
         return RestRequest.builder()
                 .body(body)
                 .uri(restResourceUri)
@@ -411,10 +412,10 @@ public abstract class AbstractRestServiceController extends AbstractController {
             }
             mockResponse = mockResponses.get(currentSequenceNumber);
             serviceProcessor.process(UpdateCurrentRestMockResponseSequenceIndexInput.builder()
-                    .restProjectId(projectId)
-                    .restApplicationId(applicationId)
-                    .restResourceId(resourceId)
-                    .restMethodId(restMethod.getId())
+                    .projectId(projectId)
+                    .applicationId(applicationId)
+                    .resourceId(resourceId)
+                    .methodId(restMethod.getId())
                     .currentRestMockResponseSequenceIndex(currentSequenceNumber + 1)
                     .build());
         } else if (restMethod.getResponseStrategy().equals(RestResponseStrategy.QUERY_MATCH)) {
@@ -515,7 +516,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
      * @since 1.13
      */
     private Collection<String> getHeaderValues(final String headerName,
-                                               final List<HttpHeader> httpHeaders) {
+                                               final Collection<HttpHeader> httpHeaders) {
         return httpHeaders
                 .stream()
                 .filter(header -> headerName.equalsIgnoreCase(header.getName()))

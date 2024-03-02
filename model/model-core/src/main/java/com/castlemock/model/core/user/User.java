@@ -180,6 +180,21 @@ public class User {
                 .role(this.role);
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", updated=" + updated +
+                ", created=" + created +
+                ", status=" + status +
+                ", role=" + role +
+                '}';
+    }
+
     @JsonPOJOBuilder(withPrefix = "")
     public static final class Builder {
         private String id;

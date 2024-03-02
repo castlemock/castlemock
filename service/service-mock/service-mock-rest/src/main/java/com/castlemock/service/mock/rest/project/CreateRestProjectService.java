@@ -53,7 +53,7 @@ public class CreateRestProjectService extends AbstractRestProjectService impleme
                 .build();
         final RestProject savedRestProject = save(restProject);
         return createServiceResult(CreateRestProjectOutput.builder()
-                .savedRestApplication(savedRestProject)
+                .project(savedRestProject)
                 .build());
     }
 }

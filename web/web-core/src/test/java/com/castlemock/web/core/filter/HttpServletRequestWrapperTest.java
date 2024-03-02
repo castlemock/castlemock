@@ -18,10 +18,12 @@ package com.castlemock.web.core.filter;
 
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -30,10 +32,11 @@ import static org.mockito.ArgumentMatchers.anyInt;
  * @author Karl Dahlgren
  * @since 1.18
  */
-public class HttpServletRequestWrapperTest {
+class HttpServletRequestWrapperTest {
 
     @Test
-    public void testGetInputStream() throws IOException {
+    @DisplayName("Get input stream")
+    void testGetInputStream() throws IOException {
         final ServletInputStream inputStream = Mockito.mock(ServletInputStream.class);
         final HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
         Mockito.when(inputStream.read(Mockito.any(byte[].class), anyInt(), anyInt())).thenReturn(-1);
@@ -42,10 +45,24 @@ public class HttpServletRequestWrapperTest {
         final HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(request);
         final ServletInputStream stream = wrapper.getInputStream();
 
-        Assert.assertNotNull(stream);
-        Assert.assertEquals(-1, stream.read());
+        Assertions.assertNotNull(stream);
+        Assertions.assertEquals(-1, stream.read());
 
         Mockito.verify(inputStream, Mockito.times(1)).read(Mockito.any(byte[].class), anyInt(), anyInt());
+    }
+
+    @Test
+    @DisplayName("Get reader")
+    void testGetReader() throws IOException {
+        final ServletInputStream inputStream = Mockito.mock(ServletInputStream.class);
+        final HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+        Mockito.when(inputStream.read(Mockito.any(byte[].class), anyInt(), anyInt())).thenReturn(-1);
+        Mockito.when(request.getInputStream()).thenReturn(inputStream);
+
+        final HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(request);
+        final BufferedReader reader = wrapper.getReader();
+
+        Assertions.assertNotNull(reader);
     }
 
 }

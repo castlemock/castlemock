@@ -53,7 +53,7 @@ public class UpdateRestProjectService extends AbstractRestProjectService impleme
                         .build())
                 .flatMap(project -> update(restProjectId, project));
         return createServiceResult(UpdateRestProjectOutput.builder()
-                .updatedRestProject(updatedRestProject.orElse(null))
+                .project(updatedRestProject.orElse(null))
                 .build());
     }
 }

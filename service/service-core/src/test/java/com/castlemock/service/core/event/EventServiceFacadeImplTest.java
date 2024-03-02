@@ -17,8 +17,8 @@
 package com.castlemock.service.core.event;
 
 import com.castlemock.model.core.service.event.EventServiceAdapter;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -43,7 +43,7 @@ public class EventServiceFacadeImplTest {
 
     private EventServiceAdapter eventServiceAdapter;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
 

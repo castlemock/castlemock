@@ -73,7 +73,9 @@ class UserCoreRestControllerTest {
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
-        assertEquals(createdUser, responseEntity.getBody());
+        assertEquals(createdUser.toBuilder()
+                .password("")
+                .build(), responseEntity.getBody());
 
         verify(serviceProcessor, times(1)).process(any());
     }
@@ -94,7 +96,9 @@ class UserCoreRestControllerTest {
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
-        assertEquals(updatedUser, responseEntity.getBody());
+        assertEquals(updatedUser.toBuilder()
+                .password("")
+                .build(), responseEntity.getBody());
 
         verify(serviceProcessor, times(1)).process(any());
     }
@@ -103,10 +107,9 @@ class UserCoreRestControllerTest {
     @DisplayName("Get users")
     void testGetUsers(){
         final User user = UserTestBuilder.builder().build();
-        final List<User> users = List.of(user);
 
         when(serviceProcessor.process(any())).thenReturn(ReadAllUsersOutput.builder()
-                .users(users)
+                .users(List.of(user))
                 .build());
 
         final ResponseEntity<List<User>> responseEntity = this.userCoreRestController.getUsers();
@@ -114,7 +117,9 @@ class UserCoreRestControllerTest {
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
-        assertEquals(users, responseEntity.getBody());
+        assertEquals(List.of(user.toBuilder()
+                .password("")
+                .build()), responseEntity.getBody());
 
         verify(serviceProcessor, times(1)).process(any(ReadAllUsersInput.class));
     }
@@ -133,7 +138,9 @@ class UserCoreRestControllerTest {
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
-        assertEquals(user, responseEntity.getBody());
+        assertEquals(user.toBuilder()
+                .password("")
+                .build(), responseEntity.getBody());
 
         verify(serviceProcessor, times(1)).process(any(ReadUserInput.class));
     }

@@ -25,6 +25,7 @@ import com.castlemock.service.mock.soap.project.input.UpdateSoapOperationsStatus
 import com.castlemock.service.mock.soap.project.input.UpdateSoapPortInput;
 import com.castlemock.service.mock.soap.project.output.DeleteSoapPortOutput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapPortOutput;
+import com.castlemock.service.mock.soap.project.output.UpdateSoapPortOutput;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.soap.model.UpdateSoapOperationForwardedEndpointsRequest;
 import com.castlemock.web.mock.soap.model.UpdateSoapOperationStatusesRequest;
@@ -66,7 +67,8 @@ public class SoapPortRestController extends AbstractRestController {
                 .build());
         return output.getPort()
                 .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());    }
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @Operation(summary =  "Delete Port")
     @RequestMapping(method = RequestMethod.DELETE, value = "/project/{projectId}/port/{portId}")
@@ -88,18 +90,20 @@ public class SoapPortRestController extends AbstractRestController {
     @RequestMapping(method = RequestMethod.PUT, value = "/project/{projectId}/port/{portId}")
     @PreAuthorize("hasAuthority('MODIFIER') or hasAuthority('ADMIN')")
     public @ResponseBody
-    ResponseEntity<Void> updatePort(
+    ResponseEntity<SoapPort> updatePort(
             @Parameter(name = "projectId", description = "The id of the project")
             @PathVariable(value = "projectId") final String projectId,
             @Parameter(name = "portId", description = "The id of the port")
             @PathVariable(value = "portId") final String portId,
             @RequestBody UpdateSoapPortRequest request){
-        super.serviceProcessor.process(UpdateSoapPortInput.builder()
+        final UpdateSoapPortOutput output = super.serviceProcessor.process(UpdateSoapPortInput.builder()
                 .projectId(projectId)
                 .portId(portId)
                 .uri(request.getUri())
                 .build());
-        return ResponseEntity.ok().build();
+        return output.getPort()
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Update operation statuses")
