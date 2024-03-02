@@ -49,6 +49,29 @@ public final class UpdateRestApplicationsForwardedEndpointInput implements Input
         return forwardedEndpoint;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateRestApplicationsForwardedEndpointInput that = (UpdateRestApplicationsForwardedEndpointInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(applicationIds, that.applicationIds) &&
+                Objects.equals(forwardedEndpoint, that.forwardedEndpoint);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, applicationIds, forwardedEndpoint);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateRestApplicationsForwardedEndpointInput{" +
+                "projectId='" + projectId + '\'' +
+                ", applicationIds=" + applicationIds +
+                ", forwardedEndpoint='" + forwardedEndpoint + '\'' +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }
@@ -58,6 +81,9 @@ public final class UpdateRestApplicationsForwardedEndpointInput implements Input
         private String projectId;
         private String forwardedEndpoint;
         private Set<String> applicationIds;
+
+        private Builder() {
+        }
 
         public Builder projectId(final String projectId){
             this.projectId = projectId;

@@ -85,18 +85,19 @@ public class SoapResourceRestController extends AbstractRestController {
             return ResponseEntity.notFound().build();
         }
 
-        final SoapResource soapResource = output.getResource().get();
-        final LoadSoapResourceOutput loadOutput =
-                this.serviceProcessor.process(LoadSoapResourceInput.builder()
-                        .projectId(projectId)
-                        .resourceId(soapResource.getId())
-                        .build());
-        return loadOutput.getResource()
-                .map(content -> soapResource.toBuilder()
-                        .content(content)
-                        .build())
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return output.getResource()
+                .flatMap(resource -> {
+                    final LoadSoapResourceOutput loadOutput =
+                            this.serviceProcessor.process(LoadSoapResourceInput.builder()
+                                    .projectId(projectId)
+                                    .resourceId(resource.getId())
+                                    .build());
+                    return loadOutput.getResource()
+                            .map(content -> resource.toBuilder()
+                                    .content(content)
+                                    .build())
+                            .map(ResponseEntity::ok);
+                }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Operation(summary =  "Get SOAP resource content")

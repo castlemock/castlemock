@@ -22,7 +22,7 @@ import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.service.core.user.input.ReadUserByUsernameInput;
 import com.castlemock.service.core.user.output.ReadUserByUsernameOutput;
 import com.castlemock.web.core.config.JWTEncoderDecoder;
-import com.castlemock.web.core.model.AuthenticationRequestTestBuilder;
+import com.castlemock.web.core.model.authentication.AuthenticationRequestTestBuilder;
 import com.castlemock.web.core.model.authentication.AuthenticationRequest;
 import com.castlemock.web.core.model.authentication.AuthenticationResponse;
 import jakarta.servlet.http.HttpServletResponse;

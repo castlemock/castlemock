@@ -40,7 +40,7 @@ public final class SoapRequestFileConverter {
                 .httpHeaders(soapRequestFile.getHttpHeaders()
                         .stream()
                         .map(HttpHeaderFileConverter::toHttpHeader)
-                        .collect(Collectors.toList()))
+                        .collect(Collectors.toSet()))
                 .operationIdentifier(SoapOperationIdentifierFileConverter
                         .toSoapOperationIdentifier(soapRequestFile.getOperationIdentifier()))
                 .build();

@@ -49,6 +49,29 @@ public final class UpdateSoapPortsForwardedEndpointInput implements Input {
         return forwardedEndpoint;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateSoapPortsForwardedEndpointInput that = (UpdateSoapPortsForwardedEndpointInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(portIds, that.portIds) &&
+                Objects.equals(forwardedEndpoint, that.forwardedEndpoint);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, portIds, forwardedEndpoint);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateSoapPortsForwardedEndpointInput{" +
+                "projectId='" + projectId + '\'' +
+                ", portIds=" + portIds +
+                ", forwardedEndpoint='" + forwardedEndpoint + '\'' +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

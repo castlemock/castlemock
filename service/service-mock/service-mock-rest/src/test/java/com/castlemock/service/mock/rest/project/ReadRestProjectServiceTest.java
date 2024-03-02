@@ -16,9 +16,9 @@ import com.castlemock.repository.rest.project.RestProjectRepository;
 import com.castlemock.repository.rest.project.RestResourceRepository;
 import com.castlemock.service.mock.rest.project.input.ReadRestProjectInput;
 import com.castlemock.service.mock.rest.project.output.ReadRestProjectOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class ReadRestProjectServiceTest {
     @InjectMocks
     private ReadRestProjectService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -58,7 +58,7 @@ public class ReadRestProjectServiceTest {
         final RestMethod method = RestMethodTestBuilder.builder().build();
 
         final ReadRestProjectInput input = ReadRestProjectInput.builder()
-                .restProjectId(project.getId())
+                .projectId(project.getId())
                 .build();
         final ServiceTask<ReadRestProjectInput> serviceTask = ServiceTask.of(input, "user");
 
@@ -73,8 +73,8 @@ public class ReadRestProjectServiceTest {
         Mockito.verify(resourceRepository, Mockito.times(1)).findIdsWithApplicationId(application.getId());
         Mockito.verify(methodRepository, Mockito.times(1)).findWithResourceId(resource.getId());
 
-        Assert.assertNotNull(result.getOutput());
-        //Assert.assertEquals(project, result.getOutput().getRestProject());
+        Assertions.assertNotNull(result.getOutput());
+        //Assertions.assertEquals(project, result.getOutput().getRestProject());
     }
 
 }

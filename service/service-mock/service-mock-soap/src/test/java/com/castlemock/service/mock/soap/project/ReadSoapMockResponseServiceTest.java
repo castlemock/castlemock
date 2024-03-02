@@ -7,9 +7,9 @@ import com.castlemock.model.mock.soap.domain.SoapMockResponseTestBuilder;
 import com.castlemock.repository.soap.project.SoapMockResponseRepository;
 import com.castlemock.service.mock.soap.project.input.ReadSoapMockResponseInput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapMockResponseOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -25,7 +25,7 @@ public class ReadSoapMockResponseServiceTest {
     @InjectMocks
     private ReadSoapMockResponseService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -50,13 +50,13 @@ public class ReadSoapMockResponseServiceTest {
 
         Mockito.verify(mockResponseRepository, Mockito.times(1)).findOne(mockResponse.getId());
 
-        Assert.assertNotNull(result.getOutput());
+        Assertions.assertNotNull(result.getOutput());
 
         final SoapMockResponse returnedSoapMockResponse = result.getOutput().getMockResponse()
                 .orElse(null);
 
-        Assert.assertNotNull(returnedSoapMockResponse);
-        Assert.assertEquals(mockResponse, returnedSoapMockResponse);
+        Assertions.assertNotNull(returnedSoapMockResponse);
+        Assertions.assertEquals(mockResponse, returnedSoapMockResponse);
     }
 
 }

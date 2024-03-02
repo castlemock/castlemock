@@ -20,8 +20,8 @@ import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpParameter;
 import jakarta.servlet.http.HttpServletRequest;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.BufferedReader;
@@ -34,6 +34,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Karl Dahlgren
@@ -53,22 +56,35 @@ public class HttpMessageSupportTest {
         Mockito.when(httpServletRequest.getHeader("Accept")).thenReturn("application/json");
         Mockito.when(httpServletRequest.getHeader("Content-Length")).thenReturn("1024");
 
-        List<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
+        Set<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpServletRequest);
 
-        Assert.assertEquals(headerNames.size(), httpHeaders.size());
+        Assertions.assertEquals(headerNames.size(), httpHeaders.size());
 
-        HttpHeader contentTypeHeader = httpHeaders.getFirst();
-        HttpHeader acceptHeader = httpHeaders.get(1);
-        HttpHeader contentLengthHeader = httpHeaders.get(2);
+        HttpHeader contentTypeHeader = httpHeaders.stream()
+                .filter(parameter -> parameter.getName().equals("Content-Type"))
+                .findFirst()
+                .orElse(null);
+        HttpHeader acceptHeader = httpHeaders.stream()
+                .filter(parameter -> parameter.getName().equals("Accept"))
+                .findFirst()
+                .orElse(null);
+        HttpHeader contentLengthHeader = httpHeaders.stream()
+                .filter(parameter -> parameter.getName().equals("Content-Length"))
+                .findFirst()
+                .orElse(null);
 
-        Assert.assertEquals("Content-Type", contentTypeHeader.getName());
-        Assert.assertEquals("application/xml", contentTypeHeader.getValue());
+        Assertions.assertNotNull(contentTypeHeader);
+        Assertions.assertNotNull(acceptHeader);
+        Assertions.assertNotNull(contentLengthHeader);
 
-        Assert.assertEquals("Accept", acceptHeader.getName());
-        Assert.assertEquals("application/json", acceptHeader.getValue());
+        Assertions.assertEquals("Content-Type", contentTypeHeader.getName());
+        Assertions.assertEquals("application/xml", contentTypeHeader.getValue());
 
-        Assert.assertEquals("Content-Length", contentLengthHeader.getName());
-        Assert.assertEquals("1024", contentLengthHeader.getValue());
+        Assertions.assertEquals("Accept", acceptHeader.getName());
+        Assertions.assertEquals("application/json", acceptHeader.getValue());
+
+        Assertions.assertEquals("Content-Length", contentLengthHeader.getName());
+        Assertions.assertEquals("1024", contentLengthHeader.getValue());
 
     }
 
@@ -86,20 +102,20 @@ public class HttpMessageSupportTest {
         List<HttpHeader> httpHeaders = HttpMessageSupport.extractHttpHeaders(httpURLConnection);
 
         // Should ignore the Content-Length and Transfer-Encoding headers
-        Assert.assertEquals(3, httpHeaders.size());
+        Assertions.assertEquals(3, httpHeaders.size());
 
         HttpHeader acceptHeader = httpHeaders.getFirst();
         HttpHeader contentTypeXmlHeader = httpHeaders.get(1);
         HttpHeader contentTypeJsonHeader = httpHeaders.get(2);
 
-        Assert.assertEquals("Accept", acceptHeader.getName());
-        Assert.assertEquals("application/json", acceptHeader.getValue());
+        Assertions.assertEquals("Accept", acceptHeader.getName());
+        Assertions.assertEquals("application/json", acceptHeader.getValue());
 
-        Assert.assertEquals("Content-Type", contentTypeXmlHeader.getName());
-        Assert.assertEquals("application/xml", contentTypeXmlHeader.getValue());
+        Assertions.assertEquals("Content-Type", contentTypeXmlHeader.getName());
+        Assertions.assertEquals("application/xml", contentTypeXmlHeader.getValue());
 
-        Assert.assertEquals("Content-Type", contentTypeJsonHeader.getName());
-        Assert.assertEquals("application/json", contentTypeJsonHeader.getValue());
+        Assertions.assertEquals("Content-Type", contentTypeJsonHeader.getName());
+        Assertions.assertEquals("application/json", contentTypeJsonHeader.getValue());
 
     }
 
@@ -113,17 +129,17 @@ public class HttpMessageSupportTest {
         try {
             Mockito.when(httpServletRequest.getReader()).thenReturn(reader);
         } catch (IOException e) {
-            Assert.fail("Unable to mock getReader method for HttpServletRequest");
+            Assertions.fail("Unable to mock getReader method for HttpServletRequest");
         }
 
         try {
             Mockito.when(reader.readLine()).thenReturn(readerOutput, (String) null);
         } catch (IOException e) {
-            Assert.fail("Unable to mock readLine method for BufferedReader");
+            Assertions.fail("Unable to mock readLine method for BufferedReader");
         }
 
         final String output = HttpMessageSupport.getBody(httpServletRequest);
-        Assert.assertEquals(readerOutput, output);
+        Assertions.assertEquals(readerOutput, output);
     }
 
     @Test
@@ -135,18 +151,27 @@ public class HttpMessageSupportTest {
         Mockito.when(httpServletRequest.getParameterValues("Parameter1")).thenReturn(new String[]{"Value1"});
         Mockito.when(httpServletRequest.getParameterValues("Parameter2")).thenReturn(new String[]{"Value2"});
 
-        List<HttpParameter> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
+        Set<HttpParameter> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
 
-        Assert.assertEquals(parameterNames.size(), parameters.size());
+        Assertions.assertEquals(parameterNames.size(), parameters.size());
 
-        HttpParameter parameter1 = parameters.getFirst();
-        HttpParameter parameter2 = parameters.get(1);
+        HttpParameter parameter1 = parameters.stream()
+                .filter(parameter -> parameter.getName().equals("Parameter1"))
+                .findFirst()
+                .orElse(null);
+        HttpParameter parameter2 = parameters.stream()
+                .filter(parameter -> parameter.getName().equals("Parameter2"))
+                .findFirst()
+                .orElse(null);
 
-        Assert.assertEquals("Parameter1", parameter1.getName());
-        Assert.assertEquals("Value1", parameter1.getValue());
+        Assertions.assertNotNull(parameter1);
+        Assertions.assertNotNull(parameter2);
 
-        Assert.assertEquals("Parameter2", parameter2.getName());
-        Assert.assertEquals("Value2", parameter2.getValue());
+        Assertions.assertEquals("Parameter1", parameter1.getName());
+        Assertions.assertEquals("Value1", parameter1.getValue());
+
+        Assertions.assertEquals("Parameter2", parameter2.getName());
+        Assertions.assertEquals("Value2", parameter2.getValue());
     }
 
     @Test
@@ -156,18 +181,29 @@ public class HttpMessageSupportTest {
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
         Mockito.when(httpServletRequest.getParameterNames()).thenReturn(Collections.enumeration(parameterNames));
         Mockito.when(httpServletRequest.getParameterValues("Parameter1")).thenReturn(new String[]{"Value1", "Value2"});
-        List<HttpParameter> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
+        Set<HttpParameter> parameters = HttpMessageSupport.extractParameters(httpServletRequest);
 
-        Assert.assertEquals(2, parameters.size());
+        Assertions.assertEquals(2, parameters.size());
 
-        HttpParameter parameter1 = parameters.getFirst();
-        HttpParameter parameter2 = parameters.get(1);
+        HttpParameter parameter1 = parameters.stream()
+                .filter(parameter -> parameter.getName().equals("Parameter1"))
+                .filter(parameter -> parameter.getValue().equals("Value1"))
+                .findFirst()
+                .orElse(null);
+        HttpParameter parameter2 = parameters.stream()
+                .filter(parameter -> parameter.getName().equals("Parameter1"))
+                .filter(parameter -> parameter.getValue().equals("Value2"))
+                .findFirst()
+                .orElse(null);
 
-        Assert.assertEquals("Parameter1", parameter1.getName());
-        Assert.assertEquals("Value1", parameter1.getValue());
+        Assertions.assertNotNull(parameter1);
+        Assertions.assertNotNull(parameter2);
 
-        Assert.assertEquals("Parameter1", parameter2.getName());
-        Assert.assertEquals("Value2", parameter2.getValue());
+        Assertions.assertEquals("Parameter1", parameter1.getName());
+        Assertions.assertEquals("Value1", parameter1.getValue());
+
+        Assertions.assertEquals("Parameter1", parameter2.getName());
+        Assertions.assertEquals("Value2", parameter2.getValue());
     }
 
     @Test
@@ -182,9 +218,10 @@ public class HttpMessageSupportTest {
                 .value("Value2")
                 .build();
 
-        final String uri = HttpMessageSupport.buildParameterUri(Arrays.asList(parameter1, parameter2));
+        final String uri = HttpMessageSupport.buildParameterUri(Set.of(parameter1, parameter2));
 
-        Assert.assertEquals("?Parameter1=Value1&Parameter2=Value2", uri);
+        Assertions.assertTrue(uri.equals("?Parameter1=Value1&Parameter2=Value2") ||
+                uri.equals("?Parameter2=Value2&Parameter1=Value1"));
     }
 
 
@@ -222,41 +259,41 @@ public class HttpMessageSupportTest {
         try {
             Mockito.when(httpServletRequest.getReader()).thenReturn(bufferedReader);
         } catch (IOException e) {
-            Assert.fail("Unable to mock getReader method for HttpServletRequest");
+            Assertions.fail("Unable to mock getReader method for HttpServletRequest");
         }
 
         final String output = HttpMessageSupport.getBody(httpServletRequest);
-        Assert.assertEquals(body, output);
+        Assertions.assertEquals(body, output);
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testGetBodyRequestIOError(){
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
 
         try {
             Mockito.when(httpServletRequest.getReader()).thenThrow(new IOException());
         } catch (IOException e) {
-            Assert.fail("Unable to mock getReader method for HttpServletRequest");
+            Assertions.fail("Unable to mock getReader method for HttpServletRequest");
         }
-        HttpMessageSupport.getBody(httpServletRequest);
+        assertThrows(IllegalStateException.class, () -> HttpMessageSupport.getBody(httpServletRequest));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testGetBodyReaderIOError(){
         final HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
         final BufferedReader reader = Mockito.mock(BufferedReader.class);
         try {
             Mockito.when(httpServletRequest.getReader()).thenReturn(reader);
         } catch (IOException e) {
-            Assert.fail("Unable to mock getReader method for HttpServletRequest");
+            Assertions.fail("Unable to mock getReader method for HttpServletRequest");
         }
 
         try {
             Mockito.when(reader.readLine()).thenThrow(new IOException());
         } catch (IOException e) {
-            Assert.fail("Unable to mock readLine method for BufferedReader");
+            Assertions.fail("Unable to mock readLine method for BufferedReader");
         }
-        HttpMessageSupport.getBody(httpServletRequest);
+        assertThrows(IllegalStateException.class, () -> HttpMessageSupport.getBody(httpServletRequest));
     }
 
     @Test
@@ -265,9 +302,9 @@ public class HttpMessageSupportTest {
         Mockito.when(httpURLConnection.getContentEncoding()).thenReturn("gzip/deflate");
         List<HttpContentEncoding> contentEncodings = HttpMessageSupport.extractContentEncoding(httpURLConnection);
 
-        Assert.assertEquals(2, contentEncodings.size());
-        Assert.assertTrue(contentEncodings.contains(HttpContentEncoding.GZIP));
-        Assert.assertTrue(contentEncodings.contains(HttpContentEncoding.DEFLATE));
+        Assertions.assertEquals(2, contentEncodings.size());
+        Assertions.assertTrue(contentEncodings.contains(HttpContentEncoding.GZIP));
+        Assertions.assertTrue(contentEncodings.contains(HttpContentEncoding.DEFLATE));
     }
 
     @Test
@@ -276,8 +313,8 @@ public class HttpMessageSupportTest {
         Mockito.when(httpURLConnection.getContentEncoding()).thenReturn("deflate");
         List<HttpContentEncoding> contentEncodings = HttpMessageSupport.extractContentEncoding(httpURLConnection);
 
-        Assert.assertEquals(1, contentEncodings.size());
-        Assert.assertFalse(contentEncodings.contains(HttpContentEncoding.GZIP));
-        Assert.assertTrue(contentEncodings.contains(HttpContentEncoding.DEFLATE));
+        Assertions.assertEquals(1, contentEncodings.size());
+        Assertions.assertFalse(contentEncodings.contains(HttpContentEncoding.GZIP));
+        Assertions.assertTrue(contentEncodings.contains(HttpContentEncoding.DEFLATE));
     }
 }

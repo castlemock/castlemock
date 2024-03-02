@@ -41,7 +41,7 @@ public class ReadRestEventService extends AbstractRestEventService implements Se
     public ServiceResult<ReadRestEventOutput> process(ServiceTask<ReadRestEventInput> serviceTask) {
         final ReadRestEventInput input = serviceTask.getInput();
         return createServiceResult(ReadRestEventOutput.builder()
-                .restEvent(find(input.getRestEventId()).orElse(null))
+                .event(find(input.getRestEventId()).orElse(null))
                 .build());
     }
 }

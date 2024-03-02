@@ -54,7 +54,7 @@ public class CreateRestMethodService extends AbstractRestProjectService implemen
                 .build();
         final RestMethod createdRestMethod = this.methodRepository.save(restMethod);
         return createServiceResult(CreateRestMethodOutput.builder()
-                .createdRestMethod(createdRestMethod)
+                .method(createdRestMethod)
                 .build());
     }
 }

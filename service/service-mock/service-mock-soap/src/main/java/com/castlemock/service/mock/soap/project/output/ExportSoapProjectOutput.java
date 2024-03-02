@@ -18,6 +18,7 @@ package com.castlemock.service.mock.soap.project.output;
 
 import com.castlemock.model.core.Output;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -34,6 +35,26 @@ public final class ExportSoapProjectOutput implements Output{
 
     public Optional<String> getProject() {
         return Optional.ofNullable(project);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ExportSoapProjectOutput that = (ExportSoapProjectOutput) o;
+        return Objects.equals(project, that.project);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(project);
+    }
+
+    @Override
+    public String toString() {
+        return "ExportSoapProjectOutput{" +
+                "project='" + project + '\'' +
+                '}';
     }
 
     public static Builder builder(){

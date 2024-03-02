@@ -20,9 +20,9 @@ import com.castlemock.model.mock.soap.domain.SoapEvent;
 import com.castlemock.model.mock.soap.domain.SoapEventTestBuilder;
 import com.castlemock.repository.core.file.FileRepositorySupport;
 import com.castlemock.repository.soap.file.event.model.SoapEventFile;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -46,7 +46,7 @@ public class SoapEventRepositoryTest {
     private static final String DIRECTORY = "/directory";
     private static final String EXTENSION = ".extension";
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
         ReflectionTestUtils.setField(repository, "soapEventFileDirectory", DIRECTORY);
@@ -67,26 +67,26 @@ public class SoapEventRepositoryTest {
     public void testFindOne(){
         final SoapEvent soapEvent = save();
         final SoapEvent returnedSoapEvent = repository.findOne(soapEvent.getId()).orElse(null);
-        Assert.assertNotNull(returnedSoapEvent);
-        Assert.assertEquals(returnedSoapEvent.getProjectId(), soapEvent.getProjectId());
-        Assert.assertEquals(returnedSoapEvent.getId(), soapEvent.getId());
-        Assert.assertEquals(returnedSoapEvent.getResourceName(), soapEvent.getResourceName());
-        Assert.assertEquals(returnedSoapEvent.getOperationId(), soapEvent.getOperationId());
-        Assert.assertEquals(returnedSoapEvent.getPortId(), soapEvent.getPortId());
-        Assert.assertEquals(returnedSoapEvent.getResourceName(), soapEvent.getResourceName());
+        Assertions.assertNotNull(returnedSoapEvent);
+        Assertions.assertEquals(returnedSoapEvent.getProjectId(), soapEvent.getProjectId());
+        Assertions.assertEquals(returnedSoapEvent.getId(), soapEvent.getId());
+        Assertions.assertEquals(returnedSoapEvent.getResourceName(), soapEvent.getResourceName());
+        Assertions.assertEquals(returnedSoapEvent.getOperationId(), soapEvent.getOperationId());
+        Assertions.assertEquals(returnedSoapEvent.getPortId(), soapEvent.getPortId());
+        Assertions.assertEquals(returnedSoapEvent.getResourceName(), soapEvent.getResourceName());
     }
 
     @Test
     public void testFindAll(){
         final SoapEvent soapEvent = save();
         final List<SoapEvent> soapEvents = repository.findAll();
-        Assert.assertEquals(soapEvents.size(), 1);
-        Assert.assertEquals(soapEvents.getFirst().getProjectId(), soapEvent.getProjectId());
-        Assert.assertEquals(soapEvents.getFirst().getId(), soapEvent.getId());
-        Assert.assertEquals(soapEvents.getFirst().getResourceName(), soapEvent.getResourceName());
-        Assert.assertEquals(soapEvents.getFirst().getOperationId(), soapEvent.getOperationId());
-        Assert.assertEquals(soapEvents.getFirst().getPortId(), soapEvent.getPortId());
-        Assert.assertEquals(soapEvents.getFirst().getResourceName(), soapEvent.getResourceName());
+        Assertions.assertEquals(soapEvents.size(), 1);
+        Assertions.assertEquals(soapEvents.getFirst().getProjectId(), soapEvent.getProjectId());
+        Assertions.assertEquals(soapEvents.getFirst().getId(), soapEvent.getId());
+        Assertions.assertEquals(soapEvents.getFirst().getResourceName(), soapEvent.getResourceName());
+        Assertions.assertEquals(soapEvents.getFirst().getOperationId(), soapEvent.getOperationId());
+        Assertions.assertEquals(soapEvents.getFirst().getPortId(), soapEvent.getPortId());
+        Assertions.assertEquals(soapEvents.getFirst().getResourceName(), soapEvent.getResourceName());
         
     }
 
@@ -107,7 +107,7 @@ public class SoapEventRepositoryTest {
     public void testCount(){
         final SoapEvent soapEvent = save();
         final Integer count = repository.count();
-        Assert.assertEquals(Integer.valueOf(1), count);
+        Assertions.assertEquals(Integer.valueOf(1), count);
     }
 
     private SoapEvent save(){

@@ -34,6 +34,9 @@ public final class UpdateRestResourcesForwardedEndpointOutput implements Output 
 
     public static final class Builder {
 
+        private Builder() {
+        }
+
         public UpdateRestResourcesForwardedEndpointOutput build(){
             return new UpdateRestResourcesForwardedEndpointOutput();
         }

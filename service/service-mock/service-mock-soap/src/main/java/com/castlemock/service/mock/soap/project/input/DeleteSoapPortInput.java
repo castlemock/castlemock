@@ -42,6 +42,27 @@ public final class DeleteSoapPortInput implements Input{
         return portId;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final DeleteSoapPortInput that = (DeleteSoapPortInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(portId, that.portId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, portId);
+    }
+
+    @Override
+    public String toString() {
+        return "DeleteSoapPortInput{" +
+                "projectId='" + projectId + '\'' +
+                ", portId='" + portId + '\'' +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

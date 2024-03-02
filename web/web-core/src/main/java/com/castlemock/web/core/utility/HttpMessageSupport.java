@@ -37,9 +37,12 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
@@ -115,8 +118,8 @@ public final class HttpMessageSupport {
      * @param httpServletRequest Incoming Http Servlet Request that contains the headers which will be extracted
      * @return A list of HTTP headers extracted from the provided httpServletRequest
      */
-    public static List<HttpHeader> extractHttpHeaders(final HttpServletRequest httpServletRequest){
-        final List<HttpHeader> httpHeaders = new ArrayList<>();
+    public static Set<HttpHeader> extractHttpHeaders(final HttpServletRequest httpServletRequest){
+        final Set<HttpHeader> httpHeaders = new HashSet<>();
         final Enumeration<String> headers = httpServletRequest.getHeaderNames();
         while(headers.hasMoreElements()){
             final String headerName = headers.nextElement();
@@ -169,8 +172,8 @@ public final class HttpMessageSupport {
      * @param httpServletRequest The incoming request which contains all the parameters
      * @return A map with the extracted parameters
      */
-    public static List<HttpParameter> extractParameters(final HttpServletRequest httpServletRequest){
-        final List<HttpParameter> httpParameters = new ArrayList<>();
+    public static Set<HttpParameter> extractParameters(final HttpServletRequest httpServletRequest){
+        final Set<HttpParameter> httpParameters = new HashSet<>();
 
         final Enumeration<String> enumeration = httpServletRequest.getParameterNames();
         while(enumeration.hasMoreElements()){
@@ -193,26 +196,15 @@ public final class HttpMessageSupport {
      * @param httpParameters The Map of parameters that will be used to build the parameter URI
      * @return A URI that contains the parameters from the provided Map
      */
-    public static String buildParameterUri(List<HttpParameter> httpParameters){
+    public static String buildParameterUri(final Set<HttpParameter> httpParameters){
         if(httpParameters.isEmpty()){
             return EMPTY;
         }
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("?");
-        for(int index = 0; index < httpParameters.size(); index++){
-            HttpParameter httpParameter = httpParameters.get(index);
-            String parameterName = httpParameter.getName();
-            String parameterValue = httpParameter.getValue();
-            stringBuilder.append(parameterName)
-                    .append("=")
-                    .append(parameterValue);
 
-            // Add a & (and) character if the Http parameter is not the last one
-            if(index < httpParameters.size() - 1){
-                stringBuilder.append("&");
-            }
-        }
-        return stringBuilder.toString();
+        return httpParameters
+                .stream()
+                .map(parameter -> parameter.getName() + "=" + parameter.getValue())
+                .collect(Collectors.joining("&", "?", ""));
     }
 
     /**
@@ -230,7 +222,7 @@ public final class HttpMessageSupport {
     public static HttpURLConnection establishConnection(final String endpoint,
                                                         final HttpMethod httpMethod,
                                                         final String body,
-                                                        final List<HttpHeader> headers) {
+                                                        final Set<HttpHeader> headers) {
         OutputStream outputStream = null;
         try {
             final URL url = new URI(endpoint).toURL();

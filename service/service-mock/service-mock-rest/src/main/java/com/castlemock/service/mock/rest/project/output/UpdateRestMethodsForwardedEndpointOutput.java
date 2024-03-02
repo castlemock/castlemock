@@ -34,6 +34,9 @@ public final class UpdateRestMethodsForwardedEndpointOutput implements Output {
 
     public static final class Builder {
 
+        private Builder() {
+        }
+
         public UpdateRestMethodsForwardedEndpointOutput build(){
             return new UpdateRestMethodsForwardedEndpointOutput();
         }

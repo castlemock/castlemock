@@ -20,7 +20,7 @@
         <jaxb.version>2.3.1</jaxb.version>
         <antlr.version>4.13.1</antlr.version>
         <log4j.version>2.22.1</log4j.version>
-        <slf4j.version>2.0.10</slf4j.version>
+        <slf4j.version>2.0.11</slf4j.version>
         <junit.version>4.13.1</junit.version>
         <jsr305.version>3.0.2</jsr305.version>
         <cxf.rt.version>3.6.2</cxf.rt.version>
@@ -50,14 +50,14 @@
         <commons.lang.version>3.14.0</commons.lang.version>
         <mockito.core.version>3.6.28</mockito.core.version>
         <commons.codec.version>1.16.0</commons.codec.version>
-        <junit.jupiter.version>5.7.0</junit.jupiter.version>
+        <junit.jupiter.version>5.10.1</junit.jupiter.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
         <tomcat.embedd.version>10.1.18</tomcat.embedd.version>
         <json.schema.validator>2.2.13</json.schema.validator>
         <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.12.1</maven.compiler.version>
         <spring.boot.version>3.2.3</spring.boot.version>
-        <swagger.parser.version>2.1.19</swagger.parser.version>
+        <swagger.parser.version>2.1.20</swagger.parser.version>
         <jakarta.servlet.version>6.0.0</jakarta.servlet.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
@@ -194,6 +194,13 @@
             </dependency>
 
             <!-- Castle Mock test dependencies -->
+            <dependency>
+                <groupId>com.castlemock.web</groupId>
+                <artifactId>web-core</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>com.castlemock.model</groupId>
                 <artifactId>model-core</artifactId>
@@ -556,6 +563,12 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
@@ -615,6 +628,11 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
         </dependency>
@@ -623,6 +641,7 @@
             <artifactId>junit-vintage-engine</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -666,6 +685,11 @@
                         </manifestEntries>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
             </plugin>
         </plugins>
     </build>

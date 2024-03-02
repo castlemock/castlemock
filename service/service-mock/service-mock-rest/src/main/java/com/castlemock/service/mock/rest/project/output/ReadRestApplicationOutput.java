@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestApplication;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -27,14 +28,34 @@ import java.util.Optional;
  */
 public final class ReadRestApplicationOutput implements Output{
 
-    private final RestApplication restApplication;
+    private final RestApplication applicationId;
 
-    private ReadRestApplicationOutput(final RestApplication restApplication) {
-        this.restApplication = restApplication;
+    private ReadRestApplicationOutput(final RestApplication applicationId) {
+        this.applicationId = applicationId;
     }
 
-    public Optional<RestApplication> getRestApplication() {
-        return Optional.ofNullable(restApplication);
+    public Optional<RestApplication> getApplicationId() {
+        return Optional.ofNullable(applicationId);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ReadRestApplicationOutput that = (ReadRestApplicationOutput) o;
+        return Objects.equals(applicationId, that.applicationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(applicationId);
+    }
+
+    @Override
+    public String toString() {
+        return "ReadRestApplicationOutput{" +
+                "applicationId=" + applicationId +
+                '}';
     }
 
     public static Builder builder(){
@@ -45,7 +66,10 @@ public final class ReadRestApplicationOutput implements Output{
 
         private RestApplication restApplication;
 
-        public Builder restApplication(final RestApplication restApplication){
+        private Builder() {
+        }
+
+        public Builder application(final RestApplication restApplication){
             this.restApplication = restApplication;
             return this;
         }

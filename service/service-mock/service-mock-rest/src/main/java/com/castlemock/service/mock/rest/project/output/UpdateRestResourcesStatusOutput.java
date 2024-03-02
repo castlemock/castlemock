@@ -34,6 +34,9 @@ public final class UpdateRestResourcesStatusOutput implements Output {
 
     public static final class Builder {
 
+        private Builder() {
+        }
+
         public UpdateRestResourcesStatusOutput build(){
             return new UpdateRestResourcesStatusOutput();
         }

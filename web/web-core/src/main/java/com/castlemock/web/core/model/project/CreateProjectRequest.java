@@ -36,9 +36,9 @@ public class CreateProjectRequest {
 
 
     private CreateProjectRequest(final Builder builder){
-        this.name = Objects.requireNonNull(builder.name);
+        this.name = Objects.requireNonNull(builder.name, "name");
         this.description = builder.description;
-        this.projectType = Objects.requireNonNull(builder.projectType);
+        this.projectType = Objects.requireNonNull(builder.projectType, "projectType");
     }
 
     public String getName() {

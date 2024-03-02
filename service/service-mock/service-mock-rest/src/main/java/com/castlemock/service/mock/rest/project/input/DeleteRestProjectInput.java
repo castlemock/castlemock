@@ -26,14 +26,34 @@ import java.util.Objects;
  */
 public final class DeleteRestProjectInput implements Input{
 
-    private final String restProjectId;
+    private final String projectId;
 
     private DeleteRestProjectInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId, "restProjectId");
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getProjectId() {
+        return projectId;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final DeleteRestProjectInput that = (DeleteRestProjectInput) o;
+        return Objects.equals(projectId, that.projectId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId);
+    }
+
+    @Override
+    public String toString() {
+        return "DeleteRestProjectInput{" +
+                "projectId='" + projectId + '\'' +
+                '}';
     }
 
     public static Builder builder(){
@@ -42,10 +62,13 @@ public final class DeleteRestProjectInput implements Input{
 
     public static final class Builder {
 
-        private String restProjectId;
+        private String projectId;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        private Builder() {
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 

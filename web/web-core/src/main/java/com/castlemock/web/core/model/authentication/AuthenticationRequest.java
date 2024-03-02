@@ -46,10 +46,10 @@ public class AuthenticationRequest {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AuthenticationRequest that = (AuthenticationRequest) o;
+        final AuthenticationRequest that = (AuthenticationRequest) o;
         return Objects.equals(username, that.username) &&
                 Objects.equals(password, that.password);
     }
@@ -80,12 +80,12 @@ public class AuthenticationRequest {
         private Builder() {
         }
 
-        public Builder username(String username) {
+        public Builder username(final String username) {
             this.username = username;
             return this;
         }
 
-        public Builder password(String password) {
+        public Builder password(final String password) {
             this.password = password;
             return this;
         }

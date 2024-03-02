@@ -26,9 +26,9 @@ import com.castlemock.repository.token.SessionTokenRepository;
 import com.castlemock.repository.user.UserRepository;
 import com.castlemock.service.core.user.input.UpdateUserInput;
 import com.castlemock.service.core.user.output.UpdateUserOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -51,7 +51,7 @@ public class UpdateUserServiceTest {
     @InjectMocks
     private UpdateUserService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -87,13 +87,13 @@ public class UpdateUserServiceTest {
 
         final User returnedUser = output.getUpdatedUser()
                 .orElse(null);
-        Assert.assertNotNull(returnedUser);
-        Assert.assertEquals(updatedUser.getId(), returnedUser.getId());
-        Assert.assertEquals(updatedUser.getPassword(), returnedUser.getPassword());
-        Assert.assertEquals(updatedUser.getEmail(), returnedUser.getEmail());
-        Assert.assertEquals(updatedUser.getRole(), returnedUser.getRole());
-        Assert.assertEquals(updatedUser.getStatus(), returnedUser.getStatus());
-        Assert.assertEquals(updatedUser.getUsername(), returnedUser.getUsername());
+        Assertions.assertNotNull(returnedUser);
+        Assertions.assertEquals(updatedUser.getId(), returnedUser.getId());
+        Assertions.assertEquals(updatedUser.getPassword(), returnedUser.getPassword());
+        Assertions.assertEquals(updatedUser.getEmail(), returnedUser.getEmail());
+        Assertions.assertEquals(updatedUser.getRole(), returnedUser.getRole());
+        Assertions.assertEquals(updatedUser.getStatus(), returnedUser.getStatus());
+        Assertions.assertEquals(updatedUser.getUsername(), returnedUser.getUsername());
         Mockito.verify(repository, Mockito.times(1)).save(Mockito.any(User.class));
     }
 

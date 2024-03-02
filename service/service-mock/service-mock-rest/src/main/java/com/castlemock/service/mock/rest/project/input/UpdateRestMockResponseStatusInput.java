@@ -52,6 +52,31 @@ public class UpdateRestMockResponseStatusInput implements Input {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateRestMockResponseStatusInput that = (UpdateRestMockResponseStatusInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(applicationId, that.applicationId) && Objects.equals(resourceId, that.resourceId) && Objects.equals(methodId, that.methodId) && Objects.equals(mockResponseId, that.mockResponseId) && status == that.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, applicationId, resourceId, methodId, mockResponseId, status);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateRestMockResponseStatusInput{" +
+                "projectId='" + projectId + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", resourceId='" + resourceId + '\'' +
+                ", methodId='" + methodId + '\'' +
+                ", mockResponseId='" + mockResponseId + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
     public static class Builder {
 
         private String projectId;
@@ -60,6 +85,9 @@ public class UpdateRestMockResponseStatusInput implements Input {
         private String methodId;
         private String mockResponseId;
         private RestMockResponseStatus status;
+
+        private Builder() {
+        }
 
         public Builder projectId(final String projectId){
             this.projectId = projectId;

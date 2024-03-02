@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestResource;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -27,16 +28,35 @@ import java.util.Optional;
  */
 public final class UpdateRestResourceOutput implements Output {
 
-    private final RestResource updatedRestResource;
+    private final RestResource resource;
 
-    private UpdateRestResourceOutput(final RestResource updatedRestResource) {
-        this.updatedRestResource = updatedRestResource;
+    private UpdateRestResourceOutput(final Builder builder) {
+        this.resource = builder.resource;
     }
 
-    public Optional<RestResource> getUpdatedRestResource() {
-        return Optional.ofNullable(updatedRestResource);
+    public Optional<RestResource> getResource() {
+        return Optional.ofNullable(resource);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateRestResourceOutput that = (UpdateRestResourceOutput) o;
+        return Objects.equals(resource, that.resource);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(resource);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateRestResourceOutput{" +
+                "resource=" + resource +
+                '}';
+    }
 
     public static Builder builder(){
         return new Builder();
@@ -44,15 +64,18 @@ public final class UpdateRestResourceOutput implements Output {
 
     public static final class Builder {
 
-        private RestResource updatedRestResource;
+        private RestResource resource;
 
-        public Builder updatedRestResource(final RestResource updatedRestResource){
-            this.updatedRestResource = updatedRestResource;
+        private Builder() {
+        }
+
+        public Builder resource(final RestResource resource){
+            this.resource = resource;
             return this;
         }
 
         public UpdateRestResourceOutput build(){
-            return new UpdateRestResourceOutput(this.updatedRestResource);
+            return new UpdateRestResourceOutput(this);
         }
 
     }

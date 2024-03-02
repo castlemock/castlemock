@@ -23,8 +23,8 @@ import com.castlemock.service.mock.rest.project.converter.RestDefinitionConverte
 import com.castlemock.service.mock.rest.project.converter.raml.RAMLRestDefinitionConverter;
 import com.castlemock.service.mock.rest.project.converter.swagger.SwaggerRestDefinitionConverter;
 import com.castlemock.service.mock.rest.project.converter.wadl.WADLRestDefinitionConverter;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 public class RestDefinitionConverterFactoryTest {
@@ -37,7 +37,7 @@ public class RestDefinitionConverterFactoryTest {
         final RestDefinitionConverter converter =
                 RestDefinitionConverterFactory.getConverter(RestDefinitionType.RAML, fileManager);
 
-        Assert.assertTrue((converter instanceof RAMLRestDefinitionConverter));
+        Assertions.assertTrue((converter instanceof RAMLRestDefinitionConverter));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class RestDefinitionConverterFactoryTest {
         final RestDefinitionConverter converter =
                 RestDefinitionConverterFactory.getConverter(RestDefinitionType.SWAGGER, fileManager);
 
-        Assert.assertTrue((converter instanceof SwaggerRestDefinitionConverter));
+        Assertions.assertTrue((converter instanceof SwaggerRestDefinitionConverter));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class RestDefinitionConverterFactoryTest {
         final RestDefinitionConverter converter =
                 RestDefinitionConverterFactory.getConverter(RestDefinitionType.WADL, fileManager);
 
-        Assert.assertTrue((converter instanceof WADLRestDefinitionConverter));
+        Assertions.assertTrue((converter instanceof WADLRestDefinitionConverter));
     }
 
 }

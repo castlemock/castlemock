@@ -40,7 +40,7 @@ public class UpdateCurrentRestMockResponseSequenceIndexService extends AbstractR
     @Override
     public ServiceResult<UpdateCurrentRestMockResponseSequenceIndexOutput> process(final ServiceTask<UpdateCurrentRestMockResponseSequenceIndexInput> serviceTask) {
         final UpdateCurrentRestMockResponseSequenceIndexInput input = serviceTask.getInput();
-        this.methodRepository.findOne(input.getRestMethodId())
+        this.methodRepository.findOne(input.getMethodId())
                 .map(method -> method.toBuilder()
                         .currentResponseSequenceIndex(input.getCurrentRestMockResponseSequenceIndex())
                         .build())

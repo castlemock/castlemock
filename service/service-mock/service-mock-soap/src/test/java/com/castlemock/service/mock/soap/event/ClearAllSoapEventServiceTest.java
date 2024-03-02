@@ -21,8 +21,8 @@ import com.castlemock.model.core.ServiceTask;
 import com.castlemock.repository.soap.event.SoapEventRepository;
 import com.castlemock.service.mock.soap.event.input.ClearAllSoapEventInput;
 import com.castlemock.service.mock.soap.event.output.ClearAllSoapEventOutput;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -42,7 +42,7 @@ public class ClearAllSoapEventServiceTest {
     @InjectMocks
     private ClearAllSoapEventService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }

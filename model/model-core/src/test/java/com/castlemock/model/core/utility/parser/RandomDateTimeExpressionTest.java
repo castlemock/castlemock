@@ -19,9 +19,9 @@ package com.castlemock.model.core.utility.parser;
 import com.castlemock.model.core.utility.parser.expression.ExpressionInput;
 import com.castlemock.model.core.utility.parser.expression.RandomDateExpression;
 import com.castlemock.model.core.utility.parser.expression.RandomDateTimeExpression;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class RandomDateTimeExpressionTest {
 

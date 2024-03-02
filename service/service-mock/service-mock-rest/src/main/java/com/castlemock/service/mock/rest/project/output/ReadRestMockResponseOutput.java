@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestMockResponse;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -27,16 +28,35 @@ import java.util.Optional;
  */
 public final class ReadRestMockResponseOutput implements Output{
 
-    private final RestMockResponse restMockResponse;
+    private final RestMockResponse mockResponse;
 
-    private ReadRestMockResponseOutput(final RestMockResponse restMockResponse) {
-        this.restMockResponse = restMockResponse;
+    private ReadRestMockResponseOutput(final RestMockResponse mockResponse) {
+        this.mockResponse = mockResponse;
     }
 
-    public Optional<RestMockResponse> getRestMockResponse() {
-        return Optional.ofNullable(restMockResponse);
+    public Optional<RestMockResponse> getMockResponse() {
+        return Optional.ofNullable(mockResponse);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ReadRestMockResponseOutput that = (ReadRestMockResponseOutput) o;
+        return Objects.equals(mockResponse, that.mockResponse);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mockResponse);
+    }
+
+    @Override
+    public String toString() {
+        return "ReadRestMockResponseOutput{" +
+                "mockResponse=" + mockResponse +
+                '}';
+    }
 
     public static Builder builder(){
         return new Builder();
@@ -44,15 +64,18 @@ public final class ReadRestMockResponseOutput implements Output{
 
     public static final class Builder {
 
-        private RestMockResponse restMockResponse;
+        private RestMockResponse mockResponse;
 
-        public Builder restMockResponse(final RestMockResponse restMockResponse){
-            this.restMockResponse = restMockResponse;
+        private Builder() {
+        }
+
+        public Builder mockResponse(final RestMockResponse mockResponse){
+            this.mockResponse = mockResponse;
             return this;
         }
 
         public ReadRestMockResponseOutput build(){
-            return new ReadRestMockResponseOutput(this.restMockResponse);
+            return new ReadRestMockResponseOutput(this.mockResponse);
         }
 
     }

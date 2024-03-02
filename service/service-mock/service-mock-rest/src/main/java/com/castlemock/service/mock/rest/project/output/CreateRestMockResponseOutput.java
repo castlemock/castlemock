@@ -27,14 +27,34 @@ import java.util.Objects;
  */
 public final class CreateRestMockResponseOutput implements Output {
 
-    private final RestMockResponse restMockResponse;
+    private final RestMockResponse mockResponse;
 
-    private CreateRestMockResponseOutput(final RestMockResponse restMockResponse) {
-        this.restMockResponse = Objects.requireNonNull(restMockResponse, "restMockResponse");
+    private CreateRestMockResponseOutput(final RestMockResponse mockResponse) {
+        this.mockResponse = Objects.requireNonNull(mockResponse, "mockResponse");
     }
 
-    public RestMockResponse getRestMockResponse() {
-        return restMockResponse;
+    public RestMockResponse getMockResponse() {
+        return mockResponse;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CreateRestMockResponseOutput that = (CreateRestMockResponseOutput) o;
+        return Objects.equals(mockResponse, that.mockResponse);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mockResponse);
+    }
+
+    @Override
+    public String toString() {
+        return "CreateRestMockResponseOutput{" +
+                "mockResponse=" + mockResponse +
+                '}';
     }
 
     public static Builder builder(){
@@ -43,15 +63,18 @@ public final class CreateRestMockResponseOutput implements Output {
 
     public static final class Builder {
 
-        private RestMockResponse restMockResponse;
+        private RestMockResponse mockResponse;
 
-        public Builder restMockResponse(final RestMockResponse restMockResponse){
-            this.restMockResponse = restMockResponse;
+        private Builder() {
+        }
+
+        public Builder mockResponse(final RestMockResponse mockResponse){
+            this.mockResponse = mockResponse;
             return this;
         }
 
         public CreateRestMockResponseOutput build(){
-            return new CreateRestMockResponseOutput(this.restMockResponse);
+            return new CreateRestMockResponseOutput(this.mockResponse);
         }
 
     }

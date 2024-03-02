@@ -27,14 +27,34 @@ import java.util.Objects;
  */
 public final class CreateRestResourceOutput implements Output {
 
-    private final RestResource createdRestResource;
+    private final RestResource resource;
 
-    private CreateRestResourceOutput(final RestResource createdRestResource) {
-        this.createdRestResource = Objects.requireNonNull(createdRestResource, "createdRestResource");
+    private CreateRestResourceOutput(final Builder builder) {
+        this.resource = Objects.requireNonNull(builder.resource, "resource");
     }
 
-    public RestResource getCreatedRestResource() {
-        return createdRestResource;
+    public RestResource getResource() {
+        return resource;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CreateRestResourceOutput that = (CreateRestResourceOutput) o;
+        return Objects.equals(resource, that.resource);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(resource);
+    }
+
+    @Override
+    public String toString() {
+        return "CreateRestResourceOutput{" +
+                "resource=" + resource +
+                '}';
     }
 
     public static Builder builder(){
@@ -43,15 +63,18 @@ public final class CreateRestResourceOutput implements Output {
 
     public static final class Builder {
 
-        private RestResource createdRestResource;
+        private RestResource resource;
 
-        public Builder savedRestApplication(final RestResource createdRestResource){
-            this.createdRestResource = createdRestResource;
+        private Builder() {
+        }
+
+        public Builder resource(final RestResource resource){
+            this.resource = resource;
             return this;
         }
 
         public CreateRestResourceOutput build(){
-            return new CreateRestResourceOutput(this.createdRestResource);
+            return new CreateRestResourceOutput(this);
         }
 
     }

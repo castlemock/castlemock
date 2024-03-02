@@ -20,12 +20,8 @@ import com.castlemock.model.core.Input;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.http.HttpParameter;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -34,49 +30,65 @@ import java.util.Set;
  */
 public final class IdentifyRestMethodInput implements Input {
 
-    private final String restProjectId;
-    private final String restApplicationId;
-    private final String restResourceUri;
+    private final String projectId;
+    private final String applicationId;
+    private final String resourceUri;
     private final HttpMethod httpMethod;
-    private final Map<String, Set<String>> httpParameters;
+    private final Set<HttpParameter> httpParameters;
 
     private IdentifyRestMethodInput(final Builder builder) {
-        this.restProjectId = Objects.requireNonNull(builder.restProjectId);
-        this.restApplicationId = Objects.requireNonNull(builder.restApplicationId);
-        this.restResourceUri = Objects.requireNonNull(builder.restResourceUri);
-        this.httpMethod = Objects.requireNonNull(builder.httpMethod);
-        this.httpParameters = builder.httpParameters != null ? convert(builder.httpParameters) : Collections.emptyMap();
+        this.projectId = Objects.requireNonNull(builder.projectId, "projectId");
+        this.applicationId = Objects.requireNonNull(builder.applicationId, "applicationId");
+        this.resourceUri = Objects.requireNonNull(builder.resourceUri, "resourceUri");
+        this.httpMethod = Objects.requireNonNull(builder.httpMethod, "httpMethod");
+        this.httpParameters = Optional.ofNullable(builder.httpParameters).orElseGet(Set::of);
     }
 
-    private static Map<String, Set<String>> convert(List<HttpParameter> httpParameters) {
-        Map<String, Set<String>> out = new HashMap<>();
-        for(HttpParameter httpParam:httpParameters){
-            if(!out.containsKey(httpParam.getName())){
-                out.put(httpParam.getName(), new HashSet<>());
-            }
-
-            out.get(httpParam.getName()).add(httpParam.getValue());
-        }
-        return out;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getRestProjectId() {
-        return restProjectId;
+    public String getApplicationId() {
+        return applicationId;
     }
 
-    public String getRestApplicationId() {
-        return restApplicationId;
-    }
-
-    public String getRestResourceUri() {
-        return restResourceUri;
+    public String getResourceUri() {
+        return resourceUri;
     }
 
     public HttpMethod getHttpMethod() {
         return httpMethod;
     }
 
-    public Map<String, Set<String>> getHttpParameters(){ return httpParameters; }
+    public Set<HttpParameter> getHttpParameters(){ return Optional.ofNullable(httpParameters)
+            .map(Set::copyOf)
+            .orElseGet(Set::of); }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final IdentifyRestMethodInput that = (IdentifyRestMethodInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(applicationId, that.applicationId) &&
+                Objects.equals(resourceUri, that.resourceUri) && httpMethod == that.httpMethod &&
+                Objects.equals(httpParameters, that.httpParameters);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, applicationId, resourceUri, httpMethod, httpParameters);
+    }
+
+    @Override
+    public String toString() {
+        return "IdentifyRestMethodInput{" +
+                "projectId='" + projectId + '\'' +
+                ", applicationId='" + applicationId + '\'' +
+                ", resourceUri='" + resourceUri + '\'' +
+                ", httpMethod=" + httpMethod +
+                ", httpParameters=" + httpParameters +
+                '}';
+    }
 
     public static Builder builder(){
         return new Builder();
@@ -84,24 +96,27 @@ public final class IdentifyRestMethodInput implements Input {
 
     public static final class Builder {
 
-        private String restProjectId;
-        private String restApplicationId;
-        private String restResourceUri;
+        private String projectId;
+        private String applicationId;
+        private String resourceUri;
         private HttpMethod httpMethod;
-        private List<HttpParameter> httpParameters;
+        private Set<HttpParameter> httpParameters;
 
-        public Builder restProjectId(final String restProjectId){
-            this.restProjectId = restProjectId;
+        private Builder() {
+        }
+
+        public Builder projectId(final String projectId){
+            this.projectId = projectId;
             return this;
         }
 
-        public Builder restApplicationId(final String restApplicationId){
-            this.restApplicationId = restApplicationId;
+        public Builder applicationId(final String applicationId){
+            this.applicationId = applicationId;
             return this;
         }
 
-        public Builder restResourceUri(final String restResourceUri){
-            this.restResourceUri = restResourceUri;
+        public Builder resourceUri(final String resourceUri){
+            this.resourceUri = resourceUri;
             return this;
         }
 
@@ -110,7 +125,7 @@ public final class IdentifyRestMethodInput implements Input {
             return this;
         }
 
-        public Builder httpParameters(final List<HttpParameter>  httpParameters){
+        public Builder httpParameters(final Set<HttpParameter> httpParameters){
             this.httpParameters = httpParameters;
             return this;
         }

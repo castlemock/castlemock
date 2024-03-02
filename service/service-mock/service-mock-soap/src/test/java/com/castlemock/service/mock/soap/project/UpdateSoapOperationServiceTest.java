@@ -23,9 +23,9 @@ import com.castlemock.model.mock.soap.domain.SoapOperationTestBuilder;
 import com.castlemock.repository.soap.project.SoapOperationRepository;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapOperationInput;
 import com.castlemock.service.mock.soap.project.output.UpdateSoapOperationOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class UpdateSoapOperationServiceTest {
     @InjectMocks
     private UpdateSoapOperationService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -82,17 +82,17 @@ public class UpdateSoapOperationServiceTest {
         final SoapOperation returnedSoapOperation = output.getOperation()
                 .orElse(null);
 
-        Assert.assertNotNull(returnedSoapOperation);
+        Assertions.assertNotNull(returnedSoapOperation);
         Mockito.verify(operationRepository, Mockito.times(1)).findOne(operation.getId());
         Mockito.verify(operationRepository, Mockito.times(1)).update(operation.getId(), operation);
-        Assert.assertEquals(operation.getId(), returnedSoapOperation.getId());
-        Assert.assertEquals(operation.getName(), returnedSoapOperation.getName());
-        Assert.assertEquals(operation.getStatus(), returnedSoapOperation.getStatus());
-        Assert.assertEquals(operation.getForwardedEndpoint(), returnedSoapOperation.getForwardedEndpoint());
-        Assert.assertEquals(operation.getResponseStrategy(), returnedSoapOperation.getResponseStrategy());
-        Assert.assertEquals(operation.getSimulateNetworkDelay(), returnedSoapOperation.getSimulateNetworkDelay());
-        Assert.assertEquals(operation.getNetworkDelay(), returnedSoapOperation.getNetworkDelay());
-        Assert.assertEquals(operation.getCurrentResponseSequenceIndex(), returnedSoapOperation.getCurrentResponseSequenceIndex());
-        Assert.assertEquals(operation.getMockOnFailure(), returnedSoapOperation.getMockOnFailure());
+        Assertions.assertEquals(operation.getId(), returnedSoapOperation.getId());
+        Assertions.assertEquals(operation.getName(), returnedSoapOperation.getName());
+        Assertions.assertEquals(operation.getStatus(), returnedSoapOperation.getStatus());
+        Assertions.assertEquals(operation.getForwardedEndpoint(), returnedSoapOperation.getForwardedEndpoint());
+        Assertions.assertEquals(operation.getResponseStrategy(), returnedSoapOperation.getResponseStrategy());
+        Assertions.assertEquals(operation.getSimulateNetworkDelay(), returnedSoapOperation.getSimulateNetworkDelay());
+        Assertions.assertEquals(operation.getNetworkDelay(), returnedSoapOperation.getNetworkDelay());
+        Assertions.assertEquals(operation.getCurrentResponseSequenceIndex(), returnedSoapOperation.getCurrentResponseSequenceIndex());
+        Assertions.assertEquals(operation.getMockOnFailure(), returnedSoapOperation.getMockOnFailure());
     }
 }

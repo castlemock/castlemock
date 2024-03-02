@@ -22,9 +22,9 @@ import com.castlemock.model.mock.soap.domain.SoapEventTestBuilder;
 import com.castlemock.service.mock.soap.event.input.ClearAllSoapEventInput;
 import com.castlemock.service.mock.soap.event.input.ReadAllSoapEventInput;
 import com.castlemock.service.mock.soap.event.output.ReadAllSoapEventOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class SoapEventServiceAdapterTest {
     @InjectMocks
     private SoapEventServiceAdapter serviceAdapter;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -68,10 +68,10 @@ public class SoapEventServiceAdapterTest {
             final SoapEvent soapEvent = soapEvents.get(index);
             final SoapEvent returnedSoapEvent = returnedSoapEvents.get(index);
 
-            Assert.assertEquals(soapEvent.getId(), returnedSoapEvent.getId());
-            Assert.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
-            Assert.assertEquals(soapEvent.getPortId(), returnedSoapEvent.getPortId());
-            Assert.assertEquals(soapEvent.getProjectId(), returnedSoapEvent.getProjectId());
+            Assertions.assertEquals(soapEvent.getId(), returnedSoapEvent.getId());
+            Assertions.assertEquals(soapEvent.getOperationId(), returnedSoapEvent.getOperationId());
+            Assertions.assertEquals(soapEvent.getPortId(), returnedSoapEvent.getPortId());
+            Assertions.assertEquals(soapEvent.getProjectId(), returnedSoapEvent.getProjectId());
         }
     }
 

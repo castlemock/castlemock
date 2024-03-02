@@ -23,9 +23,9 @@ import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.repository.Repository;
 import com.castlemock.service.core.user.input.ReadUserInput;
 import com.castlemock.service.core.user.output.ReadUserOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class ReadUserServiceTest {
     @InjectMocks
     private ReadUserService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -61,12 +61,12 @@ public class ReadUserServiceTest {
 
         final User returnedUser = output.getUser()
                 .orElse(null);
-        Assert.assertNotNull(returnedUser);
-        Assert.assertEquals(user.getId(), returnedUser.getId());
-        Assert.assertEquals(user.getEmail(), returnedUser.getEmail());
-        Assert.assertEquals(user.getRole(), returnedUser.getRole());
-        Assert.assertEquals(user.getStatus(), returnedUser.getStatus());
-        Assert.assertEquals(user.getUsername(), returnedUser.getUsername());
+        Assertions.assertNotNull(returnedUser);
+        Assertions.assertEquals(user.getId(), returnedUser.getId());
+        Assertions.assertEquals(user.getEmail(), returnedUser.getEmail());
+        Assertions.assertEquals(user.getRole(), returnedUser.getRole());
+        Assertions.assertEquals(user.getStatus(), returnedUser.getStatus());
+        Assertions.assertEquals(user.getUsername(), returnedUser.getUsername());
     }
 
 

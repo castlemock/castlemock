@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestMethod;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -27,16 +28,35 @@ import java.util.Optional;
  */
 public final class UpdateRestMethodOutput implements Output {
 
-    private final RestMethod restMethod;
+    private final RestMethod method;
 
-    private UpdateRestMethodOutput(final RestMethod restMethod) {
-        this.restMethod = restMethod;
+    private UpdateRestMethodOutput(final RestMethod method) {
+        this.method = method;
     }
 
-    public Optional<RestMethod> getRestMethod() {
-        return Optional.ofNullable(restMethod);
+    public Optional<RestMethod> getMethod() {
+        return Optional.ofNullable(method);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateRestMethodOutput that = (UpdateRestMethodOutput) o;
+        return Objects.equals(method, that.method);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(method);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateRestMethodOutput{" +
+                "method=" + method +
+                '}';
+    }
 
     public static Builder builder(){
         return new Builder();
@@ -44,15 +64,18 @@ public final class UpdateRestMethodOutput implements Output {
 
     public static final class Builder {
 
-        private RestMethod restMethod;
+        private RestMethod method;
 
-        public Builder restMethod(final RestMethod restMethod){
-            this.restMethod = restMethod;
+        private Builder() {
+        }
+
+        public Builder method(final RestMethod method){
+            this.method = method;
             return this;
         }
 
         public UpdateRestMethodOutput build(){
-            return new UpdateRestMethodOutput(this.restMethod);
+            return new UpdateRestMethodOutput(this.method);
         }
 
     }

@@ -59,6 +59,27 @@ public class HttpHeader {
                 .value(value);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final HttpHeader that = (HttpHeader) o;
+        return Objects.equals(name, that.name) && Objects.equals(value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value);
+    }
+
+    @Override
+    public String toString() {
+        return "HttpHeader{" +
+                "name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                '}';
+    }
+
     public static Builder builder() {
         return new Builder();
     }

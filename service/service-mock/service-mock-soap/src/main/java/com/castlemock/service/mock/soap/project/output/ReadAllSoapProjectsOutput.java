@@ -20,6 +20,7 @@ import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.soap.domain.SoapProject;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -36,6 +37,26 @@ public final class ReadAllSoapProjectsOutput implements Output {
 
     public List<SoapProject> getProjects() {
         return projects;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ReadAllSoapProjectsOutput that = (ReadAllSoapProjectsOutput) o;
+        return Objects.equals(projects, that.projects);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projects);
+    }
+
+    @Override
+    public String toString() {
+        return "ReadAllSoapProjectsOutput{" +
+                "projects=" + projects +
+                '}';
     }
 
     public static Builder builder(){

@@ -43,13 +43,13 @@ public class UpdateRestApplicationService extends AbstractRestProjectService imp
     @Override
     public ServiceResult<UpdateRestApplicationOutput> process(final ServiceTask<UpdateRestApplicationInput> serviceTask) {
         final UpdateRestApplicationInput input = serviceTask.getInput();
-        final Optional<RestApplication> updatedRestApplication = this.applicationRepository.findOne(input.getRestApplicationId())
+        final Optional<RestApplication> updatedRestApplication = this.applicationRepository.findOne(input.getApplicationId())
                 .map(application -> application.toBuilder()
                         .name(input.getName())
                         .build())
-                .map(application -> this.applicationRepository.update(input.getRestApplicationId(), application));
+                .map(application -> this.applicationRepository.update(input.getApplicationId(), application));
         return createServiceResult(UpdateRestApplicationOutput.builder()
-                .updatedRestApplication(updatedRestApplication.orElse(null))
+                .application(updatedRestApplication.orElse(null))
                 .build());
     }
 }

@@ -34,6 +34,9 @@ public final class UpdateRestMethodsStatusOutput implements Output {
 
     public static final class Builder {
 
+        private Builder() {
+        }
+
         public UpdateRestMethodsStatusOutput build(){
             return new UpdateRestMethodsStatusOutput();
         }

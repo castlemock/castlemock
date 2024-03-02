@@ -22,10 +22,10 @@ import com.castlemock.model.core.utility.parser.expression.argument.ExpressionAr
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentArray;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentNumber;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @since 1.14
@@ -51,7 +51,7 @@ public class ExpressionInputParserTest {
         assertEquals(1, expressionInput.getArguments().size());
 
         ExpressionArgument<?> expressionArgument = expressionInput.getArgument("Key");
-        Assert.assertTrue(expressionArgument instanceof ExpressionArgumentString);
+        Assertions.assertTrue(expressionArgument instanceof ExpressionArgumentString);
         ExpressionArgumentString argumentString = (ExpressionArgumentString) expressionArgument;
         assertEquals("Value", argumentString.getValue());
     }
@@ -63,7 +63,7 @@ public class ExpressionInputParserTest {
         assertEquals(1, expressionInput.getArguments().size());
 
         ExpressionArgument<?> expressionArgument = expressionInput.getArgument("min");
-        Assert.assertTrue(expressionArgument instanceof ExpressionArgumentNumber);
+        Assertions.assertTrue(expressionArgument instanceof ExpressionArgumentNumber);
         ExpressionArgumentNumber argumentNumber = (ExpressionArgumentNumber) expressionArgument;
         assertEquals(123.0, argumentNumber.getValue(), 0);
     }
@@ -75,7 +75,7 @@ public class ExpressionInputParserTest {
         assertEquals(1, expressionInput.getArguments().size());
 
         ExpressionArgument<?> expressionArgument = expressionInput.getArgument("values");
-        Assert.assertTrue(expressionArgument instanceof ExpressionArgumentArray);
+        Assertions.assertTrue(expressionArgument instanceof ExpressionArgumentArray);
         ExpressionArgumentArray argumentArray = (ExpressionArgumentArray) expressionArgument;
 
         assertEquals(3, argumentArray.getArgumentSize());
@@ -91,18 +91,18 @@ public class ExpressionInputParserTest {
         assertEquals(3, expressionInput.getArguments().size());
 
         ExpressionArgument<?> expressionArgument1 = expressionInput.getArgument("value1");
-        Assert.assertTrue(expressionArgument1 instanceof ExpressionArgumentString);
+        Assertions.assertTrue(expressionArgument1 instanceof ExpressionArgumentString);
         ExpressionArgumentString argumentString = (ExpressionArgumentString) expressionArgument1;
         assertEquals("This is a value", argumentString.getValue());
 
         ExpressionArgument<?> expressionArgument2 = expressionInput.getArgument("value2");
-        Assert.assertTrue(expressionArgument2 instanceof ExpressionArgumentNumber);
+        Assertions.assertTrue(expressionArgument2 instanceof ExpressionArgumentNumber);
         ExpressionArgumentNumber argumentNumber = (ExpressionArgumentNumber) expressionArgument2;
         assertEquals(999.9, argumentNumber.getValue(), 0);
 
 
         ExpressionArgument<?> expressionArgument3 = expressionInput.getArgument("value3");
-        Assert.assertTrue(expressionArgument3 instanceof ExpressionArgumentArray);
+        Assertions.assertTrue(expressionArgument3 instanceof ExpressionArgumentArray);
         ExpressionArgumentArray argumentArray = (ExpressionArgumentArray) expressionArgument3;
 
         assertEquals(3, argumentArray.getArgumentSize());

@@ -19,6 +19,7 @@ package com.castlemock.service.mock.rest.project.output;
 import com.castlemock.model.core.Output;
 import com.castlemock.model.mock.rest.domain.RestResource;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -37,6 +38,26 @@ public final class DeleteRestResourceOutput implements Output {
         return Optional.ofNullable(resource);
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final DeleteRestResourceOutput that = (DeleteRestResourceOutput) o;
+        return Objects.equals(resource, that.resource);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(resource);
+    }
+
+    @Override
+    public String toString() {
+        return "DeleteRestResourceOutput{" +
+                "resource=" + resource +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }
@@ -44,6 +65,9 @@ public final class DeleteRestResourceOutput implements Output {
     public static final class Builder {
 
         private RestResource resource;
+
+        private Builder() {
+        }
 
         public Builder resource(final RestResource resource) {
             this.resource = resource;

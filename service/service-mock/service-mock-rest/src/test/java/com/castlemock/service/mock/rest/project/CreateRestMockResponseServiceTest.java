@@ -23,9 +23,9 @@ import com.castlemock.model.mock.rest.domain.RestMockResponseTestBuilder;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import com.castlemock.service.mock.rest.project.input.CreateRestMockResponseInput;
 import com.castlemock.service.mock.rest.project.output.CreateRestMockResponseOutput;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -46,7 +46,7 @@ public class CreateRestMockResponseServiceTest {
     @InjectMocks
     private CreateRestMockResponseService service;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
@@ -80,8 +80,8 @@ public class CreateRestMockResponseServiceTest {
         final ServiceTask<CreateRestMockResponseInput> serviceTask = ServiceTask.of(input, "user");
         final ServiceResult<CreateRestMockResponseOutput> serviceResult = service.process(serviceTask);
 
-        Assert.assertNotNull(serviceResult.getOutput());
-        Assert.assertEquals(mockResponse, serviceResult.getOutput().getRestMockResponse());
+        Assertions.assertNotNull(serviceResult.getOutput());
+        Assertions.assertEquals(mockResponse, serviceResult.getOutput().getMockResponse());
         Mockito.verify(mockResponseRepository, Mockito.times(1)).save(any());
     }
 

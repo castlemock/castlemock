@@ -18,6 +18,7 @@ package com.castlemock.service.mock.soap.project.output;
 
 import com.castlemock.model.core.Output;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -36,7 +37,27 @@ public final class LoadSoapResourceOutput implements Output{
         return Optional.ofNullable(resource);
     }
 
-     public static Builder builder(){
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final LoadSoapResourceOutput that = (LoadSoapResourceOutput) o;
+        return Objects.equals(resource, that.resource);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(resource);
+    }
+
+    @Override
+    public String toString() {
+        return "LoadSoapResourceOutput{" +
+                "resource='" + resource + '\'' +
+                '}';
+    }
+
+    public static Builder builder(){
         return new Builder();
     }
 

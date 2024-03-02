@@ -56,7 +56,7 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
     @Override
     public ServiceResult<ImportRestDefinitionOutput> process(final ServiceTask<ImportRestDefinitionInput> serviceTask) {
         final ImportRestDefinitionInput input = serviceTask.getInput();
-        final String projectId = input.getRestProjectId();
+        final String projectId = input.getProjectId();
 
         final RestDefinitionConverter restDefinitionConverter =
                 RestDefinitionConverterFactory.getConverter(input.getDefinitionType(), fileManager);
@@ -79,7 +79,7 @@ public class ImportRestDefinitionService extends AbstractRestProjectService impl
         }
 
         final List<RestApplication> existingRestApplications =
-                this.applicationRepository.findWithProjectId(input.getRestProjectId());
+                this.applicationRepository.findWithProjectId(input.getProjectId());
         final List<RestApplication> restApplications = new ArrayList<>();
 
         // Iterate through all new REST application and see if they match an already

@@ -61,6 +61,32 @@ public final class UpdateSoapMockResponseStatusInput implements Input {
         return mockResponseStatus;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UpdateSoapMockResponseStatusInput that = (UpdateSoapMockResponseStatusInput) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(portId, that.portId) &&
+                Objects.equals(operationId, that.operationId) && Objects.equals(mockResponseId, that.mockResponseId)
+                && mockResponseStatus == that.mockResponseStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, portId, operationId, mockResponseId, mockResponseStatus);
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateSoapMockResponseStatusInput{" +
+                "projectId='" + projectId + '\'' +
+                ", portId='" + portId + '\'' +
+                ", operationId='" + operationId + '\'' +
+                ", mockResponseId='" + mockResponseId + '\'' +
+                ", mockResponseStatus=" + mockResponseStatus +
+                '}';
+    }
+
     public static Builder builder(){
         return new Builder();
     }

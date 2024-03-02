@@ -43,9 +43,9 @@ public class ReadRestMockResponseService extends AbstractRestProjectService impl
     @Override
     public ServiceResult<ReadRestMockResponseOutput> process(final ServiceTask<ReadRestMockResponseInput> serviceTask) {
         final ReadRestMockResponseInput input = serviceTask.getInput();
-        final Optional<RestMockResponse> restMockResponse = this.mockResponseRepository.findOne(input.getRestMockResponse());
+        final Optional<RestMockResponse> restMockResponse = this.mockResponseRepository.findOne(input.getMockResponseId());
         return createServiceResult(ReadRestMockResponseOutput.builder()
-                .restMockResponse(restMockResponse.orElse(null))
+                .mockResponse(restMockResponse.orElse(null))
                 .build());
     }
 }

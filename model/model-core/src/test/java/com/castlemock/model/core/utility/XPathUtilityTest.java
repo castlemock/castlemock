@@ -16,10 +16,10 @@
 
 package com.castlemock.model.core.utility;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Karl Dahlgren
@@ -42,7 +42,7 @@ public class XPathUtilityTest {
         String xpath = "//GetWhoISResponse/GetWhoISResult[text()='google.com is a good domain']";
 
         boolean validXPathValue = XPathUtility.isValidXPathExpr(body, xpath);
-        Assert.assertTrue(validXPathValue);
+        Assertions.assertTrue(validXPathValue);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class XPathUtilityTest {
 
         final String xpath = "sum(//value)";
         boolean validXPathValue = XPathUtility.isValidXPathExpr(body, xpath);
-        Assert.assertTrue(validXPathValue);
+        Assertions.assertTrue(validXPathValue);
     }
 
     @Test
@@ -87,7 +87,7 @@ public class XPathUtilityTest {
         String xpath = "//getUser/permissions/permission[@name='READ'][text()='The user can read']";
 
         boolean validXPathValue = XPathUtility.isValidXPathExpr(body, xpath);
-        Assert.assertTrue(validXPathValue);
+        Assertions.assertTrue(validXPathValue);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class XPathUtilityTest {
         String xpath = "//getUser/permissions/permission[@name='READ'][text()='The user can read' and //getUser/permissions/permission[@name='WRITE'][text()='The user can write']]";
 
         boolean validXPathValue = XPathUtility.isValidXPathExpr(body, xpath);
-        Assert.assertTrue(validXPathValue);
+        Assertions.assertTrue(validXPathValue);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class XPathUtilityTest {
         String xpath = "//entry[@key]";
 
         boolean validXPathValue = XPathUtility.isValidXPathExpr(body, xpath);
-        Assert.assertTrue(validXPathValue);
+        Assertions.assertTrue(validXPathValue);
 
     }
 
@@ -146,7 +146,7 @@ public class XPathUtilityTest {
         String xpath = "//entry[text() = 1234]";
 
         boolean validXPathValue = XPathUtility.isValidXPathExpr(body, xpath);
-        Assert.assertTrue(validXPathValue);
+        Assertions.assertTrue(validXPathValue);
 
     }
 
@@ -167,7 +167,7 @@ public class XPathUtilityTest {
         String xpath = "//GetWhoIS/HostName[text() = 'castlemock.com']";
 
         boolean validXPathValue = XPathUtility.isValidXPathExpr(body, xpath);
-        Assert.assertTrue(validXPathValue);
+        Assertions.assertTrue(validXPathValue);
     }
 
     @Test
