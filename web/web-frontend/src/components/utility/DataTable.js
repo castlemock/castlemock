@@ -95,13 +95,13 @@ class DataTable extends PureComponent {
         super(props);
         this.onRowSelect = this.onRowSelect.bind(this);
         this.onRowSelectAll = this.onRowSelectAll.bind(this);
-        this.onSearchInput = this.onSearchInput.bind(this);
+        this.onSearch = this.onSearch.bind(this);
         this.onColumnSort = this.onColumnSort.bind(this);
+        this.onSizePerPageChange = this.onSizePerPageChange.bind(this);
+        this.onPageChange = this.onPageChange.bind(this);
         this.filterData = this.filterData.bind(this);
         this.sortData = this.sortData.bind(this);
         this.paginateData = this.paginateData.bind(this);
-        this.onSizePerPageChange = this.onSizePerPageChange.bind(this);
-        this.onPageChange = this.onPageChange.bind(this);
 
         if (this.props.defaultSort?.length > 1) {
             console.warn("DataTable : 'defaultSort' prop doesn't (yet) support multiple columns");
@@ -126,6 +126,9 @@ class DataTable extends PureComponent {
             sizePerPage: this.props.pagination?.sizePerPage || DEFAULT_SIZE_PER_PAGE,
             sizePerPageList: this.props.pagination?.sizePerPageList || DEFAULT_SIZE_PER_PAGE_LIST,
             currentPageIndex: 0,
+            filteredData: [],
+            sortedData: [],
+            paginatedData: [],
         };
     }
 
@@ -169,12 +172,20 @@ class DataTable extends PureComponent {
     /**
      * Handles change events in the search input.
      *
-     * @param {Event} event Search input event
+     * @param {string} searchText Search input text
      */
-    onSearchInput(event) {
+    onSearch(searchText) {
+        const newSearchText = normalizeString(searchText);
+        const newCurrentPageIndex = 0;
+        const newFilteredData = this.filterData(this.props.data, newSearchText);
+        const newSortedData = this.sortData(newFilteredData, this.state.columnSort);
+        const newPaginatedData = this.paginateData(newSortedData, newCurrentPageIndex, this.state.sizePerPage);
         this.setState({
-            searchText: normalizeString(event.target.value),
-            currentPageIndex: 0,
+            searchText: newSearchText,
+            currentPageIndex: newCurrentPageIndex,
+            filteredData: newFilteredData,
+            sortedData: newSortedData,
+            paginatedData: newPaginatedData,
         });
     }
 
@@ -192,72 +203,27 @@ class DataTable extends PureComponent {
             dataField: column.dataField,
             order: SORT_ORDER_CYCLE.get(currentSort?.order),
         }];
-        this.setState({ columnSort: newColumnSort });
-    }
-
-    /**
-     * Filters a data array according to the value of the search input.
-     *
-     * @param {DTData[]} data The data array to filter
-     * @returns {DTData[]} The filtered data
-     */
-    filterData(data) {
-        let list = data;
-        if (this.state.searchText) {
-            list = list.filter((row) => {
-                return this.props.columns?.some((column) => {
-                    return normalizeString(getValue(row, column.dataField)).includes(this.state.searchText)
-                });
-            });
-        }
-        return list;
-    }
-
-    /**
-     * Sorts a data array according to the current column sort.
-     *
-     * @param {DTData[]} data The data array to sort
-     * @returns {DTData[]} The sorted data
-     */
-    sortData(data) {
-        let list = data;
-        const columnSort = this.state.columnSort[0];
-        if (columnSort) {
-            const fieldExtractor = (row) => normalizeString(getValue(row, columnSort.dataField));
-            if (columnSort.order === "asc") {
-                list = sortBy(list, fieldExtractor);
-            } else if (columnSort.order === "desc") {
-                list = sortBy(list, fieldExtractor).reverse();
-            }
-        }
-        return list;
-    }
-
-    /**
-     * Slices the data array according to the current page index and sizePerPage.
-     *
-     * @param {DTData[]} data The data to paginate
-     * @returns {DTData[]} The paginated data
-     */
-    paginateData(data) {
-        let list = data;
-        if (this.props.pagination) {
-            const startIndex = this.state.currentPageIndex * this.state.sizePerPage;
-            const endIndex = startIndex + this.state.sizePerPage;
-            list = list.slice(startIndex, endIndex);
-        }
-        return list;
+        const newSortedData = this.sortData(this.state.filteredData, newColumnSort);
+        const newPaginatedData = this.paginateData(newSortedData, this.state.currentPageIndex, this.state.sizePerPage);
+        this.setState({
+            columnSort: newColumnSort,
+            sortedData: newSortedData,
+            paginatedData: newPaginatedData,
+        });
     }
 
     /**
      * Handles a change in the number of element per page.
      *
-     * @param {Event} event Change event
+     * @param {number} sizePerPage
      */
-    onSizePerPageChange(event) {
+    onSizePerPageChange(sizePerPage) {
+        const newCurrentPageIndex = 0;
+        const newPaginatedData = this.paginateData(this.state.sortedData, newCurrentPageIndex, sizePerPage);
         this.setState({
-            sizePerPage: +event.target.value,
-            currentPageIndex: 0,
+            sizePerPage: sizePerPage,
+            currentPageIndex: newCurrentPageIndex,
+            paginatedData: newPaginatedData,
         });
     }
 
@@ -267,8 +233,10 @@ class DataTable extends PureComponent {
      * @param {number} pageIndex Index of the selected page
      */
     onPageChange(pageIndex) {
+        const newPaginatedData = this.paginateData(this.state.sortedData, pageIndex, this.state.sizePerPage);
         this.setState({
             currentPageIndex: pageIndex,
+            paginatedData: newPaginatedData,
         });
     }
 
@@ -294,15 +262,74 @@ class DataTable extends PureComponent {
             const indeterminate = this.state.selectedKeys.size > 0 && !this.state.allSelected
             this.selectAllCheckboxRef.current.indeterminate = indeterminate;
         }
+        // React to data change
+        if (prevProps.data !== this.props.data) {
+            this.onSearch(this.state.searchText);
+        }
+    }
+
+    /**
+     * Filters a data array according to the value of the search input.
+     *
+     * @param {DTData[]} data The data array to filter
+     * @param {string} searchText Search input text
+     * @returns {DTData[]} The filtered data
+     */
+    filterData(data, searchText) {
+        let list = data;
+        if (searchText) {
+            list = list.filter((row) => {
+                return this.props.columns?.some((column) => {
+                    return normalizeString(getValue(row, column.dataField)).includes(searchText)
+                });
+            });
+        }
+        return list;
+    }
+
+    /**
+     * Sorts a data array according to the current column sort.
+     *
+     * @param {DTData[]} data The data array to sort
+     * @param {DTColumnSort[]} columnSort Column sort
+     * @returns {DTData[]} The sorted data
+     */
+    sortData(data, columnSort) {
+        let list = data;
+        const firstColumnSort = columnSort[0];
+        if (firstColumnSort) {
+            const fieldExtractor = (row) => normalizeString(getValue(row, firstColumnSort.dataField));
+            if (firstColumnSort.order === "asc") {
+                list = sortBy(list, fieldExtractor);
+            } else if (firstColumnSort.order === "desc") {
+                list = sortBy(list, fieldExtractor).reverse();
+            }
+        }
+        return list;
+    }
+
+    /**
+     * Slices the data array according to the current page index and sizePerPage.
+     *
+     * @param {DTData[]} data The data to paginate
+     * @param {number} currentPageIndex Current page index
+     * @param {number} sizePerPage Number of elements per page
+     * @returns {DTData[]} The paginated data
+     */
+    paginateData(data, currentPageIndex, sizePerPage) {
+        let list = data;
+        if (this.props.pagination) {
+            const startIndex = currentPageIndex * sizePerPage;
+            const endIndex = startIndex + sizePerPage;
+            list = list.slice(startIndex, endIndex);
+        }
+        return list;
     }
 
     render() {
         const visibleColumns = this.props.columns?.filter(column => !column.hidden) || [];
         const numberOfColumns = visibleColumns.length + (this.props.selectRow ? 1 : 0);
-        const filteredData = this.filterData(this.props.data || []);
-        const sortedData = this.sortData(filteredData);
-        const paginatedData = this.paginateData(sortedData);
-        const numberOfPages = Math.ceil(sortedData.length / this.state.sizePerPage);
+        const numberOfPages = Math.ceil(this.state.sortedData.length / this.state.sizePerPage);
 
         return (
             <>
@@ -310,7 +337,7 @@ class DataTable extends PureComponent {
                     this.props.search && <FormControl
                         className="table-filter-field"
                         placeholder="Search"
-                        onInput={this.onSearchInput}
+                        onInput={(event) => this.onSearch(event.target.value)}
                     ></FormControl>
                 }
                 <Table bordered striped hover>
@@ -351,12 +378,12 @@ class DataTable extends PureComponent {
                                         this.props.noDataIndication || "No data"
                                     }</td>
                                 </tr>
-                            ) : !paginatedData.length ? (
+                            ) : !this.state.paginatedData.length ? (
                                 <tr>
                                     <td className="text-center" colSpan={numberOfColumns}>No search results</td>
                                 </tr>
                             ) : (
-                                paginatedData.map((row) => {
+                                this.state.paginatedData.map((row) => {
                                     const rowKey = row[this.props.keyField];
                                     return (
                                         <tr key={rowKey}>
@@ -396,7 +423,7 @@ class DataTable extends PureComponent {
                                         as="select"
                                         className="w-auto mr-auto"
                                         defaultValue={this.state.sizePerPage}
-                                        onChange={this.onSizePerPageChange}
+                                        onChange={(event) => this.onSizePerPageChange(+event.target.value)}
                                     >
                                         {
                                             this.state.sizePerPageList.map((size) => (
