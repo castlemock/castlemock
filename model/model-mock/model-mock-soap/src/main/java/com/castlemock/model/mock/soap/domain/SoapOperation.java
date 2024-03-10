@@ -47,9 +47,6 @@ public class SoapOperation {
     private final String name;
 
     @XmlElement
-    private final String identifier;
-
-    @XmlElement
     private final SoapOperationIdentifier operationIdentifier;
 
     @XmlElement
@@ -117,7 +114,6 @@ public class SoapOperation {
     private SoapOperation(final Builder builder){
         this.id = Objects.requireNonNull(builder.id, "id");
         this.name = Objects.requireNonNull(builder.name, "name");
-        this.identifier = Objects.requireNonNull(builder.identifier, "identifier");
         this.operationIdentifier = Objects.requireNonNull(builder.operationIdentifier, "operationIdentifier");
         this.responseStrategy = Objects.requireNonNull(builder.responseStrategy, "responseStrategy");
         this.status = Objects.requireNonNull(builder.status, "status");
@@ -146,10 +142,6 @@ public class SoapOperation {
 
     public String getName() {
         return name;
-    }
-
-    public String getIdentifier() {
-        return identifier;
     }
 
     public SoapOperationIdentifier getOperationIdentifier() {
@@ -237,7 +229,7 @@ public class SoapOperation {
         if (o == null || getClass() != o.getClass()) return false;
         SoapOperation that = (SoapOperation) o;
         return automaticForward == that.automaticForward && Objects.equals(id, that.id)
-                && Objects.equals(name, that.name) && Objects.equals(identifier, that.identifier)
+                && Objects.equals(name, that.name)
                 && Objects.equals(operationIdentifier, that.operationIdentifier) && responseStrategy == that.responseStrategy
                 && status == that.status && httpMethod == that.httpMethod && soapVersion == that.soapVersion
                 && Objects.equals(defaultBody, that.defaultBody) && Objects.equals(currentResponseSequenceIndex, that.currentResponseSequenceIndex)
@@ -251,7 +243,7 @@ public class SoapOperation {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, identifier, operationIdentifier, responseStrategy, status, httpMethod,
+        return Objects.hash(id, name, operationIdentifier, responseStrategy, status, httpMethod,
                 soapVersion, defaultBody, currentResponseSequenceIndex, forwardedEndpoint, originalEndpoint,
                 simulateNetworkDelay, networkDelay, defaultMockResponseId, portId, mockOnFailure, identifyStrategy,
                 mockResponses, invokeAddress, defaultResponseName, automaticForward);
@@ -262,7 +254,6 @@ public class SoapOperation {
         return "SoapOperation{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", identifier='" + identifier + '\'' +
                 ", operationIdentifier=" + operationIdentifier +
                 ", responseStrategy=" + responseStrategy +
                 ", status=" + status +
@@ -302,7 +293,6 @@ public class SoapOperation {
                 .defaultResponseName(defaultResponseName)
                 .defaultMockResponseId(defaultMockResponseId)
                 .name(name)
-                .identifier(identifier)
                 .operationIdentifier(operationIdentifier)
                 .responseStrategy(responseStrategy)
                 .invokeAddress(invokeAddress)
@@ -324,7 +314,6 @@ public class SoapOperation {
     public static final class Builder {
         private String id;
         private String name;
-        private String identifier;
         private SoapOperationIdentifier operationIdentifier;
         private SoapResponseStrategy responseStrategy;
         private SoapOperationStatus status;
@@ -355,11 +344,6 @@ public class SoapOperation {
 
         public Builder name(final String name) {
             this.name = name;
-            return this;
-        }
-
-        public Builder identifier(final String identifier) {
-            this.identifier = identifier;
             return this;
         }
 

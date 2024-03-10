@@ -51,7 +51,8 @@ public class RestClient {
             }
 
             final String parameterUri = HttpMessageSupport.buildParameterUri(request.getHttpParameters());
-            final String endpoint = restMethod.getForwardedEndpoint() + request.getUri() + parameterUri;
+            final String endpoint = restMethod.getForwardedEndpoint()
+                    .orElseThrow(() -> new IllegalStateException("Missing forwarded endpoint for the following REST method: " + restMethod.getId())) + request.getUri() + parameterUri;
 
             connection = HttpMessageSupport.establishConnection(
                 endpoint,

@@ -31,7 +31,6 @@ public final class SoapOperationFileConverter {
                 .name(soapOperationFile.getName())
                 .portId(soapOperationFile.getPortId())
                 .responseStrategy(soapOperationFile.getResponseStrategy())
-                .identifier(soapOperationFile.getIdentifier())
                 .operationIdentifier(SoapOperationIdentifierFileConverter
                         .toSoapOperationIdentifier(soapOperationFile.getOperationIdentifier()))
                 .status(soapOperationFile.getStatus())

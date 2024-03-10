@@ -79,7 +79,6 @@ public class SoapOperationFile implements Saveable<String> {
     private SoapOperationFile(final Builder builder) {
         this.id = Objects.requireNonNull(builder.id, "id");
         this.name = Objects.requireNonNull(builder.name, "name");
-        this.identifier = Objects.requireNonNull(builder.identifier, "identifier");
         this.operationIdentifier = Objects.requireNonNull(builder.operationIdentifier, "operationIdentifier");
         this.responseStrategy = Objects.requireNonNull(builder.responseStrategy, "responseStrategy");
         this.status = Objects.requireNonNull(builder.status, "status");
@@ -186,7 +185,6 @@ public class SoapOperationFile implements Saveable<String> {
         private String name;
         private String portId;
         private SoapResponseStrategy responseStrategy;
-        private String identifier;
         private SoapOperationIdentifierFile operationIdentifier;
         private SoapOperationStatus status;
         private HttpMethod httpMethod;
@@ -222,11 +220,6 @@ public class SoapOperationFile implements Saveable<String> {
 
         public Builder responseStrategy(final SoapResponseStrategy responseStrategy) {
             this.responseStrategy = responseStrategy;
-            return this;
-        }
-
-        public Builder identifier(final String identifier) {
-            this.identifier = identifier;
             return this;
         }
 

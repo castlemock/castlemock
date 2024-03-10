@@ -132,7 +132,6 @@ public final class ServicePortConverter {
         return SoapOperation.builder()
                 .id(operationId)
                 .portId(portId)
-                .identifier(bindingOperation.getName())
                 .operationIdentifier(operationRequestIdentifier)
                 .name(bindingOperation.getName())
                 .httpMethod(HttpMethod.POST)

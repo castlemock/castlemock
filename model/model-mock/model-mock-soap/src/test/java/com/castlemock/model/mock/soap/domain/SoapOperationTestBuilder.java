@@ -35,7 +35,6 @@ public final class SoapOperationTestBuilder {
                 .forwardedEndpoint("Forwarded event")
                 .httpMethod(HttpMethod.POST)
                 .id("SOAP OPERATION")
-                .identifier("soapoperation")
                 .identifyStrategy(SoapOperationIdentifyStrategy.ELEMENT_NAMESPACE)
                 .invokeAddress("Invoke address")
                 .mockOnFailure(Boolean.FALSE)
