@@ -19,6 +19,8 @@ package com.castlemock.repository.core.file.http.converter;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
 
+import java.util.Optional;
+
 public final class HttpHeaderFileConverter {
 
     private HttpHeaderFileConverter() {
@@ -28,7 +30,7 @@ public final class HttpHeaderFileConverter {
     public static HttpHeader toHttpHeader(final HttpHeaderFile httpHeaderFile) {
         return HttpHeader.builder()
                 .name(httpHeaderFile.getName())
-                .value(httpHeaderFile.getValue())
+                .value(Optional.ofNullable(httpHeaderFile.getValue()).orElse(""))
                 .build();
     }
 
