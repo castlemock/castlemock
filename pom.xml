@@ -23,7 +23,7 @@
         <slf4j.version>2.0.12</slf4j.version>
         <junit.version>4.13.1</junit.version>
         <jsr305.version>3.0.2</jsr305.version>
-        <cxf.rt.version>3.6.2</cxf.rt.version>
+        <cxf.rt.version>3.6.3</cxf.rt.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
         <guava.version>32.1.3-jre</guava.version>
         <taglibs.version>1.2.5</taglibs.version>
