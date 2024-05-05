@@ -20,7 +20,7 @@
         <jaxb.version>2.3.1</jaxb.version>
         <antlr.version>4.13.1</antlr.version>
         <log4j.version>2.23.1</log4j.version>
-        <slf4j.version>2.0.12</slf4j.version>
+        <slf4j.version>2.0.13</slf4j.version>
         <junit.version>4.13.1</junit.version>
         <jsr305.version>3.0.2</jsr305.version>
         <cxf.rt.version>3.6.3</cxf.rt.version>
