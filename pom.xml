@@ -52,7 +52,7 @@
         <commons.codec.version>1.16.0</commons.codec.version>
         <junit.jupiter.version>5.10.1</junit.jupiter.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
-        <tomcat.embedd.version>10.1.20</tomcat.embedd.version>
+        <tomcat.embedd.version>10.1.23</tomcat.embedd.version>
         <json.schema.validator>2.2.13</json.schema.validator>
         <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.12.1</maven.compiler.version>
