@@ -18,25 +18,8 @@ package com.castlemock.service.mock.soap.project.converter;
 
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.utility.IdUtility;
-import com.castlemock.model.mock.soap.domain.SoapMockResponse;
-import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
-import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
-import com.castlemock.model.mock.soap.domain.SoapOperationIdentifyStrategy;
-import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
-import com.castlemock.model.mock.soap.domain.SoapPort;
-import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
-import com.castlemock.service.mock.soap.project.converter.types.Attribute;
-import com.castlemock.service.mock.soap.project.converter.types.Binding;
-import com.castlemock.service.mock.soap.project.converter.types.BindingOperation;
-import com.castlemock.service.mock.soap.project.converter.types.Message;
-import com.castlemock.service.mock.soap.project.converter.types.Namespace;
-import com.castlemock.service.mock.soap.project.converter.types.PortType;
-import com.castlemock.service.mock.soap.project.converter.types.PortTypeOperation;
-import com.castlemock.service.mock.soap.project.converter.types.PortTypeOperationInput;
-import com.castlemock.service.mock.soap.project.converter.types.PortTypeOperationOutput;
-import com.castlemock.service.mock.soap.project.converter.types.ServicePort;
-import com.castlemock.service.mock.soap.project.converter.types.ServicePortAddress;
+import com.castlemock.model.mock.soap.domain.*;
+import com.castlemock.service.mock.soap.project.converter.types.*;
 
 import java.util.List;
 import java.util.Optional;

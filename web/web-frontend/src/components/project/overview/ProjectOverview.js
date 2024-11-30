@@ -21,7 +21,7 @@ import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import Badge from 'react-bootstrap/Badge'
-import {faTrash, faFile, faCloudUploadAlt, faCheckCircle} from '@fortawesome/free-solid-svg-icons'
+import {faCheckCircle, faCloudUploadAlt, faFile, faTrash} from '@fortawesome/free-solid-svg-icons'
 import validateErrorResponse from "../../../utility/HttpResponseValidator"
 import AuthenticationContext from "../../../context/AuthenticationContext";
 import {isOnlyReader} from "../../../utility/AuthorizeUtility";

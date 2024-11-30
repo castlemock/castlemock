@@ -21,11 +21,7 @@ import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.core.utility.serializer.ExportContainerSerializer;
 import com.castlemock.model.mock.soap.SoapExportContainer;
-import com.castlemock.model.mock.soap.domain.SoapMockResponse;
-import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapPort;
-import com.castlemock.model.mock.soap.domain.SoapProject;
-import com.castlemock.model.mock.soap.domain.SoapResource;
+import com.castlemock.model.mock.soap.domain.*;
 import com.castlemock.service.mock.soap.project.input.ExportSoapProjectInput;
 import com.castlemock.service.mock.soap.project.output.ExportSoapProjectOutput;
 

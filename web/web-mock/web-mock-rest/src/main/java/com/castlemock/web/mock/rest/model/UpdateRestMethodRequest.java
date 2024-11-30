@@ -22,8 +22,8 @@ import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -107,7 +107,7 @@ public class UpdateRestMethodRequest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UpdateRestMethodRequest that = (UpdateRestMethodRequest) o;
-        return automaticForward == that.automaticForward && simulateNetworkDelay == that.simulateNetworkDelay && networkDelay == that.networkDelay && Objects.equals(name, that.name) && httpMethod == that.httpMethod && Objects.equals(forwardedEndpoint, that.forwardedEndpoint) && status == that.status && responseStrategy == that.responseStrategy && Objects.equals(defaultMockResponseId, that.defaultMockResponseId);
+        return automaticForward == that.automaticForward && simulateNetworkDelay == that.simulateNetworkDelay && Objects.equals(networkDelay, that.networkDelay) && Objects.equals(name, that.name) && httpMethod == that.httpMethod && Objects.equals(forwardedEndpoint, that.forwardedEndpoint) && status == that.status && responseStrategy == that.responseStrategy && Objects.equals(defaultMockResponseId, that.defaultMockResponseId);
     }
 
     @Override

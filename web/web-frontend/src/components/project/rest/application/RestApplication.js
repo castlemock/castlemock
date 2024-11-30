@@ -29,7 +29,7 @@ import UpdateStatusModal from "./modal/UpdateStatusModal";
 import CreateResourceModal from "./modal/CreateResourceModal"
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
-import {faEdit, faTrash, faFile, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
+import {faCodeBranch, faEdit, faFile, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;

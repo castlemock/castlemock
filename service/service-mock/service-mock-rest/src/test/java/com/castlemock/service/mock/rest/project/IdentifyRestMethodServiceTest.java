@@ -20,12 +20,7 @@ package com.castlemock.service.mock.rest.project;
 import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.core.http.HttpMethod;
-import com.castlemock.model.mock.rest.domain.RestMethod;
-import com.castlemock.model.mock.rest.domain.RestMethodTestBuilder;
-import com.castlemock.model.mock.rest.domain.RestMockResponse;
-import com.castlemock.model.mock.rest.domain.RestMockResponseTestBuilder;
-import com.castlemock.model.mock.rest.domain.RestResource;
-import com.castlemock.model.mock.rest.domain.RestResourceTestBuilder;
+import com.castlemock.model.mock.rest.domain.*;
 import com.castlemock.repository.rest.project.RestMethodRepository;
 import com.castlemock.repository.rest.project.RestMockResponseRepository;
 import com.castlemock.repository.rest.project.RestResourceRepository;
@@ -156,6 +151,7 @@ public class IdentifyRestMethodServiceTest {
         Assertions.assertEquals(restMethod4, output3.getMethod());
     }
 
+    @Test
     public void testProcessMethodNotFound(){
         final RestMethod restMethod1 = RestMethodTestBuilder.builder()
                 .resourceId("Resource1")
@@ -205,7 +201,7 @@ public class IdentifyRestMethodServiceTest {
                 .httpMethod(HttpMethod.GET)
                 .build();
         final ServiceTask<IdentifyRestMethodInput> serviceTask1 = ServiceTask.of(input1, "user");
-        assertThrows(IllegalStateException.class, () -> service.process(serviceTask1));
+        assertThrows(IllegalArgumentException.class, () -> service.process(serviceTask1));
 
     }
 

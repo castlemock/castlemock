@@ -15,8 +15,8 @@
  */
 
 import React, {Component} from 'react';
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
-import { createBrowserHistory } from 'history';
+import {HashRouter as Router, Route, Switch} from "react-router-dom";
+import {createBrowserHistory} from 'history';
 import '../css/App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';

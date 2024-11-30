@@ -9,8 +9,8 @@
       <s:element name="ConversionRate">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="FromCurrency" type="tns:Currency" />
-            <s:element minOccurs="1" maxOccurs="1" name="ToCurrency" type="tns:Currency" />
+            <s:element name="FromCurrency" type="tns:Currency" />
+            <s:element name="ToCurrency" type="tns:Currency" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -172,7 +172,7 @@
       <s:element name="ConversionRateResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="ConversionRateResult" type="s:double" />
+            <s:element name="ConversionRateResult" type="s:double" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -261,7 +261,7 @@
     <wsdl:operation name="ConversionRate">
       <http:operation location="/ConversionRate" />
       <wsdl:input>
-        <mime:content type="application/x-www-form-urlencoded" />
+        <mime:content type="application/x-www-form-urlencoded"  part="Body"/>
       </wsdl:input>
       <wsdl:output>
         <mime:mimeXml part="Body" />

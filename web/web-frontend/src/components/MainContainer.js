@@ -15,7 +15,7 @@
  */
 
 import React, {PureComponent} from 'react'
-import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import {HashRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import '../css/Main.css';
 import Footer from './Footer'
 import Header from './Header'
@@ -73,7 +73,7 @@ class MainContainer extends PureComponent {
                 <Header/>
                     <div id="main-body">
                         <Switch>
-                            <Route path="/web/rest/project/:projectId/application/:applicationId/resource/:resourceId/method/:methodId/mockresponse/:mockResponseId" component={RestMockResponse} /> } />
+                            <Route path="/web/rest/project/:projectId/application/:applicationId/resource/:resourceId/method/:methodId/mockresponse/:mockResponseId" component={RestMockResponse} />
                             <Route path="/web/rest/project/:projectId/application/:applicationId/resource/:resourceId/method/:methodId" component={RestMethod} />
                             <Route path="/web/rest/project/:projectId/application/:applicationId/resource/:resourceId" component={RestResource} />
                             <Route path="/web/rest/project/:projectId/application/:applicationId" component={RestApplication} />

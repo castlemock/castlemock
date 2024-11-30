@@ -65,7 +65,7 @@ public class FileManager {
         final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
         final String fileName = "Upload-" + formatter.format(new Date());
 
-        LOGGER.debug("Uploading file: " + fileName);
+        LOGGER.debug("Uploading file: {}", fileName);
         final File serverFile = new File(fileDirectory, fileName);
         final byte[] bytes = file.getBytes();
         try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile))) {
@@ -111,10 +111,10 @@ public class FileManager {
      */
     public void deleteUploadedFile(final File file){
         Preconditions.checkNotNull(file, "Uploaded file cannot be null");
-        LOGGER.debug("Deleting: " + file.getName());
+        LOGGER.debug("Deleting: {}", file.getName());
         final boolean deleted = file.delete();
         if(!deleted) {
-            LOGGER.warn("Unable to delete the following file: " + file.getName());
+            LOGGER.warn("Unable to delete the following file: {}", file.getName());
         }
     }
 

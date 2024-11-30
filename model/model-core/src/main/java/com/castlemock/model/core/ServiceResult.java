@@ -75,7 +75,7 @@ public class ServiceResult<O extends Output> {
         }
 
         public ServiceResult<O> build() {
-            return new ServiceResult<O>(this);
+            return new ServiceResult<>(this);
         }
     }
 }

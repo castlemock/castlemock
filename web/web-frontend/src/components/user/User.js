@@ -19,7 +19,7 @@ import axios from "axios";
 import validateErrorResponse from "../../utility/HttpResponseValidator";
 import DeleteUserModal from "./modal/DeleteUserModal";
 import UpdateUserModal from "./modal/UpdateUserModal";
-import {userStatusFormatter, userRoleFormatter} from "./utility/UserFormatter";
+import {userRoleFormatter, userStatusFormatter} from "./utility/UserFormatter";
 import {faUserEdit, faUserMinus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 

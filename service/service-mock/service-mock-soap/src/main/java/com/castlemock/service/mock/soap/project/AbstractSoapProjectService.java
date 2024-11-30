@@ -16,16 +16,8 @@
 
 package com.castlemock.service.mock.soap.project;
 
-import com.castlemock.model.mock.soap.domain.SoapMockResponse;
-import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapPort;
-import com.castlemock.model.mock.soap.domain.SoapProject;
-import com.castlemock.model.mock.soap.domain.SoapResource;
-import com.castlemock.repository.soap.project.SoapMockResponseRepository;
-import com.castlemock.repository.soap.project.SoapOperationRepository;
-import com.castlemock.repository.soap.project.SoapPortRepository;
-import com.castlemock.repository.soap.project.SoapProjectRepository;
-import com.castlemock.repository.soap.project.SoapResourceRepository;
+import com.castlemock.model.mock.soap.domain.*;
+import com.castlemock.repository.soap.project.*;
 import com.castlemock.service.core.AbstractService;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;

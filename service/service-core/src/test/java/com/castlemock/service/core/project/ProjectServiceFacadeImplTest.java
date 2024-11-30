@@ -43,12 +43,10 @@ public class ProjectServiceFacadeImplTest {
     @InjectMocks
     private ProjectServiceFacadeImpl serviceFacade;
 
-    private ProjectServiceAdapter projectServiceAdapter;
-
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        projectServiceAdapter = Mockito.mock(ProjectServiceAdapter.class);
+        ProjectServiceAdapter projectServiceAdapter = Mockito.mock(ProjectServiceAdapter.class);
 
         final Map<String, Object> projectServiceAdapters = new HashMap<>();
         projectServiceAdapters.put("ProjectServiceAdapter", projectServiceAdapter);

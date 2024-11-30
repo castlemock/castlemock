@@ -27,11 +27,15 @@ import UpdateMethodModal from "./modal/UpdateMethodModal";
 import CreateMockResponseModal from "./modal/CreateMockResponseModal";
 import DuplicateMockResponsesModal from "./modal/DuplicateMockResponsesModal";
 import UpdateStatusModal from "./modal/UpdateStatusModal"
-import {mockResponseStatusFormatter, methodResponseStrategyFormatter, methodStatusFormatter} from "../utility/RestFormatter";
+import {
+    methodResponseStrategyFormatter,
+    methodStatusFormatter,
+    mockResponseStatusFormatter
+} from "../utility/RestFormatter";
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
 import ContextContext from "../../../../context/ContextContext";
-import {faEdit, faFile, faTrash, faCopy} from "@fortawesome/free-solid-svg-icons";
+import {faCopy, faEdit, faFile, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;

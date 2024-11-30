@@ -16,11 +16,7 @@
 
 package com.castlemock.model.mock.soap;
 
-import com.castlemock.model.mock.soap.domain.SoapMockResponseTestBuilder;
-import com.castlemock.model.mock.soap.domain.SoapOperationTestBuilder;
-import com.castlemock.model.mock.soap.domain.SoapPortTestBuilder;
-import com.castlemock.model.mock.soap.domain.SoapProjectTestBuilder;
-import com.castlemock.model.mock.soap.domain.SoapResourceTestBuilder;
+import com.castlemock.model.mock.soap.domain.*;
 
 import java.util.List;
 

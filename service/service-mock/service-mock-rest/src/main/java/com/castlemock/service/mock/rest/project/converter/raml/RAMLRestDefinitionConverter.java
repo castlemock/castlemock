@@ -97,7 +97,7 @@ public class RAMLRestDefinitionConverter extends AbstractRestDefinitionConverter
 
             return List.of(restApplication);
         } catch (final Exception exception) {
-            LOGGER.error("Unable to convert RAML into a REST application: " + exception.getMessage(), exception);
+            LOGGER.error("Unable to convert RAML into a REST application: {}", exception.getMessage(), exception);
             throw exception;
         }
     }

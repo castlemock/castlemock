@@ -24,24 +24,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
@@ -241,7 +228,7 @@ public final class HttpMessageSupport {
 
             return connection;
         }catch (Exception exception){
-            LOGGER.error("Unable to establish connection towards " + endpoint, exception);
+            LOGGER.error("Unable to establish connection towards {}", endpoint, exception);
             throw new IllegalStateException(exception);
         } finally {
             if(outputStream != null){

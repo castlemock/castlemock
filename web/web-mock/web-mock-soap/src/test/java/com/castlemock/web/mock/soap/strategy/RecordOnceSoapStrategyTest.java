@@ -16,13 +16,7 @@
 
 package com.castlemock.web.mock.soap.strategy;
 
-import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
-import com.castlemock.model.mock.soap.domain.SoapOperationTestBuilder;
-import com.castlemock.model.mock.soap.domain.SoapRequest;
-import com.castlemock.model.mock.soap.domain.SoapRequestTestBuilder;
-import com.castlemock.model.mock.soap.domain.SoapResponse;
-import com.castlemock.model.mock.soap.domain.SoapResponseTestBuilder;
+import com.castlemock.model.mock.soap.domain.*;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapOperationsStatusInput;
 import com.castlemock.web.mock.soap.converter.SoapResponseConverter;
 import com.castlemock.web.mock.soap.factory.SoapMockStrategyResultFactory;

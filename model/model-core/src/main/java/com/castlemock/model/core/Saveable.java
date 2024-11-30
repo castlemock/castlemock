@@ -16,7 +16,7 @@
 
 package com.castlemock.model.core;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * The Saveable class is used to indicate that a class can be identified with a ID.

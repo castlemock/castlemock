@@ -18,11 +18,7 @@
 package com.castlemock.repository.soap.file.project;
 
 import com.castlemock.model.core.http.HttpMethod;
-import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
-import com.castlemock.model.mock.soap.domain.SoapOperationIdentifyStrategy;
-import com.castlemock.model.mock.soap.domain.SoapPort;
-import com.castlemock.model.mock.soap.domain.SoapVersion;
+import com.castlemock.model.mock.soap.domain.*;
 import com.castlemock.repository.Profiles;
 import com.castlemock.repository.core.file.FileRepository;
 import com.castlemock.repository.soap.file.project.converter.SoapOperationConverter;

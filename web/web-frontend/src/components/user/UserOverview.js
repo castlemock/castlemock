@@ -23,8 +23,8 @@ import {Link} from "react-router-dom";
 import validateErrorResponse from "../../utility/HttpResponseValidator";
 import DeleteUsersModal from "./modal/DeleteUsersModal";
 import NewUserModal from "./modal/NewUserModal";
-import {userStatusFormatter, userRoleFormatter} from "../user/utility/UserFormatter";
-import {faUserPlus, faUserMinus} from "@fortawesome/free-solid-svg-icons";
+import {userRoleFormatter, userStatusFormatter} from "../user/utility/UserFormatter";
+import {faUserMinus, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;

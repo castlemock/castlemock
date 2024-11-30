@@ -25,7 +25,6 @@ import com.castlemock.model.mock.rest.domain.RestMethod;
 import com.castlemock.service.mock.rest.event.input.ReadRestEventWithMethodIdInput;
 import com.castlemock.service.mock.rest.event.output.ReadRestEventWithMethodIdOutput;
 
-import java.util.Collections;
 import java.util.List;
 
 /**

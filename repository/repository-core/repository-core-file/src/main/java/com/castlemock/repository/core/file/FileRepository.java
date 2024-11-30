@@ -27,11 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.File;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 
@@ -86,7 +82,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      */
     @Override
     public void initialize(){
-        LOGGER.debug("Start the initialize phase for the type " + entityClass.getSimpleName());
+        LOGGER.debug("Start the initialize phase for the type {}", entityClass.getSimpleName());
         final Collection<T> loadedFiles = loadFiles();
         for(T type : loadedFiles){
             collection.put(type.getId(), type);
@@ -103,7 +99,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
     @Override
     public Optional<D> findOne(final I id) {
         Preconditions.checkNotNull(id, "The provided id cannot be null");
-        LOGGER.debug("Retrieving " + entityClass.getSimpleName() + " with id " + id);
+        LOGGER.debug("Retrieving {} with id {}", entityClass.getSimpleName(), id);
         return Optional.ofNullable(collection.get(id))
                 .map(this.typeConverter);
     }
@@ -114,7 +110,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      */
     @Override
     public List<D> findAll() {
-        LOGGER.debug("Retrieving all instances for " + entityClass.getSimpleName());
+        LOGGER.debug("Retrieving all instances for {}", entityClass.getSimpleName());
         return toDtoList(collection.values());
     }
 
@@ -211,12 +207,12 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
     public Optional<D> delete(final I id) {
         Preconditions.checkNotNull(id, "The provided id cannot be null");
         final String filename = getFilename(id);
-        LOGGER.debug("Start the deletion of " + entityClass.getSimpleName() + " with id " + id);
+        LOGGER.debug("Start the deletion of {} with id {}", entityClass.getSimpleName(), id);
         final Semaphore writeLock = getWriteLock(id);
         try {
             writeLock.acquire();
             this.fileRepositorySupport.delete(filename);
-            LOGGER.debug("Deletion of " + entityClass.getSimpleName() + " with id " + id + " was successfully completed");
+            LOGGER.debug("Deletion of {} with id {} was successfully completed", entityClass.getSimpleName(), id);
 
             return Optional.ofNullable(collection.remove(id))
                     .map(this.typeConverter);
@@ -256,7 +252,7 @@ public abstract class FileRepository<T extends Saveable<I>, D, I extends Seriali
      * @see #initialize
      */
     protected void postInitiate(){
-        LOGGER.debug("Post initialize method not implemented for " + entityClass.getSimpleName());
+        LOGGER.debug("Post initialize method not implemented for {}", entityClass.getSimpleName());
     }
 
     /**

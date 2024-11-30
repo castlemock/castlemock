@@ -22,9 +22,9 @@ import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
 import com.castlemock.model.mock.soap.domain.SoapRequest;
 import com.castlemock.model.mock.soap.domain.SoapResponse;
 import com.castlemock.service.mock.soap.project.input.UpdateSoapOperationsStatusInput;
-import com.castlemock.web.mock.soap.utility.SoapClient;
 import com.castlemock.web.mock.soap.converter.SoapResponseConverter;
 import com.castlemock.web.mock.soap.factory.SoapMockStrategyResultFactory;
+import com.castlemock.web.mock.soap.utility.SoapClient;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;

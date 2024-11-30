@@ -16,28 +16,7 @@
 
 package com.castlemock.model.core.utility.parser;
 
-import com.castlemock.model.core.utility.parser.expression.BodyJsonPathExpression;
-import com.castlemock.model.core.utility.parser.expression.BodyXPathExpression;
-import com.castlemock.model.core.utility.parser.expression.Expression;
-import com.castlemock.model.core.utility.parser.expression.ExpressionInput;
-import com.castlemock.model.core.utility.parser.expression.ExpressionInputParser;
-import com.castlemock.model.core.utility.parser.expression.FakerExpression;
-import com.castlemock.model.core.utility.parser.expression.PathParameterExpression;
-import com.castlemock.model.core.utility.parser.expression.QueryStringExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomBooleanExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomDateExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomDateTimeExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomDecimalExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomDoubleExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomEmailExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomEnumExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomFloatExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomIntegerExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomLongExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomPasswordExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomStringExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomUUIDExpression;
-import com.castlemock.model.core.utility.parser.expression.UrlHostExpression;
+import com.castlemock.model.core.utility.parser.expression.*;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -148,7 +127,7 @@ public class TextParser {
             String expressionResult = expression.transform(expressionInput);
             outputBuilder.replace(indexOfStartExpression, indexOfEndExpression + 1, expressionResult);
         } else {
-            LOGGER.error("Unable to parse the following expression: " + expressionInput.getName());
+            LOGGER.error("Unable to parse the following expression: {}", expressionInput.getName());
         }
     }
     

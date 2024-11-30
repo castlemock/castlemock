@@ -16,8 +16,8 @@
 
 package com.castlemock.model.mock.rest.domain;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * The response strategy defines how mocked instances should decide which response

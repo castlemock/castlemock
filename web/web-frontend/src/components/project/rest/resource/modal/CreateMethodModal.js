@@ -17,7 +17,7 @@
 import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
-import { withRouter } from "react-router";
+import {withRouter} from "react-router";
 import preventEnterEvent from "../../../../../utility/KeyboardUtility";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

@@ -21,11 +21,7 @@ import com.castlemock.model.core.ServiceResult;
 import com.castlemock.model.core.ServiceTask;
 import com.castlemock.model.core.utility.serializer.ExportContainerSerializer;
 import com.castlemock.model.mock.rest.RestExportContainer;
-import com.castlemock.model.mock.rest.domain.RestApplication;
-import com.castlemock.model.mock.rest.domain.RestMethod;
-import com.castlemock.model.mock.rest.domain.RestMockResponse;
-import com.castlemock.model.mock.rest.domain.RestProject;
-import com.castlemock.model.mock.rest.domain.RestResource;
+import com.castlemock.model.mock.rest.domain.*;
 import com.castlemock.service.mock.rest.project.input.ExportRestProjectInput;
 import com.castlemock.service.mock.rest.project.output.ExportRestProjectOutput;
 

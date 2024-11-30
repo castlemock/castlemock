@@ -26,12 +26,7 @@ import com.castlemock.service.core.utility.UrlUtility;
 import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
 import com.castlemock.service.mock.rest.project.output.IdentifyRestMethodOutput;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 import static java.util.stream.Collectors.toMap;

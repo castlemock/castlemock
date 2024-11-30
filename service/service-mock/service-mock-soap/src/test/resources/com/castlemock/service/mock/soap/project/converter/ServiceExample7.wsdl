@@ -4,7 +4,7 @@
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
     <wsdl:import namespace="http://Services/ServiceExample/ServiceExample/1/wsdl/0" location="./ServiceExample2.wsdl"/>
     <wsdl:types>
-        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://Services/ServiceExample/ServiceExample/1/Schema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://Services/ServiceExample/ServiceExample/1/Schema" xmlns:xs="http://www.w3.org/2001/XMLSchema">
             <xs:include schemaLocation="http://schema/ServiceExample.xsd"/>
         </xs:schema>
     </wsdl:types>

@@ -18,11 +18,7 @@ package com.castlemock.web.mock.soap.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.mock.soap.domain.SoapMockResponse;
-import com.castlemock.service.mock.soap.project.input.CreateSoapMockResponseInput;
-import com.castlemock.service.mock.soap.project.input.DeleteSoapMockResponseInput;
-import com.castlemock.service.mock.soap.project.input.DuplicateSoapMockResponsesInput;
-import com.castlemock.service.mock.soap.project.input.ReadSoapMockResponseInput;
-import com.castlemock.service.mock.soap.project.input.UpdateSoapMockResponseInput;
+import com.castlemock.service.mock.soap.project.input.*;
 import com.castlemock.service.mock.soap.project.output.CreateSoapMockResponseOutput;
 import com.castlemock.service.mock.soap.project.output.DeleteSoapMockResponseOutput;
 import com.castlemock.service.mock.soap.project.output.ReadSoapMockResponseOutput;
@@ -38,11 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("api/rest/soap")

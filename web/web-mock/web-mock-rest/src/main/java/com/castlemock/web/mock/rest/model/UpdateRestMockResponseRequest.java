@@ -18,17 +18,13 @@ package com.castlemock.web.mock.rest.model;
 
 import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
-import com.castlemock.model.mock.rest.domain.RestHeaderQuery;
-import com.castlemock.model.mock.rest.domain.RestJsonPathExpression;
-import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
-import com.castlemock.model.mock.rest.domain.RestParameterQuery;
-import com.castlemock.model.mock.rest.domain.RestXPathExpression;
+import com.castlemock.model.mock.rest.domain.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

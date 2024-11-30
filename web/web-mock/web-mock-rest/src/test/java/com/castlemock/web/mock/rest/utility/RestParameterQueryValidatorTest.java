@@ -18,8 +18,8 @@ package com.castlemock.web.mock.rest.utility;
 
 import com.castlemock.model.mock.rest.domain.RestParameterQuery;
 import com.castlemock.model.mock.rest.domain.RestParameterQueryTestBuilder;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;

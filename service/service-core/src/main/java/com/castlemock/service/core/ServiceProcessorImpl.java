@@ -16,13 +16,7 @@
 
 package com.castlemock.service.core;
 
-import com.castlemock.model.core.Input;
-import com.castlemock.model.core.Message;
-import com.castlemock.model.core.Output;
-import com.castlemock.model.core.Service;
-import com.castlemock.model.core.ServiceProcessor;
-import com.castlemock.model.core.ServiceResult;
-import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.*;
 import com.castlemock.model.core.user.User;
 import com.castlemock.model.core.validation.validator.Validator;
 import org.slf4j.Logger;
@@ -75,7 +69,7 @@ public class ServiceProcessorImpl implements ServiceProcessor {
         }
 
         final ServiceTask<I> serviceTask = ServiceTask.of(input, getLoggedInUsername());
-        LOGGER.debug(getLoggedInUsername() + " is requesting " + service.getClass().getSimpleName() + " to process the following input message: " + input.getClass().getSimpleName());
+        LOGGER.debug("{} is requesting {} to process the following input message: {}", getLoggedInUsername(), service.getClass().getSimpleName(), input.getClass().getSimpleName());
         final ServiceResult<O> serviceResult = service.process(serviceTask);
         validateMessage(serviceResult.getOutput());
         return serviceResult.getOutput();
