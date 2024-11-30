@@ -8,8 +8,8 @@
     <parent>
         <groupId>com.castlemock.model</groupId>
         <artifactId>model</artifactId>
-        <version>${project.version}</version>
-        <relativePath>../</relativePath>
+        <version>1.67</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <dependencies>
@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.castlemock.model</groupId>
             <artifactId>model-expression</artifactId>
-            <version>${project.version}</version>
+            <version>1.67</version>
         </dependency>
 
         <!-- Third party dependencies -->

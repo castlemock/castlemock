@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.castlemock</groupId>
     <artifactId>castlemock</artifactId>
-    <version>${project.version}</version>
+    <version>1.67</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -85,140 +85,140 @@
             <dependency>
                 <groupId>com.castlemock.model</groupId>
                 <artifactId>model-expression</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.model</groupId>
                 <artifactId>model-core</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.model.mock</groupId>
                 <artifactId>model-mock-rest</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.model.mock</groupId>
                 <artifactId>model-mock-soap</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web.mock</groupId>
                 <artifactId>web-mock-rest</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web.mock</groupId>
                 <artifactId>web-mock-soap</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web</groupId>
                 <artifactId>web-core</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository</groupId>
                 <artifactId>repository-core</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.rest</groupId>
                 <artifactId>repository-mock-rest-file</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.rest</groupId>
                 <artifactId>repository-mock-rest-model</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.soap</groupId>
                 <artifactId>repository-mock-soap-file</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.mock.soap</groupId>
                 <artifactId>repository-mock-soap-model</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.core</groupId>
                 <artifactId>repository-core-model</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.repository.core</groupId>
                 <artifactId>repository-core-file</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.app</groupId>
                 <artifactId>app</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.deploy.tomcat</groupId>
                 <artifactId>deploy-tomcat-common</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.deploy.jetty</groupId>
                 <artifactId>deploy-jetty-common</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web</groupId>
                 <artifactId>web-site</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.web</groupId>
                 <artifactId>web-frontend</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.service</groupId>
                 <artifactId>service-core</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.service</groupId>
                 <artifactId>service-mock-rest</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.service</groupId>
                 <artifactId>service-mock-soap</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
             </dependency>
 
             <!-- Castle Mock test dependencies -->
             <dependency>
                 <groupId>com.castlemock.web</groupId>
                 <artifactId>web-core</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.model</groupId>
                 <artifactId>model-core</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.model.mock</groupId>
                 <artifactId>model-mock-rest</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.castlemock.model.mock</groupId>
                 <artifactId>model-mock-soap</artifactId>
-                <version>${project.version}</version>
+                <version>1.67</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>

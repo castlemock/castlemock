@@ -9,8 +9,8 @@
     <parent>
         <groupId>com.castlemock</groupId>
         <artifactId>castlemock</artifactId>
-        <version>${project.version}</version>
-        <relativePath>../</relativePath>
+        <version>1.67</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modules>
