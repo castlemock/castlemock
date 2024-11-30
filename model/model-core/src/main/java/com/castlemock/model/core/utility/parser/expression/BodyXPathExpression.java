@@ -74,7 +74,7 @@ public class BodyXPathExpression extends AbstractExpression {
             return XPathUtility.getXPathValue(body, expression)
                     .orElse(MISSING_BODY);
         } catch (Exception exception){
-            LOGGER.warn("Unable to parse body with the following expression: " + expression);
+            LOGGER.warn("Unable to parse body with the following expression: {}", expression);
             return MISSING_BODY;
         }
     }

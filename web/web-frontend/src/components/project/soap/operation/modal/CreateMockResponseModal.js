@@ -16,7 +16,7 @@
 
 import React, {PureComponent} from "react";
 import axios from "axios";
-import { withRouter } from "react-router";
+import {withRouter} from "react-router";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import {mockResponseStatusFormatter} from "../../utility/SoapFormatter";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";

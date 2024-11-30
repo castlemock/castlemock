@@ -31,11 +31,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -97,7 +93,7 @@ public class SoapPortConverter {
                     })
                     .collect(Collectors.toSet());
         }catch (Exception exception) {
-            LOGGER.error("Unable to parse WSDL: " + exception.getMessage(), exception);
+            LOGGER.error("Unable to parse WSDL: {}", exception.getMessage(), exception);
             throw exception;
         }
     }

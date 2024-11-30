@@ -37,11 +37,9 @@ import java.util.Objects;
 @Tag(name="Core - Documentation")
 public class DocumentationController {
 
-    @Autowired
     private final ServletContext servletContext;
 
-    @Autowired
-    public DocumentationController(final ServletContext servletContext){
+    public DocumentationController(ServletContext servletContext) {
         this.servletContext = Objects.requireNonNull(servletContext, "servletContext");
     }
 

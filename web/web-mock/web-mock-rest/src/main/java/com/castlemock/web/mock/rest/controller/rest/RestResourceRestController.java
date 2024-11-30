@@ -18,18 +18,8 @@ package com.castlemock.web.mock.rest.controller.rest;
 
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.mock.rest.domain.RestResource;
-import com.castlemock.service.mock.rest.project.input.CreateRestResourceInput;
-import com.castlemock.service.mock.rest.project.input.DeleteRestResourceInput;
-import com.castlemock.service.mock.rest.project.input.ReadRestResourceInput;
-import com.castlemock.service.mock.rest.project.input.ReadRestResourceQueryParametersInput;
-import com.castlemock.service.mock.rest.project.input.UpdateRestMethodsForwardedEndpointInput;
-import com.castlemock.service.mock.rest.project.input.UpdateRestMethodsStatusInput;
-import com.castlemock.service.mock.rest.project.input.UpdateRestResourceInput;
-import com.castlemock.service.mock.rest.project.output.CreateRestResourceOutput;
-import com.castlemock.service.mock.rest.project.output.DeleteRestResourceOutput;
-import com.castlemock.service.mock.rest.project.output.ReadRestResourceOutput;
-import com.castlemock.service.mock.rest.project.output.ReadRestResourceQueryParametersOutput;
-import com.castlemock.service.mock.rest.project.output.UpdateRestResourceOutput;
+import com.castlemock.service.mock.rest.project.input.*;
+import com.castlemock.service.mock.rest.project.output.*;
 import com.castlemock.web.core.controller.rest.AbstractRestController;
 import com.castlemock.web.mock.rest.model.CreateRestResourceRequest;
 import com.castlemock.web.mock.rest.model.UpdateRestMethodForwardedEndpointsRequest;
@@ -44,11 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 

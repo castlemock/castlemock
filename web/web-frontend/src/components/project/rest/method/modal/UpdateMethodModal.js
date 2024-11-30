@@ -18,10 +18,7 @@ import React, {PureComponent} from "react";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import preventEnterEvent from "../../../../../utility/KeyboardUtility";
-import {
-    methodResponseStrategyFormatter,
-    methodStatusFormatter
-} from "../../utility/RestFormatter";
+import {methodResponseStrategyFormatter, methodStatusFormatter} from "../../utility/RestFormatter";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 

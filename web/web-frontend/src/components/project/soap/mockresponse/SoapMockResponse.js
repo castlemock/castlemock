@@ -17,7 +17,7 @@
 import React, {PureComponent} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
-import { withRouter } from "react-router";
+import {withRouter} from "react-router";
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import validateErrorResponse from "../../../../utility/HttpResponseValidator";
@@ -26,7 +26,7 @@ import ValidateExpressionModal from "../../utility/modal/ValidateExpressionModal
 import HeaderComponent from "../../utility/HeaderComponent";
 import XPathComponent from "../../utility/XPathComponent";
 import {mockResponseStatusFormatter} from "../utility/SoapFormatter";
-import {faTrash, faEdit, faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import {faCheckCircle, faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class SoapMockResponse extends PureComponent {

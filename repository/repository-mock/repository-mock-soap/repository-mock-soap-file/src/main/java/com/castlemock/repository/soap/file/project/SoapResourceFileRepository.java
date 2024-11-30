@@ -206,7 +206,7 @@ public class SoapResourceFileRepository extends FileRepository<SoapResourceFile,
                 // that we weren't able to delete the resource file.
                 this.fileRepositorySupport.delete(path, soapResource.getId() + this.fileExtension);
             } catch (IllegalStateException e){
-                LOGGER.warn("Unable to delete the following SOAP resource: " + id);
+                LOGGER.warn("Unable to delete the following SOAP resource: {}", id);
             }
 
         }

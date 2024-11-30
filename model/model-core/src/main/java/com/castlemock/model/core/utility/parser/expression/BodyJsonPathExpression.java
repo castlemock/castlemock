@@ -74,7 +74,7 @@ public class BodyJsonPathExpression extends AbstractExpression {
             return JsonPathUtility.getValueWithJsonPathExpr(body, expression)
                     .orElse(MISSING_BODY);
         } catch (Exception exception){
-            LOGGER.warn("Unable to parse body with the following expression: " + expression);
+            LOGGER.warn("Unable to parse body with the following expression: {}", expression);
             return MISSING_BODY;
         }
     }

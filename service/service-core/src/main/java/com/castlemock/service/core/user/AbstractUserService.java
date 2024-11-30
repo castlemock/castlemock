@@ -54,7 +54,7 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
      */
     public List<User> findByRole(final Role role) {
         Preconditions.checkNotNull(role, "Role cannot be null");
-        LOGGER.debug("Finding user with role " + role);
+        LOGGER.debug("Finding user with role {}", role);
         final List<User> result = new ArrayList<>();
 
         for (User user : findAll()) {
@@ -62,7 +62,7 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
                 result.add(user);
             }
         }
-        LOGGER.debug("User found with role " + role + ": " + result.size());
+        LOGGER.debug("User found with role {}: {}", role, result.size());
         return result;
     }
 
@@ -142,7 +142,7 @@ public abstract class AbstractUserService extends AbstractService<User, String, 
      */
     @Override
     public Optional<User> delete(final String userId){
-        LOGGER.debug("Deleting user with id " + userId);
+        LOGGER.debug("Deleting user with id {}", userId);
         Preconditions.checkNotNull(userId, "User id cannot be null");
         final User userDto = find(userId).orElse(null);
 

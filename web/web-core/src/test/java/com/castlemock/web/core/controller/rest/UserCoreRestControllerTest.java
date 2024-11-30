@@ -23,11 +23,7 @@ import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.service.core.user.input.DeleteUserInput;
 import com.castlemock.service.core.user.input.ReadAllUsersInput;
 import com.castlemock.service.core.user.input.ReadUserInput;
-import com.castlemock.service.core.user.output.CreateUserOutput;
-import com.castlemock.service.core.user.output.DeleteUserOutput;
-import com.castlemock.service.core.user.output.ReadAllUsersOutput;
-import com.castlemock.service.core.user.output.ReadUserOutput;
-import com.castlemock.service.core.user.output.UpdateUserOutput;
+import com.castlemock.service.core.user.output.*;
 import com.castlemock.web.core.model.user.CreateUserRequest;
 import com.castlemock.web.core.model.user.CreateUserRequestTestBuilder;
 import com.castlemock.web.core.model.user.UpdateUserRequest;
@@ -43,10 +39,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class UserCoreRestControllerTest {
 

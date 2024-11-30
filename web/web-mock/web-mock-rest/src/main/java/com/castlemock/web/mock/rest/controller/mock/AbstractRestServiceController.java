@@ -26,14 +26,7 @@ import com.castlemock.model.core.utility.XPathUtility;
 import com.castlemock.model.core.utility.parser.ExternalInputBuilder;
 import com.castlemock.model.core.utility.parser.TextParser;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
-import com.castlemock.model.mock.rest.domain.RestEvent;
-import com.castlemock.model.mock.rest.domain.RestMethod;
-import com.castlemock.model.mock.rest.domain.RestMethodStatus;
-import com.castlemock.model.mock.rest.domain.RestMockResponse;
-import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
-import com.castlemock.model.mock.rest.domain.RestRequest;
-import com.castlemock.model.mock.rest.domain.RestResponse;
-import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
+import com.castlemock.model.mock.rest.domain.*;
 import com.castlemock.service.mock.rest.event.input.CreateRestEventInput;
 import com.castlemock.service.mock.rest.project.input.CreateRestMockResponseInput;
 import com.castlemock.service.mock.rest.project.input.IdentifyRestMethodInput;
@@ -59,17 +52,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -137,7 +120,7 @@ public abstract class AbstractRestServiceController extends AbstractController {
                     output.getMethod(), output.getPathParameters(),
                     httpServletRequest);
         } catch (Exception exception) {
-            LOGGER.error("REST service exception: " + exception.getMessage(), exception);
+            LOGGER.error("REST service exception: {}", exception.getMessage(), exception);
             throw new RestException(exception);
         }
     }

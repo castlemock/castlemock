@@ -79,7 +79,7 @@ public final class CharsetUtility {
                 return matcher.group(1).trim().toUpperCase();
             }
         } catch (Exception e){
-            LOGGER.info("Unable to extract the charset from the following Content-Type: " + contentType, e);
+            LOGGER.info("Unable to extract the charset from the following Content-Type: {}", contentType, e);
         }
         return DEFAULT_CHARSET;
     }

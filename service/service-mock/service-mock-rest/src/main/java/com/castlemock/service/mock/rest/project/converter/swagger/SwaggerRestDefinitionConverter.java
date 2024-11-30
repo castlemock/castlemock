@@ -20,56 +20,15 @@ import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.utility.IdUtility;
 import com.castlemock.model.core.utility.file.FileUtility;
-import com.castlemock.model.core.utility.parser.expression.Expression;
-import com.castlemock.model.core.utility.parser.expression.ExpressionInput;
-import com.castlemock.model.core.utility.parser.expression.ExpressionInputParser;
-import com.castlemock.model.core.utility.parser.expression.RandomBooleanExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomDateExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomDateTimeExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomDecimalExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomDoubleExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomEnumExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomFloatExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomIntegerExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomLongExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomPasswordExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomStringExpression;
-import com.castlemock.model.core.utility.parser.expression.RandomUUIDExpression;
+import com.castlemock.model.core.utility.parser.expression.*;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentArray;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgumentString;
-import com.castlemock.model.mock.rest.domain.RestApplication;
-import com.castlemock.model.mock.rest.domain.RestMethod;
-import com.castlemock.model.mock.rest.domain.RestMethodStatus;
-import com.castlemock.model.mock.rest.domain.RestMockResponse;
-import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
-import com.castlemock.model.mock.rest.domain.RestResource;
-import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
+import com.castlemock.model.mock.rest.domain.*;
 import com.castlemock.service.mock.rest.project.converter.AbstractRestDefinitionConverter;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import io.swagger.models.ArrayModel;
-import io.swagger.models.Model;
-import io.swagger.models.ModelImpl;
-import io.swagger.models.Operation;
-import io.swagger.models.Path;
-import io.swagger.models.RefModel;
-import io.swagger.models.Response;
-import io.swagger.models.Swagger;
-import io.swagger.models.Xml;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.BooleanProperty;
-import io.swagger.models.properties.DateProperty;
-import io.swagger.models.properties.DateTimeProperty;
-import io.swagger.models.properties.DecimalProperty;
-import io.swagger.models.properties.DoubleProperty;
-import io.swagger.models.properties.FloatProperty;
-import io.swagger.models.properties.IntegerProperty;
-import io.swagger.models.properties.LongProperty;
-import io.swagger.models.properties.PasswordProperty;
-import io.swagger.models.properties.Property;
-import io.swagger.models.properties.RefProperty;
-import io.swagger.models.properties.StringProperty;
-import io.swagger.models.properties.UUIDProperty;
+import io.swagger.models.*;
+import io.swagger.models.properties.*;
 import io.swagger.parser.SwaggerParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,14 +45,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * The {@link SwaggerRestDefinitionConverter} provides Swagger related functionality.
@@ -447,7 +399,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             final Model model = definitions.get(simpleRef);
 
             if(model == null){
-                LOGGER.warn("Unable to find the following definition in the Swagger file: " + simpleRef);
+                LOGGER.warn("Unable to find the following definition in the Swagger file: {}", simpleRef);
                 return Optional.empty();
             }
             element = getXmlElement(model, definitions, document);
@@ -579,7 +531,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             final Model model = definitions.get(simpleRef);
 
             if(model == null){
-                LOGGER.warn("Unable to find the following definition in the Swagger file: " + simpleRef);
+                LOGGER.warn("Unable to find the following definition in the Swagger file: {}", simpleRef);
                 return;
             }
             generateJsonBody(model, definitions, generator);
@@ -679,7 +631,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
             case PasswordProperty passwordProperty ->
                     expressionInput = new ExpressionInput(RandomPasswordExpression.IDENTIFIER);
             case null, default -> {
-                LOGGER.warn("Unsupported property type: " + Objects.requireNonNull(property).getClass().getSimpleName());
+                LOGGER.warn("Unsupported property type: {}", Objects.requireNonNull(property).getClass().getSimpleName());
                 return Optional.empty();
             }
         }
@@ -708,7 +660,7 @@ public class SwaggerRestDefinitionConverter extends AbstractRestDefinitionConver
      * Get the max item count. It is based in the value configured in the Swagger file.
      * If the <code>maxitemCount</code> is null, then the <code>MAX_RESPONSE_ITEMS</code>
      * will be returned.
-     *
+     * <p>
      * If <code>maxitemCount</code> is not null, then it will take the minimum of <code>maxitemCount</code>
      * and <code>MAX_RESPONSE_ITEMS</code>.
      * @param maxItemCount The max item count configured in the Swagger file.

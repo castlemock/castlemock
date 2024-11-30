@@ -44,10 +44,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/mock/soap/project")
 public class SoapServiceController extends AbstractSoapServiceController {
 
-    @Autowired
     public SoapServiceController(final ServiceProcessor serviceProcessor,
                                  final ServletContext servletContext,
-                                 final SoapStrategyFactory strategyFactory){
+                                 final SoapStrategyFactory strategyFactory) {
         super(serviceProcessor, servletContext, strategyFactory);
     }
 

@@ -19,11 +19,7 @@ package com.castlemock.repository.rest.file.event.model;
 import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

@@ -17,13 +17,7 @@
 package com.castlemock.service.mock.soap.project.converter;
 
 import com.castlemock.model.core.http.HttpMethod;
-import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapOperationIdentifier;
-import com.castlemock.model.mock.soap.domain.SoapOperationStatus;
-import com.castlemock.model.mock.soap.domain.SoapPort;
-import com.castlemock.model.mock.soap.domain.SoapResourceType;
-import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
-import com.castlemock.model.mock.soap.domain.SoapVersion;
+import com.castlemock.model.mock.soap.domain.*;
 import com.castlemock.service.core.manager.FileManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

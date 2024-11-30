@@ -31,7 +31,14 @@ import CreateApplicationModal from "./modal/CreateApplicationModal";
 import UploadDefinitionModal from "./modal/UploadDefinitionModal"
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import AuthenticationContext from "../../../../context/AuthenticationContext";
-import {faCloudDownloadAlt, faFile, faTrash, faCloudUploadAlt, faEdit, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
+import {
+    faCloudDownloadAlt,
+    faCloudUploadAlt,
+    faCodeBranch,
+    faEdit,
+    faFile,
+    faTrash
+} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;

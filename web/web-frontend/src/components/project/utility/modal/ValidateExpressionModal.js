@@ -15,9 +15,6 @@
  */
 
 import React, {PureComponent} from "react";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import PaginationFactory from "react-bootstrap-table2-paginator";
 import axios from "axios";
 import validateErrorResponse from "../../../../utility/HttpResponseValidator";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";

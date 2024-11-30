@@ -28,10 +28,15 @@ import UpdateOperationModal from "./modal/UpdateOperationModal";
 import DeleteMockResponsesModal from "./modal/DeleteMockResponsesModal";
 import CreateMockResponseModal from "./modal/CreateMockResponseModal";
 import DuplicateMockResponseModal from "./modal/DuplicateMockResponseModal"
-import {operationStatusFormatter, operationSoapVersionFormatter,
-    operationIdentifyStrategy, operationResponseStrategy, mockResponseStatusFormatter} from "../utility/SoapFormatter"
+import {
+    mockResponseStatusFormatter,
+    operationIdentifyStrategy,
+    operationResponseStrategy,
+    operationSoapVersionFormatter,
+    operationStatusFormatter
+} from "../utility/SoapFormatter"
 import ContextContext from "../../../../context/ContextContext";
-import {faTrash, faFile, faEdit, faCopy} from "@fortawesome/free-solid-svg-icons";
+import {faCopy, faEdit, faFile, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;

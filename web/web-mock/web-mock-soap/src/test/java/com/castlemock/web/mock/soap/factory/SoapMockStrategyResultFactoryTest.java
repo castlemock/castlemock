@@ -16,15 +16,7 @@
 
 package com.castlemock.web.mock.soap.factory;
 
-import com.castlemock.model.mock.soap.domain.SoapMockResponse;
-import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
-import com.castlemock.model.mock.soap.domain.SoapMockResponseTestBuilder;
-import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapOperationTestBuilder;
-import com.castlemock.model.mock.soap.domain.SoapRequest;
-import com.castlemock.model.mock.soap.domain.SoapRequestTestBuilder;
-import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
-import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
+import com.castlemock.model.mock.soap.domain.*;
 import com.castlemock.service.mock.soap.project.input.UpdateCurrentMockResponseSequenceIndexInput;
 import com.castlemock.web.mock.soap.converter.SoapMockResponseConverter;
 import com.castlemock.web.mock.soap.stategy.SoapStrategyResult;
@@ -36,9 +28,7 @@ import org.mockito.Mockito;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 class SoapMockStrategyResultFactoryTest {

@@ -19,11 +19,7 @@ package com.castlemock.service.mock.rest.project.input;
 import com.castlemock.model.core.Input;
 import com.castlemock.model.core.http.HttpContentEncoding;
 import com.castlemock.model.core.http.HttpHeader;
-import com.castlemock.model.mock.rest.domain.RestHeaderQuery;
-import com.castlemock.model.mock.rest.domain.RestJsonPathExpression;
-import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
-import com.castlemock.model.mock.rest.domain.RestParameterQuery;
-import com.castlemock.model.mock.rest.domain.RestXPathExpression;
+import com.castlemock.model.mock.rest.domain.*;
 
 import java.util.List;
 import java.util.Objects;

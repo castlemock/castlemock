@@ -35,7 +35,7 @@ import java.util.Comparator;
 /**
  * This is an updated version with enhancements made by Daniel Migowski,
  * Andre Bogus, and David Koelle. Updated by David Koelle in 2017.
- *
+ * <p>
  * To use this class:
  *   Use the static "sort" method from the java.util.Collections class:
  *   Collections.sort(your list, new AlphanumComparator());

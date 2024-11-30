@@ -30,7 +30,7 @@ import UpdateProjectModal from "./modal/UpdateProjectModal"
 import DeletePortsModal from "./modal/DeletePortsModal"
 import DeleteProjectModal from "./modal/DeleteProjectModal"
 import UploadWSDLModal from "./modal/UploadWSDLModal"
-import {faEdit, faTrash, faCloudDownloadAlt, faCloudUploadAlt, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
+import {faCloudDownloadAlt, faCloudUploadAlt, faCodeBranch, faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;

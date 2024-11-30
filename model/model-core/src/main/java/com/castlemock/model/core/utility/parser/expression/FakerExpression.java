@@ -58,8 +58,7 @@ public class FakerExpression extends AbstractExpression {
 				return String.valueOf(result);
 			}
 		} catch (Exception e) {
-			LOGGER.warn("Can not transform ${FAKER(api=\"" + apiArgument.getValue() + "\", locale=\""
-					+ locale + "\")", e);
+            LOGGER.warn("Can not transform ${FAKER(api=\"{}\", locale=\"{}\")", apiArgument.getValue(), locale, e);
 		}
 
 		return "";

@@ -88,7 +88,7 @@ public class RestMockResponseFileRepository extends FileRepository<RestMockRespo
     /**
      * The post initialize method can be used to run functionality for a specific service. The method is called when
      * the method {@link #initialize} has finished successful.
-     *
+     * <p>
      * The method is responsible to validate the imported types and make certain that all the collections are
      * initialized.
      * @see #initialize

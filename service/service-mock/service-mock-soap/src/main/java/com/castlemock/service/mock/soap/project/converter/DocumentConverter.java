@@ -17,16 +17,7 @@
 package com.castlemock.service.mock.soap.project.converter;
 
 import com.castlemock.model.mock.soap.domain.SoapPort;
-import com.castlemock.service.mock.soap.project.converter.types.Binding;
-import com.castlemock.service.mock.soap.project.converter.types.Message;
-import com.castlemock.service.mock.soap.project.converter.types.Namespace;
-import com.castlemock.service.mock.soap.project.converter.types.PortType;
-import com.castlemock.service.mock.soap.project.converter.types.Service;
-import com.castlemock.service.mock.soap.project.converter.types.WsdlBindingParser;
-import com.castlemock.service.mock.soap.project.converter.types.WsdlMessageParser;
-import com.castlemock.service.mock.soap.project.converter.types.WsdlNamespaceParser;
-import com.castlemock.service.mock.soap.project.converter.types.WsdlPortTypeParser;
-import com.castlemock.service.mock.soap.project.converter.types.WsdlServiceParser;
+import com.castlemock.service.mock.soap.project.converter.types.*;
 import org.w3c.dom.Document;
 
 import java.util.Collection;
@@ -62,16 +53,13 @@ public final class DocumentConverter {
         final Set<PortType> portTypes = PORT_TYPE_PARSER.parsePortTypes(document);
         final Set<Namespace> namespaces = NAMESPACE_PARSER.parseNamespaces(document);
 
-        final Set<SoapPort> ports = services.stream()
+
+        return services.stream()
                 .map(Service::getPorts)
                 .flatMap(Collection::stream)
                 .map(servicePort -> ServicePortConverter
                         .toSoapPort(servicePort, projectId, bindings, portTypes, messages, namespaces, generateResponse))
                 .collect(Collectors.toSet());
-
-
-
-        return ports;
     }
 
 

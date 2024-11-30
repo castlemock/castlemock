@@ -16,26 +16,13 @@
 
 package com.castlemock.service.mock.rest.project;
 
-import com.castlemock.model.mock.rest.domain.RestApplication;
-import com.castlemock.model.mock.rest.domain.RestMethod;
-import com.castlemock.model.mock.rest.domain.RestMethodStatus;
-import com.castlemock.model.mock.rest.domain.RestMockResponse;
-import com.castlemock.model.mock.rest.domain.RestProject;
-import com.castlemock.model.mock.rest.domain.RestResource;
-import com.castlemock.repository.rest.project.RestApplicationRepository;
-import com.castlemock.repository.rest.project.RestMethodRepository;
-import com.castlemock.repository.rest.project.RestMockResponseRepository;
-import com.castlemock.repository.rest.project.RestProjectRepository;
-import com.castlemock.repository.rest.project.RestResourceRepository;
+import com.castlemock.model.mock.rest.domain.*;
+import com.castlemock.repository.rest.project.*;
 import com.castlemock.service.core.AbstractService;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
 

@@ -25,12 +25,7 @@ import com.castlemock.service.core.user.input.ReadUserInput;
 import com.castlemock.service.core.user.output.ReadUserOutput;
 import com.castlemock.web.core.config.JWTEncoderDecoder;
 import com.castlemock.web.core.controller.AbstractController;
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -128,12 +123,12 @@ public class SecurityInterceptor implements HandlerInterceptor, Filter {
         final User loggedInUser = readUserOutput.getUser()
                 .orElse(null);
         if(loggedInUser == null){
-            LOGGER.info("The following logged in user is not valid anymore: " + userId);
+            LOGGER.info("The following logged in user is not valid anymore: {}", userId);
             request.logout();
             response.sendRedirect(request.getContextPath());
             return false;
         } else if(!Status.ACTIVE.equals(loggedInUser.getStatus())){
-            LOGGER.info("The following logged in user is not active anymore: " + userId);
+            LOGGER.info("The following logged in user is not active anymore: {}", userId);
             request.logout();
             response.sendRedirect(request.getContextPath());
             return false;

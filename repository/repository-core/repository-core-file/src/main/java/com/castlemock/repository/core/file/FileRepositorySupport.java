@@ -26,15 +26,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -64,7 +56,7 @@ public class FileRepositorySupport {
             final byte[] raw = Files.readAllBytes(file.toPath());
             return new String(raw);
         } catch (IOException e) {
-            LOGGER.error("Unable to find the following file: " + filename, e);
+            LOGGER.error("Unable to find the following file: {}", filename, e);
             throw new IllegalStateException("Unable to find the following file: " + filename, e);
         }
     }
@@ -80,7 +72,7 @@ public class FileRepositorySupport {
             writer = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8));
             writer.write(data);
         } catch (Exception e) {
-            LOGGER.error("Unable to save the following file: " + filename, e);
+            LOGGER.error("Unable to save the following file: {}", filename, e);
             throw new IllegalStateException("Unable to save the following file: " + filename, e);
         } finally {
             try {
@@ -97,7 +89,7 @@ public class FileRepositorySupport {
         final Path path = FileSystems.getDefault().getPath(directory);
         this.createDirectory(path);
 
-        LOGGER.debug("Start loading files for the following type: " + entityClass.getSimpleName());
+        LOGGER.debug("Start loading files for the following type: {}", entityClass.getSimpleName());
         return Optional.of(new File(directory))
                 .map(File::listFiles)
                 .map(Stream::of)
@@ -116,11 +108,11 @@ public class FileRepositorySupport {
             try(final Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)){
                 final JAXBContext jaxbContext = JAXBContext.newInstance(entityClass, HttpHeaderFile.class, HttpParameterFile.class);
                 final Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-                LOGGER.debug("\tLoaded " + file.getName());
+                LOGGER.debug("\tLoaded {}", file.getName());
                 return Optional.ofNullable((T) jaxbUnmarshaller.unmarshal(reader));
             }
         } catch (JAXBException | IOException e) {
-            LOGGER.error("Unable to parse the following file: " + file.getAbsolutePath(), e);
+            LOGGER.error("Unable to parse the following file: {}", file.getAbsolutePath(), e);
         }
         return Optional.empty();
     }
@@ -134,17 +126,17 @@ public class FileRepositorySupport {
             writer = new FileWriter(filename, StandardCharsets.UTF_8);
             marshaller.marshal(type, writer);
         } catch (JAXBException e) {
-            LOGGER.error("Unable to parse file: " + filename, e);
+            LOGGER.error("Unable to parse file: {}", filename, e);
             throw new IllegalStateException("Unable to parse the following file: " + filename, e);
         } catch (IOException e) {
-            LOGGER.error("Unable to read file: " + filename, e);
+            LOGGER.error("Unable to read file: {}", filename, e);
             throw new IllegalStateException("Unable to read the following file: " + filename, e);
         } finally {
             if (writer != null) {
                 try {
                     writer.close();
                 } catch (IOException e) {
-                    LOGGER.error("Unable to close file writer for type " + type.getClass().getSimpleName(), e);
+                    LOGGER.error("Unable to close file writer for type {}", type.getClass().getSimpleName(), e);
                 }
             }
         }
@@ -153,7 +145,7 @@ public class FileRepositorySupport {
     public void delete(String filename){
         File file = new File(filename);
         if(!file.delete()){
-            LOGGER.error("Unable to delete the following file: " + filename);
+            LOGGER.error("Unable to delete the following file: {}", filename);
             throw new IllegalStateException("Unable to delete the following file: " + filename);
         }
     }
@@ -161,7 +153,7 @@ public class FileRepositorySupport {
     public void delete(String directory, String filename){
         File file = new File(directory, filename);
         if(!file.delete()){
-            LOGGER.error("Unable to delete the following file: " + filename);
+            LOGGER.error("Unable to delete the following file: {}", filename);
             throw new IllegalStateException("Unable to delete the following file: " + filename);
         }
     }
@@ -169,10 +161,10 @@ public class FileRepositorySupport {
     private void createDirectory(Path path){
         if(!Files.exists(path)){
             try {
-                LOGGER.debug("Creating the following directory: " + path);
+                LOGGER.debug("Creating the following directory: {}", path);
                 Files.createDirectories(path);
             } catch (IOException e) {
-                LOGGER.error("Unable to create the following directory: " + path, e);
+                LOGGER.error("Unable to create the following directory: {}", path, e);
                 throw new IllegalStateException("Unable to create the following folder: " + path);
             }
         }

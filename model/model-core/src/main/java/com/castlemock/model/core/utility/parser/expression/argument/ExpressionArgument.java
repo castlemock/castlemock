@@ -22,7 +22,7 @@ import java.util.Objects;
  * The {@link ExpressionArgument} represent an argument for an
  * {@link com.castlemock.model.core.utility.parser.expression.Expression} and
  * is a container class for a typed value.
- *
+ * <p>
  * There are three different types of arguments:
  * <ul>
  *     <li><b>String: </b>{@link ExpressionArgumentString}.</li>

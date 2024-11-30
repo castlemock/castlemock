@@ -16,11 +16,7 @@
 
 package com.castlemock.deploy.tomcat.war.config;
 
-import com.castlemock.app.config.Application;
-import com.castlemock.app.config.MvcConfig;
-import com.castlemock.app.config.PropertyConfig;
-import com.castlemock.app.config.RestSecurityConfig;
-import com.castlemock.app.config.SecurityConfig;
+import com.castlemock.app.config.*;
 import com.castlemock.deploy.tomcat.common.TomcatConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -33,8 +29,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.WebApplicationInitializer;
 
 @EnableAsync
-@SpringBootApplication(scanBasePackages = "com.castlemock")
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class, MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
+@SpringBootApplication(scanBasePackages = "com.castlemock", exclude={DataSourceAutoConfiguration.class, MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class WarTomcatApplication extends Application implements WebApplicationInitializer {
 
     /**

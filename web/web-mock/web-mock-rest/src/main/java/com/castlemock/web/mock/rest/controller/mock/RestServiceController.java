@@ -45,10 +45,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/mock/rest/project")
 public class RestServiceController extends AbstractRestServiceController  {
 
-    @Autowired
-    public RestServiceController(final ServiceProcessor serviceProcessor,
-                                 final ServletContext servletContext,
-                                 final RestClient restClient){
+    public RestServiceController(ServiceProcessor serviceProcessor,
+                                 ServletContext servletContext,
+                                 RestClient restClient) {
         super(serviceProcessor, servletContext, restClient);
     }
 

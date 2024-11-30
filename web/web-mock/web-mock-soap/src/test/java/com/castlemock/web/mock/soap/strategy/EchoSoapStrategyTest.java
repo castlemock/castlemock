@@ -17,11 +17,7 @@
 package com.castlemock.web.mock.soap.strategy;
 
 import com.castlemock.model.core.http.HttpHeader;
-import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapOperationTestBuilder;
-import com.castlemock.model.mock.soap.domain.SoapRequest;
-import com.castlemock.model.mock.soap.domain.SoapRequestTestBuilder;
-import com.castlemock.model.mock.soap.domain.SoapResponse;
+import com.castlemock.model.mock.soap.domain.*;
 import com.castlemock.web.mock.soap.stategy.EchoSoapStrategy;
 import com.castlemock.web.mock.soap.stategy.SoapStrategyResult;
 import jakarta.servlet.http.HttpServletRequest;

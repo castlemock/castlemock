@@ -51,7 +51,6 @@ public class UpdateSoapOperationServiceTest {
     }
 
     @Test
-    @SuppressWarnings("deprecation")
     public void testProcess(){
         final String projectId = "ProjectId";
         final String portId = "PortId";

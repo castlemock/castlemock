@@ -16,11 +16,7 @@
 
 package com.castlemock.web.core.service;
 
-import com.castlemock.model.core.Input;
-import com.castlemock.model.core.Output;
-import com.castlemock.model.core.Service;
-import com.castlemock.model.core.ServiceResult;
-import com.castlemock.model.core.ServiceTask;
+import com.castlemock.model.core.*;
 import com.castlemock.service.core.ServiceProcessorImpl;
 import com.castlemock.service.core.ServiceRegistry;
 import org.junit.jupiter.api.Assertions;

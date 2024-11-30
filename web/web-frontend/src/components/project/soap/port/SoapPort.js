@@ -27,9 +27,9 @@ import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import DeletePortModal from "./modal/DeletePortModal"
 import UpdateEndpointModal from "./modal/UpdateEndpointModal";
 import UpdateStatusModal from "./modal/UpdateStatusModal";
-import {operationStatusFormatter, operationResponseStrategy} from "../utility/SoapFormatter"
+import {operationResponseStrategy, operationStatusFormatter} from "../utility/SoapFormatter"
 import ContextContext from "../../../../context/ContextContext";
-import {faTrash, faEdit, faCodeBranch} from "@fortawesome/free-solid-svg-icons";
+import {faCodeBranch, faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const { SearchBar } = Search;

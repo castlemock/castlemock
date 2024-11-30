@@ -21,12 +21,7 @@ import com.castlemock.model.core.utility.XPathUtility;
 import com.castlemock.model.core.utility.parser.ExternalInputBuilder;
 import com.castlemock.model.core.utility.parser.TextParser;
 import com.castlemock.model.core.utility.parser.expression.argument.ExpressionArgument;
-import com.castlemock.model.mock.soap.domain.SoapMockResponse;
-import com.castlemock.model.mock.soap.domain.SoapMockResponseStatus;
-import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapRequest;
-import com.castlemock.model.mock.soap.domain.SoapResponse;
-import com.castlemock.model.mock.soap.domain.SoapResponseStrategy;
+import com.castlemock.model.mock.soap.domain.*;
 import com.castlemock.service.mock.soap.project.input.UpdateCurrentMockResponseSequenceIndexInput;
 import com.castlemock.web.mock.soap.converter.SoapMockResponseConverter;
 import com.castlemock.web.mock.soap.stategy.SoapStrategyResult;
@@ -34,11 +29,7 @@ import com.castlemock.web.mock.soap.utility.compare.SoapMockResponseNameComparat
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Predicate;
 
 @Component

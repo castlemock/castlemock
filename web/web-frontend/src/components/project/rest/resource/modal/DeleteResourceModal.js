@@ -15,7 +15,7 @@
  */
 
 import React, {PureComponent} from "react";
-import { withRouter } from "react-router";
+import {withRouter} from "react-router";
 import axios from "axios";
 import validateErrorResponse from "../../../../../utility/HttpResponseValidator";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";

@@ -40,8 +40,7 @@ public class ContextController {
 
     private final ServletContext servletContext;
 
-    @Autowired
-    public ContextController(final ServletContext servletContext){
+    public ContextController(ServletContext servletContext) {
         this.servletContext = Objects.requireNonNull(servletContext, "servletContext");
     }
 

@@ -19,11 +19,7 @@ package com.castlemock.web.mock.soap.controller.mock;
 import com.castlemock.model.core.ServiceProcessor;
 import com.castlemock.model.core.http.HttpHeader;
 import com.castlemock.model.core.utility.IdUtility;
-import com.castlemock.model.mock.soap.domain.SoapEvent;
-import com.castlemock.model.mock.soap.domain.SoapOperation;
-import com.castlemock.model.mock.soap.domain.SoapRequest;
-import com.castlemock.model.mock.soap.domain.SoapResourceType;
-import com.castlemock.model.mock.soap.domain.SoapResponse;
+import com.castlemock.model.mock.soap.domain.*;
 import com.castlemock.service.mock.soap.event.input.CreateSoapEventInput;
 import com.castlemock.service.mock.soap.project.input.IdentifySoapOperationInput;
 import com.castlemock.service.mock.soap.project.input.LoadSoapResourceInput;
@@ -48,11 +44,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * The AbstractSoapServiceController provides functionality that are shared for all the SOAP controllers
@@ -102,7 +94,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
             final SoapOperation operation = output.getOperation();
             return process(projectId, output.getPortId(), operation, request, httpServletRequest);
         } catch (Exception exception) {
-            LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
+            LOGGER.debug("SOAP service exception: {}", exception.getMessage(), exception);
             throw new SoapException(exception);
         }
     }
@@ -129,7 +121,7 @@ public abstract class AbstractSoapServiceController extends AbstractController {
 
             throw new IllegalArgumentException("Unable to parse incoming message");
         } catch (Exception exception) {
-            LOGGER.debug("SOAP service exception: " + exception.getMessage(), exception);
+            LOGGER.debug("SOAP service exception: {}", exception.getMessage(), exception);
             throw new SoapException(exception);
         }
     }

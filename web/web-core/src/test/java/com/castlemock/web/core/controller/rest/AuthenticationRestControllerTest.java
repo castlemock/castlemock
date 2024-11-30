@@ -22,8 +22,8 @@ import com.castlemock.model.core.user.UserTestBuilder;
 import com.castlemock.service.core.user.input.ReadUserByUsernameInput;
 import com.castlemock.service.core.user.output.ReadUserByUsernameOutput;
 import com.castlemock.web.core.config.JWTEncoderDecoder;
-import com.castlemock.web.core.model.authentication.AuthenticationRequestTestBuilder;
 import com.castlemock.web.core.model.authentication.AuthenticationRequest;
+import com.castlemock.web.core.model.authentication.AuthenticationRequestTestBuilder;
 import com.castlemock.web.core.model.authentication.AuthenticationResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,10 +37,7 @@ import org.springframework.security.core.Authentication;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Karl Dahlgren

@@ -19,12 +19,7 @@ package com.castlemock.service.mock.rest.project.converter.wadl;
 
 import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.model.core.utility.IdUtility;
-import com.castlemock.model.mock.rest.domain.RestApplication;
-import com.castlemock.model.mock.rest.domain.RestMethod;
-import com.castlemock.model.mock.rest.domain.RestMethodStatus;
-import com.castlemock.model.mock.rest.domain.RestMockResponse;
-import com.castlemock.model.mock.rest.domain.RestResource;
-import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
+import com.castlemock.model.mock.rest.domain.*;
 import com.castlemock.service.core.manager.FileManager;
 import com.castlemock.service.core.utility.DocumentUtility;
 import com.castlemock.service.mock.rest.project.converter.AbstractRestDefinitionConverter;
@@ -157,15 +152,15 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
                 restApplications.addAll(convertedRestApplications);
             }
         } catch (IOException | URISyntaxException e) {
-            LOGGER.error("Unable to download file file: " + location, e);
+            LOGGER.error("Unable to download file file: {}", location, e);
         } finally {
             if(files != null){
                 for(File uploadedFile : files){
                     boolean deletionResult = fileManager.deleteFile(uploadedFile);
                     if(deletionResult){
-                        LOGGER.debug("Deleted the following WADL file: " + uploadedFile.getName());
+                        LOGGER.debug("Deleted the following WADL file: {}", uploadedFile.getName());
                     } else {
-                        LOGGER.warn("Unable to delete the following WADL file: " + uploadedFile.getName());
+                        LOGGER.warn("Unable to delete the following WADL file: {}", uploadedFile.getName());
                     }
 
                 }
@@ -215,7 +210,7 @@ public class WADLRestDefinitionConverter extends AbstractRestDefinitionConverter
                         final URL url = new URI(resourceBase).toURL();
                         return Optional.of(url.getPath());
                     } catch (MalformedURLException | URISyntaxException e) {
-                        LOGGER.error("Unable to create an URL for the following URL " + resourceBase);
+                        LOGGER.error("Unable to create an URL for the following URL {}", resourceBase);
                         return Optional.empty();
                     }
                 });

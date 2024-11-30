@@ -32,21 +32,12 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Serial;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The session token repository is responsible for managing all the ongoing sessions and their corresponding
@@ -169,17 +160,17 @@ public class SessionTokenFileRepository implements SessionTokenRepository {
             writer = new FileWriter(filename, StandardCharsets.UTF_8);
             marshaller.marshal(tokens, writer);
         } catch (JAXBException e) {
-            LOGGER.error("Unable to parse the following file: " + tokenFileName, e);
+            LOGGER.error("Unable to parse the following file: {}", tokenFileName, e);
             throw new IllegalStateException("Unable to parse the following file: " + tokenFileName);
         } catch (IOException e) {
-            LOGGER.error("Unable to read file: " + tokenFileName, e);
+            LOGGER.error("Unable to read file: {}", tokenFileName, e);
             throw new IllegalStateException("Unable to read the following file: " + tokenFileName);
         } finally {
             if (writer != null) {
                 try {
                     writer.close();
                 } catch (IOException e) {
-                    LOGGER.error("Unable to close file writer for type " + tokens.getClass().getSimpleName(), e);
+                    LOGGER.error("Unable to close file writer for type {}", tokens.getClass().getSimpleName(), e);
                 }
             }
         }
@@ -192,10 +183,10 @@ public class SessionTokenFileRepository implements SessionTokenRepository {
         final Path path = FileSystems.getDefault().getPath(tokenDirectory);
         if(!Files.exists(path)){
             try {
-                LOGGER.debug("Creating the following directory: " + path);
+                LOGGER.debug("Creating the following directory: {}", path);
                 Files.createDirectories(path);
             } catch (IOException e) {
-                LOGGER.error("Unable to create the following directory: " + path, e);
+                LOGGER.error("Unable to create the following directory: {}", path, e);
                 throw new IllegalStateException("Unable to create the following folder: " + tokenDirectory);
             }
         }
@@ -213,10 +204,10 @@ public class SessionTokenFileRepository implements SessionTokenRepository {
                     PersistentRememberMeToken persistentRememberMeToken = new PersistentRememberMeToken(token.getUsername(), token.getSeries(), token.getTokenValue(), token.getDate());
                     seriesTokens.put(persistentRememberMeToken.getSeries(), persistentRememberMeToken);
                 }
-                LOGGER.debug("\tLoaded " + file.getName());
+                LOGGER.debug("\tLoaded {}", file.getName());
             }
         } catch (JAXBException e) {
-            LOGGER.error("Unable to parse files for type " + SessionTokenList.class.getSimpleName(), e);
+            LOGGER.error("Unable to parse files for type {}", SessionTokenList.class.getSimpleName(), e);
         }
     }
 

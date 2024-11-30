@@ -27,7 +27,7 @@ import {mockResponseStatusFormatter} from "../utility/RestFormatter";
 import {isOnlyReader} from "../../../../utility/AuthorizeUtility";
 import ValidateExpressionModal from "../../utility/modal/ValidateExpressionModal"
 import AuthenticationContext from "../../../../context/AuthenticationContext";
-import {faEdit, faTrash, faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import {faCheckCircle, faEdit, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import JsonPathComponent from "../../utility/JsonPathComponent";
 import HeaderQueryComponent from "../../utility/HeaderQueryComponent";

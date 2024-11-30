@@ -20,9 +20,9 @@ import com.castlemock.model.core.Input;
 import com.castlemock.model.mock.soap.domain.SoapOperation;
 import com.castlemock.model.mock.soap.domain.SoapRequest;
 import com.castlemock.model.mock.soap.domain.SoapResponse;
-import com.castlemock.web.mock.soap.utility.SoapClient;
 import com.castlemock.web.mock.soap.converter.SoapResponseConverter;
 import com.castlemock.web.mock.soap.factory.SoapMockStrategyResultFactory;
+import com.castlemock.web.mock.soap.utility.SoapClient;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;

@@ -1,13 +1,7 @@
 package com.castlemock.service.mock.rest.project.converter.wadl;
 
 import com.castlemock.model.core.http.HttpMethod;
-import com.castlemock.model.mock.rest.domain.RestApplication;
-import com.castlemock.model.mock.rest.domain.RestMethod;
-import com.castlemock.model.mock.rest.domain.RestMethodStatus;
-import com.castlemock.model.mock.rest.domain.RestMockResponse;
-import com.castlemock.model.mock.rest.domain.RestMockResponseStatus;
-import com.castlemock.model.mock.rest.domain.RestResource;
-import com.castlemock.model.mock.rest.domain.RestResponseStrategy;
+import com.castlemock.model.mock.rest.domain.*;
 import com.castlemock.service.core.manager.FileManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
