@@ -39,7 +39,7 @@ public class DocumentationController {
 
     private final ServletContext servletContext;
 
-    public DocumentationController(ServletContext servletContext) {
+    public DocumentationController(final ServletContext servletContext) {
         this.servletContext = Objects.requireNonNull(servletContext, "servletContext");
     }
 
