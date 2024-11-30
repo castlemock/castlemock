@@ -20,7 +20,7 @@ import com.castlemock.model.core.http.HttpMethod;
 import com.castlemock.repository.core.file.http.model.HttpHeaderFile;
 import com.castlemock.repository.core.file.http.model.HttpParameterFile;
 
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 

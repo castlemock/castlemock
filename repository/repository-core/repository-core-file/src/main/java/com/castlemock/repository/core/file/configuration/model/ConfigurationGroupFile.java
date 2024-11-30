@@ -18,7 +18,7 @@ package com.castlemock.repository.core.file.configuration.model;
 
 import com.castlemock.model.core.Saveable;
 
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 

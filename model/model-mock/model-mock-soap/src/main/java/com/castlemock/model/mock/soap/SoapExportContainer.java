@@ -19,7 +19,7 @@ package com.castlemock.model.mock.soap;
 import com.castlemock.model.core.ExportContainer;
 import com.castlemock.model.mock.soap.domain.*;
 
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

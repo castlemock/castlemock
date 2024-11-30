@@ -22,7 +22,7 @@ import com.castlemock.model.mock.soap.domain.SoapXPathExpression;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-import javax.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

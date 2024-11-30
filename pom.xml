@@ -15,7 +15,7 @@
 
         <!-- Version properties -->
         <java.release>21</java.release>
-        <java.version>1.21</java.version>
+        <java.version>21</java.version>
         <jwt.version>4.4.0</jwt.version>
         <jaxb.version>2.3.1</jaxb.version>
         <antlr.version>4.13.1</antlr.version>
@@ -32,13 +32,13 @@
         <sun.jaxb.version>2.3.0</sun.jaxb.version>
         <mockito.version>1.10.19</mockito.version>
         <snakeyaml.version>2.2</snakeyaml.version>
-        <jaxb.impl.version>2.3.9</jaxb.impl.version>
+        <jaxb.impl.version>4.0.5</jaxb.impl.version>
         <datafaker.version>1.9.0</datafaker.version>
         <maven.jar.version>3.1.1</maven.jar.version>
         <json.path.version>2.9.0</json.path.version>
         <joda.time.version>2.12.5</joda.time.version>
         <activation.version>1.1.1</activation.version>
-        <jaxb.core.version>2.3.0.1</jaxb.core.version>
+        <jaxb.core.version>4.0.5</jaxb.core.version>
         <maven.exec.version>1.2.1</maven.exec.version>
         <commons.io.version>2.10.0</commons.io.version>
         <httpclient.version>4.5.13</httpclient.version>
@@ -476,11 +476,6 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
             <dependency>
