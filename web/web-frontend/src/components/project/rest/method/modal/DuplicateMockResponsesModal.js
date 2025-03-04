@@ -50,7 +50,7 @@ class DuplicateMockResponsesModal extends PureComponent {
         let mockResponseIds = this.props.selectedMockResponses.map(mockResponse => mockResponse.id);
         axios
             .post(process.env.PUBLIC_URL + "/api/rest/rest/project/" + this.props.projectId + "/application/" + this.props.applicationId +
-                "/resource/" + this.props.methodId + "/method/" + this.props.methodId + "/mockresponse/duplicate", {
+                "/resource/" + this.props.resourceId + "/method/" + this.props.methodId + "/mockresponse/duplicate", {
                 projectId: this.props.projectId,
                 applicationId: this.props.applicationId,
                 resourceId: this.props.resourceId,
