@@ -16,48 +16,49 @@
         <!-- Version properties -->
         <java.release>21</java.release>
         <java.version>1.21</java.version>
-        <jwt.version>4.4.0</jwt.version>
+        <jwt.version>4.5.0</jwt.version>
         <jaxb.version>2.3.1</jaxb.version>
-        <antlr.version>4.13.1</antlr.version>
-        <log4j.version>2.23.1</log4j.version>
-        <slf4j.version>2.0.13</slf4j.version>
+        <antlr.version>4.13.2</antlr.version>
+        <log4j.version>2.24.3</log4j.version>
+        <slf4j.version>2.0.17</slf4j.version>
         <junit.version>4.13.1</junit.version>
         <jsr305.version>3.0.2</jsr305.version>
-        <cxf.rt.version>3.6.3</cxf.rt.version>
+        <cxf.rt.version>4.1.1</cxf.rt.version>
         <wsdl4j.version>1.6.3</wsdl4j.version>
-        <guava.version>32.1.3-jre</guava.version>
+        <guava.version>33.4.6-jre</guava.version>
         <taglibs.version>1.2.5</taglibs.version>
-        <jackson.version>2.17.1</jackson.version>
+        <jackson.version>2.18.3</jackson.version>
         <jaxb.api.version>2.3.1</jaxb.api.version>
         <sun.jaxb.version>2.3.0</sun.jaxb.version>
         <mockito.version>1.10.19</mockito.version>
-        <snakeyaml.version>2.2</snakeyaml.version>
+        <snakeyaml.version>2.4</snakeyaml.version>
+        <springdoc.version>2.8.6</springdoc.version>
         <jaxb.impl.version>2.3.9</jaxb.impl.version>
         <datafaker.version>1.9.0</datafaker.version>
         <maven.jar.version>3.1.1</maven.jar.version>
         <json.path.version>2.9.0</json.path.version>
         <joda.time.version>2.12.5</joda.time.version>
         <activation.version>1.1.1</activation.version>
-        <jaxb.core.version>2.3.0.1</jaxb.core.version>
+        <jaxb.core.version>4.0.5</jaxb.core.version>
         <maven.exec.version>1.2.1</maven.exec.version>
-        <commons.io.version>2.10.0</commons.io.version>
+        <commons.io.version>2.18.0</commons.io.version>
         <httpclient.version>4.5.13</httpclient.version>
-        <byte.buddy.version>1.14.5</byte.buddy.version>
-        <antlr.maven.version>4.13.1</antlr.maven.version>
+        <byte.buddy.version>1.17.4</byte.buddy.version>
+        <antlr.maven.version>4.13.2</antlr.maven.version>
         <raml.parser.version>1.0.51</raml.parser.version>
-        <jaxb.runtime.version>2.3.3</jaxb.runtime.version>
-        <swagger.core.version>2.2.22</swagger.core.version>
+        <jaxb.runtime.version>4.0.5</jaxb.runtime.version>
+        <swagger.core.version>2.2.28</swagger.core.version>
         <commons.lang.version>3.14.0</commons.lang.version>
         <mockito.core.version>3.6.28</mockito.core.version>
         <commons.codec.version>1.16.0</commons.codec.version>
         <junit.jupiter.version>5.10.1</junit.jupiter.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
-        <tomcat.embedd.version>10.1.34</tomcat.embedd.version>
+        <tomcat.embedd.version>11.0.5</tomcat.embedd.version>
         <json.schema.validator>2.2.13</json.schema.validator>
         <xmlschema.core.version>2.2.5</xmlschema.core.version>
         <maven.compiler.version>3.12.1</maven.compiler.version>
-        <spring.boot.version>3.4.0</spring.boot.version>
-        <swagger.parser.version>2.1.22</swagger.parser.version>
+        <spring.boot.version>3.4.4</spring.boot.version>
+        <swagger.parser.version>2.1.25</swagger.parser.version>
         <jakarta.servlet.version>6.1.0</jakarta.servlet.version>
         <maven.war.plugin.version>3.2.3</maven.war.plugin.version>
         <common.beanutils.version>1.9.4</common.beanutils.version>
@@ -65,9 +66,9 @@
         <maven.build.helper.version>1.7</maven.build.helper.version>
         <common.collections.version>3.2.2</common.collections.version>
         <jakarta.validation.version>3.1.0</jakarta.validation.version>
-        <spring.framework.version>6.1.14</spring.framework.version>
-        <spring.framework.security.version>6.2.2</spring.framework.security.version>
-        <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
+        <spring.framework.version>6.2.5</spring.framework.version>
+        <spring.framework.security.version>6.4.4</spring.framework.security.version>
+        <hibernate.validator.version>8.0.2.Final</hibernate.validator.version>
     </properties>
 
     <modules>
@@ -356,7 +357,7 @@
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-                <version>2.7.0</version>
+                <version>${springdoc.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.antlr</groupId>
