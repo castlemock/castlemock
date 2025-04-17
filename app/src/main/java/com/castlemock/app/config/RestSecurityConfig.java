@@ -57,7 +57,7 @@ public class RestSecurityConfig {
     public SecurityFilterChain restSecurityFilterChain(final HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz.requestMatchers("/api/rest/core/login", "/api/rest/core/version",
-                                "/api/rest/core/context", "/doc/api/rest", "/mock/**")
+                                "/api/rest/core/context", "/doc/api/rest")
                         .permitAll()
                 ).authorizeHttpRequests((authz) -> authz.requestMatchers("/api/rest/**")
                         .authenticated()

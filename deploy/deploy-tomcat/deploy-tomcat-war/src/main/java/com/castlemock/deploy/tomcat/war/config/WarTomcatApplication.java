@@ -17,6 +17,7 @@
 package com.castlemock.deploy.tomcat.war.config;
 
 import com.castlemock.app.config.Application;
+import com.castlemock.app.config.MockSecurityConfig;
 import com.castlemock.app.config.MvcConfig;
 import com.castlemock.app.config.PropertyConfig;
 import com.castlemock.app.config.RestSecurityConfig;
@@ -57,7 +58,7 @@ public class WarTomcatApplication extends Application implements WebApplicationI
     @Override
     protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
         return application.sources(WarTomcatApplication.class, MvcConfig.class, SecurityConfig.class,
-                RestSecurityConfig.class, PropertyConfig.class, TomcatConfig.class);
+                MockSecurityConfig.class, RestSecurityConfig.class, PropertyConfig.class, TomcatConfig.class);
     }
 
 }
