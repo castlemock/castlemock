@@ -2,14 +2,19 @@
 
 <h1 align="center"> Castle Mock: <br/>Mock RESTful APIs and SOAP web services</h1>
 
+<div style="border:1px solid #e00; padding:16px; background-color:#ffe6e6; color:#800; font-weight:bold;">
+Castle Mock is no longer maintained and will not receive future updates.  
+The repository remains available for reference, but we recommend exploring alternatives for active use. 
+Please see DEPRECATION for more information.
+</div>
+
 <p align="center">
-    <a href="https://snyk.io/test/github/castlemock/castlemock"><img src="https://snyk.io/test/github/castlemock/castlemock/badge.svg"></a>
     <a href="https://github.com/castlemock/castlemock/releases"><img src="https://img.shields.io/github/release/castlemock/castlemock.svg"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue.svg"></a>
     <img src="https://img.shields.io/badge/platforms-Linux%C2%A0%7C%C2%A0macOS%20%7C%20Windows-blue">
-    <a href="https://hub.docker.com/r/castlemock/castlemock/"><img src="https://img.shields.io/docker/pulls/castlemock/castlemock.svg"></a>
-</p>
+    <img src="https://img.shields.io/badge/status-unmaintained-red">
 
+</p>
 
 **Castle Mock** is a web application that provides the functionality to mock out RESTful APIs and SOAP web services. This functionality allows client-side developers to completely mimic a server side behaviour and shape the responses themselves.
 
@@ -18,14 +23,8 @@ Table Of Content
 
 - [About](#about)
 - [What to Use Castle Mock for and When to Use It](#what-to-use-castle-mock-for-and-when-to-use-it)
-- [Download](#download)
 - [Installation](#installation)
-- [Docker](#docker)
 - [Documentation](#documentation)
-- [Communication](#communication)
-- [Bugs and Feedback](#bugs-and-feedback)
-- [Continuous integration](#continuous-integration)
-- [News and Website](#news-and-website)
 - [License](#license)
 
 ## About
@@ -37,10 +36,6 @@ Table Of Content
 ## What to Use Castle Mock for and When to Use It
 
 Use **Castle Mock** to mock out RESTful APIs and SOAP web services for testing purposes for when either performing system or integration tests. It is recommended to only use **Castle Mock** on an internal network and never be used publically. **Castle Mock** is **NOT** developed or meant for anything else other than for testing purposes.
-
-## Download
-
-Non-source downloads such as WAR files can be found on our website: [https://www.castlemock.com/](https://www.castlemock.com/). The WAR files can also be located and downloaded from [GitHub Releases](https://github.com/castlemock/castlemock/releases).
 
 ## Installation
 
@@ -59,44 +54,9 @@ It is recommended that the administrator profile gets updated with a more secure
 
 Upon successful login, you will be able to create both SOAP and REST projects. SOAP and REST resources can either be created manually or created by importing resource descriptions, such as WSDL and WADL. All created resources can be mocked multiple times. Each resource can also be configured to have different response strategies, such as random and sequence
 
-## Docker
-
-> Docker is an open-source project that automates the deployment of applications inside software containers, by providing an additional layer of abstraction and automation of operating-system-level virtualization on Linux.
-
-**Castle Mock** absolutely loves Docker. Docker allows you to simply setup and deploy your own instance of **Castle Mock**, by just typing one line. Download and install Docker by visiting their web page: https://docker.com
-
-Use our official Docker image to setup and test **Castle Mock**:
-```
-docker run -d -p 8080:8080 castlemock/castlemock
-```
-
-**Castle Mock** can be accessed from the following address after the installation is finished:
-```
-http://{CONTAINER IP}:8080/castlemock
-```
-
-For more information and details: https://hub.docker.com/r/castlemock/castlemock
-
 ## Documentation
 
 Documentation can be found under our [GitHub Wiki](https://github.com/castlemock/castlemock/wiki). 
-
-## Communication
-- Website: [https://www.castlemock.com/](https://www.castlemock.com/)
-- [GitHub Issues](https://github.com/castlemock/castlemock/issues)
-- [Docker Hub](https://hub.docker.com/r/castlemock/castlemock/)
-
-## Bugs and Feedback
-
-For bugs, questions and discussions please use the **[GitHub Issues](https://github.com/castlemock/castlemock/issues)**. Please read our **[FAQ](https://github.com/castlemock/castlemock/wiki/FAQ)** and **[Code Of Conduct](https://github.com/castlemock/castlemock/blob/master/CODE_OF_CONDUCT.md)** before creating a new issue. 
-
-## Continuous integration
-
-**Castle Mock's** continuous integration environment is publicly available and can be access on the following link: [Travis CI](https://travis-ci.org/castlemock/castlemock)
-
-## News and Website
-
-All information about **Castle Mock** can be found on our [website](https://www.castlemock.com/). Follow us on Twitter: [CastleMock](http://twitter.com/CastleMock).
 
 ## License
 
