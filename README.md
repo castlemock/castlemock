@@ -37,8 +37,6 @@ Use **Castle Mock** to mock out RESTful APIs and SOAP web services for testing p
 
 ## Installation
 
-**Castle Mock** can be downloaded as Java Web Archive (.war) file and be deployed on a Apache Tomcat server (Java 21+ and Apache Tomcat 11). **Castle Mock** can also be deployed by using Docker. For more information go to the offical **Castle Mock** Docker page: [https://hub.docker.com/r/castlemock/castlemock/](https://hub.docker.com/r/castlemock/castlemock/).
-
 Upon successful installation and deployment, **Castle Mock** can be accessed from the web browser:
 
     http://localhost:8080/castlemock
