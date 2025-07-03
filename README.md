@@ -2,18 +2,16 @@
 
 <h1 align="center"> Castle Mock: <br/>Mock RESTful APIs and SOAP web services</h1>
 
-<div style="border:1px solid #e00; padding:16px; background-color:#ffe6e6; color:#800; font-weight:bold;">
-Castle Mock is no longer maintained and will not receive future updates.  
-The repository remains available for reference, but we recommend exploring alternatives for active use. 
-Please see DEPRECATION for more information.
-</div>
+> [!CAUTION]
+> Castle Mock is no longer maintained and will not receive future updates.  
+The repository remains available for reference, but we recommend exploring alternatives for active use.
+Please see **[DEPRECATION](https://github.com/castlemock/castlemock/blob/master/DEPRECATION.md)** for more information.
 
 <p align="center">
     <a href="https://github.com/castlemock/castlemock/releases"><img src="https://img.shields.io/github/release/castlemock/castlemock.svg"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202-blue.svg"></a>
     <img src="https://img.shields.io/badge/platforms-Linux%C2%A0%7C%C2%A0macOS%20%7C%20Windows-blue">
     <img src="https://img.shields.io/badge/status-unmaintained-red">
-
 </p>
 
 **Castle Mock** is a web application that provides the functionality to mock out RESTful APIs and SOAP web services. This functionality allows client-side developers to completely mimic a server side behaviour and shape the responses themselves.
