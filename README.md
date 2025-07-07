@@ -4,7 +4,7 @@
 
 > [!CAUTION]
 > Castle Mock is no longer maintained and will not receive future updates.  
-> The GitHub repository remains available for reference, but we recommend exploring alternatives for active use. The Docker Hub repository associated with Castle Mock will also be deprecated and eventually deleted.
+> The [GitHub repository](https://github.com/castlemock/castlemock) remains available for reference, but we recommend exploring alternatives for active use. The [Docker Hub repository](https://hub.docker.com/r/castlemock/castlemock) will also be deprecated and eventually deleted. 
 > Please see **[DEPRECATION](https://github.com/castlemock/castlemock/blob/master/DEPRECATION.md)** for more information.
 
 <p align="center">
