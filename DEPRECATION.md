@@ -5,4 +5,6 @@ Castle Mock has served its purpose as an open-source tool for simulating and moc
 
 While the codebase remains available in its current state, we recommend users evaluate alternative solutions for long-term or production use. The project will remain accessible for archival and educational purposes.
 
+The Docker Hub repository associated with Castle Mock will also be deprecated and eventually deleted.
+
 Thank you for being part of the Castle Mock journey.
